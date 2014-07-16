@@ -12,6 +12,7 @@ namespace FeedIo;
 
 
 use GuzzleHttp\Client;
+use Psr\Log\NullLogger;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +25,8 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->object = new Reader(
-            new Client()
+            new Client(),
+            new NullLogger()
         );
     }
 

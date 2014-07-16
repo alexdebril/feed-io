@@ -30,9 +30,10 @@ class Reader
      * @param Client $client
      * @param LoggerInterface $logger
      */
-    function __construct(Client $client)
+    function __construct(Client $client, LoggerInterface $logger)
     {
         $this->client = $client;
+        $this->logger = $logger;
     }
 
 } 
