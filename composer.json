@@ -1,0 +1,29 @@
+{
+    "name": "debril/feed-io",
+    "description": "Reads and writes new feeds",
+    "keywords": ["rss", "atom", "feed", "news"],
+    "homepage": "https://github.com/alexdebril/feed-io",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandre Debril",
+            "email": "alex.debril@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~4.1",
+        "psr/log": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7.0",
+        "monolog/monolog": "1.10.*@dev"
+    },
+    "suggest": {
+        "monolog/monolog": "Allow to handle logs"
+    },
+    "autoload": {
+        "psr-4": {"FeedIo\\": "src/FeedIo"}
+    }
+}
