@@ -11,6 +11,7 @@
 namespace FeedIo\Feed;
 
 
+use FeedIo\Feed\Item\OptionalFields;
 use FeedIo\Feed\Item\OptionalFieldsInterface;
 
 class Item extends Node implements ItemInterface
@@ -23,9 +24,9 @@ class Item extends Node implements ItemInterface
     /**
      * @param OptionalFieldsInterface $optionalFields
      */
-    function __construct(OptionalFieldsInterface $optionalFields)
+    function __construct(OptionalFieldsInterface $optionalFields = null)
     {
-        $this->optionalFields = $optionalFields;
+        $this->optionalFields = is_null( $optionalFields) ? new OptionalFields():$optionalFields;
     }
 
     /**
