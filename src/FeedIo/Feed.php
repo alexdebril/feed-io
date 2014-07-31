@@ -17,6 +17,20 @@ use FeedIo\Feed\Node;
 class Feed extends Node implements FeedInterface
 {
     /**
+     * @var \ArrayIterator
+     */
+    protected $items;
+
+    /**
+     *
+     */
+    function __construct()
+    {
+        $this->items = new \ArrayIterator();
+    }
+
+
+    /**
      * (PHP 5 &gt;= 5.0.0)<br/>
      * Return the current element
      * @link http://php.net/manual/en/iterator.current.php
@@ -24,7 +38,7 @@ class Feed extends Node implements FeedInterface
      */
     public function current()
     {
-        // TODO: Implement current() method.
+        return $this->items->current();
     }
 
     /**
@@ -35,7 +49,7 @@ class Feed extends Node implements FeedInterface
      */
     public function next()
     {
-        // TODO: Implement next() method.
+        return $this->items->next();
     }
 
     /**
@@ -46,7 +60,7 @@ class Feed extends Node implements FeedInterface
      */
     public function key()
     {
-        // TODO: Implement key() method.
+        return $this->items->key();
     }
 
     /**
@@ -58,7 +72,7 @@ class Feed extends Node implements FeedInterface
      */
     public function valid()
     {
-        // TODO: Implement valid() method.
+        return $this->items->valid();
     }
 
     /**
@@ -69,17 +83,18 @@ class Feed extends Node implements FeedInterface
      */
     public function rewind()
     {
-        // TODO: Implement rewind() method.
+        return $this->items->rewind();
     }
 
     /**
-     * Atom : feed.entry <feed><entry>
-     * Rss  : rss.channel.item <rss><channel><item>
      * @param ItemInterface $item
+     * @return $this
      */
     public function add(ItemInterface $item)
     {
-        // TODO: Implement add() method.
+        $this->items->append($item);
+
+        return $this;
     }
 
 } 
