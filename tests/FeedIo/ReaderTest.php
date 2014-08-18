@@ -10,8 +10,6 @@
 
 namespace FeedIo;
 
-
-use GuzzleHttp\Client;
 use Psr\Log\NullLogger;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
@@ -25,9 +23,17 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->object = new Reader(
-            new Client(),
+            $this->getClientMock(),
             new NullLogger()
         );
+    }
+
+    /**
+     * @return \FeedIo\Adapter\ClientInterface
+     */
+    protected function getClientMock()
+    {
+        return $this->getMock('FeedIo\Adapter\ClientInterface');
     }
 
     public function testDummy()

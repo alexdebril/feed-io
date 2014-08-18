@@ -10,14 +10,13 @@
 
 namespace FeedIo;
 
-use GuzzleHttp\Client;
-
+use FeedIo\Adapter\ClientInterface;
 use Psr\Log\LoggerInterface;
 
 class Reader
 {
     /**
-     * @var \GuzzleHttp\Client
+     * @var \FeedIo\Adapter\ClientInterface;
      */
     protected $client;
 
@@ -27,10 +26,10 @@ class Reader
     protected $logger;
 
     /**
-     * @param Client $client
+     * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
-    function __construct(Client $client, LoggerInterface $logger)
+    function __construct(ClientInterface $client, LoggerInterface $logger)
     {
         $this->client = $client;
         $this->logger = $logger;
