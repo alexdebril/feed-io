@@ -11,6 +11,8 @@
 namespace FeedIo;
 
 
+use FeedIo\Feed\Item;
+
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -35,8 +37,20 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testParse()
     {
-        $feed = $this->object->parse(new \DOMDocument('<dom></dom>'), new Feed());
+        $document = new \DOMDocument();
+        $document->loadXML('<feed><items></items></feed>');
+        $feed = $this->object->parse($document, new Feed(), new \DateTime());
         $this->assertInstanceOf('FeedIo\Feed', $feed);
+    }
+
+    public function testIsValid()
+    {
+        $item = new Item();
+        $item->setLastModified(new \DateTime('-1day'));
+
+        $this->assertTrue($this->object->isValid($item, new \DateTime('-2day')));
+        $this->assertFalse($this->object->isValid($item, new \DateTime()));
+        $this->assertFalse($this->object->isValid($item, new \DateTime('-1day')));
     }
 
     public function testGuessDateFormat()

@@ -12,6 +12,7 @@ namespace FeedIo;
 
 use \DOMDocument;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
 
 abstract class ParserAbstract
@@ -40,10 +41,12 @@ abstract class ParserAbstract
     /**
      * @param DOMDocument $document
      * @param FeedInterface $feed
+     * @param \DateTime $modifiedSince
      * @return FeedInterface
+     * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
-    public function parse(DOMDocument $document, FeedInterface $feed)
+    public function parse(DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
     {
         if (!$this->canHandle($document)) {
             throw new UnsupportedFormatException('this is not a supported format');
@@ -51,17 +54,31 @@ abstract class ParserAbstract
 
         $this->checkBodyStructure($document);
 
-        return $this->parseBody($document, $feed);
+        return $this->parseBody($document, $feed, $modifiedSince);
     }
 
     /**
      * @param DOMDocument $document
+     * @return $this
+     * @throws Parser\MissingFieldsException
      */
     protected function checkBodyStructure(DOMDocument $document)
     {
         $errors = array();
 
+        $element = $document->documentElement;
+        foreach( $this->mandatoryFields as $field ) {
+            $list = $element->getElementsByTagName($field);
+            if ( 0 === $list->length ) {
+                $errors[] = $field;
+            }
+        }
 
+        if ( ! empty($errors) ) {
+            throw new MissingFieldsException(implode(',', $errors));
+        }
+
+        return $this;
     }
 
     /**
@@ -96,25 +113,27 @@ abstract class ParserAbstract
      * @param ItemInterface $item
      * @return $this
      */
-    public function addValidItem(FeedInterface $feed, ItemInterface $item)
+    public function addValidItem(FeedInterface $feed, ItemInterface $item, \DateTime $modifiedSince)
     {
-        if ($this->isValid($item)) {
-            $feed->addItem($item);
+        if ($this->isValid($item, $modifiedSince)) {
+            $feed->add($item);
         }
 
         return $this;
     }
 
     /**
-     * @todo test the item using the filters
      * @param ItemInterface $item
+     * @param \DateTime $modifiedSince
      * @return bool
      */
-    public function isValid(ItemInterface $item)
+    public function isValid(ItemInterface $item, \DateTime $modifiedSince)
     {
-        $valid = true;
+        if ( $item->getLastModified() instanceof \DateTime ) {
+            return $item->getLastModified() > $modifiedSince;
+        }
 
-        return $valid;
+        return false;
     }
 
     /**
@@ -165,10 +184,10 @@ abstract class ParserAbstract
     abstract public function canHandle(\DOMDocument $document);
 
     /**
-     * Performs the actual conversion into a FeedContent instance
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @param FeedInterface $feed
+     * @param \DateTime $modifiedSince
      * @return FeedInterface
      */
-    abstract protected function parseBody(\DOMDocument $document, FeedInterface $feed);
+    abstract protected function parseBody(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince);
 } 
