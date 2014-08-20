@@ -15,11 +15,12 @@ interface ClientInterface
 {
 
     /**
-     * @param $url
+     * @param string $url
+     * @param \DateTime $modifiedSince
      * @throws \FeedIo\Adapter\NotFoundException
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse($url);
+    public function getResponse($url, \DateTime $modifiedSince);
 
 } 

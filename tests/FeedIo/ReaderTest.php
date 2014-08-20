@@ -36,6 +36,21 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('FeedIo\Adapter\ClientInterface');
     }
 
+    public function testLoadDocument()
+    {
+        $document = $this->object->loadDocument('<foo></foo>');
+        $this->assertInstanceOf('\DomDocument', $document);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testLoadMalformedDocument()
+    {
+        $document = $this->object->loadDocument('<foo></bar>');
+        $this->assertInstanceOf('\DomDocument', $document);
+    }
+
     public function testDummy()
     {
         $this->assertInstanceOf('\FeedIo\Reader', $this->object);

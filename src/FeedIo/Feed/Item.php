@@ -26,7 +26,7 @@ class Item extends Node implements ItemInterface
      */
     function __construct(OptionalFieldsInterface $optionalFields = null)
     {
-        $this->optionalFields = is_null( $optionalFields) ? new OptionalFields():$optionalFields;
+        $this->optionalFields = is_null($optionalFields) ? new OptionalFields() : $optionalFields;
     }
 
     /**

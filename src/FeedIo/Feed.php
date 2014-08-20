@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 
+use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\Node;
 
@@ -28,7 +29,6 @@ class Feed extends Node implements FeedInterface
     {
         $this->items = new \ArrayIterator();
     }
-
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
@@ -97,4 +97,12 @@ class Feed extends Node implements FeedInterface
         return $this;
     }
 
-} 
+    /**
+     * @return ItemInterface
+     */
+    public function newItem()
+    {
+        return new Item();
+    }
+
+}

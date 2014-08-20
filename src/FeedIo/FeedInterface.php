@@ -28,4 +28,8 @@ interface FeedInterface extends \Iterator, NodeInterface
      */
     public function add(ItemInterface $item);
 
+    /**
+     * @return ItemInterface
+     */
+    public function newItem();
 }
