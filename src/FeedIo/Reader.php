@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 use FeedIo\Adapter\ClientInterface;
+use FeedIo\Reader\ReadErrorException;
 use FeedIo\Reader\Result;
 use FeedIo\Reader\NoAccurateParserException;
 use Psr\Log\LoggerInterface;
@@ -48,6 +49,7 @@ class Reader
      */
     public function addParser(ParserAbstract $parser)
     {
+        $this->logger->debug("new parser added : " . get_class($parser));
         $this->parsers[] = $parser;
 
         return $this;
@@ -76,19 +78,29 @@ class Reader
      * @param $url
      * @param FeedInterface $feed
      * @param \DateTime $modifiedSince
-     * @return Result
+     * @throws Reader\ReadErrorException
      */
     public function read($url, FeedInterface $feed, \DateTime $modifiedSince = null)
     {
+        $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
+            $this->logger->notice("no 'modifiedSince' parameter given, setting it to 01/01/1970");
             $modifiedSince = new \DateTime('@0');
         }
 
-        $response = $this->client->getResponse($url, $modifiedSince);
-        $document = $this->loadDocument($response->getBody());
-        $this->parseDocument($document, $feed, $modifiedSince);
+        try {
+            $response = $this->client->getResponse($url, $modifiedSince);
 
-        return new Result($document, $feed, $modifiedSince, $response, $url);
+            $this->logger->debug("response ok, now turning it into a DomDocument");
+            $document = $this->loadDocument($response->getBody());
+            $this->parseDocument($document, $feed, $modifiedSince);
+
+            $this->logger->info("{$url} successfully parsed");
+            return new Result($document, $feed, $modifiedSince, $response, $url);
+        } catch (\Exception $e) {
+            $this->logger->warning("{$url} read error : {$e->getMessage()}");
+            throw new ReadErrorException($e);
+        }
     }
 
     /**
@@ -102,6 +114,8 @@ class Reader
     public function parseDocument(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
     {
         $parser = $this->getAccurateParser($document);
+        $this->logger->debug("accurate parser : " . get_class($parser));
+
         return $parser->parse($document, $feed, $modifiedSince);
     }
 

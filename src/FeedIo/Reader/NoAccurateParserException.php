@@ -13,4 +13,5 @@ namespace FeedIo\Reader;
 
 class NoAccurateParserException extends \Exception
 {
+
 }

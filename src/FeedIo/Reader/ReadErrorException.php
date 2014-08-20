@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo\Reader;
 
 
-class MissingFieldsException extends \Exception
+class ReadErrorException extends \Exception
 {
 
 }

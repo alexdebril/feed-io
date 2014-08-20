@@ -12,6 +12,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
+use Psr\Log\NullLogger;
 
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +24,7 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->object = $this->getMockForAbstractClass('\FeedIo\ParserAbstract');
+        $this->object = $this->getMockForAbstractClass('\FeedIo\ParserAbstract', array(new NullLogger()));
         $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $this->object->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
     }

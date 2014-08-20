@@ -14,6 +14,7 @@ use \DOMDocument;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
+use Psr\Log\LoggerInterface;
 
 abstract class ParserAbstract
 {
@@ -37,6 +38,20 @@ abstract class ParserAbstract
      * @var array[string]
      */
     protected $dateFormats = array();
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
 
     /**
      * @param DOMDocument $document
@@ -75,7 +90,9 @@ abstract class ParserAbstract
         }
 
         if ( ! empty($errors) ) {
-            throw new MissingFieldsException(implode(',', $errors));
+            $message = "missing mandatory field(s) : " . implode(',', $errors);
+            $this->logger->warning($message);
+            throw new MissingFieldsException($message);
         }
 
         return $this;
