@@ -86,7 +86,7 @@ class Reader
 
         $response = $this->client->getResponse($url, $modifiedSince);
         $document = $this->loadDocument($response->getBody());
-        $this->parseDocument($document, $feed);
+        $this->parseDocument($document, $feed, $modifiedSince);
 
         return new Result($document, $feed, $modifiedSince, $response, $url);
     }
@@ -94,14 +94,15 @@ class Reader
     /**
      * @param \DOMDocument $document
      * @param FeedInterface $feed
+     * @param \DateTime $modifiedSince
      * @return FeedInterface
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(\DOMDocument $document, FeedInterface $feed)
+    public function parseDocument(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
     {
         $parser = $this->getAccurateParser($document);
-        return $parser->parse($document, $feed);
+        return $parser->parse($document, $feed, $modifiedSince);
     }
 
     /**
