@@ -17,13 +17,18 @@ use FeedIo\ParserAbstract;
 class Rss extends ParserAbstract
 {
     /**
+     * RSS document must have a <rss> root node
+     */
+    const ROOT_NODE_TAGNAME = 'rss';
+
+    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
      * @return mixed
      */
     public function canHandle(\DOMDocument $document)
     {
-        // TODO: Implement canHandle() method.
+        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
     }
 
     /**
