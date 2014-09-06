@@ -45,6 +45,11 @@ abstract class ParserAbstract
     protected $logger;
 
     /**
+     * @var array[FilterInterface]
+     */
+    protected $filters = array();
+
+    /**
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -52,16 +57,25 @@ abstract class ParserAbstract
         $this->logger = $logger;
     }
 
+    /**
+     * @param FilterInterface $filter
+     * @return $this
+     */
+    public function addFilter(FilterInterface $filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
 
     /**
      * @param DOMDocument $document
      * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
      * @return FeedInterface
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
-    public function parse(DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
+    public function parse(DOMDocument $document, FeedInterface $feed)
     {
         if (!$this->canHandle($document)) {
             throw new UnsupportedFormatException('this is not a supported format');
@@ -69,7 +83,7 @@ abstract class ParserAbstract
 
         $this->checkBodyStructure($document);
 
-        return $this->parseBody($document, $feed, $modifiedSince);
+        return $this->parseBody($document, $feed);
     }
 
     /**
@@ -77,7 +91,7 @@ abstract class ParserAbstract
      * @return $this
      * @throws Parser\MissingFieldsException
      */
-    protected function checkBodyStructure(DOMDocument $document)
+    public function checkBodyStructure(DOMDocument $document)
     {
         $errors = array();
 
@@ -130,9 +144,9 @@ abstract class ParserAbstract
      * @param ItemInterface $item
      * @return $this
      */
-    public function addValidItem(FeedInterface $feed, ItemInterface $item, \DateTime $modifiedSince)
+    public function addValidItem(FeedInterface $feed, ItemInterface $item)
     {
-        if ($this->isValid($item, $modifiedSince)) {
+        if ($this->isValid($item)) {
             $feed->add($item);
         }
 
@@ -141,16 +155,17 @@ abstract class ParserAbstract
 
     /**
      * @param ItemInterface $item
-     * @param \DateTime $modifiedSince
      * @return bool
      */
-    public function isValid(ItemInterface $item, \DateTime $modifiedSince)
+    public function isValid(ItemInterface $item)
     {
-        if ( $item->getLastModified() instanceof \DateTime ) {
-            return $item->getLastModified() > $modifiedSince;
+        foreach( $this->filters as $filter ) {
+            if ( ! $filter->isValid($item) ) {
+                return false;
+            }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -203,8 +218,7 @@ abstract class ParserAbstract
     /**
      * @param DOMDocument $document
      * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
      * @return FeedInterface
      */
-    abstract protected function parseBody(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince);
+    abstract protected function parseBody(\DOMDocument $document, FeedInterface $feed);
 } 

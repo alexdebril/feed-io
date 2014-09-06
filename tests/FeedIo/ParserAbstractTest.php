@@ -40,7 +40,7 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
     {
         $document = new \DOMDocument();
         $document->loadXML('<feed><items></items></feed>');
-        $feed = $this->object->parse($document, new Feed(), new \DateTime());
+        $feed = $this->object->parse($document, new Feed());
         $this->assertInstanceOf('FeedIo\Feed', $feed);
     }
 
@@ -49,9 +49,13 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->setLastModified(new \DateTime('-1day'));
 
-        $this->assertTrue($this->object->isValid($item, new \DateTime('-2day')));
-        $this->assertFalse($this->object->isValid($item, new \DateTime()));
-        $this->assertFalse($this->object->isValid($item, new \DateTime('-1day')));
+        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
+        $filter->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+
+        $this->object->addFilter($filter);
+        $this->assertTrue($this->object->isValid($item));
     }
 
     public function testGuessDateFormat()
