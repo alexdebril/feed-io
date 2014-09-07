@@ -93,7 +93,7 @@ class Reader
 
             $this->logger->debug("response ok, now turning it into a DomDocument");
             $document = $this->loadDocument($response->getBody());
-            $this->parseDocument($document, $feed, $modifiedSince);
+            $this->parseDocument($document, $feed);
 
             $this->logger->info("{$url} successfully parsed");
             return new Result($document, $feed, $modifiedSince, $response, $url);
@@ -106,17 +106,16 @@ class Reader
     /**
      * @param \DOMDocument $document
      * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
      * @return FeedInterface
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
+    public function parseDocument(\DOMDocument $document, FeedInterface $feed)
     {
         $parser = $this->getAccurateParser($document);
         $this->logger->debug("accurate parser : " . get_class($parser));
 
-        return $parser->parse($document, $feed, $modifiedSince);
+        return $parser->parse($document, $feed);
     }
 
     /**
