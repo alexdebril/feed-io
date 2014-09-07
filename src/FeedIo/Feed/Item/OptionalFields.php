@@ -42,7 +42,7 @@ class OptionalFields implements OptionalFieldsInterface
     public function get($name)
     {
         if ($this->has($name)) {
-            return $name;
+            return $this->data[$name];
         }
 
         return null;

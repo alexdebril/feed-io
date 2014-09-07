@@ -141,6 +141,11 @@ abstract class ParserAbstract
         return $feed;
     }
 
+    /**
+     * @param \DOMElement $element
+     * @param FeedInterface $feed
+     * @return ItemInterface
+     */
     public function parseItemNode(\DOMElement $element, FeedInterface $feed)
     {
         $item = $feed->newItem();

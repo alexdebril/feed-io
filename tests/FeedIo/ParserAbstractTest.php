@@ -52,6 +52,24 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('feed-io is a library', $feed->getDescription());
     }
 
+    public function testParseItemNode()
+    {
+        $document = new \DOMDocument();
+        $item = <<<XML
+        <item>
+            <title>My Great Title</title>
+            <author>a.debril</author>
+        </item>
+XML;
+
+        $document->loadXML($item);
+        $feed = new Feed();
+        $item = $this->object->parseItemNode($document->documentElement, $feed);
+
+        $this->assertEquals('My Great Title', $item->getTitle());
+        $this->assertEquals('a.debril', $item->getOptionalFields()->get('author'));
+    }
+
     public function testIsValid()
     {
         $item = new Item();
