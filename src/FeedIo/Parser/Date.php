@@ -86,6 +86,7 @@ class Date
      * Creates a DateTime instance for the given string. Default format is RFC2822
      * @param string $string
      * @return \DateTime
+     * @throws InvalidArgumentException
      */
     public function convertToDateTime($string)
     {
