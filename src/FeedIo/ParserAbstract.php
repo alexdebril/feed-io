@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 use \DOMDocument;
+use FeedIo\Parser\Date;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
@@ -18,12 +19,17 @@ use Psr\Log\LoggerInterface;
 
 abstract class ParserAbstract
 {
-    /**
-     * System's time zone
-     *
-     * @var \DateTimeZone
-     */
-    static protected $timezone;
+    const FEED_TITLE = 'title';
+
+    const FEED_DESCRIPTION = 'description';
+
+    const FEED_URL = 'link';
+
+    const FEED_LAST_MODIFIED = 'updated';
+
+    const FEED_ITEM = 'item';
+
+    const ITEM_TITLE = 'title';
 
     /**
      * List of mandatory fields
@@ -31,13 +37,6 @@ abstract class ParserAbstract
      * @var array[string]
      */
     protected $mandatoryFields = array();
-
-    /**
-     * supported date formats
-     *
-     * @var array[string]
-     */
-    protected $dateFormats = array();
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -50,10 +49,17 @@ abstract class ParserAbstract
     protected $filters = array();
 
     /**
+     * @var \FeedIo\Parser\Date
+     */
+    protected $date;
+
+    /**
+     * @param Date $date
      * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(Date $date, LoggerInterface $logger)
     {
+        $this->date = $date;
         $this->logger = $logger;
     }
 
@@ -83,7 +89,9 @@ abstract class ParserAbstract
 
         $this->checkBodyStructure($document);
 
-        return $this->parseBody($document, $feed);
+        $element = $this->getMainElement($document);
+
+        return $this->parseRootNode($element, $feed);
     }
 
     /**
@@ -112,31 +120,44 @@ abstract class ParserAbstract
         return $this;
     }
 
-    /**
-     *
-     * @param array $dates
-     */
-    public function setDateFormats(array $dates)
+    public function parseRootNode(\DOMElement $element, FeedInterface $feed)
     {
-        $this->dateFormats = $dates;
-    }
-
-    /**
-     *
-     * @param string $date
-     * @return string date Format
-     * @throws InvalidArgumentException
-     */
-    public function guessDateFormat($date)
-    {
-        foreach ($this->dateFormats as $format) {
-            $test = \DateTime::createFromFormat($format, $date);
-            if ($test instanceof \DateTime) {
-                return $format;
+        foreach( $element->childNodes as $node ) {
+            if ( $node instanceof \DOMElement ) {
+                switch( strtolower($node->tagName) ) {
+                    case static::FEED_DESCRIPTION:
+                        $feed->setDescription($node->nodeValue);
+                        break;
+                    case static::FEED_LAST_MODIFIED:
+                        $feed->setLastModified($this->date->convertToDateTime($node->nodeValue));
+                        break;
+                    case static::FEED_ITEM:
+                        $this->parseItemNode($node, $feed);
+                        break;
+                }
             }
         }
 
-        throw new \InvalidArgumentException('Impossible to guess date format : ' . $date);
+        return $feed;
+    }
+
+    public function parseItemNode(\DOMElement $element, FeedInterface $feed)
+    {
+        $item = $feed->newItem();
+        foreach( $element->childNodes as $node ) {
+            if ( $node instanceof \DOMElement ) {
+                switch( strtolower($node->tagName) ) {
+                    case static::ITEM_TITLE:
+                        $item->setTitle($node->nodeValue);
+                        break;
+                    default:
+                        $item->getOptionalFields()->set($node->nodeName, $node->nodeValue);
+                        break;
+                }
+            }
+        }
+
+        return $item;
     }
 
     /**
@@ -169,46 +190,6 @@ abstract class ParserAbstract
     }
 
     /**
-     * Creates a DateTime instance for the given string. Default format is RFC2822
-     * @param string $string
-     * @param string $format
-     */
-    static public function convertToDateTime($string, $format = DateTime::RFC2822)
-    {
-        $date = DateTime::createFromFormat($format, $string);
-
-        if (!$date instanceof \DateTime) {
-            throw new \InvalidArgumentException("date is the wrong format : {$string} - expected {$format}");
-        }
-
-        $date->setTimezone(self::getSystemTimezone());
-
-        return $date;
-    }
-
-    /**
-     * Returns the system's timezone
-     *
-     * @return \DateTimeZone
-     */
-    static public function getSystemTimezone()
-    {
-        if (is_null(self::$timezone)) {
-            self::$timezone = new \DateTimeZone(date_default_timezone_get());
-        }
-
-        return self::$timezone;
-    }
-
-    /**
-     * Reset the system's time zone
-     */
-    static public function resetTimezone()
-    {
-        self::$timezone = null;
-    }
-
-    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
      * @return mixed
@@ -217,8 +198,8 @@ abstract class ParserAbstract
 
     /**
      * @param DOMDocument $document
-     * @param FeedInterface $feed
-     * @return FeedInterface
+     * @return \DomElement
      */
-    abstract protected function parseBody(\DOMDocument $document, FeedInterface $feed);
+    abstract public function getMainElement(\DOMDocument $document);
+
 } 

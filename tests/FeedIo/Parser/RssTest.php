@@ -11,6 +11,7 @@
 namespace FeedIo\Parser;
 
 
+use FeedIo\Feed;
 use Psr\Log\NullLogger;
 
 class RssTest extends \PHPUnit_Framework_TestCase
@@ -24,6 +25,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->object = new Rss(
+            new Date(),
             new NullLogger()
         );
     }
@@ -34,6 +36,12 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->canHandle($document));
     }
 
+    public function testParseBody()
+    {
+        $document = $this->buildDomDocument('rss/sample-rss.xml');
+        $this->object->parse($document, new Feed());
+    }
+
     /**
      * @param $filename
      * @return \DOMDocument
@@ -42,7 +50,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     {
         $file = dirname(__FILE__) . "/../../samples/{$filename}";
         $domDocument = new \DOMDocument();
-        $domDocument->load($file);
+        $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
 
         return $domDocument;
     }

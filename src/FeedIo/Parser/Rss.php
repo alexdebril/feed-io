@@ -11,6 +11,7 @@
 namespace FeedIo\Parser;
 
 
+use DOMDocument;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
 
@@ -32,14 +33,12 @@ class Rss extends ParserAbstract
     }
 
     /**
-     * Performs the actual conversion into a FeedContent instance
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
-     * @return FeedInterface
+     * @param DOMDocument $document
+     * @return \DomElement
      */
-    protected function parseBody(\DOMDocument $document, FeedInterface $feed)
+    public function getMainElement(\DOMDocument $document)
     {
-        // TODO: Implement parseBody() method.
+        return $document->documentElement->getElementsByTagName('channel')->item(0);
     }
 
 } 
