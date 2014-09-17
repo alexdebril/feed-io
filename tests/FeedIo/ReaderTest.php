@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 use Psr\Log\NullLogger;
+use FeedIo\Parser\Date;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,6 +51,17 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $document = $this->object->loadDocument('<foo></bar>');
         $this->assertInstanceOf('\DomDocument', $document);
     }
-    
+
+    public function testAddParser()
+    {
+        $parser = $this->getMockForAbstractClass(
+            '\FeedIo\ParserAbstract',
+            array(new Date(), new NullLogger())
+        );
+
+        $this->object->addParser($parser);
+        $this->assertAttributeEquals(array($parser), 'parsers', $this->object);
+    }
+
 }
  
