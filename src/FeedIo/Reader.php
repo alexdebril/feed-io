@@ -78,7 +78,8 @@ class Reader
      * @param $url
      * @param FeedInterface $feed
      * @param \DateTime $modifiedSince
-     * @throws Reader\ReadErrorException
+     * @return \FeedIo\Reader\Result
+     * @throws ReadErrorException
      */
     public function read($url, FeedInterface $feed, \DateTime $modifiedSince = null)
     {
