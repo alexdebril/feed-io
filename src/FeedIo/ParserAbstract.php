@@ -129,7 +129,8 @@ abstract class ParserAbstract
                         $feed->setDescription($node->nodeValue);
                         break;
                     case static::FEED_LAST_MODIFIED:
-                        $feed->setLastModified($this->date->convertToDateTime($node->nodeValue));
+                        $date = $this->date->convertToDateTime($node->nodeValue);
+                        $feed->setLastModified($date);
                         break;
                     case static::FEED_ITEM:
                         $this->parseItemNode($node, $feed);

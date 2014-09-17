@@ -27,7 +27,7 @@ class Feed extends Node implements FeedInterface
      */
     function __construct()
     {
-        $this->items = new \ArrayIterator();
+        $this->items = new \ArrayIterator(array());
     }
 
     /**
