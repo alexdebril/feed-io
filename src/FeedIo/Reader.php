@@ -131,7 +131,9 @@ class Reader
             }
         }
 
-        throw new NoAccurateParserException('No parser can handle this stream');
+        $message = 'No parser can handle this stream';
+        $this->logger->error($message);
+        throw new NoAccurateParserException($message);
     }
 
 }
