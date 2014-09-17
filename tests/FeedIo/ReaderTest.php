@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use FeedIo\Adapter\ServerErrorException;
 use Psr\Log\NullLogger;
 use FeedIo\Parser\Date;
 
@@ -38,6 +39,19 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $response = $this->getMock('FeedIo\Adapter\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue('<rss></rss>'));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
+
+        return $client;
+    }
+
+    /**
+     * @return \FeedIo\Adapter\ClientInterface
+     */
+    protected function getFaultyClientMock()
+    {
+        $client = $this->getMock('FeedIo\Adapter\ClientInterface');
+        $client->expects($this->any())->method('getResponse')->will(
+            $this->throwException(new ServerErrorException())
+        );
 
         return $client;
     }
@@ -84,11 +98,60 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(array($parser), 'parsers', $this->object);
     }
 
-    public function testRead()
+    public function testGetAccurateParser()
+    {
+        $this->object->addParser($this->getParserMock());
+        $parser = $this->object->getAccurateParser(new \DOMDocument());
+
+        $this->assertInstanceOf('\FeedIo\ParserAbstract', $parser);
+    }
+
+    /**
+     * @expectedException \FeedIo\Reader\NoAccurateParserException
+     */
+    public function testGetAccurateParserFailure()
+    {
+        $this->object->getAccurateParser(new \DOMDocument());
+    }
+
+    public function testParseDocument()
+    {
+        $this->object->addParser($this->getParserMock());
+        $feed = $this->object->parseDocument(new \DOMDocument(), new Feed());
+
+        $this->assertInstanceOf('\FeedIo\Feed', $feed);
+        $this->assertEquals('This is an example of an RSS feed', $feed->getDescription());
+    }
+
+    public function testReadWithModifiedSince()
     {
         $feed = new Feed();
         $this->object->addParser($this->getParserMock());
-        $this->object->read('fakeurl', $feed);
+        $modifiedSince = new \DateTime();
+        $url = 'http://localhost';
+        $result = $this->object->read($url, $feed, $modifiedSince);
+
+        $this->assertEquals($url, $result->getUrl());
+        $this->assertEquals($modifiedSince, $result->getModifiedSince());
+        $this->assertInstanceOf('\DOMDocument', $result->getDocument());
+    }
+
+    public function testReadWithoutModifiedSince()
+    {
+        $feed = new Feed();
+        $this->object->addParser($this->getParserMock());
+        $result = $this->object->read('fakeurl', $feed);
+        $this->assertEquals(new \DateTime('@0'), $result->getModifiedSince());
+    }
+
+    /**
+     * @expectedException \FeedIo\Reader\ReadErrorException
+     */
+    public function testReadException()
+    {
+        $reader = new Reader($this->getFaultyClientMock(), new NullLogger());
+        $reader->read('fault', new Feed());
+
     }
 
 }
