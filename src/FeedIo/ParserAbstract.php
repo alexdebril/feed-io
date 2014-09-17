@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 use \DOMDocument;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Parser\Date;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
@@ -129,8 +130,7 @@ abstract class ParserAbstract
                         $feed->setDescription($node->nodeValue);
                         break;
                     case static::FEED_LAST_MODIFIED:
-                        $date = $this->date->convertToDateTime($node->nodeValue);
-                        $feed->setLastModified($date);
+                        $this->setLastModifiedSince($feed, $node->nodeValue);
                         break;
                     case static::FEED_ITEM:
                         $this->parseItemNode($node, $feed);
@@ -164,6 +164,21 @@ abstract class ParserAbstract
         }
 
         return $item;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param $value
+     */
+    public function setLastModifiedSince(NodeInterface $node, $value)
+    {
+        $date = $this->date->convertToDateTime($value);
+        if ( $date instanceof \DateTime) {
+            $node->setLastModified($date);
+            return $node;
+        }
+
+        throw new \InvalidArgumentException("invalid date : {$value}");
     }
 
     /**
