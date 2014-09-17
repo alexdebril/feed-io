@@ -34,7 +34,32 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClientMock()
     {
-        return $this->getMock('FeedIo\Adapter\ClientInterface');
+        $client = $this->getMock('FeedIo\Adapter\ClientInterface');
+        $response = $this->getMock('FeedIo\Adapter\ResponseInterface');
+        $response->expects($this->any())->method('getBody')->will($this->returnValue('<rss></rss>'));
+        $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
+
+        return $client;
+    }
+
+    /**
+     * @return \FeedIo\ParserAbstract
+     */
+    protected function getParserMock()
+    {
+        $parser = $this->getMockForAbstractClass(
+            '\FeedIo\ParserAbstract',
+            array(new Date(), new NullLogger())
+        );
+        $parser->expects($this->any())->method('canHandle')->will($this->returnValue(true));
+        $file = dirname(__FILE__) . "/../samples/rss/sample-rss.xml";
+        $domDocument = new \DOMDocument();
+        $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
+        $parser->expects($this->any())->method('getMainElement')->will($this->returnValue(
+                $domDocument->documentElement->getElementsByTagName('channel')->item(0)
+            ));
+
+        return $parser;
     }
 
     public function testLoadDocument()
@@ -54,13 +79,16 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddParser()
     {
-        $parser = $this->getMockForAbstractClass(
-            '\FeedIo\ParserAbstract',
-            array(new Date(), new NullLogger())
-        );
-
+        $parser = $this->getParserMock();
         $this->object->addParser($parser);
         $this->assertAttributeEquals(array($parser), 'parsers', $this->object);
+    }
+
+    public function testRead()
+    {
+        $feed = new Feed();
+        $this->object->addParser($this->getParserMock());
+        $this->object->read('fakeurl', $feed);
     }
 
 }
