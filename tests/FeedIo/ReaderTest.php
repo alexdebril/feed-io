@@ -50,10 +50,6 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $document = $this->object->loadDocument('<foo></bar>');
         $this->assertInstanceOf('\DomDocument', $document);
     }
-
-    public function testDummy()
-    {
-        $this->assertInstanceOf('\FeedIo\Reader', $this->object);
-    }
+    
 }
  
