@@ -91,6 +91,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DomDocument', $document);
     }
 
+    /**
+     * @covers ParserAbstract::addParser
+     */
     public function testAddParser()
     {
         $parser = $this->getParserMock();
@@ -123,6 +126,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('This is an example of an RSS feed', $feed->getDescription());
     }
 
+    /**
+     * @covers ParserAbstract::read
+     */
     public function testReadWithModifiedSince()
     {
         $feed = new Feed();
@@ -136,6 +142,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DOMDocument', $result->getDocument());
     }
 
+    /**
+     * @covers ParserAbstract::read
+     */
     public function testReadWithoutModifiedSince()
     {
         $feed = new Feed();
@@ -145,6 +154,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ParserAbstract::read
      * @expectedException \FeedIo\Reader\ReadErrorException
      */
     public function testReadException()
