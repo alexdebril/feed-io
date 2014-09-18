@@ -93,5 +93,14 @@ XML;
         $this->assertEquals($date, $feed->getLastModified());
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetLastModifiedSinceWrongFormat()
+    {
+        $date = new \DateTime();
+        $feed = $this->object->setLastModifiedSince(new Feed(), $date->format(\DateTime::RFC850));
+    }
+
 }
  
