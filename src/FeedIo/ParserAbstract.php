@@ -169,6 +169,7 @@ abstract class ParserAbstract
     /**
      * @param NodeInterface $node
      * @param $value
+     * @return NodeInterface
      */
     public function setLastModifiedSince(NodeInterface $node, $value)
     {
