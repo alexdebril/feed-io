@@ -170,16 +170,18 @@ abstract class ParserAbstract
      * @param NodeInterface $node
      * @param $value
      * @return NodeInterface
+     * @throws \InvalidArgumentException
      */
     public function setLastModifiedSince(NodeInterface $node, $value)
     {
-        $date = $this->date->convertToDateTime($value);
-        if ( $date instanceof \DateTime) {
+        try {
+            $date = $this->date->convertToDateTime($value);
             $node->setLastModified($date);
             return $node;
+        } catch (\InvalidArgumentException $e) {
+            $this->logger->warning($e->getMessage());
+            throw $e;
         }
-
-        throw new \InvalidArgumentException("invalid date : {$value}");
     }
 
     /**
