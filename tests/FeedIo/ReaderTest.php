@@ -92,7 +92,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ParserAbstract::addParser
+     * @covers \FeedIo\Reader::addParser
      */
     public function testAddParser()
     {
@@ -127,7 +127,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ParserAbstract::read
+     * @covers \FeedIo\Reader::read
      */
     public function testReadWithModifiedSince()
     {
@@ -143,7 +143,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ParserAbstract::read
+     * @covers \FeedIo\Reader::read
      */
     public function testReadWithoutModifiedSince()
     {
@@ -154,7 +154,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ParserAbstract::read
+     * @covers \FeedIo\Reader::read
      * @expectedException \FeedIo\Reader\ReadErrorException
      */
     public function testReadException()
