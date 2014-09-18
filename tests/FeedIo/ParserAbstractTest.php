@@ -25,9 +25,11 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $date = new Date();
+        $date->addDateFormat(\DateTime::ATOM);
         $this->object = $this->getMockForAbstractClass(
             '\FeedIo\ParserAbstract',
-            array(new Date(), new NullLogger())
+            array($date, new NullLogger())
         );
         $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $this->object->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
@@ -82,6 +84,13 @@ XML;
 
         $this->object->addFilter($filter);
         $this->assertTrue($this->object->isValid($item));
+    }
+
+    public function testSetLastModifiedSince()
+    {
+        $date = new \DateTime();
+        $feed = $this->object->setLastModifiedSince(new Feed(), $date->format(\DateTime::ATOM));
+        $this->assertEquals($date, $feed->getLastModified());
     }
 
 }
