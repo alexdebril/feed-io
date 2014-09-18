@@ -176,7 +176,9 @@ abstract class ParserAbstract
     {
         try {
             $date = $this->date->convertToDateTime($value);
-            $node->setLastModified($date);
+            if ( $date instanceof \DateTime ) {
+                $node->setLastModified($date);
+            }
             return $node;
         } catch (\InvalidArgumentException $e) {
             $this->logger->warning($e->getMessage());
