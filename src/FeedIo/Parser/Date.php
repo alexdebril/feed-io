@@ -66,7 +66,7 @@ class Date
     /**
      *
      * @param string $date
-     * @return string date Format
+     * @return string|false date Format
      * @throws InvalidArgumentException
      */
     public function guessDateFormat($date)
@@ -79,7 +79,7 @@ class Date
             }
         }
 
-        throw new \InvalidArgumentException('Impossible to guess date format : ' . $date);
+        return false;
     }
 
     /**
@@ -90,16 +90,15 @@ class Date
      */
     public function convertToDateTime($string)
     {
-        $date = \DateTime::createFromFormat($this->getLastGuessedFormat(), $string);
-
-        if (!$date instanceof \DateTime) {
-            $format = $this->guessDateFormat($string);
+        foreach( [$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format ) {
             $date = \DateTime::createFromFormat($format, $string);
+            if ( $date instanceof \DateTime ) {
+                $date->setTimezone($this->getTimezone());
+                return $date;
+            }
         }
 
-        $date->setTimezone($this->getTimezone());
-
-        return $date;
+        throw new \InvalidArgumentException('Impossible to convert date : ' . $string);
     }
 
     /**

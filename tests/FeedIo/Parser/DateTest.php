@@ -52,13 +52,11 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(\DateTime::ATOM, $format);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
+
     public function testDontGuessDateFormat()
     {
         $this->object->addDateFormat(\DateTime::ATOM);
-        $this->object->guessDateFormat('foo');
+        $this->assertFalse($this->object->guessDateFormat('foo'));
     }
 
     public function testConvertDateFormat()
@@ -74,7 +72,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testDontConvertDateFormat()
     {
