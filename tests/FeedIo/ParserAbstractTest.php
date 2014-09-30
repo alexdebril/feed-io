@@ -47,11 +47,25 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
     public function testParseRootNode()
     {
         $document = new \DOMDocument();
-        $document->loadXML('<channel><description>feed-io is a library</description></channel>');
+        $date = new \DateTime();
+        $xml = <<<XML
+        <channel>
+            <publicId>a</publicId>
+            <updated>{$date->format(\DateTime::ATOM)}</updated>
+            <title>feed-io</title>
+            <link>https://github.com/alexdebril/feed-io</link>
+            <description>feed-io is a library</description>
+        </channel>
+XML;
+        $document->loadXML($xml);
         $feed = new Feed();
         $this->object->parseRootNode($document->documentElement, $feed);
 
+        $this->assertEquals($date, $feed->getLastModified());
+        $this->assertEquals('a', $feed->getPublicId());
         $this->assertEquals('feed-io is a library', $feed->getDescription());
+        $this->assertEquals('feed-io', $feed->getTitle());
+        $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getLink());
     }
 
     public function testParseItemNode()

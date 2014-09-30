@@ -30,6 +30,8 @@ abstract class ParserAbstract
 
     const FEED_ITEM = 'item';
 
+    const FEED_PUBLIC_ID = 'publicId';
+
     const ITEM_TITLE = 'title';
 
     /**
@@ -105,14 +107,14 @@ abstract class ParserAbstract
         $errors = array();
 
         $element = $document->documentElement;
-        foreach( $this->mandatoryFields as $field ) {
+        foreach ($this->mandatoryFields as $field) {
             $list = $element->getElementsByTagName($field);
-            if ( 0 === $list->length ) {
+            if (0 === $list->length) {
                 $errors[] = $field;
             }
         }
 
-        if ( ! empty($errors) ) {
+        if (!empty($errors)) {
             $message = "missing mandatory field(s) : " . implode(',', $errors);
             $this->logger->warning($message);
             throw new MissingFieldsException($message);
@@ -123,11 +125,20 @@ abstract class ParserAbstract
 
     public function parseRootNode(\DOMElement $element, FeedInterface $feed)
     {
-        foreach( $element->childNodes as $node ) {
-            if ( $node instanceof \DOMElement ) {
-                switch( strtolower($node->tagName) ) {
+        foreach ($element->childNodes as $node) {
+            if ($node instanceof \DOMElement) {
+                switch (strtolower($node->tagName)) {
                     case static::FEED_DESCRIPTION:
                         $feed->setDescription($node->nodeValue);
+                        break;
+                    case static::FEED_TITLE:
+                        $feed->setTitle($node->nodeValue);
+                        break;
+                    case static::FEED_URL:
+                        $feed->setLink($node->nodeValue);
+                        break;
+                    case strtolower(static::FEED_PUBLIC_ID):
+                        $feed->setPublicId($node->nodeValue);
                         break;
                     case static::FEED_LAST_MODIFIED:
                         $this->setLastModifiedSince($feed, $node->nodeValue);
@@ -150,9 +161,9 @@ abstract class ParserAbstract
     public function parseItemNode(\DOMElement $element, FeedInterface $feed)
     {
         $item = $feed->newItem();
-        foreach( $element->childNodes as $node ) {
-            if ( $node instanceof \DOMElement ) {
-                switch( strtolower($node->tagName) ) {
+        foreach ($element->childNodes as $node) {
+            if ($node instanceof \DOMElement) {
+                switch (strtolower($node->tagName)) {
                     case static::ITEM_TITLE:
                         $item->setTitle($node->nodeValue);
                         break;
@@ -176,7 +187,7 @@ abstract class ParserAbstract
     {
         try {
             $date = $this->date->convertToDateTime($value);
-            if ( $date instanceof \DateTime ) {
+            if ($date instanceof \DateTime) {
                 $node->setLastModified($date);
             }
             return $node;
@@ -206,8 +217,8 @@ abstract class ParserAbstract
      */
     public function isValid(ItemInterface $item)
     {
-        foreach( $this->filters as $filter ) {
-            if ( ! $filter->isValid($item) ) {
+        foreach ($this->filters as $filter) {
+            if (!$filter->isValid($item)) {
                 return false;
             }
         }
