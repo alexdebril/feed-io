@@ -25,11 +25,10 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
-        $rule = $this->getMockForAbstractClass('\FeedIo\Parser\RuleInterface');
-        $rule->expects($this->any())->method('getNodeName')->will($this->returnValue('mockRule'));
+        $rule = $this->getMockForAbstractClass('\FeedIo\Parser\RuleAbstract');
         $this->object->add($rule);
 
-        $this->assertEquals($rule, $this->object->get('mockRule'));
+        $this->assertEquals($rule, $this->object->get('node'));
     }
 
     /**

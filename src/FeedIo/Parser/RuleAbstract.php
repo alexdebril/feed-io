@@ -13,17 +13,22 @@ namespace FeedIo\Parser;
 
 use FeedIo\Feed\NodeInterface;
 
-interface RuleInterface
+abstract class RuleAbstract
 {
+    const NODE_NAME = 'node';
+
     /**
      * @return string
      */
-    public function getNodeName();
+    public function getNodeName()
+    {
+        return static::NODE_NAME;
+    }
 
     /**
      * @param NodeInterface $node
      * @param $value
      * @return $this
      */
-    public function set(NodeInterface $node, $value);
+    abstract public function set(NodeInterface $node, $value);
 } 

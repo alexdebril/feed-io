@@ -26,10 +26,10 @@ class RuleSet
     }
 
     /**
-     * @param RuleInterface $rule
+     * @param RuleAbstract $rule
      * @return $this
      */
-    public function add(RuleInterface $rule)
+    public function add(RuleAbstract $rule)
     {
         $this->rules->offsetSet($rule->getNodeName(), $rule);
 
@@ -38,7 +38,7 @@ class RuleSet
 
     /**
      * @param $name
-     * @return RuleInterface
+     * @return RuleAbstract
      * @throws NotFoundException
      */
     public function get($name)
