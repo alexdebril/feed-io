@@ -11,6 +11,42 @@
 namespace FeedIo\Parser;
 
 
-class RuleSet {
+use FeedIo\Parser\Rule\NotFoundException;
 
+class RuleSet
+{
+    /**
+     * @var \ArrayIterator
+     */
+    protected $rules;
+
+    public function __construct()
+    {
+        $this->rules = new \ArrayIterator();
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @return $this
+     */
+    public function add(RuleInterface $rule)
+    {
+        $this->rules->offsetSet($rule->getNodeName(), $rule);
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return RuleInterface
+     * @throws NotFoundException
+     */
+    public function get($name)
+    {
+        if ( $this->rules->offsetExists($name) ) {
+            return $this->rules->offsetGet($name);
+        }
+
+        throw new NotFoundException("Rule not found : {$name}");
+    }
 } 

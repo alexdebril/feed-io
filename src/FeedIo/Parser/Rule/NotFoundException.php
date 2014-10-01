@@ -11,6 +11,5 @@
 namespace FeedIo\Parser\Rule;
 
 
-class NotFoundException {
-
-} 
+class NotFoundException extends \Exception
+{ }
