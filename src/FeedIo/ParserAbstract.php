@@ -123,6 +123,11 @@ abstract class ParserAbstract
         return $this;
     }
 
+    /**
+     * @param \DOMElement $element
+     * @param FeedInterface $feed
+     * @return FeedInterface
+     */
     public function parseRootNode(\DOMElement $element, FeedInterface $feed)
     {
         foreach ($element->childNodes as $node) {
