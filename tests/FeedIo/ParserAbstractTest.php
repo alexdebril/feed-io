@@ -50,8 +50,6 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
         $date = new \DateTime();
         $xml = <<<XML
         <channel>
-            <publicId>a</publicId>
-            <updated>{$date->format(\DateTime::ATOM)}</updated>
             <title>feed-io</title>
             <link>https://github.com/alexdebril/feed-io</link>
             <description>feed-io is a library</description>
@@ -61,11 +59,9 @@ XML;
         $feed = new Feed();
         $this->object->parseRootNode($document->documentElement, $feed);
 
-        $this->assertEquals($date, $feed->getLastModified());
-        $this->assertEquals('a', $feed->getPublicId());
-        $this->assertEquals('feed-io is a library', $feed->getDescription());
-        $this->assertEquals('feed-io', $feed->getTitle());
-        $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getLink());
+        $this->assertEquals('feed-io is a library', $feed->getOptionalFields()->get('description'));
+        $this->assertEquals('feed-io', $feed->getOptionalFields()->get('title'));
+        $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getOptionalFields()->get('link'));
     }
 
     public function testParseItemNode()

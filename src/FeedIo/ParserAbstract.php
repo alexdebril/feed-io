@@ -15,6 +15,8 @@ use FeedIo\Feed\NodeInterface;
 use FeedIo\Parser\Date;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
+use FeedIo\Parser\RuleAbstract;
+use FeedIo\Parser\RuleSet;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
 
@@ -57,6 +59,11 @@ abstract class ParserAbstract
     protected $date;
 
     /**
+     * @var RuleSet
+     */
+    protected $ruleSet;
+
+    /**
      * @param Date $date
      * @param LoggerInterface $logger
      */
@@ -64,6 +71,18 @@ abstract class ParserAbstract
     {
         $this->date = $date;
         $this->logger = $logger;
+        $this->ruleSet = new RuleSet();
+    }
+
+    /**
+     * @param RuleAbstract $rule
+     * @return $this
+     */
+    public function addRule(RuleAbstract $rule)
+    {
+        $this->ruleSet->add($rule);
+
+        return $this;
     }
 
     /**
@@ -132,26 +151,8 @@ abstract class ParserAbstract
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
-                switch (strtolower($node->tagName)) {
-                    case static::FEED_DESCRIPTION:
-                        $feed->setDescription($node->nodeValue);
-                        break;
-                    case static::FEED_TITLE:
-                        $feed->setTitle($node->nodeValue);
-                        break;
-                    case static::FEED_URL:
-                        $feed->setLink($node->nodeValue);
-                        break;
-                    case strtolower(static::FEED_PUBLIC_ID):
-                        $feed->setPublicId($node->nodeValue);
-                        break;
-                    case static::FEED_LAST_MODIFIED:
-                        $this->setLastModifiedSince($feed, $node->nodeValue);
-                        break;
-                    case static::FEED_ITEM:
-                        $this->parseItemNode($node, $feed);
-                        break;
-                }
+                $rule = $this->ruleSet->get(strtolower($node->tagName));
+                $rule->set($feed, $node);
             }
         }
 

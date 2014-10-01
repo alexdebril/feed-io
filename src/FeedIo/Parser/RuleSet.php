@@ -36,7 +36,7 @@ class RuleSet
      */
     public function add(RuleAbstract $rule)
     {
-        $this->rules->offsetSet($rule->getNodeName(), $rule);
+        $this->rules->offsetSet(strtolower($rule->getNodeName()), $rule);
 
         return $this;
     }
@@ -48,6 +48,7 @@ class RuleSet
      */
     public function get($name)
     {
+        $name = strtolower($name);
         if ( $this->rules->offsetExists($name) ) {
             return $this->rules->offsetGet($name);
         }

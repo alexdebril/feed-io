@@ -12,6 +12,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
+use FeedIo\Feed\Item\OptionalFieldsInterface;
 use FeedIo\Feed\ItemInterface;
 
 class Feed extends Item implements FeedInterface
@@ -22,10 +23,11 @@ class Feed extends Item implements FeedInterface
     protected $items;
 
     /**
-     *
+     * @param OptionalFieldsInterface $optionalFields
      */
-    function __construct()
+    function __construct(OptionalFieldsInterface $optionalFields = null)
     {
+        parent::__construct($optionalFields);
         $this->items = new \ArrayIterator(array());
     }
 
