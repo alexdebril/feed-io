@@ -18,7 +18,7 @@ use FeedIo\Feed\ItemInterface;
  * Represents the top node of a news feed
  * @package FeedIo
  */
-interface FeedInterface extends \Iterator, NodeInterface
+interface FeedInterface extends \Iterator, ItemInterface
 {
 
     /**

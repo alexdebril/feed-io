@@ -11,24 +11,38 @@
 namespace FeedIo\Parser;
 
 
-use FeedIo\Feed\NodeInterface;
+use FeedIo\Feed\ItemInterface;
 
 abstract class RuleAbstract
 {
     const NODE_NAME = 'node';
 
     /**
+     * @var string
+     */
+    protected $nodeName;
+
+    /**
+     * @param null $nodeName
+     */
+    function __construct($nodeName = null)
+    {
+        $this->nodeName = is_null($nodeName) ? static::NODE_NAME:$nodeName;
+    }
+
+
+    /**
      * @return string
      */
     public function getNodeName()
     {
-        return static::NODE_NAME;
+        return $this->nodeName;
     }
 
     /**
-     * @param NodeInterface $node
-     * @param $value
-     * @return $this
+     * @param ItemInterface $item
+     * @param \DOMElement $element
+     * @return mixed
      */
-    abstract public function set(NodeInterface $node, $value);
+    abstract public function set(ItemInterface $item, \DOMElement $element);
 } 

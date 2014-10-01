@@ -31,13 +31,5 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($rule, $this->object->get('node'));
     }
 
-    /**
-     * @expectedException \FeedIo\Parser\Rule\NotFoundException
-     */
-    public function testNotFoundException()
-    {
-        $this->object->get('unknown');
-    }
-
 }
  

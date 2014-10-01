@@ -10,8 +10,7 @@
 
 namespace FeedIo\Parser;
 
-
-use FeedIo\Parser\Rule\NotFoundException;
+use FeedIo\Parser\Rule\OptionalField;
 
 class RuleSet
 {
@@ -20,9 +19,15 @@ class RuleSet
      */
     protected $rules;
 
+    /**
+     * @var OptionalField
+     */
+    protected $default;
+
     public function __construct()
     {
-        $this->rules = new \ArrayIterator();
+        $this->rules = new \ArrayIterator(array());
+        $this->default = new OptionalField();
     }
 
     /**
@@ -47,6 +52,6 @@ class RuleSet
             return $this->rules->offsetGet($name);
         }
 
-        throw new NotFoundException("Rule not found : {$name}");
+       return $this->default;
     }
 } 

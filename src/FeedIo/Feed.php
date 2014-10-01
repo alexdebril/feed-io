@@ -13,9 +13,8 @@ namespace FeedIo;
 
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Feed\Node;
 
-class Feed extends Node implements FeedInterface
+class Feed extends Item implements FeedInterface
 {
     /**
      * @var \ArrayIterator
