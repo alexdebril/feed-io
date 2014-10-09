@@ -39,7 +39,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     public function testParseBody()
     {
         $document = $this->buildDomDocument('rss/sample-rss.xml');
-        $this->object->parse($document, new Feed());
+        $this->assertInstanceOf('\FeedIo\Feed', $this->object->parse($document, new Feed()));
     }
 
     /**
