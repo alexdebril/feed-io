@@ -33,7 +33,7 @@ class TitleTest extends \PHPUnit_Framework_TestCase
     public function testSet()
     {
         $item = new Item();
-        
+
         $this->object->set($item, new \DOMElement('title', 'feed-io title'));
         $this->assertEquals('feed-io title', $item->getTitle());
     }
