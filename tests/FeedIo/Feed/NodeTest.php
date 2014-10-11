@@ -11,7 +11,51 @@
 namespace FeedIo\Feed;
 
 
-class NodeTest extends \PHPUnit_Framework_TestCase {
+class NodeTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var \FeedIo\Feed\Node
+     */
+    protected $object;
 
+    protected function setUp()
+    {
+        $this->object = new Node();
+    }
+
+    public function testTitle()
+    {
+        $title = 'my brilliant title';
+
+        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setTitle($title));
+        $this->assertEquals($title, $this->object->getTitle());
+    }
+
+    public function testPublicId()
+    {
+        $publicId = 'a12';
+        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setPublicId($publicId));
+        $this->assertEquals($publicId, $this->object->getPublicId());
+    }
+
+    public function testDescription()
+    {
+        $description = 'lorem ipsum';
+        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setDescription($description));
+        $this->assertEquals($description, $this->object->getDescription());
+    }
+
+    public function testLink()
+    {
+        $link = 'http://localhost';
+        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setLink($link));
+        $this->assertEquals($link, $this->object->getLink());
+    }
+
+    public function testLastModified()
+    {
+        $lastModified = new \DateTime();
+        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setLastModified($lastModified));
+        $this->assertEquals($lastModified, $this->object->getLastModified());
+    }
 }
- 
