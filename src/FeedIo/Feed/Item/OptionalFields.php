@@ -60,4 +60,4 @@ class OptionalFields implements OptionalFieldsInterface
         return $this;
     }
 
-} 
+}

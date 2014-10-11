@@ -29,4 +29,4 @@ class Title extends RuleAbstract
         return $this;
     }
 
-} 
+}

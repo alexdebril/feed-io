@@ -82,4 +82,4 @@ interface NodeInterface
      */
     public function setLink($link);
 
-} 
+}

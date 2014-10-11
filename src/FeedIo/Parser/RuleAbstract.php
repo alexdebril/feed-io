@@ -25,7 +25,7 @@ abstract class RuleAbstract
     /**
      * @param null $nodeName
      */
-    function __construct($nodeName = null)
+    public function __construct($nodeName = null)
     {
         $this->nodeName = is_null($nodeName) ? static::NODE_NAME:$nodeName;
     }
@@ -45,4 +45,4 @@ abstract class RuleAbstract
      * @return mixed
      */
     abstract public function set(ItemInterface $item, \DOMElement $element);
-} 
+}

@@ -245,4 +245,4 @@ abstract class ParserAbstract
      */
     abstract public function getMainElement(\DOMDocument $document);
 
-} 
+}

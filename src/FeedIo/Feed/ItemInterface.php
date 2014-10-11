@@ -32,4 +32,4 @@ interface ItemInterface extends NodeInterface
      * @return $this
      */
     public function setOptionalFields(OptionalFieldsInterface $optionalFields);
-} 
+}

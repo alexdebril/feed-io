@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo\Feed;
 
 
-class UnsupportedFormatException extends \Exception
-{
+class NodeTest extends \PHPUnit_Framework_TestCase {
 
 }
+ 

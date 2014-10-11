@@ -22,4 +22,4 @@ interface FilterInterface
      */
     public function isValid(ItemInterface $item);
 
-} 
+}

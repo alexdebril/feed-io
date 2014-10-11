@@ -28,7 +28,7 @@ class Date
      */
     protected $lastGuessedFormat = \DateTime::RFC2822;
 
-    function __construct()
+    public function __construct()
     {
         $this->setTimezone(new \DateTimeZone(date_default_timezone_get()));
     }

@@ -25,7 +25,7 @@ class Feed extends Item implements FeedInterface
     /**
      * @param OptionalFieldsInterface $optionalFields
      */
-    function __construct(OptionalFieldsInterface $optionalFields = null)
+    public function __construct(OptionalFieldsInterface $optionalFields = null)
     {
         parent::__construct($optionalFields);
         $this->items = new \ArrayIterator(array());

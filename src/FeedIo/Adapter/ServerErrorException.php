@@ -14,4 +14,4 @@ namespace FeedIo\Adapter;
 class ServerErrorException extends \Exception
 {
 
-} 
+}

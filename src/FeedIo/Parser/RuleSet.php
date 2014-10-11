@@ -55,4 +55,4 @@ class RuleSet
 
        return $this->default;
     }
-} 
+}

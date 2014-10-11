@@ -41,4 +41,4 @@ class Rss extends ParserAbstract
         return $document->documentElement->getElementsByTagName('channel')->item(0);
     }
 
-} 
+}

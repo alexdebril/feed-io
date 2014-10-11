@@ -24,7 +24,7 @@ class ModifiedSince implements FilterInterface
     /**
      * @param \DateTime $date
      */
-    function __construct(\DateTime $date)
+    public function __construct(\DateTime $date)
     {
         $this->date = $date;
     }

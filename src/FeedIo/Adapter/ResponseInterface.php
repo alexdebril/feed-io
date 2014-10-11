@@ -30,4 +30,4 @@ interface ResponseInterface
      */
     public function getHeader($name);
 
-} 
+}
