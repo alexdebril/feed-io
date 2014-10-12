@@ -21,13 +21,13 @@ class DateTest extends \PHPUnit_Framework_TestCase
     const ALTERNATE_TIMEZONE = 'Antarctica/Troll';
 
     /**
-     * @var \FeedIo\Parser\Date
+     * @var \FeedIo\Parser\DateTimeBuilder
      */
     protected $object;
 
     protected function setUp()
     {
-        $this->object = new Date();
+        $this->object = new DateTimeBuilder();
     }
 
     public function testGetTimezone()
@@ -92,4 +92,3 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::ALTERNATE_TIMEZONE, $return->getTimezone()->getName());
     }
 }
- 

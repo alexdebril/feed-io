@@ -25,7 +25,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->object = new Rss(
-            new Date(),
+            new DateTimeBuilder(),
             new NullLogger()
         );
     }
@@ -55,4 +55,3 @@ class RssTest extends \PHPUnit_Framework_TestCase
         return $domDocument;
     }
 }
- 

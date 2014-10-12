@@ -12,7 +12,7 @@ namespace FeedIo;
 
 use \DOMDocument;
 use FeedIo\Feed\NodeInterface;
-use FeedIo\Parser\Date;
+use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\RuleAbstract;
@@ -54,9 +54,9 @@ abstract class ParserAbstract
     protected $filters = array();
 
     /**
-     * @var \FeedIo\Parser\Date
+     * @var \FeedIo\Parser\DateTimeBuilder
      */
-    protected $date;
+    protected $dateTimeBuilder;
 
     /**
      * @var RuleSet
@@ -64,12 +64,12 @@ abstract class ParserAbstract
     protected $ruleSet;
 
     /**
-     * @param Date $date
+     * @param DateTimeBuilder $dateTimeBuilder
      * @param LoggerInterface $logger
      */
-    public function __construct(Date $date, LoggerInterface $logger)
+    public function __construct(DateTimeBuilder $dateTimeBuilder, LoggerInterface $logger)
     {
-        $this->date = $date;
+        $this->dateTimeBuilder = $dateTimeBuilder;
         $this->logger = $logger;
         $this->ruleSet = new RuleSet();
     }
@@ -168,7 +168,7 @@ abstract class ParserAbstract
     public function setLastModifiedSince(NodeInterface $node, $value)
     {
         try {
-            $date = $this->date->convertToDateTime($value);
+            $date = $this->dateTimeBuilder->convertToDateTime($value);
             if ($date instanceof \DateTime) {
                 $node->setLastModified($date);
             }

@@ -12,7 +12,7 @@ namespace FeedIo\Parser\Rule;
 
 
 use FeedIo\Feed\Item;
-use FeedIo\Parser\Date;
+use FeedIo\Parser\DateTimeBuilder;
 
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $date = new Date();
+        $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);
         $this->object = new ModifiedSince($date);
     }
@@ -44,10 +44,10 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $dateTime = new \DateTime('-3 days');
         $element = new \DOMElement('pubDate', $dateTime->format(\DateTime::RSS));
 
-        $date = new Date();
-        $date->addDateFormat(\DateTime::ATOM);
-        $modifiedSince = new ModifiedSince($date);
-        $date->addDateFormat(\DateTime::RSS);
+        $dateTimeBuilder = new DateTimeBuilder();
+        $dateTimeBuilder->addDateFormat(\DateTime::ATOM);
+        $modifiedSince = new ModifiedSince($dateTimeBuilder);
+        $dateTimeBuilder->addDateFormat(\DateTime::RSS);
 
         $modifiedSince->set($item, $element);
         $this->assertEquals($dateTime, $item->getLastModified());
@@ -55,6 +55,6 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDate()
     {
-        $this->assertInstanceOf('\FeedIo\Parser\Date', $this->object->getDate());
+        $this->assertInstanceOf('\FeedIo\Parser\DateTimeBuilder', $this->object->getDateTimeBuilder());
     }
 }

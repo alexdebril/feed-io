@@ -12,7 +12,7 @@ namespace FeedIo;
 
 use FeedIo\Adapter\ServerErrorException;
 use Psr\Log\NullLogger;
-use FeedIo\Parser\Date;
+use FeedIo\Parser\DateTimeBuilder;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,7 +63,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $parser = $this->getMockForAbstractClass(
             '\FeedIo\ParserAbstract',
-            array(new Date(), new NullLogger())
+            array(new DateTimeBuilder(), new NullLogger())
         );
         $parser->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $file = dirname(__FILE__) . "/../samples/rss/sample-rss.xml";
@@ -165,4 +165,3 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
 }
- 

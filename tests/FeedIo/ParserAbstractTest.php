@@ -12,7 +12,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
-use FeedIo\Parser\Date;
+use FeedIo\Parser\DateTimeBuilder;
 use Psr\Log\NullLogger;
 
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $date = new Date();
+        $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);
         $this->object = $this->getMockForAbstractClass(
             '\FeedIo\ParserAbstract',

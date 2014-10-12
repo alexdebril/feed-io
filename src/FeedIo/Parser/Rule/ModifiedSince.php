@@ -12,7 +12,7 @@ namespace FeedIo\Parser\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Parser\Date;
+use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Parser\RuleAbstract;
 
 class ModifiedSince extends RuleAbstract
@@ -20,24 +20,24 @@ class ModifiedSince extends RuleAbstract
     const NODE_NAME = 'pubDate';
 
     /**
-     * @var \FeedIo\Parser\Date
+     * @var \FeedIo\Parser\DateTimeBuilder
      */
-    protected $date;
+    protected $dateTimeBuilder;
 
     /**
-     * @param Date $date
+     * @param DateTimeBuilder $dateTimeBuilder
      */
-    public function __construct(Date $date)
+    public function __construct(DateTimeBuilder $dateTimeBuilder)
     {
-        $this->date = $date;
+        $this->dateTimeBuilder = $dateTimeBuilder;
     }
 
     /**
-     * @return \FeedIo\Parser\Date
+     * @return \FeedIo\Parser\DateTimeBuilder
      */
-    public function getDate()
+    public function getDateTimeBuilder()
     {
-        return $this->date;
+        return $this->dateTimeBuilder;
     }
 
     /**
@@ -47,7 +47,7 @@ class ModifiedSince extends RuleAbstract
      */
     public function set(ItemInterface $item, \DOMElement $element)
     {
-        $item->setLastModified($this->date->convertToDateTime($element->nodeValue));
+        $item->setLastModified($this->dateTimeBuilder->convertToDateTime($element->nodeValue));
 
         return $this;
     }

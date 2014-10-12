@@ -11,7 +11,7 @@
 namespace FeedIo\Parser;
 
 
-class Date
+class DateTimeBuilder
 {
     /**
      * @var array
