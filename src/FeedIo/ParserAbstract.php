@@ -160,30 +160,6 @@ abstract class ParserAbstract
     }
 
     /**
-     * @param \DOMElement $element
-     * @param FeedInterface $feed
-     * @return ItemInterface
-     */
-    public function parseItemNode(\DOMElement $element, FeedInterface $feed)
-    {
-        $item = $feed->newItem();
-        foreach ($element->childNodes as $node) {
-            if ($node instanceof \DOMElement) {
-                switch (strtolower($node->tagName)) {
-                    case static::ITEM_TITLE:
-                        $item->setTitle($node->nodeValue);
-                        break;
-                    default:
-                        $item->getOptionalFields()->set($node->nodeName, $node->nodeValue);
-                        break;
-                }
-            }
-        }
-
-        return $item;
-    }
-
-    /**
      * @param NodeInterface $node
      * @param $value
      * @return NodeInterface
