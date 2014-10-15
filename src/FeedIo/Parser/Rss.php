@@ -12,8 +12,6 @@ namespace FeedIo\Parser;
 
 
 use DOMDocument;
-use FeedIo\FeedInterface;
-use FeedIo\Parser\Rule\ModifiedSince;
 use FeedIo\Parser\Rule\Title;
 use FeedIo\ParserAbstract;
 use Psr\Log\LoggerInterface;
@@ -39,17 +37,6 @@ class Rss extends ParserAbstract
             ;
     }
 
-    /**
-     * @param $tagName
-     * @return ModifiedSince
-     */
-    public function getModifiedSinceRule($tagName)
-    {
-        $rule = new ModifiedSince($tagName);
-        $rule->setDateTimeBuilder($this->dateTimeBuilder);
-
-        return $rule;
-    }
     /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document

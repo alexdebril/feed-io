@@ -15,7 +15,7 @@ use FeedIo\Feed\ItemInterface;
 use FeedIo\FeedInterface;
 use FeedIo\Parser\RuleAbstract;
 
-class Item extends RuleAbstract
+class Item extends DateRuleAbstract
 {
     const NODE_NAME = 'item';
 

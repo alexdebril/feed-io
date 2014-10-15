@@ -17,6 +17,7 @@ use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\RuleAbstract;
 use FeedIo\Parser\RuleSet;
+use FeedIo\Parser\Rule\ModifiedSince;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
 
@@ -143,6 +144,18 @@ abstract class ParserAbstract
         }
 
         return $feed;
+    }
+
+    /**
+     * @param $tagName
+     * @return ModifiedSince
+     */
+    public function getModifiedSinceRule($tagName)
+    {
+        $rule = new ModifiedSince($tagName);
+        $rule->setDateTimeBuilder($this->dateTimeBuilder);
+
+        return $rule;
     }
 
     /**
