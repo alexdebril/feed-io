@@ -33,11 +33,23 @@ class Rss extends ParserAbstract
     {
         parent::__construct($dateTimeBuilder, $logger);
 
-        $this->addRule(new ModifiedSince($dateTimeBuilder))
-            ->addRule(new Title());
+        $this->addRule(new Title())
+            ->addRule($this->getModifiedSinceRule('pubDate'))
+            ->addRule($this->getModifiedSinceRule('lastPubDate'))
+            ;
     }
 
+    /**
+     * @param $tagName
+     * @return ModifiedSince
+     */
+    public function getModifiedSinceRule($tagName)
+    {
+        $rule = new ModifiedSince($tagName);
+        $rule->setDateTimeBuilder($this->dateTimeBuilder);
 
+        return $rule;
+    }
     /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document

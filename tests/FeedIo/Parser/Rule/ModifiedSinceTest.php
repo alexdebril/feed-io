@@ -25,7 +25,8 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
     {
         $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);
-        $this->object = new ModifiedSince($date);
+        $this->object = new ModifiedSince();
+        $this->object->setDateTimeBuilder($date);
     }
 
     public function testSet()
@@ -46,7 +47,8 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 
         $dateTimeBuilder = new DateTimeBuilder();
         $dateTimeBuilder->addDateFormat(\DateTime::ATOM);
-        $modifiedSince = new ModifiedSince($dateTimeBuilder);
+        $modifiedSince = new ModifiedSince();
+        $modifiedSince->setDateTimeBuilder($dateTimeBuilder);
         $dateTimeBuilder->addDateFormat(\DateTime::RSS);
 
         $modifiedSince->set($item, $element);

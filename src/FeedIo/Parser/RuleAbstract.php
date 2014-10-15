@@ -30,7 +30,6 @@ abstract class RuleAbstract
         $this->nodeName = is_null($nodeName) ? static::NODE_NAME:$nodeName;
     }
 
-
     /**
      * @return string
      */
