@@ -22,20 +22,6 @@ use Psr\Log\LoggerInterface;
 
 abstract class ParserAbstract
 {
-    const FEED_TITLE = 'title';
-
-    const FEED_DESCRIPTION = 'description';
-
-    const FEED_URL = 'link';
-
-    const FEED_LAST_MODIFIED = 'updated';
-
-    const FEED_ITEM = 'item';
-
-    const FEED_PUBLIC_ID = 'publicId';
-
-    const ITEM_TITLE = 'title';
-
     /**
      * List of mandatory fields
      *
