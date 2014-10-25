@@ -23,7 +23,7 @@ abstract class RuleAbstract
     protected $nodeName;
 
     /**
-     * @param null $nodeName
+     * @param string $nodeName
      */
     public function __construct($nodeName = null)
     {
