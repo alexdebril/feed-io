@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
 
 /**
@@ -25,6 +24,7 @@ interface FeedInterface extends \Iterator, ItemInterface
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
      * @param ItemInterface $item
+     * @return Feed
      */
     public function add(ItemInterface $item);
 

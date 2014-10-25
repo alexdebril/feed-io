@@ -52,7 +52,7 @@ class Rss extends ParserAbstract
     /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
-     * @return mixed
+     * @return boolean
      */
     public function canHandle(\DOMDocument $document)
     {

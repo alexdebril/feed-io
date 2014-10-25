@@ -11,7 +11,6 @@
 namespace FeedIo;
 
 use \DOMDocument;
-use FeedIo\Feed\Item;
 use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
@@ -182,7 +181,7 @@ abstract class ParserAbstract
     }
 
     /**
-     * @param $tagName
+     * @param string $tagName
      * @return ModifiedSince
      */
     public function getModifiedSinceRule($tagName)

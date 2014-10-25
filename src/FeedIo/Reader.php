@@ -56,12 +56,16 @@ class Reader
     }
 
     /**
-     * @param $body
+     * @param string $body
      * @return \DOMDocument
      */
     public function loadDocument($body)
     {
         set_error_handler(
+
+            /**
+             * @param string $errno
+             */
             function ($errno, $errstr) {
                 throw new \InvalidArgumentException("malformed xml string. parsing error : $errstr ($errno)");
             }
