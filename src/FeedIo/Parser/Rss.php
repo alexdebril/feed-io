@@ -36,7 +36,9 @@ class Rss extends ParserAbstract
         return $ruleSet;
     }
 
-
+    /**
+     * @return RuleSet
+     */
     public function buildItemRuleSet()
     {
         $ruleSet = new RuleSet();
