@@ -237,13 +237,13 @@ abstract class ParserAbstract
 
     /**
      * Builds and returns a rule set to parse the root node
-     * @return $this
+     * @return \FeedIo\Parser\RuleSet
      */
     abstract public function buildFeedRuleSet();
 
     /**
      * Builds and returns a rule set to parse an item
-     * @return $this
+     * @return \FeedIo\Parser\RuleSet
      */
     abstract public function buildItemRuleSet();
 
