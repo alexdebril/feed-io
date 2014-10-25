@@ -13,6 +13,8 @@ namespace FeedIo;
 
 use FeedIo\Feed\Item;
 use FeedIo\Parser\DateTimeBuilder;
+use FeedIo\Parser\Rss;
+use FeedIo\Parser\RuleSet;
 use Psr\Log\NullLogger;
 
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase
@@ -32,6 +34,7 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
             array($date, new NullLogger())
         );
         $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));
+        $this->object->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
         $this->object->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
         $this->object->expects($this->any())->method('getMainElement')->will($this->returnValue(new \DOMElement('test')));
     }
@@ -44,10 +47,9 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('FeedIo\Feed', $feed);
     }
 
-    public function testParseRootNode()
+    public function testParseNode()
     {
         $document = new \DOMDocument();
-        $date = new \DateTime();
         $xml = <<<XML
         <channel>
             <title>feed-io</title>
@@ -57,11 +59,28 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
 XML;
         $document->loadXML($xml);
         $feed = new Feed();
-        $this->object->parseRootNode($document->documentElement, $feed);
+        $this->object->parseNode($feed, $document->documentElement, new RuleSet());
 
         $this->assertEquals('feed-io is a library', $feed->getOptionalFields()->get('description'));
         $this->assertEquals('feed-io', $feed->getOptionalFields()->get('title'));
         $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getOptionalFields()->get('link'));
+    }
+
+    /**
+     * @expectedException \FeedIo\Parser\UnsupportedFormatException
+     */
+    public function testParseBadDocument()
+    {
+        $document = new \DOMDocument();
+        $document->loadXML('<feed><items></items></feed>');
+
+        $parser = $this->getMockForAbstractClass(
+            '\FeedIo\ParserAbstract',
+            array(new DateTimeBuilder(), new NullLogger())
+        );
+        $parser->expects($this->any())->method('canHandle')->will($this->returnValue(false));
+
+        $parser->parse($document, new Feed());
     }
 
     public function testIsValid()
@@ -69,29 +88,60 @@ XML;
         $item = new Item();
         $item->setLastModified(new \DateTime('-1day'));
 
-        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
-        $filter->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue(true));
-
-        $this->object->addFilter($filter);
+        $this->object->addFilter($this->getFilterMock(true));
         $this->assertTrue($this->object->isValid($item));
     }
 
-    public function testSetLastModifiedSince()
+    public function testIsNotValid()
     {
-        $date = new \DateTime();
-        $feed = $this->object->setLastModifiedSince(new Feed(), $date->format(\DateTime::ATOM));
-        $this->assertEquals($date, $feed->getLastModified());
+        $item = new Item();
+
+        $this->object->addFilter($this->getFilterMock(false));
+        $this->assertFalse($this->object->isValid($item));
+    }
+
+    public function testCheckStructure()
+    {
+        $rss = <<<RSS
+<rss version="2.0">
+    <channel>
+        <title>RSS Title</title>
+    </channel>
+</rss>
+RSS;
+        $document = new \DOMDocument();
+        $document->loadXML($rss);
+        $this->assertInstanceOf(
+            '\FeedIo\ParserAbstract',
+            $this->object->checkBodyStructure($document, array('channel', 'title'))
+        );
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \FeedIo\Parser\MissingFieldsException
      */
-    public function testSetLastModifiedSinceWrongFormat()
+    public function testCheckBadStructure()
     {
-        $date = new \DateTime();
-        $feed = $this->object->setLastModifiedSince(new Feed(), $date->format(\DateTime::RFC850));
+        $document = new \DOMDocument();
+        $document->loadXML('<rss></rss>');
+        $this->assertInstanceOf(
+            '\FeedIo\ParserAbstract',
+            $this->object->checkBodyStructure($document, array('channel'))
+        );
+    }
+
+    /**
+     * @param boolean $returnValue
+     * @return \FeedIo\FilterInterface
+     */
+    protected function getFilterMock($returnValue)
+    {
+        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
+        $filter->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue($returnValue));
+
+        return $filter;
     }
 
 }

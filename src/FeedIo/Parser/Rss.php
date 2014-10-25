@@ -14,7 +14,6 @@ namespace FeedIo\Parser;
 use DOMDocument;
 use FeedIo\Parser\Rule\Title;
 use FeedIo\ParserAbstract;
-use Psr\Log\LoggerInterface;
 
 class Rss extends ParserAbstract
 {
@@ -24,18 +23,29 @@ class Rss extends ParserAbstract
     const ROOT_NODE_TAGNAME = 'rss';
 
     /**
-     * @param DateTimeBuilder $dateTimeBuilder
-     * @param LoggerInterface $logger
+     * @return RuleSet
      */
-    public function __construct(DateTimeBuilder $dateTimeBuilder, LoggerInterface $logger)
+    public function buildFeedRuleSet()
     {
-        parent::__construct($dateTimeBuilder, $logger);
+        $ruleSet = new RuleSet();
+        $ruleSet->add(new Title())
+            ->add($this->getModifiedSinceRule('pubDate'))
+            ->add($this->getModifiedSinceRule('lastPubDate'))
+        ;
 
-        $this->addRule(new Title())
-            ->addRule($this->getModifiedSinceRule('pubDate'))
-            ->addRule($this->getModifiedSinceRule('lastPubDate'))
-            ;
+        return $ruleSet;
     }
+
+
+    public function buildItemRuleSet()
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->add(new Title())
+            ->add($this->getModifiedSinceRule('pubDate'));
+
+        return $ruleSet;
+    }
+
 
     /**
      * Tells if the parser can handle the feed or not

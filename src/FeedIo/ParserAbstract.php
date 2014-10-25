@@ -11,11 +11,10 @@
 namespace FeedIo;
 
 use \DOMDocument;
-use FeedIo\Feed\NodeInterface;
+use FeedIo\Feed\Item;
 use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
-use FeedIo\Parser\RuleAbstract;
 use FeedIo\Parser\RuleSet;
 use FeedIo\Parser\Rule\ModifiedSince;
 use FeedIo\Parser\UnsupportedFormatException;
@@ -23,6 +22,8 @@ use Psr\Log\LoggerInterface;
 
 abstract class ParserAbstract
 {
+    const ITEM_NODE = 'item';
+
     /**
      * List of mandatory fields
      *
@@ -46,9 +47,15 @@ abstract class ParserAbstract
     protected $dateTimeBuilder;
 
     /**
-     * @var RuleSet
+     * RuleSet used to parse the feed's main node
+     * @var \FeedIo\Parser\RuleSet
      */
-    protected $ruleSet;
+    protected $feedRuleSet;
+
+    /**
+     * @var \FeedIo\Parser\RuleSet
+     */
+    protected $itemRuleSet;
 
     /**
      * @param DateTimeBuilder $dateTimeBuilder
@@ -58,18 +65,40 @@ abstract class ParserAbstract
     {
         $this->dateTimeBuilder = $dateTimeBuilder;
         $this->logger = $logger;
-        $this->ruleSet = new RuleSet();
     }
 
     /**
-     * @param RuleAbstract $rule
-     * @return $this
+     * Returns the RuleSet used to parse the feed's main node
+     * @return \FeedIo\Parser\RuleSet
      */
-    public function addRule(RuleAbstract $rule)
+    public function getFeedRuleSet()
     {
-        $this->ruleSet->add($rule);
+        if ( is_null($this->feedRuleSet) ) {
+            $this->feedRuleSet = $this->buildFeedRuleSet();
+        }
 
-        return $this;
+        return $this->feedRuleSet;
+    }
+
+    /**
+     * @return \FeedIo\Parser\RuleSet
+     */
+    public function getItemRuleSet()
+    {
+        if ( is_null($this->itemRuleSet) ) {
+            $this->itemRuleSet = $this->buildItemRuleSet();
+        }
+
+        return $this->itemRuleSet;
+    }
+
+    /**
+     * @param $tagName
+     * @return bool
+     */
+    public function isItem($tagName)
+    {
+        return ( strtolower(static::ITEM_NODE) === strtolower($tagName) );
     }
 
     /**
@@ -96,24 +125,24 @@ abstract class ParserAbstract
             throw new UnsupportedFormatException('this is not a supported format');
         }
 
-        $this->checkBodyStructure($document);
-
+        $this->checkBodyStructure($document, $this->mandatoryFields);
         $element = $this->getMainElement($document);
 
-        return $this->parseRootNode($element, $feed);
+        return $this->parseNode($feed, $element, $this->getFeedRuleSet());
     }
 
     /**
      * @param DOMDocument $document
+     * @param array $mandatoryFields
      * @return $this
-     * @throws Parser\MissingFieldsException
+     * @throws MissingFieldsException
      */
-    public function checkBodyStructure(DOMDocument $document)
+    public function checkBodyStructure(DOMDocument $document, array $mandatoryFields)
     {
         $errors = array();
 
         $element = $document->documentElement;
-        foreach ($this->mandatoryFields as $field) {
+        foreach ($mandatoryFields as $field) {
             $list = $element->getElementsByTagName($field);
             if (0 === $list->length) {
                 $errors[] = $field;
@@ -130,20 +159,26 @@ abstract class ParserAbstract
     }
 
     /**
+     * @param ItemInterface $item
      * @param \DOMElement $element
-     * @param FeedInterface $feed
-     * @return FeedInterface
+     * @param RuleSet $ruleSet
+     * @return ItemInterface
      */
-    public function parseRootNode(\DOMElement $element, FeedInterface $feed)
+    public function parseNode(ItemInterface $item, \DOMElement $element, RuleSet $ruleSet)
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
-                $rule = $this->ruleSet->get(strtolower($node->tagName));
-                $rule->set($feed, $node);
+                if ( $this->isItem($node->tagName) && $item instanceof FeedInterface) {
+                    $newItem = $this->parseNode($item->newItem(), $node, $this->getItemRuleSet());
+                    $this->addValidItem($item, $newItem);
+                } else {
+                    $rule = $ruleSet->get($node->tagName);
+                    $rule->set($item, $node);
+                }
             }
         }
 
-        return $feed;
+        return $item;
     }
 
     /**
@@ -156,26 +191,6 @@ abstract class ParserAbstract
         $rule->setDateTimeBuilder($this->dateTimeBuilder);
 
         return $rule;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @param $value
-     * @return NodeInterface
-     * @throws \InvalidArgumentException
-     */
-    public function setLastModifiedSince(NodeInterface $node, $value)
-    {
-        try {
-            $date = $this->dateTimeBuilder->convertToDateTime($value);
-            if ($date instanceof \DateTime) {
-                $node->setLastModified($date);
-            }
-            return $node;
-        } catch (\InvalidArgumentException $e) {
-            $this->logger->warning($e->getMessage());
-            throw $e;
-        }
     }
 
     /**
@@ -219,5 +234,17 @@ abstract class ParserAbstract
      * @return \DomElement
      */
     abstract public function getMainElement(\DOMDocument $document);
+
+    /**
+     * Builds and returns a rule set to parse the root node
+     * @return $this
+     */
+    abstract public function buildFeedRuleSet();
+
+    /**
+     * Builds and returns a rule set to parse an item
+     * @return $this
+     */
+    abstract public function buildItemRuleSet();
 
 }
