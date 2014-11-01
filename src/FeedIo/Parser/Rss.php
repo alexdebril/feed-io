@@ -28,11 +28,8 @@ class Rss extends ParserAbstract
      */
     public function buildFeedRuleSet()
     {
-        $ruleSet = new RuleSet();
-        $ruleSet->add(new Title())
-            ->add($this->getModifiedSinceRule('pubDate'))
-            ->add($this->getModifiedSinceRule('lastPubDate'))
-        ;
+        $ruleSet = $this->buildItemRuleSet();
+        $ruleSet->add($this->getModifiedSinceRule('lastPubDate'));
 
         return $ruleSet;
     }
@@ -49,7 +46,6 @@ class Rss extends ParserAbstract
 
         return $ruleSet;
     }
-
 
     /**
      * Tells if the parser can handle the feed or not
