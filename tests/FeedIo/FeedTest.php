@@ -36,6 +36,51 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(new \ArrayIterator(), 'items', $this->object);
     }
 
+    public function testNext()
+    {
+        $item1 = new Feed\Item();
+        $item2 = clone $item1;
+        $item2->setTitle('item2');
+        $this->object->add($item1);
+        $this->object->add($item2);
+        $this->object->rewind();
+        $this->assertEquals($item1, $this->object->current());
+        $this->assertNull($this->object->next());
+        $this->assertEquals($item2, $this->object->current());
+    }
+
+    public function testIsValid()
+    {
+        $item = new Feed\Item();
+        $this->object->add($item);
+        $this->object->rewind();
+
+        $this->assertTrue($this->object->valid());
+        $this->object->next();
+        $this->assertFalse($this->object->valid());
+    }
+
+    public function testRewind()
+    {
+        $item = new Feed\Item();
+        $this->object->add($item);
+
+        $this->object->next();
+        $this->assertFalse($this->object->valid());
+        $this->object->rewind();
+        $this->assertEquals($item, $this->object->current());
+    }
+
+    public function testKey()
+    {
+        $this->assertNull($this->object->key());
+        $this->object->add(new Feed\Item());
+        $this->object->add(new Feed\Item());
+        $this->assertEquals(0, $this->object->key());
+        $this->object->next();
+        $this->assertEquals(1, $this->object->key());
+    }
+
     public function testAdd()
     {
         $item = new Feed\Item();
