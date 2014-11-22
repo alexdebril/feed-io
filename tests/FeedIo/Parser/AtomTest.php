@@ -14,19 +14,25 @@ namespace FeedIo\Parser;
 use FeedIo\Feed;
 use Psr\Log\NullLogger;
 
-class RssTest extends ParserTestAbstract
+class AtomTest extends ParserTestAbstract
 {
 
-    const SAMPLE_FILE = 'rss/sample-rss.xml';
+    const SAMPLE_FILE = 'sample-atom.xml';
+
+    /**
+     * @var \FeedIo\Parser\Atom
+     */
+    protected $object;
 
     /**
      * @return \FeedIo\ParserAbstract
      */
     public function getObject()
     {
-        return new Rss(
+        return new Atom(
             new DateTimeBuilder(),
             new NullLogger()
         );
     }
+
 }
