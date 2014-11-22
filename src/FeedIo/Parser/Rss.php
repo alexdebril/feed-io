@@ -26,6 +26,25 @@ class Rss extends ParserAbstract
     const ROOT_NODE_TAGNAME = 'rss';
 
     /**
+     * Tells if the parser can handle the feed or not
+     * @param \DOMDocument $document
+     * @return boolean
+     */
+    public function canHandle(\DOMDocument $document)
+    {
+        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
+    }
+
+    /**
+     * @param DOMDocument $document
+     * @return \DomElement
+     */
+    public function getMainElement(\DOMDocument $document)
+    {
+        return $document->documentElement->getElementsByTagName('channel')->item(0);
+    }
+
+    /**
      * @return RuleSet
      */
     public function buildFeedRuleSet()
@@ -49,25 +68,6 @@ class Rss extends ParserAbstract
             ->add($this->getModifiedSinceRule('pubDate'));
 
         return $ruleSet;
-    }
-
-    /**
-     * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
-     * @return boolean
-     */
-    public function canHandle(\DOMDocument $document)
-    {
-        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
-    }
-
-    /**
-     * @param DOMDocument $document
-     * @return \DomElement
-     */
-    public function getMainElement(\DOMDocument $document)
-    {
-        return $document->documentElement->getElementsByTagName('channel')->item(0);
     }
 
 }
