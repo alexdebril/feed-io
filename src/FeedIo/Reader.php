@@ -56,12 +56,16 @@ class Reader
     }
 
     /**
-     * @param $body
+     * @param string $body
      * @return \DOMDocument
      */
     public function loadDocument($body)
     {
         set_error_handler(
+
+            /**
+             * @param string $errno
+             */
             function ($errno, $errstr) {
                 throw new \InvalidArgumentException("malformed xml string. parsing error : $errstr ($errno)");
             }
@@ -78,7 +82,8 @@ class Reader
      * @param $url
      * @param FeedInterface $feed
      * @param \DateTime $modifiedSince
-     * @throws Reader\ReadErrorException
+     * @return \FeedIo\Reader\Result
+     * @throws ReadErrorException
      */
     public function read($url, FeedInterface $feed, \DateTime $modifiedSince = null)
     {
@@ -93,7 +98,7 @@ class Reader
 
             $this->logger->debug("response ok, now turning it into a DomDocument");
             $document = $this->loadDocument($response->getBody());
-            $this->parseDocument($document, $feed, $modifiedSince);
+            $this->parseDocument($document, $feed);
 
             $this->logger->info("{$url} successfully parsed");
             return new Result($document, $feed, $modifiedSince, $response, $url);
@@ -106,17 +111,16 @@ class Reader
     /**
      * @param \DOMDocument $document
      * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
      * @return FeedInterface
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(\DOMDocument $document, FeedInterface $feed, \DateTime $modifiedSince)
+    public function parseDocument(\DOMDocument $document, FeedInterface $feed)
     {
         $parser = $this->getAccurateParser($document);
         $this->logger->debug("accurate parser : " . get_class($parser));
 
-        return $parser->parse($document, $feed, $modifiedSince);
+        return $parser->parse($document, $feed);
     }
 
     /**
@@ -132,7 +136,9 @@ class Reader
             }
         }
 
-        throw new NoAccurateParserException('No parser can handle this stream');
+        $message = 'No parser can handle this stream';
+        $this->logger->error($message);
+        throw new NoAccurateParserException($message);
     }
 
 }

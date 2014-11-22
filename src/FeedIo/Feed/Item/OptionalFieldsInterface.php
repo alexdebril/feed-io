@@ -31,8 +31,8 @@ interface OptionalFieldsInterface
     public function get($name);
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @return $this
      */
     public function set($name, $value);

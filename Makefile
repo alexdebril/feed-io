@@ -1,7 +1,7 @@
 all: clean coverage
 
 test: 
-	vendor/bin/phpunit
+	vendor/bin/phpunit  --strict -v
 
 coverage: 
 	vendor/bin/phpunit --coverage-html=artifacts/coverage

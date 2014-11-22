@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../security/dsa-rdf.css" type="text/css"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xml:lang="en"
+>
+    <channel rdf:about="http://www.rdf-test.org/News/news.rdf">
+        <title>rdf-test News</title>
+        <link>http://www.rdf-test.org/News/</link>
+        <description>
+            rdf-test Latest News
+        </description>
+        <dc:date>2013-06-25T23:32:59+00:00</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130615" />
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130523" />
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130504" />
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130404" />
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130321" />
+                <rdf:li resource="http://www.rdf-test.org/News/2013/20130320" />
+            </rdf:Seq>
+        </items>
+    </channel>
+    <item rdf:about="http://www.rdf-test.org/News/2013/20130615">
+        <title>A RDF News</title>
+        <link>http://www.rdf-test.org/News/2013/20130615</link>
+        <description>
+            lorem ipsum ...
+        </description>
+        <dc:date>2013-06-15</dc:date>
+    </item>
+</rdf:RDF>

@@ -23,4 +23,4 @@ interface ClientInterface
      */
     public function getResponse($url, \DateTime $modifiedSince);
 
-} 
+}

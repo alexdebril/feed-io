@@ -14,4 +14,4 @@ namespace FeedIo\Parser;
 class UnsupportedFormatException extends \Exception
 {
 
-} 
+}

@@ -11,30 +11,62 @@
 namespace FeedIo\Parser;
 
 
-use FeedIo\FeedInterface;
+use DOMDocument;
+use FeedIo\Parser\Rule\Description;
+use FeedIo\Parser\Rule\Link;
+use FeedIo\Parser\Rule\PublicId;
 use FeedIo\ParserAbstract;
 
 class Rss extends ParserAbstract
 {
     /**
+     * RSS document must have a <rss> root node
+     */
+    const ROOT_NODE_TAGNAME = 'rss';
+
+    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
-     * @return mixed
+     * @return boolean
      */
     public function canHandle(\DOMDocument $document)
     {
-        // TODO: Implement canHandle() method.
+        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
     }
 
     /**
-     * Performs the actual conversion into a FeedContent instance
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
-     * @return FeedInterface
+     * @param DOMDocument $document
+     * @return \DomElement
      */
-    protected function parseBody(\DOMDocument $document, FeedInterface $feed)
+    public function getMainElement(\DOMDocument $document)
     {
-        // TODO: Implement parseBody() method.
+        return $document->documentElement->getElementsByTagName('channel')->item(0);
     }
 
-} 
+    /**
+     * @return RuleSet
+     */
+    public function buildFeedRuleSet()
+    {
+        $ruleSet = $this->buildItemRuleSet();
+        $ruleSet->add($this->getModifiedSinceRule('lastPubDate'));
+
+        return $ruleSet;
+    }
+
+    /**
+     * @return RuleSet
+     */
+    public function buildItemRuleSet()
+    {
+        $ruleSet = $this->buildBaseRuleSet();
+        $ruleSet
+            ->add(new Link())
+            ->add(new PublicId())
+            ->add(new Description())
+            ->add($this->getModifiedSinceRule('pubDate'));
+
+        return $ruleSet;
+    }
+
+}

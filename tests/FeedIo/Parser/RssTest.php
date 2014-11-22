@@ -11,12 +11,22 @@
 namespace FeedIo\Parser;
 
 
-class RssTest extends \PHPUnit_Framework_TestCase
+use FeedIo\Feed;
+use Psr\Log\NullLogger;
+
+class RssTest extends ParserTestAbstract
 {
 
-    public function testNothing()
-    {
+    const SAMPLE_FILE = 'rss/sample-rss.xml';
 
+    /**
+     * @return \FeedIo\ParserAbstract
+     */
+    public function getObject()
+    {
+        return new Rss(
+            new DateTimeBuilder(),
+            new NullLogger()
+        );
     }
 }
- 

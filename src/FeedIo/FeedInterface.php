@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
 
 /**
@@ -18,13 +17,14 @@ use FeedIo\Feed\ItemInterface;
  * Represents the top node of a news feed
  * @package FeedIo
  */
-interface FeedInterface extends \Iterator, NodeInterface
+interface FeedInterface extends \Iterator, ItemInterface
 {
 
     /**
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
      * @param ItemInterface $item
+     * @return Feed
      */
     public function add(ItemInterface $item);
 
