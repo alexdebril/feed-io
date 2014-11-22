@@ -67,6 +67,32 @@ abstract class ParserAbstract
     }
 
     /**
+     * Tells if the parser can handle the feed or not
+     * @param \DOMDocument $document
+     * @return mixed
+     */
+    abstract public function canHandle(\DOMDocument $document);
+
+    /**
+     * @param DOMDocument $document
+     * @return \DomElement
+     */
+    abstract public function getMainElement(\DOMDocument $document);
+
+    /**
+     * Builds and returns a rule set to parse the root node
+     * @return \FeedIo\Parser\RuleSet
+     */
+    abstract public function buildFeedRuleSet();
+
+    /**
+     * Builds and returns a rule set to parse an item
+     * @return \FeedIo\Parser\RuleSet
+     */
+    abstract public function buildItemRuleSet();
+
+
+    /**
      * Returns the RuleSet used to parse the feed's main node
      * @return \FeedIo\Parser\RuleSet
      */
@@ -220,30 +246,5 @@ abstract class ParserAbstract
 
         return true;
     }
-
-    /**
-     * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
-     * @return mixed
-     */
-    abstract public function canHandle(\DOMDocument $document);
-
-    /**
-     * @param DOMDocument $document
-     * @return \DomElement
-     */
-    abstract public function getMainElement(\DOMDocument $document);
-
-    /**
-     * Builds and returns a rule set to parse the root node
-     * @return \FeedIo\Parser\RuleSet
-     */
-    abstract public function buildFeedRuleSet();
-
-    /**
-     * Builds and returns a rule set to parse an item
-     * @return \FeedIo\Parser\RuleSet
-     */
-    abstract public function buildItemRuleSet();
 
 }
