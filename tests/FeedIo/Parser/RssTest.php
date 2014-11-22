@@ -39,7 +39,29 @@ class RssTest extends \PHPUnit_Framework_TestCase
     public function testParseBody()
     {
         $document = $this->buildDomDocument('rss/sample-rss.xml');
-        $this->assertInstanceOf('\FeedIo\Feed', $this->object->parse($document, new Feed()));
+        $feed = $this->object->parse($document, new Feed());
+        $this->assertInstanceOf('\FeedIo\Feed', $feed);
+
+        $this->assertNotEmpty($feed->getTitle(), 'title must not be empty');
+        $this->assertNotEmpty($feed->getLink(), 'link must not be empty');
+        $this->assertNotEmpty($feed->getDescription(), 'description  must not be empty');
+        $this->assertNotEmpty($feed->getLastModified(), 'lastModified must not be empty');
+
+        $this->assertTrue($feed->valid());
+        $item = $feed->current();
+        $this->assertInstanceOf('\FeedIo\Feed\ItemInterface', $item);
+        if ( $item instanceof \FeedIo\Feed\ItemInterface ){
+            $this->assertNotEmpty($item->getTitle());
+            $this->assertNotEmpty($item->getDescription());
+            $this->assertNotEmpty($item->getPublicId());
+            $this->assertNotEmpty($item->getLastModified());
+            $this->assertNotEmpty($item->getLink());
+            $optionalFields = $item->getOptionalFields();
+            $this->assertCount(1, $optionalFields->getFields());
+            $this->assertTrue($optionalFields->has('author'));
+        }
+
+
     }
 
     /**
