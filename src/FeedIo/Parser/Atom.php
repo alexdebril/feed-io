@@ -50,9 +50,8 @@ class Atom extends ParserAbstract
      */
     public function buildFeedRuleSet()
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
-            ->add(new Title())
             ->add(new Link())
             ->add(new PublicId('id'))
             ->add($this->getModifiedSinceRule('updated'))

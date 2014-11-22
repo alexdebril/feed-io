@@ -14,6 +14,8 @@ use \DOMDocument;
 use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
+use FeedIo\Parser\Rule\Link;
+use FeedIo\Parser\Rule\Title;
 use FeedIo\Parser\RuleSet;
 use FeedIo\Parser\Rule\ModifiedSince;
 use FeedIo\Parser\UnsupportedFormatException;
@@ -91,14 +93,13 @@ abstract class ParserAbstract
      */
     abstract public function buildItemRuleSet();
 
-
     /**
      * Returns the RuleSet used to parse the feed's main node
      * @return \FeedIo\Parser\RuleSet
      */
     public function getFeedRuleSet()
     {
-        if ( is_null($this->feedRuleSet) ) {
+        if (is_null($this->feedRuleSet)) {
             $this->feedRuleSet = $this->buildFeedRuleSet();
         }
 
@@ -110,7 +111,7 @@ abstract class ParserAbstract
      */
     public function getItemRuleSet()
     {
-        if ( is_null($this->itemRuleSet) ) {
+        if (is_null($this->itemRuleSet)) {
             $this->itemRuleSet = $this->buildItemRuleSet();
         }
 
@@ -123,7 +124,7 @@ abstract class ParserAbstract
      */
     public function isItem($tagName)
     {
-        return ( strtolower(static::ITEM_NODE) === strtolower($tagName) );
+        return (strtolower(static::ITEM_NODE) === strtolower($tagName));
     }
 
     /**
@@ -193,7 +194,7 @@ abstract class ParserAbstract
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
-                if ( $this->isItem($node->tagName) && $item instanceof FeedInterface) {
+                if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
                     $newItem = $this->parseNode($item->newItem(), $node, $this->getItemRuleSet());
                     $this->addValidItem($item, $newItem);
                 } else {
@@ -245,6 +246,17 @@ abstract class ParserAbstract
         }
 
         return true;
+    }
+
+    /**
+     * @return RuleSet
+     */
+    protected function buildBaseRuleSet()
+    {
+        $ruleSet = $ruleSet = new RuleSet();
+        $ruleSet->add(new Title());
+
+        return $ruleSet;
     }
 
 }

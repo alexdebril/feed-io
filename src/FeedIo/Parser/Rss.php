@@ -15,7 +15,6 @@ use DOMDocument;
 use FeedIo\Parser\Rule\Description;
 use FeedIo\Parser\Rule\Link;
 use FeedIo\Parser\Rule\PublicId;
-use FeedIo\Parser\Rule\Title;
 use FeedIo\ParserAbstract;
 
 class Rss extends ParserAbstract
@@ -60,8 +59,8 @@ class Rss extends ParserAbstract
      */
     public function buildItemRuleSet()
     {
-        $ruleSet = new RuleSet();
-        $ruleSet->add(new Title())
+        $ruleSet = $this->buildBaseRuleSet();
+        $ruleSet
             ->add(new Link())
             ->add(new PublicId())
             ->add(new Description())
