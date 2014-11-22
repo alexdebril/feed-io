@@ -16,7 +16,10 @@ class DateTimeBuilder
     /**
      * @var array
      */
-    protected $dateFormats = array();
+    protected $dateFormats = [
+        \DateTime::RFC2822,
+        \DateTime::ATOM,
+    ];
 
     /**
      * @var \DateTimeZone
