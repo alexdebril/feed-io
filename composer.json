@@ -22,7 +22,7 @@
     },
     "suggest": {
         "guzzlehttp/guzzle": "~4.1",
-        "monolog/monolog": "Allow to handle logs"
+        "monolog/monolog": "Allows to handle logs"
     },
     "autoload": {
         "psr-4": {"FeedIo\\": "src/FeedIo"}
