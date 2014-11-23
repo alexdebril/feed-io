@@ -9,8 +9,17 @@
 namespace FeedIo;
 
 
+use FeedIo\Feed\Item;
+
 class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Very sneaky way to test that setItems iterates over Feed's Items
+     * @see FormatterAbstractTest::testSetItems()
+     * @var int
+     */
+    public static $ITEMS_COUNT = 0;
 
     /**
      * @var \FeedIo\FormatterAbstract
@@ -22,7 +31,11 @@ class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
         $this->object = $this->getMockForAbstractClass('\FeedIo\FormatterAbstract');
         $this->object->expects($this->any())->method('prepare')->will($this->returnArgument(0));
         $this->object->expects($this->any())->method('setHeaders')->will($this->returnSelf());
-        $this->object->expects($this->any())->method('addItem')->will($this->returnSelf());
+        $this->object->expects($this->any())->method('addItem')->will($this->returnCallback(
+            function (){
+                FormatterAbstractTest::$ITEMS_COUNT++;
+            }
+        ));
     }
 
     public function testGetEmptyDocument()
@@ -47,5 +60,15 @@ class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
 
         $this->assertInstanceOf('\DomDocument', $this->object->toDom($feed));
+    }
+
+    public function testSetItems()
+    {
+        $feed = new Feed();
+        $feed->add(new Item());
+        $feed->add(new Item());
+
+        $this->object->setItems($this->object->getDocument(), $feed);
+        $this->assertEquals(2, self::$ITEMS_COUNT);
     }
 }
