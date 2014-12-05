@@ -13,7 +13,7 @@ namespace FeedIo\Parser;
 
 use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
-use Psr\Log\NullLogger;
+use FeedIo\Standard\Atom;
 
 class AtomTest extends ParserTestAbstract
 {
@@ -26,14 +26,11 @@ class AtomTest extends ParserTestAbstract
     protected $object;
 
     /**
-     * @return \FeedIo\ParserAbstract
+     * @return \FeedIo\StandardAbstract
      */
-    public function getObject()
+    public function getStandard()
     {
-        return new Atom(
-            new DateTimeBuilder(),
-            new NullLogger()
-        );
+        return new Atom(new DateTimeBuilder());
     }
 
 }

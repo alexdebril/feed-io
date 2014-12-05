@@ -58,24 +58,25 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \FeedIo\ParserAbstract
+     * @return \FeedIo\Parser
      */
-    protected function getParserMock()
+    protected function getParser()
     {
-        $parser = $this->getMockForAbstractClass(
-            '\FeedIo\ParserAbstract',
-            array(new DateTimeBuilder(), new NullLogger())
+        $standard = $this->getMockForAbstractClass(
+            '\FeedIo\StandardAbstract',
+            array(new DateTimeBuilder())
         );
-        $parser->expects($this->any())->method('canHandle')->will($this->returnValue(true));
-        $parser->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
-        $parser->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
+        $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
+        $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
+        $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
         $file = dirname(__FILE__) . "/../samples/rss/sample-rss.xml";
         $domDocument = new \DOMDocument();
         $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
-        $parser->expects($this->any())->method('getMainElement')->will($this->returnValue(
+        $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(
                 $domDocument->documentElement->getElementsByTagName('channel')->item(0)
             ));
 
+        $parser = new Parser($standard, new NullLogger());
         return $parser;
     }
 
@@ -99,17 +100,17 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddParser()
     {
-        $parser = $this->getParserMock();
+        $parser = $this->getParser();
         $this->object->addParser($parser);
         $this->assertAttributeEquals(array($parser), 'parsers', $this->object);
     }
 
     public function testGetAccurateParser()
     {
-        $this->object->addParser($this->getParserMock());
+        $this->object->addParser($this->getParser());
         $parser = $this->object->getAccurateParser(new \DOMDocument());
 
-        $this->assertInstanceOf('\FeedIo\ParserAbstract', $parser);
+        $this->assertInstanceOf('\FeedIo\Parser', $parser);
     }
 
     /**
@@ -122,7 +123,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testParseDocument()
     {
-        $this->object->addParser($this->getParserMock());
+        $this->object->addParser($this->getParser());
         $feed = $this->object->parseDocument(new \DOMDocument(), new Feed());
 
         $this->assertInstanceOf('\FeedIo\Feed', $feed);
@@ -135,7 +136,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testReadWithModifiedSince()
     {
         $feed = new Feed();
-        $this->object->addParser($this->getParserMock());
+        $this->object->addParser($this->getParser());
         $modifiedSince = new \DateTime();
         $url = 'http://localhost';
         $result = $this->object->read($url, $feed, $modifiedSince);
@@ -151,7 +152,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testReadWithoutModifiedSince()
     {
         $feed = new Feed();
-        $this->object->addParser($this->getParserMock());
+        $this->object->addParser($this->getParser());
         $result = $this->object->read('fakeurl', $feed);
         $this->assertEquals(new \DateTime('@0'), $result->getModifiedSince());
     }

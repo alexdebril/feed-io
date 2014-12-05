@@ -15,7 +15,7 @@ use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
 use Psr\Log\NullLogger;
 
-class ParserAbstractTest extends \PHPUnit_Framework_TestCase
+class ParserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -27,14 +27,16 @@ class ParserAbstractTest extends \PHPUnit_Framework_TestCase
     {
         $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);
-        $this->object = $this->getMockForAbstractClass(
-            '\FeedIo\ParserAbstract',
-            array($date, new NullLogger())
+        $standard = $this->getMockForAbstractClass(
+            '\FeedIo\StandardAbstract',
+            array($date)
         );
-        $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));
-        $this->object->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
-        $this->object->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
-        $this->object->expects($this->any())->method('getMainElement')->will($this->returnValue(new \DOMElement('test')));
+        $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
+        $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
+        $standard->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
+        $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(new \DOMElement('test')));
+
+        $this->object = new Parser($standard, new NullLogger());
     }
 
     public function testParse()
@@ -72,11 +74,12 @@ XML;
         $document = new \DOMDocument();
         $document->loadXML('<feed><items></items></feed>');
 
-        $parser = $this->getMockForAbstractClass(
-            '\FeedIo\ParserAbstract',
-            array(new DateTimeBuilder(), new NullLogger())
+        $standard = $this->getMockForAbstractClass(
+            '\FeedIo\StandardAbstract',
+            array(new DateTimeBuilder())
         );
-        $parser->expects($this->any())->method('canHandle')->will($this->returnValue(false));
+        $standard->expects($this->any())->method('canHandle')->will($this->returnValue(false));
+        $parser = new Parser($standard, new NullLogger());
 
         $parser->parse($document, new Feed());
     }
@@ -110,7 +113,7 @@ RSS;
         $document = new \DOMDocument();
         $document->loadXML($rss);
         $this->assertInstanceOf(
-            '\FeedIo\ParserAbstract',
+            '\FeedIo\Parser',
             $this->object->checkBodyStructure($document, array('channel', 'title'))
         );
     }
@@ -123,7 +126,7 @@ RSS;
         $document = new \DOMDocument();
         $document->loadXML('<rss></rss>');
         $this->assertInstanceOf(
-            '\FeedIo\ParserAbstract',
+            '\FeedIo\Parser',
             $this->object->checkBodyStructure($document, array('channel'))
         );
     }

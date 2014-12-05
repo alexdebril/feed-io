@@ -6,17 +6,16 @@
  * Time: 11:45
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo\Standard;
 
 
 use DOMDocument;
 use FeedIo\Rule\Atom\Link;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
-use FeedIo\Rule\Title;
-use FeedIo\ParserAbstract;
+use FeedIo\StandardAbstract;
 
-class Atom extends ParserAbstract
+class Atom extends StandardAbstract
 {
     /**
      * Atom document must have a <feed> root node

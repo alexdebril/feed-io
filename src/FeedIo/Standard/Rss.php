@@ -8,16 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo\Standard;
 
 
 use DOMDocument;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
-use FeedIo\ParserAbstract;
+use FeedIo\StandardAbstract;
 
-class Rss extends ParserAbstract
+class Rss extends StandardAbstract
 {
     /**
      * RSS document must have a <rss> root node

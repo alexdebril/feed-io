@@ -44,12 +44,12 @@ class Reader
     }
 
     /**
-     * @param ParserAbstract $parser
+     * @param Parser $parser
      * @return $this
      */
-    public function addParser(ParserAbstract $parser)
+    public function addParser(Parser $parser)
     {
-        $this->logger->debug("new parser added : " . get_class($parser));
+        $this->logger->debug("new parser added : " . get_class($parser->getStandard()));
         $this->parsers[] = $parser;
 
         return $this;
@@ -131,7 +131,7 @@ class Reader
     public function getAccurateParser(\DOMDocument $document)
     {
         foreach ($this->parsers as $parser) {
-            if ($parser->canHandle($document)) {
+            if ($parser->getStandard()->canHandle($document)) {
                 return $parser;
             }
         }
