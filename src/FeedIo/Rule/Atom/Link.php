@@ -2,18 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: alex
- * Date: 31/10/14
- * Time: 12:02
+ * Date: 22/11/14
+ * Time: 15:50
  */
 
-namespace FeedIo\Parser\Rule;
+namespace FeedIo\Rule\Atom;
 
 
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Parser\RuleAbstract;
+use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
 {
+
     const NODE_NAME = 'link';
 
     /**
@@ -23,9 +24,12 @@ class Link extends RuleAbstract
      */
     public function set(ItemInterface $item, \DOMElement $element)
     {
-        $item->setLink($element->nodeValue);
+        if ( $element->hasAttribute('href') ) {
+            $item->setLink($element->getAttribute('href'));
+        }
 
         return $this;
     }
+
 
 }

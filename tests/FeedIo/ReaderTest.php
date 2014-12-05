@@ -11,7 +11,7 @@
 namespace FeedIo;
 
 use FeedIo\Adapter\ServerErrorException;
-use FeedIo\Parser\RuleSet;
+use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 use FeedIo\Parser\DateTimeBuilder;
 

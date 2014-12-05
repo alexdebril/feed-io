@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: alex
- * Date: 22/11/14
- * Time: 16:04
+ * Date: 31/10/14
+ * Time: 12:14
  */
 
-namespace FeedIo\Parser\Rule\Atom;
+namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;
@@ -14,6 +14,9 @@ use FeedIo\Feed\Item;
 class LinkTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var \FeedIo\Rule\Link
+     */
     protected $object;
 
     protected function setUp()
@@ -21,15 +24,16 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $this->object = new Link();
     }
 
+    public function testGetNodeName()
+    {
+        $this->assertEquals('link', $this->object->getNodeName());
+    }
+
     public function testSet()
     {
         $item = new Item();
-        $document = new \DOMDocument();
 
-        $link = $document->createElement('link');
-        $link->setAttribute('href', 'http://localhost');
-        $this->object->set($item, $link);
+        $this->object->set($item, new \DOMElement('link', 'http://localhost'));
         $this->assertEquals('http://localhost', $item->getLink());
     }
-
 }

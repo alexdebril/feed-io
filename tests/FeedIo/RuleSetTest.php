@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo;
 
 
 class RuleSetTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
-        $rule = $this->getMockForAbstractClass('\FeedIo\Parser\RuleAbstract');
+        $rule = $this->getMockForAbstractClass('\FeedIo\RuleAbstract');
         $this->object->add($rule);
 
         $this->assertEquals($rule, $this->object->get('node'));

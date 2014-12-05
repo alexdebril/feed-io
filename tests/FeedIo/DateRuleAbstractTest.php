@@ -6,14 +6,16 @@
  * Time: 11:04
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo;
 
+
+use FeedIo\Parser\DateTimeBuilder;
 
 class DateRuleAbstractTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \FeedIo\Parser\DateRuleAbstract
+     * @var \FeedIo\DateRuleAbstract
      */
     protected $object;
 
@@ -25,7 +27,7 @@ class DateRuleAbstractTest extends \PHPUnit_Framework_TestCase
     public function testSetDateTimeBuilder()
     {
         $this->assertInstanceOf(
-            '\FeedIo\Parser\DateRuleAbstract',
+            '\FeedIo\DateRuleAbstract',
             $this->object->setDateTimeBuilder(new DateTimeBuilder())
         );
     }
@@ -46,10 +48,10 @@ class DateRuleAbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \FeedIo\Parser\DateRuleAbstract
+     * @return \FeedIo\DateRuleAbstract
      */
     protected function getDateRule()
     {
-        return $this->getMockForAbstractClass('\FeedIo\Parser\DateRuleAbstract');
+        return $this->getMockForAbstractClass('\FeedIo\DateRuleAbstract');
     }
 }

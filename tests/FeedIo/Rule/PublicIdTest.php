@@ -6,7 +6,7 @@
  * Time: 11:28
  */
 
-namespace FeedIo\Parser\Rule;
+namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;

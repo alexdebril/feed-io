@@ -46,13 +46,13 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
     public function testBuildFeedRuleSet()
     {
         $ruleSet = $this->object->buildFeedRuleSet();
-        $this->assertInstanceOf('\FeedIo\Parser\RuleSet', $ruleSet);
+        $this->assertInstanceOf('\FeedIo\RuleSet', $ruleSet);
     }
 
     public function testBuildItemRuleSet()
     {
         $ruleSet = $this->object->buildItemRuleSet();
-        $this->assertInstanceOf('\FeedIo\Parser\RuleSet', $ruleSet);
+        $this->assertInstanceOf('\FeedIo\RuleSet', $ruleSet);
     }
 
     public function testParseBody()

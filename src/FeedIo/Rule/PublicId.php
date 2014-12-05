@@ -6,11 +6,11 @@
  * Time: 11:24
  */
 
-namespace FeedIo\Parser\Rule;
+namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Parser\RuleAbstract;
+use FeedIo\RuleAbstract;
 
 class PublicId extends RuleAbstract
 {

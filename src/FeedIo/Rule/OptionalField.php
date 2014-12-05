@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser\Rule;
+namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Parser\RuleAbstract;
+use FeedIo\RuleAbstract;
 
 class OptionalField extends RuleAbstract
 {

@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo;
 
-use FeedIo\Parser\Rule\OptionalField;
+use FeedIo\Rule\OptionalField;
 
 class RuleSet
 {

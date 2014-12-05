@@ -14,7 +14,7 @@ namespace FeedIo;
 use FeedIo\Feed\Item;
 use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Parser\Rss;
-use FeedIo\Parser\RuleSet;
+use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase

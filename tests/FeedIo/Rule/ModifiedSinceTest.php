@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser\Rule;
+namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;
@@ -17,7 +17,7 @@ use FeedIo\Parser\DateTimeBuilder;
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \FeedIo\Parser\Rule\ModifiedSince
+     * @var \FeedIo\Rule\ModifiedSince
      */
     protected $object;
 

@@ -8,8 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Parser;
+namespace FeedIo;
 
+
+use FeedIo\Parser\DateTimeBuilder;
 
 abstract class DateRuleAbstract extends RuleAbstract
 {

@@ -10,10 +10,10 @@ namespace FeedIo\Parser;
 
 
 use DOMDocument;
-use FeedIo\Parser\Rule\Atom\Link;
-use FeedIo\Parser\Rule\Description;
-use FeedIo\Parser\Rule\PublicId;
-use FeedIo\Parser\Rule\Title;
+use FeedIo\Rule\Atom\Link;
+use FeedIo\Rule\Description;
+use FeedIo\Rule\PublicId;
+use FeedIo\Rule\Title;
 use FeedIo\ParserAbstract;
 
 class Atom extends ParserAbstract
@@ -46,7 +46,7 @@ class Atom extends ParserAbstract
 
     /**
      * Builds and returns a rule set to parse the root node
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function buildFeedRuleSet()
     {
@@ -62,7 +62,7 @@ class Atom extends ParserAbstract
 
     /**
      * Builds and returns a rule set to parse an item
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function buildItemRuleSet()
     {

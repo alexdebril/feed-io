@@ -12,9 +12,9 @@ namespace FeedIo\Parser;
 
 
 use DOMDocument;
-use FeedIo\Parser\Rule\Description;
-use FeedIo\Parser\Rule\Link;
-use FeedIo\Parser\Rule\PublicId;
+use FeedIo\Rule\Description;
+use FeedIo\Rule\Link;
+use FeedIo\Rule\PublicId;
 use FeedIo\ParserAbstract;
 
 class Rss extends ParserAbstract

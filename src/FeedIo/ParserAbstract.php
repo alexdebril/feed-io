@@ -14,10 +14,10 @@ use \DOMDocument;
 use FeedIo\Parser\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
-use FeedIo\Parser\Rule\Link;
-use FeedIo\Parser\Rule\Title;
-use FeedIo\Parser\RuleSet;
-use FeedIo\Parser\Rule\ModifiedSince;
+use FeedIo\Rule\Link;
+use FeedIo\Rule\Title;
+use FeedIo\RuleSet;
+use FeedIo\Rule\ModifiedSince;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
 
@@ -49,12 +49,12 @@ abstract class ParserAbstract
 
     /**
      * RuleSet used to parse the feed's main node
-     * @var \FeedIo\Parser\RuleSet
+     * @var \FeedIo\RuleSet
      */
     protected $feedRuleSet;
 
     /**
-     * @var \FeedIo\Parser\RuleSet
+     * @var \FeedIo\RuleSet
      */
     protected $itemRuleSet;
 
@@ -83,19 +83,19 @@ abstract class ParserAbstract
 
     /**
      * Builds and returns a rule set to parse the root node
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     abstract public function buildFeedRuleSet();
 
     /**
      * Builds and returns a rule set to parse an item
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     abstract public function buildItemRuleSet();
 
     /**
      * Returns the RuleSet used to parse the feed's main node
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function getFeedRuleSet()
     {
@@ -107,7 +107,7 @@ abstract class ParserAbstract
     }
 
     /**
-     * @return \FeedIo\Parser\RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function getItemRuleSet()
     {
