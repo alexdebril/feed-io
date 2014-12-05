@@ -12,6 +12,7 @@ namespace FeedIo\Parser;
 
 
 use FeedIo\Feed;
+use FeedIo\Rule\DateTimeBuilder;
 use Psr\Log\NullLogger;
 
 class AtomTest extends ParserTestAbstract

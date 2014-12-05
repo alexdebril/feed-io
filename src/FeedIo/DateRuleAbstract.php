@@ -11,7 +11,7 @@
 namespace FeedIo;
 
 
-use FeedIo\Parser\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilder;
 
 abstract class DateRuleAbstract extends RuleAbstract
 {

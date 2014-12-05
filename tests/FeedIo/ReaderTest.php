@@ -13,7 +13,7 @@ namespace FeedIo;
 use FeedIo\Adapter\ServerErrorException;
 use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
-use FeedIo\Parser\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilder;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {

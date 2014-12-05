@@ -12,9 +12,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
-use FeedIo\Parser\DateTimeBuilder;
-use FeedIo\Parser\Rss;
-use FeedIo\RuleSet;
+use FeedIo\Rule\DateTimeBuilder;
 use Psr\Log\NullLogger;
 
 class ParserAbstractTest extends \PHPUnit_Framework_TestCase

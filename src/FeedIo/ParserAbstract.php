@@ -11,12 +11,10 @@
 namespace FeedIo;
 
 use \DOMDocument;
-use FeedIo\Parser\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Parser\MissingFieldsException;
-use FeedIo\Rule\Link;
 use FeedIo\Rule\Title;
-use FeedIo\RuleSet;
 use FeedIo\Rule\ModifiedSince;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;

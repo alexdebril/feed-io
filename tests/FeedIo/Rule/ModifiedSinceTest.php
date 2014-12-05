@@ -12,7 +12,7 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;
-use FeedIo\Parser\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilder;
 
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 {
@@ -57,6 +57,6 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDate()
     {
-        $this->assertInstanceOf('\FeedIo\Parser\DateTimeBuilder', $this->object->getDateTimeBuilder());
+        $this->assertInstanceOf('\FeedIo\Rule\DateTimeBuilder', $this->object->getDateTimeBuilder());
     }
 }
