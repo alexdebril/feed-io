@@ -22,7 +22,7 @@ class Description extends RuleAbstract
      * @param \DOMElement $element
      * @return $this
      */
-    public function set(ItemInterface $item, \DOMElement $element)
+    public function setFromElement(ItemInterface $item, \DOMElement $element)
     {
         $item->setDescription($element->nodeValue);
 

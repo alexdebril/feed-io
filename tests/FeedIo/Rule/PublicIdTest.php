@@ -14,6 +14,9 @@ use FeedIo\Feed\Item;
 class PublicIdTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var PublicId
+     */
     protected $object;
 
     protected function setUp()
@@ -30,7 +33,7 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
     {
         $item = new Item();
 
-        $this->object->set($item, new \DOMElement('guid', 'foo'));
+        $this->object->setFromElement($item, new \DOMElement('guid', 'foo'));
         $this->assertEquals('foo', $item->getPublicId());
     }
 }

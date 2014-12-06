@@ -33,7 +33,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
     {
         $item = new Item();
 
-        $this->object->set($item, new \DOMElement('link', 'http://localhost'));
+        $this->object->setFromElement($item, new \DOMElement('link', 'http://localhost'));
         $this->assertEquals('http://localhost', $item->getLink());
     }
 }

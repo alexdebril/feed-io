@@ -43,5 +43,5 @@ abstract class RuleAbstract
      * @param \DOMElement $element
      * @return mixed
      */
-    abstract public function set(ItemInterface $item, \DOMElement $element);
+    abstract public function setFromElement(ItemInterface $item, \DOMElement $element);
 }

@@ -14,6 +14,9 @@ use FeedIo\Feed\Item;
 class LinkTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var Link
+     */
     protected $object;
 
     protected function setUp()
@@ -28,7 +31,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
         $link = $document->createElement('link');
         $link->setAttribute('href', 'http://localhost');
-        $this->object->set($item, $link);
+        $this->object->setFromElement($item, $link);
         $this->assertEquals('http://localhost', $item->getLink());
     }
 

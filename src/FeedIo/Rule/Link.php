@@ -21,7 +21,7 @@ class Link extends RuleAbstract
      * @param \DOMElement $element
      * @return mixed
      */
-    public function set(ItemInterface $item, \DOMElement $element)
+    public function setFromElement(ItemInterface $item, \DOMElement $element)
     {
         $item->setLink($element->nodeValue);
 

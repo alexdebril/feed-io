@@ -24,7 +24,7 @@ class OptionalField extends RuleAbstract
      * @param \DOMElement $element
      * @return $this
      */
-    public function set(ItemInterface $item, \DOMElement $element)
+    public function setFromElement(ItemInterface $item, \DOMElement $element)
     {
         $item->getOptionalFields()->set($element->nodeName, $element->nodeValue);
 
