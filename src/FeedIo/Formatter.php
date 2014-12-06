@@ -10,30 +10,60 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\ItemInterface;
+use Psr\Log\LoggerInterface;
 
-abstract class FormatterAbstract
+class Formatter
 {
 
     /**
-     * Prepares the DOM Document according to the format's specifications
-     * @param \DOMDocument $document
-     * @return \DOMDocument
+     * @var StandardAbstract
      */
-    abstract public function prepare(\DOMDocument $document);
+    protected $standard;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @param StandardAbstract $standard
+     * @param LoggerInterface $logger
+     */
+    function __construct(StandardAbstract $standard, LoggerInterface $logger)
+    {
+        $this->standard = $standard;
+        $this->logger = $logger;
+    }
+
 
     /**
      * @param \DOMDocument $document
      * @param FeedInterface $feed
      * @return $this
      */
-    abstract public function setHeaders(\DOMDocument$document, FeedInterface $feed);
+    public function setHeaders(\DOMDocument $document, FeedInterface $feed)
+    {
+        $rules = $this->standard->getFeedRuleSet()->getRules();
+
+    }
 
     /**
      * @param \DOMDocument $document
      * @param ItemInterface $item
      * @return $this
      */
-    abstract public function addItem(\DOMDocument$document, ItemInterface $item);
+    public function addItem(\DOMDocument $document, ItemInterface $item)
+    {
+
+    }
+
+    public function applyRules(RuleSet $ruleSet, DOMDocument $document, ItemInterface $feed)
+    {
+        $rules = $ruleSet->getRules();
+        foreach( $rules as $rule ) {
+
+        }
+    }
 
     /**
      * @return \DOMDocument
@@ -50,7 +80,7 @@ abstract class FormatterAbstract
     {
         $document = $this->getEmptyDocument();
 
-        return $this->prepare($document);
+        return $this->standard->format($document);
     }
 
     /**

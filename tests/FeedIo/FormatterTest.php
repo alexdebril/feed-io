@@ -10,16 +10,11 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
+use FeedIo\Rule\DateTimeBuilder;
+use Psr\Log\NullLogger;
 
-class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
+class FormatterTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * Very sneaky way to test that setItems iterates over Feed's Items
-     * @see FormatterAbstractTest::testSetItems()
-     * @var int
-     */
-    public static $ITEMS_COUNT = 0;
 
     /**
      * @var \FeedIo\FormatterAbstract
@@ -28,14 +23,13 @@ class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->object = $this->getMockForAbstractClass('\FeedIo\FormatterAbstract');
-        $this->object->expects($this->any())->method('prepare')->will($this->returnArgument(0));
-        $this->object->expects($this->any())->method('setHeaders')->will($this->returnSelf());
-        $this->object->expects($this->any())->method('addItem')->will($this->returnCallback(
-            function (){
-                FormatterAbstractTest::$ITEMS_COUNT++;
-            }
-        ));
+        $standard = $this->getMockForAbstractClass('\FeedIo\StandardAbstract', array(new DateTimeBuilder()));
+        $standard->expects($this->any())->method('format')->will($this->returnArgument(0));
+        $standard->expects($this->any())->method('setHeaders')->will($this->returnSelf());
+        $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
+        $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
+
+        $this->object = new Formatter($standard, new NullLogger());
     }
 
     public function testGetEmptyDocument()
@@ -69,6 +63,6 @@ class FormatterAbstractTest extends \PHPUnit_Framework_TestCase
         $feed->add(new Item());
 
         $this->object->setItems($this->object->getDocument(), $feed);
-        $this->assertEquals(2, self::$ITEMS_COUNT);
+        
     }
 }

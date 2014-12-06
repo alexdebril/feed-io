@@ -25,6 +25,16 @@ class Rss extends StandardAbstract
     const ROOT_NODE_TAGNAME = 'rss';
 
     /**
+     * Formats the document according to the standard's specification
+     * @param \DOMDocument $document
+     * @return mixed
+     */
+    public function format(\DOMDocument $document)
+    {
+        // TODO: Implement format() method.
+    }
+
+    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
      * @return boolean

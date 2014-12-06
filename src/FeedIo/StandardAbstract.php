@@ -50,6 +50,13 @@ abstract class StandardAbstract
     }
 
     /**
+     * Formats the document according to the standard's specification
+     * @param \DOMDocument $document
+     * @return mixed
+     */
+    abstract public function format(\DOMDocument $document);
+
+    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
      * @return mixed

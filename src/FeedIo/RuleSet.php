@@ -31,6 +31,14 @@ class RuleSet
     }
 
     /**
+     * @return \ArrayIterator
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    /**
      * @param RuleAbstract $rule
      * @return $this
      */

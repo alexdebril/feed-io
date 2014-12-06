@@ -25,6 +25,16 @@ class Atom extends StandardAbstract
     const ITEM_NODE = 'entry';
 
     /**
+     * Formats the document according to the standard's specification
+     * @param \DOMDocument $document
+     * @return mixed
+     */
+    public function format(\DOMDocument $document)
+    {
+        // TODO: Implement format() method.
+    }
+
+    /**
      * Tells if the parser can handle the feed or not
      * @param \DOMDocument $document
      * @return mixed
