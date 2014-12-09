@@ -133,7 +133,7 @@ class Parser
                     $this->addValidItem($item, $newItem);
                 } else {
                     $rule = $ruleSet->get($node->tagName);
-                    $rule->setFromElement($item, $node);
+                    $rule->setProperty($item, $node);
                 }
             }
         }

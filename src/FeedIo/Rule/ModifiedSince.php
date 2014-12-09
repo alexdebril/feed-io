@@ -22,11 +22,27 @@ class ModifiedSince extends DateRuleAbstract
      * @param \DOMElement $element
      * @return $this
      */
-    public function setFromElement(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         $item->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
 
         return $this;
     }
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DomDocument $document
+     * @param ItemInterface $item
+     * @return \DomElement
+     */
+    public function createElement(\DomDocument $document, ItemInterface $item)
+    {
+        return $document->createElement(
+            $this->getNodeName(),
+            \DateTime::createFromFormat($this->getDefaultFormat(), $item->getLastModified())
+        );
+    }
+
 
 }

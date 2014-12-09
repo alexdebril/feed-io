@@ -21,11 +21,24 @@ class Link extends RuleAbstract
      * @param \DOMElement $element
      * @return mixed
      */
-    public function setFromElement(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         $item->setLink($element->nodeValue);
 
         return $this;
     }
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DomDocument $document
+     * @param ItemInterface $item
+     * @return \DomElement
+     */
+    public function createElement(\DomDocument $document, ItemInterface $item)
+    {
+        return $document->createElement($this->getNodeName(), $item->getLink());
+    }
+
 
 }

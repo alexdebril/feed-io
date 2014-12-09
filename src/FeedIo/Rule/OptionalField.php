@@ -24,11 +24,29 @@ class OptionalField extends RuleAbstract
      * @param \DOMElement $element
      * @return $this
      */
-    public function setFromElement(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         $item->getOptionalFields()->set($element->nodeName, $element->nodeValue);
 
         return $this;
     }
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DomDocument $document
+     * @param ItemInterface $item
+     * @return \DomElement
+     */
+    public function createElement(\DomDocument $document, ItemInterface $item)
+    {
+        $element = $document->createElement($item);
+        if ( $item->getOptionalFields()->has($this->getNodeName()) ) {
+            $element->nodeValue = $item->getOptionalFields()->get($this->getNodeName());
+        }
+
+        return $element;
+    }
+
 
 }

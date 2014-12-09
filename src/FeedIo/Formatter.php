@@ -43,8 +43,13 @@ class Formatter
      */
     public function setHeaders(\DOMDocument $document, FeedInterface $feed)
     {
-        $rules = $this->standard->getFeedRuleSet()->getRules();
+        $rules = $this->standard->getFeedRuleSet();
+        $elements = $this->buildElements($rules, $document, $feed);
+        foreach ($elements as $element) {
+            $document->documentElement->firstChild->appendChild($element);
+        }
 
+        return $this;
     }
 
     /**
@@ -54,15 +59,34 @@ class Formatter
      */
     public function addItem(\DOMDocument $document, ItemInterface $item)
     {
+        $domItem = $document->createElement($this->standard->getItemNodeName());
+        $rules = $this->standard->getItemRuleSet();
+        $elements = $this->buildElements($rules, $document, $item);
 
+        foreach( $elements as $element ) {
+            $domItem->appendChild($element);
+        }
+
+        $document->documentElement->firstChild->appendChild($domItem);
+
+        return $this;
     }
 
-    public function applyRules(RuleSet $ruleSet, DOMDocument $document, ItemInterface $feed)
+    /**
+     * @param RuleSet $ruleSet
+     * @param \DOMDocument $document
+     * @param ItemInterface $item
+     * @return array
+     */
+    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, ItemInterface $item)
     {
         $rules = $ruleSet->getRules();
+        $elements = array();
         foreach( $rules as $rule ) {
-
+            $elements[] = $rule->createElement($document, $item);
         }
+
+        return $elements;
     }
 
     /**
@@ -91,7 +115,7 @@ class Formatter
     {
         $document = $this->toDom($feed);
 
-        return$document->saveXML();
+        return $document->saveXML();
     }
 
     /**

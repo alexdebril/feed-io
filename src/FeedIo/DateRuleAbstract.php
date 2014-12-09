@@ -21,6 +21,11 @@ abstract class DateRuleAbstract extends RuleAbstract
     protected $dateTimeBuilder = null;
 
     /**
+     * @var string
+     */
+    protected $defaultFormat = \DateTime::RSS;
+
+    /**
      * @param DateTimeBuilder $dateTimeBuilder
      * @return $this
      */
@@ -42,4 +47,21 @@ abstract class DateRuleAbstract extends RuleAbstract
 
         return $this->dateTimeBuilder;
     }
+
+    /**
+     * @return string
+     */
+    public function getDefaultFormat()
+    {
+        return $this->defaultFormat;
+    }
+
+    /**
+     * @param string $defaultFormat
+     */
+    public function setDefaultFormat($defaultFormat)
+    {
+        $this->defaultFormat = $defaultFormat;
+    }
+
 }

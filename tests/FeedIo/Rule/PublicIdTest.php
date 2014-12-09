@@ -33,7 +33,7 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
     {
         $item = new Item();
 
-        $this->object->setFromElement($item, new \DOMElement('guid', 'foo'));
+        $this->object->setProperty($item, new \DOMElement('guid', 'foo'));
         $this->assertEquals('foo', $item->getPublicId());
     }
 }

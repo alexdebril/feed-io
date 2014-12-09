@@ -39,9 +39,21 @@ abstract class RuleAbstract
     }
 
     /**
+     * Sets the accurate $item property according to the DomElement content
+     *
      * @param ItemInterface $item
      * @param \DOMElement $element
      * @return mixed
      */
-    abstract public function setFromElement(ItemInterface $item, \DOMElement $element);
+    abstract public function setProperty(ItemInterface $item, \DOMElement $element);
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DomDocument $document
+     * @param ItemInterface $item
+     * @return \DomElement
+     */
+    abstract public function createElement(\DomDocument $document, ItemInterface $item);
+
 }

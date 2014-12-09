@@ -11,23 +11,30 @@ namespace FeedIo;
 
 use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\Title;
 use Psr\Log\NullLogger;
 
 class FormatterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \FeedIo\FormatterAbstract
+     * @var \FeedIo\Formatter
      */
     protected $object;
 
     protected function setUp()
     {
+        $ruleSet = new RuleSet();
+        $ruleSet->add(new Title());
+        $document = new \DOMDocument();
+        $document->loadXML('<channel><feed></feed></channel>');
         $standard = $this->getMockForAbstractClass('\FeedIo\StandardAbstract', array(new DateTimeBuilder()));
-        $standard->expects($this->any())->method('format')->will($this->returnArgument(0));
+        $standard->expects($this->any())->method('format')->will($this->returnValue(
+            $document
+        ));
         $standard->expects($this->any())->method('setHeaders')->will($this->returnSelf());
-        $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
-        $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
+        $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue($ruleSet));
+        $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue($ruleSet));
 
         $this->object = new Formatter($standard, new NullLogger());
     }
@@ -45,8 +52,10 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $feed = new Feed();
-
-        $this->assertInternalType('string', $this->object->toString($feed));
+        $feed->setTitle('foo-bar');
+        $out = $this->object->toString($feed);
+        $this->assertInternalType('string', $out);
+        $this->assertContains('foo-bar', $out);
     }
 
     public function testToDom()
@@ -62,7 +71,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $feed->add(new Item());
         $feed->add(new Item());
 
-        $this->object->setItems($this->object->getDocument(), $feed);
-        
+        $document = $this->object->getDocument();
+        $this->object->setItems($document, $feed);
+
+        $this->assertEquals(2, $document->getElementsByTagName('item')->length);
     }
 }

@@ -31,7 +31,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
         $link = $document->createElement('link');
         $link->setAttribute('href', 'http://localhost');
-        $this->object->setFromElement($item, $link);
+        $this->object->setProperty($item, $link);
         $this->assertEquals('http://localhost', $item->getLink());
     }
 

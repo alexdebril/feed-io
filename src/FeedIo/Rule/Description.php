@@ -22,11 +22,23 @@ class Description extends RuleAbstract
      * @param \DOMElement $element
      * @return $this
      */
-    public function setFromElement(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         $item->setDescription($element->nodeValue);
 
         return $this;
+    }
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DOMDocument $document
+     * @param ItemInterface $item
+     * @return \DOMElement
+     */
+    public function createElement(\DOMDocument $document, ItemInterface $item)
+    {
+        return $document->createElement(static::NODE_NAME, $item->getDescription());
     }
 
 }

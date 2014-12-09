@@ -31,7 +31,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     {
         $item = new Item();
 
-        $this->object->setFromElement($item, new \DOMElement('description', 'lorem ipsum'));
+        $this->object->setProperty($item, new \DOMElement('description', 'lorem ipsum'));
         $this->assertEquals('lorem ipsum', $item->getDescription());
     }
 }

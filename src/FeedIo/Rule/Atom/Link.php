@@ -22,13 +22,28 @@ class Link extends RuleAbstract
      * @param \DOMElement $element
      * @return mixed
      */
-    public function setFromElement(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         if ( $element->hasAttribute('href') ) {
             $item->setLink($element->getAttribute('href'));
         }
 
         return $this;
+    }
+
+    /**
+     * creates the accurate DomElement content according to the $item's property
+     *
+     * @param \DomDocument $document
+     * @param ItemInterface $item
+     * @return \DomElement
+     */
+    public function createElement(\DomDocument $document, ItemInterface $item)
+    {
+        $element = $document->createElement($this->getNodeName());
+        $element->setAttribute('href', $item->getLink());
+
+        return $element;
     }
 
 
