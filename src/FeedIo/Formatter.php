@@ -10,6 +10,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Rule\OptionalField;
 use Psr\Log\LoggerInterface;
 
 class Formatter
@@ -80,13 +81,29 @@ class Formatter
      */
     public function buildElements(RuleSet $ruleSet, \DOMDocument $document, ItemInterface $item)
     {
-        $rules = $ruleSet->getRules();
+        $rules = $this->getAllRules($ruleSet, $item);
         $elements = array();
         foreach( $rules as $rule ) {
             $elements[] = $rule->createElement($document, $item);
         }
 
         return $elements;
+    }
+
+    /**
+     * @param RuleSet $ruleSet
+     * @param ItemInterface $item
+     * @return array|\ArrayIterator
+     */
+    public function getAllRules(RuleSet $ruleSet, ItemInterface $item)
+    {
+        $rules = $ruleSet->getRules();
+        $optionalFields = $item->getOptionalFields()->getFields();
+        foreach( $optionalFields as $optionalField ) {
+            $rules[] = new OptionalField($optionalField);
+        }
+
+        return $rules;
     }
 
     /**
