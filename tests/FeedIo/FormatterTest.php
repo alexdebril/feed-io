@@ -49,6 +49,22 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DomDocument', $this->object->getDocument());
     }
 
+    public function testGetAllRules()
+    {
+        $item = new Item();
+        $item->getOptionalFields()->set('title', 'the title');
+        $item->getOptionalFields()->set('description', 'the description');
+
+        $rules = $this->object->getAllRules(new RuleSet(), $item);
+        $this->assertCount(2, $rules);
+
+        $ruleNames = array('title', 'description');
+        foreach( $rules as $rule ) {
+            $this->assertEquals(current($ruleNames), $rule->getNodeName());
+            next($ruleNames);
+        }
+    }
+
     public function testToString()
     {
         $feed = new Feed();
