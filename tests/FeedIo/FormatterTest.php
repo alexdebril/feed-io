@@ -32,6 +32,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $standard->expects($this->any())->method('format')->will($this->returnValue(
             $document
         ));
+        $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(
+            $document->documentElement->firstChild
+        ));
         $standard->expects($this->any())->method('setHeaders')->will($this->returnSelf());
         $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue($ruleSet));
         $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue($ruleSet));
@@ -72,6 +75,9 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $out = $this->object->toString($feed);
         $this->assertInternalType('string', $out);
         $this->assertContains('foo-bar', $out);
+        $this->assertEquals('<?xml version="1.0"?>
+<channel><feed><title>foo-bar</title></feed></channel>
+', $out);
     }
 
     public function testToDom()

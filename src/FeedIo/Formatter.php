@@ -47,7 +47,7 @@ class Formatter
         $rules = $this->standard->getFeedRuleSet();
         $elements = $this->buildElements($rules, $document, $feed);
         foreach ($elements as $element) {
-            $document->documentElement->firstChild->appendChild($element);
+            $this->standard->getMainElement($document)->appendChild($element);
         }
 
         return $this;
@@ -68,7 +68,7 @@ class Formatter
             $domItem->appendChild($element);
         }
 
-        $document->documentElement->firstChild->appendChild($domItem);
+        $this->standard->getMainElement($document)->appendChild($domItem);
 
         return $this;
     }
