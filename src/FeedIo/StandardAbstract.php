@@ -21,6 +21,11 @@ abstract class StandardAbstract
     const ITEM_NODE = 'item';
 
     /**
+     * DateTime default format
+     */
+    const DATETIME_FORMAT = \DateTime::RFC2822;
+
+    /**
      * @var array
      */
     protected $mandatoryFields = array();
@@ -90,6 +95,14 @@ abstract class StandardAbstract
     }
 
     /**
+     * @return string
+     */
+    public function getDefaultDateFormat()
+    {
+        return static::DATETIME_FORMAT;
+    }
+
+    /**
      * @return array
      */
     public function getMandatoryFields()
@@ -129,6 +142,7 @@ abstract class StandardAbstract
     public function getModifiedSinceRule($tagName)
     {
         $rule = new ModifiedSince($tagName);
+        $rule->setDefaultFormat($this->getDefaultDateFormat());
         $rule->setDateTimeBuilder($this->dateTimeBuilder);
 
         return $rule;
