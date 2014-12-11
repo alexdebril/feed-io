@@ -40,7 +40,7 @@ class OptionalField extends RuleAbstract
      */
     public function createElement(\DomDocument $document, ItemInterface $item)
     {
-        $element = $document->createElement($item);
+        $element = $document->createElement($this->getNodeName());
         if ( $item->getOptionalFields()->has($this->getNodeName()) ) {
             $element->nodeValue = $item->getOptionalFields()->get($this->getNodeName());
         }
