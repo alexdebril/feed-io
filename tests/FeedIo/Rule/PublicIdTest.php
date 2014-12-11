@@ -19,6 +19,8 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    const PUBLIC_ID = 'a12';
+
     protected function setUp()
     {
         $this->object = new PublicId();
@@ -35,5 +37,16 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
 
         $this->object->setProperty($item, new \DOMElement('guid', 'foo'));
         $this->assertEquals('foo', $item->getPublicId());
+    }
+
+    public function testCreateElement()
+    {
+        $item = new Item();
+        $item->setPublicId(self::PUBLIC_ID);
+
+        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $this->assertInstanceOf('\DomElement', $element);
+        $this->assertEquals(self::PUBLIC_ID, $element->nodeValue);
+        $this->assertEquals('guid', $element->nodeName);
     }
 }

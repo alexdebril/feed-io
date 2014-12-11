@@ -19,6 +19,8 @@ class LinkTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    const LINK = 'http://localhost';
+
     protected function setUp()
     {
         $this->object = new Link();
@@ -33,7 +35,18 @@ class LinkTest extends \PHPUnit_Framework_TestCase
     {
         $item = new Item();
 
-        $this->object->setProperty($item, new \DOMElement('link', 'http://localhost'));
-        $this->assertEquals('http://localhost', $item->getLink());
+        $this->object->setProperty($item, new \DOMElement('link', self::LINK));
+        $this->assertEquals(self::LINK, $item->getLink());
+    }
+
+    public function testCreateElement()
+    {
+        $item = new Item();
+        $item->setLink(self::LINK);
+
+        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $this->assertInstanceOf('\DomElement', $element);
+        $this->assertEquals(self::LINK, $element->nodeValue);
+        $this->assertEquals('link', $element->nodeName);
     }
 }

@@ -20,6 +20,8 @@ class TitleTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    const TITLE = 'my great article';
+
     protected function setUp()
     {
         $this->object = new Title();
@@ -36,6 +38,17 @@ class TitleTest extends \PHPUnit_Framework_TestCase
 
         $this->object->setProperty($item, new \DOMElement('title', 'feed-io title'));
         $this->assertEquals('feed-io title', $item->getTitle());
+    }
+
+    public function testCreateElement()
+    {
+        $item = new Item();
+        $item->setTitle(self::TITLE);
+
+        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $this->assertInstanceOf('\DomElement', $element);
+        $this->assertEquals(self::TITLE, $element->nodeValue);
+        $this->assertEquals('title', $element->nodeName);
     }
 
 }
