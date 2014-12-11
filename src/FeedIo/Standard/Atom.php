@@ -27,11 +27,15 @@ class Atom extends StandardAbstract
     /**
      * Formats the document according to the standard's specification
      * @param \DOMDocument $document
-     * @return mixed
+     * @return \DOMDocument
      */
     public function format(\DOMDocument $document)
     {
-        // TODO: Implement format() method.
+        $element = $document->createElement('feed');
+        $element->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
+        $document->appendChild($element);
+
+        return $document;
     }
 
     /**

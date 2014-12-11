@@ -31,7 +31,13 @@ class Rss extends StandardAbstract
      */
     public function format(\DOMDocument $document)
     {
-        // TODO: Implement format() method.
+        $rss = $document->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $channel = $document->createElement('channel');
+        $rss->appendChild($channel);
+        $document->appendChild($rss);
+
+        return $document;
     }
 
     /**
