@@ -59,4 +59,17 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('\FeedIo\Rule\DateTimeBuilder', $this->object->getDateTimeBuilder());
     }
+
+    public function testCreateElement()
+    {
+        $item = new Item();
+        $date = new \DateTime();
+        $item->setLastModified($date);
+        $this->object->setDefaultFormat(\DateTime::ATOM);
+
+        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $this->assertInstanceOf('\DomElement', $element);
+        $this->assertEquals($date->format(\DateTime::ATOM), $element->nodeValue);
+        $this->assertEquals('pubDate', $element->nodeName);
+    }
 }

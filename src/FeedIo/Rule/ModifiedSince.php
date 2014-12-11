@@ -40,7 +40,7 @@ class ModifiedSince extends DateRuleAbstract
     {
         return $document->createElement(
             $this->getNodeName(),
-            \DateTime::createFromFormat($this->getDefaultFormat(), $item->getLastModified())
+            $item->getLastModified()->format($this->getDefaultFormat())
         );
     }
 
