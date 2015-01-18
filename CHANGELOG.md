@@ -1,6 +1,30 @@
 CHANGELOG
 =========
 
+0.3.1 (2015-01-18)
+------------------
+
+* updated the Changelog
+
+0.3.0 (2014-12-13)
+------------------
+
+* Removed ParserAbstract, Parser/Rss Parser/Atom
+* Added Parser class. This class parses a Feed using a Standard
+* Added StandardAbstract
+* Added Standard/Atom
+* Added Standard/Rss
+* Added Formatter class. This class formats a Feed using a Standard 
+
+0.2.0 (2014-11-23)
+------------------
+
+* added ClientInterface to handle HTTP queries
+* added ParserAbstract
+* added Parser/Rss
+* added Parser/atom
+* Feed now extends Item
+
 0.1.0 (2014-09-06)
 ------------------
 
