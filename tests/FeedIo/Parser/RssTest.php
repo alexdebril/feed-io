@@ -12,7 +12,8 @@ namespace FeedIo\Parser;
 
 
 use FeedIo\Feed;
-use Psr\Log\NullLogger;
+use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Standard\Rss;
 
 class RssTest extends ParserTestAbstract
 {
@@ -20,13 +21,10 @@ class RssTest extends ParserTestAbstract
     const SAMPLE_FILE = 'rss/sample-rss.xml';
 
     /**
-     * @return \FeedIo\ParserAbstract
+     * @return \FeedIo\StandardAbstract
      */
-    public function getObject()
+    public function getStandard()
     {
-        return new Rss(
-            new DateTimeBuilder(),
-            new NullLogger()
-        );
+        return new Rss(new DateTimeBuilder());
     }
 }

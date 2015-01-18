@@ -10,6 +10,8 @@ namespace FeedIo\Parser;
 
 
 use FeedIo\Feed;
+use FeedIo\Parser;
+use Psr\Log\NullLogger;
 
 abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
 {
@@ -21,38 +23,39 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
     const SAMPLE_FILE = '';
 
     /**
-     * @return \FeedIo\ParserAbstract
+     * @return \FeedIo\StandardAbstract
      */
-    abstract public function getObject();
+    abstract public function getStandard();
 
     public function setUp()
     {
-        $this->object = $this->getObject();
+        $standard = $this->getStandard();
+        $this->object = new Parser($standard, new NullLogger());
     }
 
     public function testCanHandle()
     {
         $document = $this->buildDomDocument(static::SAMPLE_FILE);
-        $this->assertTrue($this->object->canHandle($document));
+        $this->assertTrue($this->object->getStandard()->canHandle($document));
     }
 
     public function testGetMainElement()
     {
         $document = $this->buildDomDocument(static::SAMPLE_FILE);
-        $element = $this->object->getMainElement($document);
+        $element = $this->object->getStandard()->getMainElement($document);
         $this->assertInstanceOf('\DomElement', $element);
     }
 
     public function testBuildFeedRuleSet()
     {
-        $ruleSet = $this->object->buildFeedRuleSet();
-        $this->assertInstanceOf('\FeedIo\Parser\RuleSet', $ruleSet);
+        $ruleSet = $this->object->getStandard()->buildFeedRuleSet();
+        $this->assertInstanceOf('\FeedIo\RuleSet', $ruleSet);
     }
 
     public function testBuildItemRuleSet()
     {
-        $ruleSet = $this->object->buildItemRuleSet();
-        $this->assertInstanceOf('\FeedIo\Parser\RuleSet', $ruleSet);
+        $ruleSet = $this->object->getStandard()->buildItemRuleSet();
+        $this->assertInstanceOf('\FeedIo\RuleSet', $ruleSet);
     }
 
     public function testParseBody()
