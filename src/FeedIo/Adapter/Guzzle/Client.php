@@ -50,5 +50,4 @@ class Client implements ClientInterface
         }
     }
 
-
 }

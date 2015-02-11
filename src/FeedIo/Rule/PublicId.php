@@ -40,5 +40,4 @@ class PublicId extends RuleAbstract
         return $document->createElement($this->getNodeName(), $item->getPublicId());
     }
 
-
 }
