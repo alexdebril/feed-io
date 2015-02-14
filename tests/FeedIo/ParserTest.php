@@ -61,6 +61,7 @@ XML;
         $feed = new Feed();
         $this->object->parseNode($feed, $document->documentElement, new RuleSet());
 
+        $this->assertInternalType('string', $feed->getOptionalFields()->get('description'));
         $this->assertEquals('feed-io is a library', $feed->getOptionalFields()->get('description'));
         $this->assertEquals('feed-io', $feed->getOptionalFields()->get('title'));
         $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getOptionalFields()->get('link'));
