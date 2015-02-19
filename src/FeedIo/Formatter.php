@@ -30,7 +30,7 @@ class Formatter
      * @param StandardAbstract $standard
      * @param LoggerInterface $logger
      */
-    function __construct(StandardAbstract $standard, LoggerInterface $logger)
+    public function __construct(StandardAbstract $standard, LoggerInterface $logger)
     {
         $this->standard = $standard;
         $this->logger = $logger;
