@@ -45,9 +45,8 @@ class FeedIo
     public function __construct(ClientInterface $client, LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->reader = new Reader($client, $logger);
         $this->dateTimeBuilder = new DateTimeBuilder;
-        
+        $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
     }
     
@@ -74,7 +73,7 @@ class FeedIo
             'rss' => new Rss($this->dateTimeBuilder),
         );
     }
-    
+     
     /**
      * @param string $name
      * @param \FeedIo\StandardAbstract $standard
@@ -91,6 +90,33 @@ class FeedIo
         return $this;
     }
     
+    /**
+     * @return \FeedIo\Rule\DateTimeBuilder
+     */
+    public function getDateTimeBuilder()
+    {
+        return $this->dateTimeBuilder;
+    }
+    
+    /**
+     * @return \FeedIo\Reader
+     */
+    public function getReader()
+    {
+        return $this->reader;
+    }
+    
+    /**
+     * @param \FeedIo\Reader
+     * @return $this
+     */
+    public function setReader(Reader $reader)
+    {
+        $this->reader = $reader;
+        
+        return $this:
+    }
+
     /**
      * @param $url
      * @param FeedInterface $feed
