@@ -108,6 +108,16 @@ class FeedIo
     }
     
     /**
+     * @param $url
+     * @param \DateTime $modifiedSince
+     * @return \FeedIo\Reader\Result
+     */ 
+    public function readSince($url, \DateTime $modifiedSince)
+    {
+        return $this->read($url, new Feed, $modifiedSince);
+    }
+    
+    /**
      * @param FeedInterface $feed
      * @param string $standard Standard's name
      * @return \DomDocument
