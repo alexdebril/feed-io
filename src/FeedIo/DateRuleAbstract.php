@@ -16,7 +16,7 @@ use FeedIo\Rule\DateTimeBuilder;
 abstract class DateRuleAbstract extends RuleAbstract
 {
     /**
-     * @var \FeedIo\Parser\DateTimeBuilder
+     * @var \FeedIo\Rule\DateTimeBuilder
      */
     protected $dateTimeBuilder = null;
 
@@ -26,7 +26,7 @@ abstract class DateRuleAbstract extends RuleAbstract
     protected $defaultFormat = \DateTime::RSS;
 
     /**
-     * @param DateTimeBuilder $dateTimeBuilder
+     * @param \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
      * @return $this
      */
     public function setDateTimeBuilder(DateTimeBuilder $dateTimeBuilder)
