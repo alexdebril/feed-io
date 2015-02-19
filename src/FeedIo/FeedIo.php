@@ -12,7 +12,7 @@ namespace FeedIo;
 
 use \FeedIo\Reader;
 use \FeedIo\Rule\DateTimeBuilder;
-use \FeedIo\Adapter\ClientInterface
+use \FeedIo\Adapter\ClientInterface;
 use \Psr\Log\LoggerInterface;
 
 class FeedIo
@@ -114,7 +114,7 @@ class FeedIo
     {
         $this->reader = $reader;
         
-        return $this:
+        return $this;
     }
 
     /**
