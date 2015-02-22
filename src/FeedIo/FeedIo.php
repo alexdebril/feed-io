@@ -13,6 +13,8 @@ namespace FeedIo;
 use \FeedIo\Reader;
 use \FeedIo\Rule\DateTimeBuilder;
 use \FeedIo\Adapter\ClientInterface;
+use FeedIo\Standard\Atom;
+use FeedIo\Standard\Rss;
 use \Psr\Log\LoggerInterface;
 
 class FeedIo
