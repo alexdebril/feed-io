@@ -180,7 +180,7 @@ class FeedIo
     /**
      * @param string $name
      * @return \FeedIo\StandardAbstract
-     * @throws \InvalidArgumentException
+     * @throws \OutOfBoundsException
      */
     public function getStandard($name)
     {
@@ -189,7 +189,7 @@ class FeedIo
             return $this->standards[$name];
         }
         
-        throw new \InvalidArgument("no standard found for $name");
+        throw new \OutOfBoundsException("no standard found for $name");
     }
     
     /**
