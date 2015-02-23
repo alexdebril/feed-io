@@ -14,11 +14,18 @@ namespace FeedIo\Rule;
 class DateTimeBuilder
 {
     /**
+     * Supported date formats
      * @var array
      */
     protected $dateFormats = [
         \DateTime::RFC2822,
         \DateTime::ATOM,
+        \DateTime::RFC3339,
+        \DateTime::RSS,
+        \DateTime::W3C,
+        'Y-m-d\TH:i:s.uP',
+        'Y-m-d',
+        'd/m/Y',
     ];
 
     /**

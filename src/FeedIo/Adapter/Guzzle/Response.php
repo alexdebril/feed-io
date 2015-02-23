@@ -45,7 +45,7 @@ class Response implements ResponseInterface
 
     /**
      * @param string $name
-     * @return string
+     * @return array|string
      */
     public function getHeader($name)
     {

@@ -31,7 +31,7 @@ abstract class StandardAbstract
     protected $mandatoryFields = array();
 
     /**
-     * @var \FeedIo\Parser\DateTimeBuilder
+     * @var \FeedIo\Rule\DateTimeBuilder
      */
     protected $dateTimeBuilder;
 
@@ -47,7 +47,7 @@ abstract class StandardAbstract
     protected $itemRuleSet;
 
     /**
-     * @param DateTimeBuilder $dateTimeBuilder
+     * @param \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
      */
     public function __construct(DateTimeBuilder $dateTimeBuilder)
     {

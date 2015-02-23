@@ -38,7 +38,8 @@ class Title extends RuleAbstract
      */
     public function createElement(\DomDocument $document, ItemInterface $item)
     {
-        return $document->createElement(static::NODE_NAME, $item->getTitle());
+        $title = htmlspecialchars($item->getTitle());
+        return $document->createElement(static::NODE_NAME, $title);
     }
 
 
