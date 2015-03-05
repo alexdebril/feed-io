@@ -40,5 +40,4 @@ class Link extends RuleAbstract
         return $document->createElement($this->getNodeName(), $item->getLink());
     }
 
-
 }

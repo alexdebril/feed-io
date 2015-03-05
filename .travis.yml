@@ -6,4 +6,8 @@ php:
 script : phpunit --coverage-clover=coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 before_script:
-  - composer install --dev
+  - composer require guzzlehttp/guzzle:${GUZZLE_VERSION}
+
+env:
+  - GUZZLE_VERSION="~4.1"
+  - GUZZLE_VERSION="~5.1"
