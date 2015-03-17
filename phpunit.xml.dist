@@ -5,6 +5,9 @@
         <testsuite name="feed-io Test Suite">
             <directory>tests/FeedIo/</directory>
         </testsuite>
+        <testsuite name="Integration Tests Suite">
+            <directory>tests/live-feeds/</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
