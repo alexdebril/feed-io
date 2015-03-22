@@ -15,10 +15,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Timezone used to test a timezone switch.
-     * The Troll Research Center is the only place in the world where the testSetTimezone() test will fail,
+     * Longyearbyen is the only place in the world where the testSetTimezone() test will fail,
      * I hope it won't bother anyone
      */
-    const ALTERNATE_TIMEZONE = 'Antarctica/Troll';
+    const ALTERNATE_TIMEZONE = 'Arctic/Longyearbyen';
 
     /**
      * @var \FeedIo\Parser\DateTimeBuilder

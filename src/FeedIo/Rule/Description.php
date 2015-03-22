@@ -39,7 +39,7 @@ class Description extends RuleAbstract
     public function createElement(\DOMDocument $document, ItemInterface $item)
     {
         $description = htmlspecialchars($item->getDescription());
-        return $document->createElement(static::NODE_NAME, $description);
+        return $document->createElement($this->getNodeName(), $description);
     }
 
 }
