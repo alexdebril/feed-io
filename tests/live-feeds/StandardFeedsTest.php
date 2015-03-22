@@ -36,6 +36,7 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
         } catch (\FeedIo\Reader\ReadErrorException $e) {
             $this->markTestIncomplete("read error : {$e->getMessage()}");
         }
+        
     }
     
     protected function performAssertions(\FeedIo\Reader\Result $result)
@@ -46,6 +47,25 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             array(
                 $feed->getTitle(),
                 $feed->getPublicId(),
+                $feed->getLink(),
+            )
+        );
+        
+        $this->assertInstanceOf('\DateTime', $feed->getLastModified());
+        
+        foreach ( $feed as $item ) {
+            $this->performItemAssertions($item);
+        }
+    }
+    
+    protected function performItemAssertions(\FeedIo\Feed\ItemInterface $item) 
+    {
+        $this->performStringAssertions(
+            array(
+                $item->getTitle(),
+                $item->getPublicId(),
+                $item->getLink(),
+                $item->getDescription(),
             )
         );
     }
@@ -54,9 +74,15 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
     {
         foreach ($strings as $string) {
             $this->assertInternalType('string', $string);
+            #$this->assertTrue(strlen($string) > 0);
+            $this->assertEncodingIsUtf8($string);
         }
     }
-    
+   
+    protected function assertEncodingIsUtf8($string)
+    {
+        return $this->assertTrue(mb_check_encoding($string, 'utf-8'));
+    }
     /**
      * @return array
      */

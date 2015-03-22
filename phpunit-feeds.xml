@@ -2,8 +2,8 @@
 
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="feed-io Test Suite">
-            <directory>tests/FeedIo/</directory>
+        <testsuite name="Integration Tests Suite">
+            <directory>tests/live-feeds/</directory>
         </testsuite>
     </testsuites>
 
