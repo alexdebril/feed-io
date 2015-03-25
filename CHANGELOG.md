@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.5.1 (2015-03-23)
+-------------------
+
+* atom specifications : "content" node instead of "description"
+
 0.5.0 (2015-02-23)
 ------------------
 
