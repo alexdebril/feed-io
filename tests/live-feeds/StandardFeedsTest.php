@@ -45,9 +45,9 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\FeedIo\FeedInterface', $feed);
         $this->performStringAssertions(
             array(
-                $feed->getTitle(),
-                $feed->getPublicId(),
-                $feed->getLink(),
+                'title' => $feed->getTitle(),
+                'id' => $feed->getPublicId(),
+                'link' => $feed->getLink(),
             )
         );
         
@@ -62,27 +62,28 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
     {
         $this->performStringAssertions(
             array(
-                $item->getTitle(),
-                $item->getPublicId(),
-                $item->getLink(),
-                $item->getDescription(),
+                'title' => $item->getTitle(),
+                'id' => $item->getPublicId(),
+                'link' => $item->getLink(),
+                'description' => $item->getDescription(),
             )
         );
     }
     
     protected function performStringAssertions(array $strings)
     {
-        foreach ($strings as $string) {
-            $this->assertInternalType('string', $string);
-            #$this->assertTrue(strlen($string) > 0);
-            $this->assertEncodingIsUtf8($string);
+        foreach ($strings as $name => $string) {
+            $this->assertInternalType('string', $string, "$name must be a string");
+            $this->assertTrue(strlen($string) > 0, "$name cannot be empty");
+            $this->assertEncodingIsUtf8($string, $name);
         }
     }
    
-    protected function assertEncodingIsUtf8($string)
+    protected function assertEncodingIsUtf8($string, $name)
     {
-        return $this->assertTrue(mb_check_encoding($string, 'utf-8'));
+        return $this->assertTrue(mb_check_encoding($string, 'utf-8'), "$name must be utf-8 encoded");
     }
+
     /**
      * @return array
      */
@@ -103,6 +104,10 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
         return array(
             
             'http://127.0.0.1:8080/feed-io/tests/samples/expected-atom.xml',
+            'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom.xml',          
+            'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom-html.xml',
+            'http://127.0.0.1:8080/feed-io/tests/samples/rss/expected-rss.xml',
+            'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',
         );
     }
 }
