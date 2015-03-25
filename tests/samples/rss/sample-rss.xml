@@ -3,6 +3,7 @@
     <channel>
         <title>RSS Title</title>
         <description>This is an example of an RSS feed</description>
+        <guid>1</guid>
         <link>http://www.someexamplerssdomain.com/main.html</link>
         <lastBuildDate>Mon, 06 Sep 2010 00:01:00 GMT</lastBuildDate>
         <pubDate>Mon, 06 Sep 2009 16:45:00 GMT</pubDate>
