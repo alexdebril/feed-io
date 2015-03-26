@@ -101,7 +101,7 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
     
     protected function getUrls()
     {
-        return array(
+        $localhost = array(
             
             'http://127.0.0.1:8080/feed-io/tests/samples/expected-atom.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom.xml',          
@@ -109,5 +109,25 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             'http://127.0.0.1:8080/feed-io/tests/samples/rss/expected-rss.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',
         );
+        
+        $urls = array();
+        
+        return $this->isLocalhostUp() ? array_merge($localhost, $urls):$urls;
+    }
+    
+    /**
+     *
+     */
+    protected function isLocalhostUp()
+    {
+        $client = new \GuzzleHttp\Client;
+        
+        try {
+            $response = $client->get('http://127.0.0.1:8080/feed-io/tests/');
+            return 200 === (int) $response->getStatusCode();
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
     }
 }
