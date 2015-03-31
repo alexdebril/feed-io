@@ -65,7 +65,10 @@ class Rss extends StandardAbstract
     public function buildFeedRuleSet()
     {
         $ruleSet = $this->buildItemRuleSet();
-        $ruleSet->add($this->getModifiedSinceRule('lastPubDate'));
+        $ruleSet->add(
+                    $this->getModifiedSinceRule('lastPubDate'),
+                    array('lastBuildDate')
+                    );
 
         return $ruleSet;
     }
