@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+
+0.5.2 (2015-04-01)
+-------------------
+
+* alias system to fetch same data from different nodes (like lastBuildDate and lastPubDate in RSS)
+* lastBuildDate is now an alias of lastPubDate in RSS standard
+
 0.5.1 (2015-03-23)
 -------------------
 
