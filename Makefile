@@ -3,6 +3,9 @@ all: clean coverage
 test: 
 	vendor/bin/phpunit  --strict -v
 
+test-live-feeds:
+	vendor/bin/phpunit -c phpunit-feeds.xml
+
 coverage: 
 	vendor/bin/phpunit --coverage-html=artifacts/coverage
 
