@@ -11,6 +11,8 @@
 namespace FeedIo;
 
 use \FeedIo\Reader;
+use \FeedIo\Reader\FixerSet;
+use \FeedIo\Reader\FixerInterface;
 use \FeedIo\Rule\DateTimeBuilder;
 use \FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Atom;
@@ -41,6 +43,11 @@ class FeedIo
     protected $standards;
 
     /**
+     * @var \FeedIo\Reader\FixerSet
+     */
+    protected $fixerSet;
+
+    /**
      * @param \FeedIo\Adapter\ClientInterface $client
      * @param \Psr\Log\LoggerInterface $logger
      */
@@ -50,6 +57,7 @@ class FeedIo
         $this->dateTimeBuilder = new DateTimeBuilder;
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
+        $this->loadFixerSet();
     }
     
     /**
@@ -93,6 +101,42 @@ class FeedIo
     }
     
     /**
+     * @return $this;
+     */   
+    protected function loadFixerSet()
+    {
+        $this->fixerSet = new FixerSet;
+        $fixers = $this->getBaseFixers();
+        
+        foreach ( $fixers as $fixer ) {
+            $this->addFixer($fixer);
+        }
+        
+        return $this;
+    }
+
+    /**
+     * 
+     */
+    public function addFixer(FixerInterface $fixer)
+    {
+        $fixer->setLogger($this->logger);
+        $this->fixerSet->add($fixer);
+        
+        return $this;
+    }
+    
+    /**
+     *
+     */
+    public function getBaseFixers()
+    {
+        return array(
+            new \FeedIo\Reader\Fixer\LastModified,
+        );
+    }
+
+    /**
      * @return \FeedIo\Rule\DateTimeBuilder
      */
     public function getDateTimeBuilder()
@@ -132,7 +176,11 @@ class FeedIo
         }
        
         $this->logAction($feed, "read access : $url into a %s instance");
-        return $this->reader->read($url, $feed, $modifiedSince);
+        $result = $this->reader->read($url, $feed, $modifiedSince);
+        
+        $this->fixerSet->correct($result->getFeed());
+        
+        return $result;
     }
     
     /**
