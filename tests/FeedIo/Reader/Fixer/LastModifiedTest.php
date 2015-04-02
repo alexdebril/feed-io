@@ -44,12 +44,12 @@ class LastModifiedTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSetRight()
+    public function testCorrect()
     {
         $feed = $this->getFeed();
     
         $this->assertNull($feed->getLastModified());
-        $this->object->setRight($feed);
+        $this->object->correct($feed);
         
         $this->assertEquals($this->newest, $feed->getLastModified());
     }

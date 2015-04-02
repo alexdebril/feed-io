@@ -32,10 +32,10 @@ class FixerSet
      * @param FeedInterface $feed
      * @return $this
      */
-    public function setRight(FeedInterface $feed)
+    public function correct(FeedInterface $feed)
     {
         foreach( $this->fixers as $fixer ) {
-            $fixer->setRight($feed);
+            $fixer->correct($feed);
         }
     
         return $this;
