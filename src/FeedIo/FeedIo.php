@@ -101,7 +101,7 @@ class FeedIo
     }
     
     /**
-     * @return $this;
+     * @return $this
      */   
     protected function loadFixerSet()
     {
@@ -116,7 +116,8 @@ class FeedIo
     }
 
     /**
-     * 
+     * @param FixerInterface $fixer
+     * @return $this
      */
     public function addFixer(FixerInterface $fixer)
     {
@@ -125,14 +126,14 @@ class FeedIo
         
         return $this;
     }
-    
+
     /**
-     *
+     * @return array
      */
     public function getBaseFixers()
     {
         return array(
-            new \FeedIo\Reader\Fixer\LastModified,
+            new Reader\Fixer\LastModified,
         );
     }
 
