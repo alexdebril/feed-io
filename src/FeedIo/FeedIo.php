@@ -101,6 +101,14 @@ class FeedIo
     }
     
     /**
+     * @return \FeedIo\Reader\FixerSet
+     */
+    public function getFixerSet()
+    {
+        return $this->fixerSet;
+    }
+
+    /**
      * @return $this
      */   
     protected function loadFixerSet()
