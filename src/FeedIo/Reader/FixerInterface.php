@@ -11,13 +11,19 @@
 namespace FeedIo\Reader;
 
 use FeedIo\FeedInterface;
+use Psr\Log\LoggerInterface;
 
 interface FixerInterface
 {
 
     /**
+     * @param Psr\Log\LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger);
+    
+    /**
      * @param FeedIo\FeedInterface $feed
      */
-    public function setRight(FeedInterface $feed);
+    public function correct(FeedInterface $feed);
 
 }

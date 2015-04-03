@@ -12,11 +12,28 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\FeedInterface;
 use FeedIo\Reader\FixerInterface;
+use Psr\Log\LoggerInterface;
 
 class LastModified implements FixerInterface
 {
 
-    public function setRight(FeedInterface $feed)
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;   
+
+    /**
+     * @param \Psr\Log\LoggerInterface
+     * @return $this
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+        
+        return $this;
+    }
+
+    public function correct(FeedInterface $feed)
     {
         if ( is_null($feed->getLastModified()) ) {
             $feed->setLastModified(
