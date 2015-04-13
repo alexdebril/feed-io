@@ -48,7 +48,7 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
         $item->setTitle('item title');
         $item->setDescription('A great description');
         $item->setLink('http://localhost/item/1');
-        $item->getOptionalFields()->set('author', 'name');
+        $item->set('author', 'name');
 
         $feed->add($item);
 

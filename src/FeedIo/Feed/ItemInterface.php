@@ -10,7 +10,7 @@
 
 namespace FeedIo\Feed;
 
-use FeedIo\Feed\Item\OptionalFieldsInterface;
+use FeedIo\Feed\Item\ElementInterface;
 
 /**
  * Interface ItemInterface
@@ -21,15 +21,52 @@ use FeedIo\Feed\Item\OptionalFieldsInterface;
  */
 interface ItemInterface extends NodeInterface
 {
-    /**
-     * Returns the item's optional fields
-     * @return OptionalFieldsInterface
-     */
-    public function getOptionalFields();
 
     /**
-     * @param OptionalFieldsInterface $optionalFields
+     * @return ElementInterface
+     */
+    public function newElement();
+    
+    /**
+     * @param string $name element name
+     * @return mixed
+     */
+    public function getValue($name);
+    
+    /**
+     * @param string $name element name
+     * @param string $value element value
+     * @return $this
+     */      
+    public function set($name, $value);
+    
+    /**
+     * @param string $name element name
+     * @return ElementIterator
+     */
+    public function getElementIterator($name);
+    
+    /**
+     * @param string $name element name
+     * @return boolean true if the element exists
+     */   
+    public function hasElement($name);
+    
+    /**
+     * @param Element $element
      * @return $this
      */
-    public function setOptionalFields(OptionalFieldsInterface $optionalFields);
+    public function addElement(ElementInterface $element);
+
+    /**
+     * Returns all the item's optional elements
+     * @return \ArrayIterator
+     */
+    public function getAllElements();
+
+    /**
+     * Returns the item's optional elements tag names
+     * @return array
+     */
+    public function listElements();
 }

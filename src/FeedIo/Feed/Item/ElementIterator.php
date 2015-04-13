@@ -38,7 +38,7 @@ class ElementIterator extends \FilterIterator
     public function accept()
     {
         $element = $this->getInnerIterator()->current();
-        
-        return 0 === strcasecmp($this->name, $element->getName());
+
+        return (0 == strcasecmp($this->name, $element->getName()));
     }
 }

@@ -25,13 +25,13 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $element->getName());
     }
     
-    public function testSetContent()
+    public function testSetValue()
     {
         $element = new Element;
         $text = 'lorem ipsum';
         
-        $element->setContent($text);
-        $this->assertEquals($text, $element->getContent());
+        $element->setValue($text);
+        $this->assertEquals($text, $element->getValue());
     }
     
     public function testAttributes()

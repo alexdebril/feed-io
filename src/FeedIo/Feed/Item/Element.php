@@ -11,7 +11,7 @@
 namespace FeedIo\Feed\Item;
 
 
-class Element
+class Element implements ElementInterface
 {
 
     /**
@@ -22,7 +22,7 @@ class Element
     /**
      * @var string
      */
-    protected $content;
+    protected $value;
     
     /**
      * @var array
@@ -51,18 +51,18 @@ class Element
     /**
      * @return string
      */
-    public function getContent()
+    public function getValue()
     {
-        return $this->content;
+        return $this->value;
     }
     
     /**
-     * @param string $content
+     * @param string $value
      * @return $this
      */   
-    public function setContent($content)
+    public function setValue($value)
     {
-        $this->content = $content;
+        $this->value = $value;
     
         return $this;
     }

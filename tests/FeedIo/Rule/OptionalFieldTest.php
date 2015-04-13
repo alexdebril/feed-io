@@ -31,15 +31,14 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $this->object->setProperty($item, $element);
 
-        $optionalFields = $item->getOptionalFields();
-        $this->assertTrue($optionalFields->has('test'));
-        $this->assertEquals('a test value', $optionalFields->get('test'));
+        $this->assertTrue($item->hasElement('test'));
+        $this->assertEquals('a test value', $item->getValue('test'));
     }
 
     public function testCreateElement()
     {
         $item = new Item();
-        $item->getOptionalFields()->set('default', 'a test value');
+        $item->set('default', 'a test value');
 
         $element = $this->object->createElement(new \DOMDocument(), $item);
         $this->assertEquals('default', $element->nodeName);
@@ -49,7 +48,7 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
     public function testDontCreateElement()
     {
         $item = new Item();
-        $item->getOptionalFields()->set('another', 'a test value');
+        $item->set('another', 'a test value');
 
         $element = $this->object->createElement(new \DOMDocument(), $item);
         $this->assertEquals('default', $element->nodeName);

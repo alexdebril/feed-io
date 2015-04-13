@@ -77,9 +77,8 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
             $this->assertNotEmpty($item->getPublicId());
             $this->assertNotEmpty($item->getLastModified());
             $this->assertNotEmpty($item->getLink());
-            $optionalFields = $item->getOptionalFields();
-            $this->assertCount(1, $optionalFields->getFields());
-            $this->assertTrue($optionalFields->has('author'));
+            $this->assertCount(1, $item->getAllElements());
+            $this->assertTrue($item->hasElement('author'));
         }
     }
 

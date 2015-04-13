@@ -11,42 +11,109 @@
 namespace FeedIo\Feed;
 
 
-use FeedIo\Feed\Item\OptionalFields;
-use FeedIo\Feed\Item\OptionalFieldsInterface;
+use FeedIo\Feed\Item\Element;
+use FeedIo\Feed\Item\ElementIterator;
+use FeedIo\Feed\Item\ElementInterface;
 
 class Item extends Node implements ItemInterface
 {
+    
     /**
-     * @var \FeedIo\Feed\Item\OptionalFieldsInterface
+     * @var \ArrayIterator
      */
-    protected $optionalFields;
+    protected $elements;
 
-    /**
-     * @param OptionalFieldsInterface $optionalFields
-     */
-    public function __construct(OptionalFieldsInterface $optionalFields = null)
+    public function __construct()
     {
-        $this->optionalFields = is_null($optionalFields) ? new OptionalFields() : $optionalFields;
+        $this->elements = new \ArrayIterator;
+    }
+
+    
+    public function set($name, $value)
+    {
+        $element = $this->newElement();
+        
+        $element->setName($name);
+        $element->setValue($value);
+        
+        $this->addElement($element);
+        
+        return $this;
     }
 
     /**
-     * Returns the item's optional fields
-     * @return OptionalFieldsInterface
+     * @return ElementInterface
      */
-    public function getOptionalFields()
+    public function newElement()
     {
-        return $this->optionalFields;
+        return new Element;
     }
 
     /**
-     * @param OptionalFieldsInterface $optionalFields
+     * @param string $name element name
+     * @return ElementIterator
+     */
+    public function getValue($name)
+    {
+        foreach ( $this->getElementIterator($name) as $element ) {
+            return $element->getValue();
+        }
+        
+        return null;
+    }
+    
+    /**
+     * @param string $name element name
+     * @return ElementIterator
+     */
+    public function getElementIterator($name)
+    {
+        return new ElementIterator($this->elements, $name);
+    }
+
+    /**
+     * @param string $name element name
+     * @return boolean true if the element exists
+     */   
+    public function hasElement($name)
+    {
+        $filter = $this->getElementIterator($name);
+        
+        return $filter->count() > 0;
+    }
+    
+    /**
+     * @param Element $element
      * @return $this
      */
-    public function setOptionalFields(OptionalFieldsInterface $optionalFields)
+    public function addElement(ElementInterface $element)
     {
-        $this->optionalFields = $optionalFields;
-
+        $this->elements->append($element);
+    
         return $this;
+    }
+
+    /**
+     * Returns all the item's optional elements
+     * @return \ArrayIterator
+     */
+    public function getAllElements()
+    {
+        return $this->elements;
+    }
+
+    /**
+     * Returns the item's optional elements tag names
+     * @return array
+     */
+    public function listElements()
+    {
+        $out = array();
+        foreach ( $this->elements as $element ) {
+            $out[] = $element->getName();
+        }
+        
+        return $out;
     }
 
 }

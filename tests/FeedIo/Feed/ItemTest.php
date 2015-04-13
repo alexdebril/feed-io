@@ -11,7 +11,7 @@
 namespace FeedIo\Feed;
 
 
-use FeedIo\Feed\Item\OptionalFields;
+use FeedIo\Feed\Item\Element;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,11 +25,33 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->object = new Item();
     }
 
-    public function testSetOptionalFields()
+    public function testGetElement()
     {
-        $optionalFields = new OptionalFields();
-        $this->object->setOptionalFields($optionalFields);
-        $this->assertEquals($optionalFields, $this->object->getOptionalFields());
+        $element = new Element;
+        $element->setName('foo');
+        
+        $this->object->addElement($element);
+        
+        $element2 = new Element;
+        $element2->setName('bar');
+        
+        $this->object->addElement($element2);
+        $iterator = $this->object->getElementIterator('foo');
+        
+        $this->assertTrue($iterator->count() > 0);
+        
+        $count = 0;
+        foreach( $iterator as $element ) {
+            $count++;
+            $this->assertEquals('foo', $element->getName());
+        }
+        
+        $this->assertEquals(1, $count);
+    }
+    
+    public function testNewElement()
+    {
+        $this->assertInstanceOf('\FeedIo\Feed\Item\ElementInterface', $this->object->newElement());
     }
 }
  
