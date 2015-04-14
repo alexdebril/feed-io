@@ -33,6 +33,20 @@ class ElementIterator extends \FilterIterator
     }
     
     /**
+     * override PHP's count implementation.
+     * @return int
+     */
+    public function count()
+    {
+        $count = 0;
+        foreach ( $this as $item ) {
+            $count++;
+        }
+        
+        return $count;
+    }
+    
+    /**
      * @return boolean True if the current element's name matches the expected one
      */
     public function accept()

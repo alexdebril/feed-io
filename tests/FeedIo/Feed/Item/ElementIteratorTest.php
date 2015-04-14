@@ -17,7 +17,7 @@ class ElementIteratorTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
     
-    public function testValid()
+    protected function setUp()
     {
         $array = new \ArrayIterator;
         
@@ -30,11 +30,23 @@ class ElementIteratorTest extends \PHPUnit_Framework_TestCase
         $array->append($element1);
         $array->append($element2);
         
-        $filter = new ElementIterator($array, 'foo');
-        
-        foreach( $filter as $element ) {
+        $this->object = new ElementIterator($array, 'foo');
+    }
+    
+    
+    public function testValid()
+    {
+        foreach( $this->object as $element ) {
             $this->assertEquals('foo', $element->getName());
         }
+    }
+    
+    public function testCount()
+    {
+        $this->assertEquals(1, $this->object->count());
+        
+        $filter = new ElementIterator(new \ArrayIterator, 'foo');
+        $this->assertEquals(0, $filter->count());
     }
     
 }
