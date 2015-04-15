@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+0.6.0 (2015-04-15)
+-------------------
+
+* OptionalField is replaced by Element
+* item supports multiple elements of same names
+* Element supports multiple attributes
 
 0.5.2 (2015-04-01)
 -------------------
