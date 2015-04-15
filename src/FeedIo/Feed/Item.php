@@ -28,7 +28,11 @@ class Item extends Node implements ItemInterface
         $this->elements = new \ArrayIterator;
     }
 
-    
+    /**
+     * @param string $name element name
+     * @param string $value element value
+     * @return $this
+     */        
     public function set($name, $value)
     {
         $element = $this->newElement();
