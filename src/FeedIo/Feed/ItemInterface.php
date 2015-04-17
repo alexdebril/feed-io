@@ -23,7 +23,7 @@ interface ItemInterface extends NodeInterface
 {
 
     /**
-     * @return ElementInterface
+     * @return \FeedIo\Feed\Item\ElementInterface
      */
     public function newElement();
     
@@ -42,7 +42,7 @@ interface ItemInterface extends NodeInterface
     
     /**
      * @param string $name element name
-     * @return ElementIterator
+     * @return \FeedIo\Feed\Item\ElementIterator
      */
     public function getElementIterator($name);
     
