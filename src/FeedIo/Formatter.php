@@ -98,7 +98,7 @@ class Formatter
     public function getAllRules(RuleSet $ruleSet, ItemInterface $item)
     {
         $rules = $ruleSet->getRules();
-        $optionalFields = $item->getOptionalFields()->getFields();
+        $optionalFields = $item->listElements();
         foreach( $optionalFields as $optionalField ) {
             $rules[] = new OptionalField($optionalField);
         }

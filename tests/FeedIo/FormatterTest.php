@@ -55,8 +55,8 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
     public function testGetAllRules()
     {
         $item = new Item();
-        $item->getOptionalFields()->set('title', 'the title');
-        $item->getOptionalFields()->set('description', 'the description');
+        $item->set('title', 'the title');
+        $item->set('description', 'the description');
 
         $rules = $this->object->getAllRules(new RuleSet(), $item);
         $this->assertCount(2, $rules);

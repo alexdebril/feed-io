@@ -61,10 +61,15 @@ XML;
         $feed = new Feed();
         $this->object->parseNode($feed, $document->documentElement, new RuleSet());
 
-        $this->assertInternalType('string', $feed->getOptionalFields()->get('description'));
-        $this->assertEquals('feed-io is a library', $feed->getOptionalFields()->get('description'));
-        $this->assertEquals('feed-io', $feed->getOptionalFields()->get('title'));
-        $this->assertEquals('https://github.com/alexdebril/feed-io', $feed->getOptionalFields()->get('link'));
+        $this->assertInstanceOf('\Iterator', $feed->getElementIterator('description'));
+        $iterator = $feed->getElementIterator('description');
+        $count = 0;
+        foreach ( $feed->getElementIterator('description') as $element ) {
+            $this->assertInstanceOf('\FeedIo\Feed\Item\ElementInterface', $element);
+            $this->assertEquals('feed-io is a library', $element->getValue());
+            $count++;
+        }
+        $this->assertEquals(1, $count);
     }
 
     /**
