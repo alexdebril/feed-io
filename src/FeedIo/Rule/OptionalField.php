@@ -22,7 +22,7 @@ class OptionalField extends RuleAbstract
 
     /**
      * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param \DOMElement $domElement
      * @return $this
      */
     public function setProperty(ItemInterface $item, \DOMElement $domElement)

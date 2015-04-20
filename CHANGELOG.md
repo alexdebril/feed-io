@@ -7,6 +7,7 @@ CHANGELOG
 * OptionalField is replaced by Element
 * item supports multiple elements of same names
 * Element supports multiple attributes
+* Fixer system to repair feeds after parsing -(like missing date)
 
 0.5.2 (2015-04-01)
 -------------------
