@@ -12,6 +12,7 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\Item\ElementInterface;
 use FeedIo\RuleAbstract;
 
 class OptionalField extends RuleAbstract
@@ -21,12 +22,15 @@ class OptionalField extends RuleAbstract
 
     /**
      * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param \DOMElement $domElement
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(ItemInterface $item, \DOMElement $domElement)
     {
-        $item->getOptionalFields()->set($element->nodeName, $element->nodeValue);
+        $element = $item->newElement();
+        $element->setName($domElement->nodeName);
+        $element->setValue($domElement->nodeValue);
+        $item->addElement($element);
 
         return $this;
     }
@@ -40,13 +44,24 @@ class OptionalField extends RuleAbstract
      */
     public function createElement(\DomDocument $document, ItemInterface $item)
     {
-        $element = $document->createElement($this->getNodeName());
-        if ( $item->getOptionalFields()->has($this->getNodeName()) ) {
-            $element->nodeValue = $item->getOptionalFields()->get($this->getNodeName());
+       $domElement = $document->createElement($this->getNodeName());
+       
+        foreach ( $item->getElementIterator($this->getNodeName()) as $element) {
+            $this->buildDomElement($domElement, $element);
         }
 
-        return $element;
+        return $domElement;
     }
 
+    public function buildDomElement(\DomElement $domElement, ElementInterface $element)
+    {
+        $domElement->nodeValue = $element->getValue();
+        
+        foreach ( $element->getAttributes() as $name => $value ) {
+            $domElement->setAttribute($name, $value);
+        }
+        
+        return $domElement;
+    }
 
 }

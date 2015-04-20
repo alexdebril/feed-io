@@ -127,7 +127,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $feed = $this->object->parseDocument(new \DOMDocument(), new Feed());
 
         $this->assertInstanceOf('\FeedIo\Feed', $feed);
-        $this->assertEquals('This is an example of an RSS feed', $feed->getOptionalFields()->get('description'));
+        $this->assertEquals('This is an example of an RSS feed', $feed->getValue('description'));
     }
 
     /**

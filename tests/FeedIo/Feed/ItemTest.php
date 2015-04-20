@@ -11,7 +11,7 @@
 namespace FeedIo\Feed;
 
 
-use FeedIo\Feed\Item\OptionalFields;
+use FeedIo\Feed\Item\Element;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,11 +25,101 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->object = new Item();
     }
 
-    public function testSetOptionalFields()
+    public function testGetElementIterator()
     {
-        $optionalFields = new OptionalFields();
-        $this->object->setOptionalFields($optionalFields);
-        $this->assertEquals($optionalFields, $this->object->getOptionalFields());
+        $element = new Element;
+        $element->setName('foo');
+        
+        $this->object->addElement($element);
+        
+        $element2 = new Element;
+        $element2->setName('bar');
+        
+        $this->object->addElement($element2);
+        $iterator = $this->object->getElementIterator('foo');
+        
+        $this->assertInstanceOf('\FeedIo\Feed\Item\ElementIterator', $iterator);
+        $this->assertTrue($iterator->count() > 0);
+        
+        $count = 0;
+        foreach( $iterator as $element ) {
+            $count++;
+            $this->assertEquals('foo', $element->getName());
+        }
+        
+        $this->assertEquals(1, $count);
+    }
+    
+    public function testNewElement()
+    {
+        $this->assertInstanceOf('\FeedIo\Feed\Item\ElementInterface', $this->object->newElement());
+    }
+    
+    public function testSet()
+    {
+        $this->object->set('foo', 'bar');
+        $this->assertEquals('bar', $this->object->getValue('foo'));
+    }
+    
+    public function testGetValue()
+    {
+        $this->assertNull($this->object->getValue('null'));
+        $this->object->set('name', 'value');
+        
+        $this->assertEquals('value', $this->object->getValue('name'));
+    }
+    
+    public function testSetValue()
+    {
+        $this->object->set('foo', 'bar');
+        
+        $element = new Element;
+        $element->setName('foo');
+        $element->setValue('bar');
+        
+        $this->assertAttributeContainsOnly($element, 'elements', $this->object);
+    }
+    
+    public function testHasElement()
+    {
+        $this->assertFalse($this->object->hasElement('foo'));
+        $this->object->set('name', 'value');
+        
+        $this->assertFalse($this->object->hasElement('foo'));
+        $this->assertTrue($this->object->hasElement('name'));
+    }
+    
+    public function testGetAllElements()
+    {
+        $element = new Element;
+        $element->setName('foo');
+        
+        $this->object->addElement($element);
+        
+        $element2 = new Element;
+        $element2->setName('bar');
+        
+        $this->object->addElement($element2);
+        
+        $iterator = $this->object->getAllElements();
+        
+        $this->assertInstanceOf('\ArrayIterator', $iterator);
+        $this->assertEquals(2, $iterator->count());
+    }
+    
+    public function testListElements()
+    {
+        $element = new Element;
+        $element->setName('foo');
+        
+        $this->object->addElement($element);
+        
+        $element2 = new Element;
+        $element2->setName('bar');
+        
+        $this->object->addElement($element2);
+        
+        $this->assertEquals(array('foo', 'bar'), $this->object->listElements());  
     }
 }
  
