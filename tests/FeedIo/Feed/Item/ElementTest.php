@@ -43,5 +43,10 @@ class ElementTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals(array('url' => 'http://foo.com'), $element->getAttributes());
     }
-    
+
+    public function testGetNullAttribute()
+    {
+        $element = new Element;
+        $this->assertNull($element->getAttribute('null'));
+    }
 }
