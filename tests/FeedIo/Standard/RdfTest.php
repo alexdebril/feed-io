@@ -16,7 +16,7 @@ use FeedIo\Rule\DateTimeBuilder;
 class RdfTest extends \PHPUnit_Framework_TestCase
 {
 
-    const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rdf><channel/></rdf>';
+    const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rdf version="1.0"><channel/></rdf>';
 
     /**
      * @var Rdf

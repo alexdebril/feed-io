@@ -18,27 +18,23 @@ use FeedIo\Rule\Link;
 use FeedIo\Rule\Structure;
 use FeedIo\StandardAbstract;
 
-class Rdf extends StandardAbstract
+class Rdf extends Rss
 {
+
+    /**
+     * Format version
+     */
+    const VERSION = '1.0';
+    
     /**
      * RDF document must have a <rdf> root node
      */
     const ROOT_NODE_TAGNAME = 'rdf';
-
+    
     /**
-     * Formats the document according to the standard's specification
-     * @param \DOMDocument $document
-     * @return mixed
+     * publication date
      */
-    public function format(\DOMDocument $document)
-    {
-        $rdf = $document->createElement('rdf');
-        $channel = $document->createElement('channel');
-        $rdf->appendChild($channel);
-        $document->appendChild($rdf);
-
-        return $document;
-    }
+    const DATE_NODE_TAGNAME = 'dc:date';
 
     /**
      * Tells if the parser can handle the feed or not
@@ -47,7 +43,7 @@ class Rdf extends StandardAbstract
      */
     public function canHandle(\DOMDocument $document)
     {
-        return false !== strpos($document->documentElement->tagName, self::ROOT_NODE_TAGNAME);
+        return false !== strpos($document->documentElement->tagName, static::ROOT_NODE_TAGNAME);
     }
 
     /**
@@ -65,22 +61,8 @@ class Rdf extends StandardAbstract
     public function buildFeedRuleSet()
     {
         $ruleSet = new RuleSet;
-        $ruleSet->add(new Structure('channel', $this->buildItemRuleSet()));
+        $ruleSet->add(new Structure(static::CHANNEL_NODE_TAGNAME, $this->buildItemRuleSet()));
         
-        return $ruleSet;
-    }
-
-    /**
-     * @return RuleSet
-     */
-    public function buildItemRuleSet()
-    {
-        $ruleSet = $this->buildBaseRuleSet();
-        $ruleSet
-            ->add(new Link())
-            ->add(new Description())
-            ->add($this->getModifiedSinceRule('dc:date'));
-
         return $ruleSet;
     }
 
