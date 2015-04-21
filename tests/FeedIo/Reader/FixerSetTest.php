@@ -25,5 +25,17 @@ class FixerSetTest extends \PHPUnit_Framework_TestCase
         
         $this->assertAttributeContainsOnly($fixer, 'fixers', $fixerSet);
     }
-    
+
+    public function testCorrect()
+    {
+        $fixer = new FixerMock();
+        $fixerSet = new FixerSet;
+        $fixerSet->add($fixer);
+
+        $feed = new Feed();
+        $fixerSet->correct($feed);
+
+        $this->assertEquals('corrected', $feed->getTitle());
+    }
+
 }

@@ -10,6 +10,7 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;
+use FeedIo\Feed\Item\Element;
 
 class OptionalFieldTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,6 +44,23 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $element = $this->object->createElement(new \DOMDocument(), $item);
         $this->assertEquals('default', $element->nodeName);
         $this->assertEquals('a test value', $element->nodeValue);
+    }
+
+    public function testCreateElementWithAttributes()
+    {
+        $element = new Element;
+        $element->setName('default');
+        $element->setValue('value');
+        $element->setAttribute('foo', 'bar');
+                
+        $item = new Item;
+        $item->addElement($element);
+        
+        $domElement = $this->object->createElement(new \DOMDocument(), $item);
+        $this->assertEquals('default', $domElement->nodeName);
+        $this->assertEquals('value', $domElement->nodeValue);
+        
+        $this->assertTrue($domElement->hasAttribute('foo'));
     }
 
     public function testDontCreateElement()
