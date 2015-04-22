@@ -17,9 +17,14 @@ use Psr\Log\LoggerInterface;
 class LastModified extends FixerAbstract
 {
 
+    /**
+     * @param FeedInterface $feed
+     * @return $this
+     */
     public function correct(FeedInterface $feed)
     {
         if ( is_null($feed->getLastModified()) ) {
+            $this->logger->notice("correct last modified date for feed {$feed->getTitle()}");
             $feed->setLastModified(
                         $this->searchLastModified($feed)
             );
@@ -28,6 +33,10 @@ class LastModified extends FixerAbstract
         return $this;
     }
 
+    /**
+     * @param FeedInterface $feed
+     * @return \DateTime
+     */
     public function searchLastModified(FeedInterface $feed)
     {
         $latest = new \DateTime('@0');

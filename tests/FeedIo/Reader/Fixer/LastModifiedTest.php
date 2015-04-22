@@ -13,6 +13,7 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\Feed;
 use FeedIo\Feed\Item;
+use Psr\Log\NullLogger;
 
 class LastModifiedTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,6 +33,7 @@ class LastModifiedTest extends \PHPUnit_Framework_TestCase
         $this->newest = new \DateTime('2014-01-01');
     
         $this->object = new LastModified;
+        $this->object->setLogger(new NullLogger());
     }
 
     public function testSearchLastModified()
