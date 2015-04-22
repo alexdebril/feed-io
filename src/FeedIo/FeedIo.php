@@ -81,6 +81,7 @@ class FeedIo
         return array(
             'atom' => new Atom($this->dateTimeBuilder),
             'rss' => new Rss($this->dateTimeBuilder),
+            'rdf' => new Rdf($this->dateTimeBuilder),
         );
     }
      

@@ -1,12 +1,18 @@
 CHANGELOG
 =========
 
+0.7.0 (2015-04-21)
+-------------------
+
+* RSS/RDF Format support
+
 0.6.0 (2015-04-15)
 -------------------
 
 * OptionalField is replaced by Element
 * item supports multiple elements of same names
 * Element supports multiple attributes
+* Fixer system to repair feeds after parsing -(like missing date)
 
 0.5.2 (2015-04-01)
 -------------------

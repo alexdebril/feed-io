@@ -18,12 +18,28 @@ use FeedIo\Rule\PublicId;
 use FeedIo\StandardAbstract;
 
 class Rss extends StandardAbstract
-{
+{  
+
+    /**
+     * Format version
+     */
+    const VERSION = '2.0';
+    
     /**
      * RSS document must have a <rss> root node
      */
     const ROOT_NODE_TAGNAME = 'rss';
-
+    
+    /**
+     * <channel> node contains feed's metadata 
+     */
+    const CHANNEL_NODE_TAGNAME = 'channel';
+    
+    /**
+     * publication date
+     */
+    const DATE_NODE_TAGNAME = 'pubDate';
+    
     /**
      * Formats the document according to the standard's specification
      * @param \DOMDocument $document
@@ -31,9 +47,9 @@ class Rss extends StandardAbstract
      */
     public function format(\DOMDocument $document)
     {
-        $rss = $document->createElement('rss');
-        $rss->setAttribute('version', '2.0');
-        $channel = $document->createElement('channel');
+        $rss = $document->createElement(static::ROOT_NODE_TAGNAME);
+        $rss->setAttribute('version', static::VERSION);
+        $channel = $document->createElement(static::CHANNEL_NODE_TAGNAME);
         $rss->appendChild($channel);
         $document->appendChild($rss);
 
@@ -47,7 +63,7 @@ class Rss extends StandardAbstract
      */
     public function canHandle(\DOMDocument $document)
     {
-        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
+        return static::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
     }
 
     /**
@@ -56,7 +72,7 @@ class Rss extends StandardAbstract
      */
     public function getMainElement(\DOMDocument $document)
     {
-        return $document->documentElement->getElementsByTagName('channel')->item(0);
+        return $document->documentElement->getElementsByTagName(static::CHANNEL_NODE_TAGNAME)->item(0);
     }
 
     /**
@@ -83,7 +99,7 @@ class Rss extends StandardAbstract
             ->add(new Link())
             ->add(new PublicId())
             ->add(new Description())
-            ->add($this->getModifiedSinceRule('pubDate'));
+            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
 
         return $ruleSet;
     }
