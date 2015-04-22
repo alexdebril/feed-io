@@ -13,10 +13,7 @@ namespace FeedIo\Standard;
 
 use DOMDocument;
 use FeedIo\RuleSet;
-use FeedIo\Rule\Description;
-use FeedIo\Rule\Link;
 use FeedIo\Rule\Structure;
-use FeedIo\StandardAbstract;
 
 class Rdf extends Rss
 {

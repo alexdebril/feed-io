@@ -17,6 +17,7 @@ use \FeedIo\Rule\DateTimeBuilder;
 use \FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Atom;
 use FeedIo\Standard\Rss;
+use FeedIo\Standard\Rdf;
 use \Psr\Log\LoggerInterface;
 
 class FeedIo
@@ -81,6 +82,7 @@ class FeedIo
         return array(
             'atom' => new Atom($this->dateTimeBuilder),
             'rss' => new Rss($this->dateTimeBuilder),
+            'rdf' => new Rdf($this->dateTimeBuilder),
         );
     }
      
