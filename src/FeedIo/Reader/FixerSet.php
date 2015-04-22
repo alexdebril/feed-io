@@ -18,10 +18,10 @@ class FixerSet
     protected $fixers = array();
     
     /**
-     * @param \FeedIo\Reader\FixerInterface
+     * @param \FeedIo\Reader\FixerAbstract
      * @return $this
      */
-    public function add(FixerInterface $fixer)
+    public function add(FixerAbstract $fixer)
     {
         $this->fixers[] = $fixer;
         
