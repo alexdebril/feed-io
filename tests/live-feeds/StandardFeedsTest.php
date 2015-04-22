@@ -34,6 +34,7 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             $result = $this->object->read($url);
             $this->performAssertions($result);
         } catch (\FeedIo\Reader\ReadErrorException $e) {
+            throw $e;
             $this->markTestIncomplete("read error : {$e->getMessage()}");
         }
         
@@ -107,7 +108,8 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom.xml',          
             'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom-html.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/rss/expected-rss.xml',
-            'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',
+            'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',            
+            'http://127.0.0.1:8080/feed-io/tests/samples/sample-rdf.xml',
         );
         
         $urls = array();
