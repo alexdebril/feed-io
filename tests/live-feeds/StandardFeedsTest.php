@@ -137,12 +137,10 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             'http://www.larvf.com/rss/article/10135',
             'http://www.lemonde.fr/sciences/rss_full.xml',
             'http://www.lemonde.fr/technologies/rss_full.xml',
-            'http://www.lepoint.fr/vin/rss.xml',
             'http://www.metalorgie.com/feed/news',
             'http://www.sitepoint.com/feed/',
             'http://www.slate.fr/rss.xml',
             'http://xkcd.com/rss.xml',
-            'https://fr.news.yahoo.com/?format=rss',
         );
         
         return $this->isLocalhostUp() ? array_merge($localhost, $urls):$urls;
