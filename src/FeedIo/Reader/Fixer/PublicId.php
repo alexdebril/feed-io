@@ -17,6 +17,10 @@ use Psr\Log\LoggerInterface;
 class PublicId extends FixerAbstract
 {
 
+    /**
+     * @param FeedInterface $feed
+     * @return $this
+     */
     public function correct(FeedInterface $feed)
     {
         if ( is_null($feed->getPublicId()) ) {
@@ -28,6 +32,10 @@ class PublicId extends FixerAbstract
         return $this;
     }
 
+    /**
+     * @param FeedInterface $feed
+     * @return $this
+     */
     protected function fixItems(FeedInterface $feed)
     {
         foreach ( $feed as $item ) {
