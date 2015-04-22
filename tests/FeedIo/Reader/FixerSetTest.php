@@ -18,7 +18,7 @@ class FixerSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
-        $fixer = $this->getMockForAbstractClass('\FeedIo\Reader\FixerInterface');
+        $fixer = $this->getMockForAbstractClass('\FeedIo\Reader\FixerAbstract');
         
         $fixerSet = new FixerSet;
         $fixerSet->add($fixer);

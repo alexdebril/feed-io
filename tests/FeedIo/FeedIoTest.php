@@ -65,14 +65,14 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $fixers = $this->object->getBaseFixers();
         
         foreach ( $fixers as $fixer ) {
-            $this->assertInstanceOf('\FeedIo\Reader\FixerInterface', $fixer);
+            $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
         }
         
     }
 
     public function testAddFixer()
     {
-        $fixer = $this->getMockForAbstractClass('FeedIo\Reader\FixerInterface');
+        $fixer = $this->getMockForAbstractClass('FeedIo\Reader\FixerAbstract');
         
         $this->object->addFixer($fixer);
         $fixerSet = $this->object->getFixerSet();
