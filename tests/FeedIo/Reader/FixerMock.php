@@ -14,6 +14,10 @@ use Psr\Log\LoggerInterface;
 
 class FixerMock implements FixerInterface
 {
+
+    /**
+     * @var Psr\Log\LoggerInterface
+     */
     protected $logger;
 
     /**
