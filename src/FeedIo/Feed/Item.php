@@ -14,6 +14,8 @@ namespace FeedIo\Feed;
 use FeedIo\Feed\Item\Element;
 use FeedIo\Feed\Item\ElementIterator;
 use FeedIo\Feed\Item\ElementInterface;
+use FeedIo\Feed\Item\Media;
+use FeedIo\Feed\Item\MediaInterface;
 
 class Item extends Node implements ItemInterface
 {
@@ -22,10 +24,16 @@ class Item extends Node implements ItemInterface
      * @var \ArrayIterator
      */
     protected $elements;
-
+    
+    /**
+     * @var \ArrayIterator
+     */
+    protected $medias;
+    
     public function __construct()
     {
         $this->elements = new \ArrayIterator;
+        $this->medias = new \ArrayIterator;
     }
 
     /**
@@ -118,6 +126,41 @@ class Item extends Node implements ItemInterface
         }
         
         return $out;
+    }
+    
+    /**
+     * @param MediaInterface $media
+     * @return $this
+     */      
+    public function addMedia(MediaInterface $media)
+    {
+        $this->medias->append($media);
+        
+        return $this;
+    }
+    
+    /**
+     * @return \ArrayIterator
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function hasMedia()
+    {
+        return $this->medias->count() > 0;
+    }
+    
+    /**
+     * @return MediaInterface
+     */
+    public function newMedia()
+    {
+        return new Media;
     }
 
 }

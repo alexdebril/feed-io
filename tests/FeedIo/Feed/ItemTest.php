@@ -12,6 +12,7 @@ namespace FeedIo\Feed;
 
 
 use FeedIo\Feed\Item\Element;
+use FeedIo\Feed\Item\Media;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
@@ -120,6 +121,30 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->object->addElement($element2);
         
         $this->assertEquals(array('foo', 'bar'), $this->object->listElements());  
+    }
+    
+    public function testNewMedia()
+    {
+        $this->assertInstanceOf('\FeedIo\Feed\Item\MediaInterface', $this->object->newMedia());
+    }
+    
+    public function testAddMedia()
+    {
+        $media = new Media;
+        $media->setType('audio/mp3');
+        
+        $this->assertInstanceOf('FeedIo\Feed\Item', $this->object->addMedia($media));
+        
+        $this->assertAttributeContains($media, 'medias', $this->object);
+    }
+    
+    public function testHasMedia()
+    {
+        $this->assertFalse($this->object->hasMedia());
+        
+        $this->object->addMedia(new Media);
+        
+        $this->assertTrue($this->object->hasMedia());
     }
 }
  

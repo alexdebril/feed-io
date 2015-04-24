@@ -11,12 +11,13 @@
 namespace FeedIo\Feed;
 
 use FeedIo\Feed\Item\ElementInterface;
+use FeedIo\Feed\Item\MediaInterface;
 
 /**
  * Interface ItemInterface
  * Represents news items
  * each mandatory field has its own setter and getter
- * other fields are handled using set/get
+ * other fields are handled using set() and getValue()
  * @package FeedIo
  */
 interface ItemInterface extends NodeInterface
@@ -69,4 +70,26 @@ interface ItemInterface extends NodeInterface
      * @return array
      */
     public function listElements();
+    
+    /**
+     * @param MediaInterface $media
+     * @return $this
+     */  
+    public function addMedia(MediaInterface $media);
+    
+    /**
+     * @return \ArrayIterator
+     */
+    public function getMedias();
+    
+    /**
+     * @return boolean
+     */
+    public function hasMedia();
+    
+    /**
+     * @return MediaInterface
+     */
+    public function newMedia();
+    
 }
