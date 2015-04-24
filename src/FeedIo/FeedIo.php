@@ -12,7 +12,7 @@ namespace FeedIo;
 
 use \FeedIo\Reader;
 use \FeedIo\Reader\FixerSet;
-use \FeedIo\Reader\FixerInterface;
+use \FeedIo\Reader\FixerAbstract;
 use \FeedIo\Rule\DateTimeBuilder;
 use \FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Atom;
@@ -126,10 +126,10 @@ class FeedIo
     }
 
     /**
-     * @param FixerInterface $fixer
+     * @param FixerAbstract $fixer
      * @return $this
      */
-    public function addFixer(FixerInterface $fixer)
+    public function addFixer(FixerAbstract $fixer)
     {
         $fixer->setLogger($this->logger);
         $this->fixerSet->add($fixer);
@@ -144,6 +144,8 @@ class FeedIo
     {
         return array(
             new Reader\Fixer\LastModified,
+            new Reader\Fixer\PublicId,
+            
         );
     }
 

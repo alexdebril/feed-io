@@ -14,7 +14,7 @@ use FeedIo\FeedInterface;
 use FeedIo\Reader\FixerAbstract;
 use Psr\Log\LoggerInterface;
 
-class LastModified extends FixerAbstract
+class PublicId extends FixerAbstract
 {
 
     /**
@@ -23,11 +23,10 @@ class LastModified extends FixerAbstract
      */
     public function correct(FeedInterface $feed)
     {
-        if ( is_null($feed->getLastModified()) ) {
-            $this->logger->notice("correct last modified date for feed {$feed->getTitle()}");
-            $feed->setLastModified(
-                        $this->searchLastModified($feed)
-            );
+        if ( is_null($feed->getPublicId()) ) {
+            $this->logger->notice("correct public id for feed {$feed->getTitle()}");
+            $feed->setPublicId($feed->getLink());
+            $this->fixItems($feed);
         }
         
         return $this;
@@ -35,19 +34,15 @@ class LastModified extends FixerAbstract
 
     /**
      * @param FeedInterface $feed
-     * @return \DateTime
+     * @return $this
      */
-    public function searchLastModified(FeedInterface $feed)
+    protected function fixItems(FeedInterface $feed)
     {
-        $latest = new \DateTime('@0');
-        
         foreach ( $feed as $item ) {
-            if ( $item->getLastModified() > $latest ) {
-                $latest = $item->getLastModified();
-            }
+            $item->setPublicId($item->getLink());
         }
         
-        return $latest;
+        return $this;
     }
-
+    
 }

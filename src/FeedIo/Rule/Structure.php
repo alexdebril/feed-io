@@ -44,8 +44,10 @@ class Structure extends RuleAbstract
     public function setProperty(ItemInterface $item, \DOMElement $element)
     {
         foreach ($element->childNodes as $node) {
-            $rule = $this->ruleSet->get($node->tagName);
-            $rule->setProperty($item, $node);
+            if ( $node instanceOf \DomElement ) {
+                $rule = $this->ruleSet->get($node->tagName);
+                $rule->setProperty($item, $node);
+            }
         }
 
         return $this;

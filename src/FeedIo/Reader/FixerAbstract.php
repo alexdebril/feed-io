@@ -13,17 +13,25 @@ namespace FeedIo\Reader;
 use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
 
-interface FixerInterface
+abstract class FixerAbstract
 {
 
     /**
-     * @param Psr\Log\LoggerInterface $logger
+     * @var \Psr\Log\LoggerInterface
      */
-    public function setLogger(LoggerInterface $logger);
-    
-    /**
-     * @param FeedIo\FeedInterface $feed
-     */
-    public function correct(FeedInterface $feed);
+    protected $logger;   
 
+    /**
+     * @param \Psr\Log\LoggerInterface
+     * @return $this
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+        
+        return $this;
+    }
+
+    abstract public function correct(FeedInterface $feed);
+    
 }

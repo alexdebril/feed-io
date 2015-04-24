@@ -12,7 +12,7 @@ namespace FeedIo\Reader;
 use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
 
-class FixerMock implements FixerInterface
+class FixerMock extends FixerAbstract
 {
 
     /**
