@@ -31,7 +31,7 @@ interface MediaInterface
     public function getUrl();
     
     /**
-     * @param string $type
+     * @param string $url
      * @return $this
      */   
     public function setUrl($url);
