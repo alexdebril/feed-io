@@ -10,7 +10,7 @@ namespace FeedIo\Standard;
 
 
 use DOMDocument;
-use FeedIo\Rule\Atom\Link;
+use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
 use FeedIo\StandardAbstract;
@@ -65,7 +65,7 @@ class Atom extends StandardAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
-            ->add(new Link())
+            ->add(new LinkNode())
             ->add(new PublicId('id'))
             ->add($this->getModifiedSinceRule('updated'))
         ;
