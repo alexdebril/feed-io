@@ -19,7 +19,26 @@ class Media extends RuleAbstract
 
     const NODE_NAME = 'enclosure';
 
-    const URL_ATTRIBUTE = 'url';
+    protected $urlAttributeName = 'url';
+
+    /**
+     * @return string
+     */
+    public function getUrlAttributeName()
+    {
+        return $this->urlAttributeName;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function setUrlAttributeName($name)
+    {
+        $this->urlAttributeName = $name;
+        
+        return $this;
+    }
 
     /**
      * @param ItemInterface $item
@@ -30,7 +49,7 @@ class Media extends RuleAbstract
     {
         $media = $item->newMedia();
         $media->setType($this->getAttributeValue($element, 'type'))
-              ->setUrl($this->getAttributeValue($element, static::URL_ATTRIBUTE))
+              ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
               ->setLenght($this->getAttributeValue($element, 'lenght'));
               
         $item->addMedia($media);
@@ -62,7 +81,7 @@ class Media extends RuleAbstract
     public function createMediaElement(\DomDocument $document, MediaInterface $media)
     {
         $element = $document->createElement($this->getNodeName());
-        $element->setAttribute(static::URL_ATTRIBUTE, $media->getUrl());
+        $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
         $element->setAttribute('type', $media->getType());
         $element->setAttribute('lenght', $media->getLenght());
         
