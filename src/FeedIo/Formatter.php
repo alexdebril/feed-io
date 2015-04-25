@@ -62,7 +62,7 @@ class Formatter
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
-        $elements = array_filter($this->buildElements($rules, $document, $item));
+        $elements = $this->buildElements($rules, $document, $item);
 
         foreach( $elements as $element ) {
             $domItem->appendChild($element);
@@ -87,7 +87,7 @@ class Formatter
             $elements[] = $rule->createElement($document, $item);
         }
 
-        return $elements;
+        return array_filter($elements);
     }
 
     /**
