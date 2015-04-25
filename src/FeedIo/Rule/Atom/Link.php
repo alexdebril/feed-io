@@ -40,7 +40,7 @@ class Link extends RuleAbstract
      */
     public function createElement(\DomDocument $document, ItemInterface $item)
     {
-        $element = $document->createElement($this->getNodeName());
+        $element = $document->createElement(static::NODE_NAME);
         $element->setAttribute('href', $item->getLink());
 
         return $element;

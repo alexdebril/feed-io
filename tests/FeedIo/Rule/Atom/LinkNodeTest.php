@@ -13,7 +13,7 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-class LinkTest extends \PHPUnit_Framework_TestCase
+class LinkNodeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -25,7 +25,7 @@ class LinkTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->object = new Link();
+        $this->object = new LinkNode();
     }
 
     public function testSet()
@@ -37,6 +37,26 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $link->setAttribute('href', 'http://localhost');
         $this->object->setProperty($item, $link);
         $this->assertEquals('http://localhost', $item->getLink());
+    }
+    
+    public function testSetMedia()
+    {
+        $item = new Item();
+        $document = new \DOMDocument();
+
+        $link = $document->createElement('link');
+        $link->setAttribute('href', 'http://localhost/video.mpeg');
+        $link->setAttribute('rel', 'enclosure');
+        $this->object->setProperty($item, $link);
+        
+        $this->assertTrue($item->hasMedia());
+        $count = 0;
+        foreach ( $item->getMedias() as $media ) {
+            $count++;
+            $this->assertEquals($link->getAttribute('href'), $media->getUrl());
+        }
+        
+        $this->assertEquals(1, $count);
     }
 
     public function testCreateElement()

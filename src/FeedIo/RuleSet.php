@@ -25,14 +25,25 @@ class RuleSet
     protected $aliases = array();
 
     /**
-     * @var OptionalField
+     * @var RuleAbstract
      */
     protected $default;
 
-    public function __construct()
+    /**
+     * @param RuleAbstract $default default rule
+     */
+    public function __construct(RuleAbstract $default = null)
     {
         $this->rules = new \ArrayIterator(array());
-        $this->default = new OptionalField();
+        $this->default = is_null($default) ? new OptionalField():$default;
+    }
+
+    /**
+     * @return RuleAbstract
+     */
+    public function getDefault()
+    {
+        return $this->default;
     }
 
     /**
