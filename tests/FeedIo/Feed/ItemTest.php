@@ -146,5 +146,20 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         
         $this->assertTrue($this->object->hasMedia());
     }
+    
+    public function testGetMedias()
+    {
+        $this->object->addMedia(new Media);
+        
+        $iterator = $this->object->getMedias();
+        $this->assertInstanceOf('\ArrayIterator', $iterator);
+        $count = 0;
+        foreach ( $iterator as $media ) {
+            $count++;
+            $this->assertInstanceOf('FeedIo\Feed\Item\MediaInterface', $media);
+        }
+        
+        $this->assertEquals(1, $count);
+    }
 }
  
