@@ -15,6 +15,7 @@ use DOMDocument;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
+use FeedIo\Rule\Media;
 use FeedIo\StandardAbstract;
 
 class Rss extends StandardAbstract
@@ -99,6 +100,7 @@ class Rss extends StandardAbstract
             ->add(new Link())
             ->add(new PublicId())
             ->add(new Description())
+            ->add(new Media())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
 
         return $ruleSet;
