@@ -39,6 +39,20 @@ abstract class RuleAbstract
     }
 
     /**
+     * @param \DOMElement $element
+     * @param string $name
+     * @return string|null
+     */
+    public function getAttributeValue(\DOMElement $element, $name)
+    {
+        if ( $element->hasAttribute($name) ) {
+            return $element->getAttribute($name);
+        }
+        
+        return null;
+    }
+
+    /**
      * Sets the accurate $item property according to the DomElement content
      *
      * @param ItemInterface $item
