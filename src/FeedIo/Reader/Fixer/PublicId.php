@@ -12,7 +12,6 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\FeedInterface;
 use FeedIo\Reader\FixerAbstract;
-use Psr\Log\LoggerInterface;
 
 class PublicId extends FixerAbstract
 {
