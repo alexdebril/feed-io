@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+0.8.0 (2015-04-25)
+-------------------
+
+* RuleSet's default rule can be set
+* Atom and RSS enclosures support
+
 0.7.0 (2015-04-21)
 -------------------
 
