@@ -10,7 +10,10 @@
 
 namespace FeedIo\Adapter;
 
-
+/**
+ * Describes a HTTP Response as returned by an instance of ClientInterface
+ *
+ */
 interface ResponseInterface
 {
 

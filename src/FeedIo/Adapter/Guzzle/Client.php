@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 25/01/15
- * Time: 13:37
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FeedIo\Adapter\Guzzle;
@@ -14,6 +16,9 @@ use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ServerErrorException;
 use GuzzleHttp\Exception\BadResponseException;
 
+/**
+ * Guzzle dependent HTTP client
+ */
 class Client implements ClientInterface
 {
     /**
