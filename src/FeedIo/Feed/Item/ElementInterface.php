@@ -10,7 +10,27 @@
 
 namespace FeedIo\Feed\Item;
 
-
+/**
+ * Describe an Element instance
+ * 
+ * $name matches the node's tag name
+ * $value matches the node's content
+ * each attribute matches an attribute of the node
+ *
+ * for example, to represent this XML node
+ * 
+ * <media lenght="45668" type="audio/mpeg">http://example.org/some-sound.mp3</media>
+ * 
+ * you must set the ElementInstance's properties this way
+ *
+ * <code>
+ * $item->setName('media');
+ * $item->setValue('http://example.org/some-sound.mp3');
+ * $item->setAttribute('lenght', 45668);
+ * $item->setAttribute('type', 'audio/mpeg');
+ *
+ * </code>
+ */
 interface ElementInterface
 {
 
