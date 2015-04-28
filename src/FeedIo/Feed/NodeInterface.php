@@ -11,20 +11,22 @@
 namespace FeedIo\Feed;
 
 /**
- * Interface NodeInterface
- * A node in the news feed
- * @package FeedIo\Feed
+ * Describes a node instance
+ *
+ * A node exposes attributes which are common to feeds and items
  */
 interface NodeInterface
 {
     /**
      * Returns node's title
+     *
      * @return string
      */
     public function getTitle();
 
     /**
      * Sets nodes's title
+     *
      * @param string $title
      * @return $this
      */
@@ -32,12 +34,14 @@ interface NodeInterface
 
     /**
      * Returns node's public id
+     *
      * @return string
      */
     public function getPublicId();
 
     /**
      * sets node's public id
+     *
      * @param string $id
      * @return $this
      */
@@ -45,12 +49,14 @@ interface NodeInterface
 
     /**
      * Returns node's description
+     *
      * @return string
      */
     public function getDescription();
 
     /**
      * Sets node's description
+     *
      * @param string $description
      * @return $this
      */
@@ -58,12 +64,14 @@ interface NodeInterface
 
     /**
      * Returns the node's last modified date
+     *
      * @return \DateTime
      */
     public function getLastModified();
 
     /**
      * Sets the node's last modified date
+     *
      * @param \DateTime $lastModified
      * @return $this
      */
@@ -71,12 +79,14 @@ interface NodeInterface
 
     /**
      * Returns the node's link
+     *
      * @return string
      */
     public function getLink();
 
     /**
      * Sets the nodes's link
+     *
      * @param string $link
      * @return $this
      */

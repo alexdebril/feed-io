@@ -63,7 +63,7 @@ class Item extends Node implements ItemInterface
 
     /**
      * @param string $name element name
-     * @return ElementIterator
+     * @return mixed
      */
     public function getValue($name)
     {
