@@ -13,6 +13,18 @@ namespace FeedIo\Reader;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\FeedInterface;
 
+/**
+ * Result of the read() operation
+ *
+ * a Result instance holds the following :
+ *
+ * - the Feed instance
+ * - Date and time of the request
+ * - value of the 'modifiedSince' header sent throught the request
+ * - the raw response
+ * - the DOM document
+ * - URL of the feed 
+ */
 class Result
 {
 
