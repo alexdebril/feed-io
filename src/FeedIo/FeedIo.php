@@ -20,6 +20,54 @@ use FeedIo\Standard\Rss;
 use FeedIo\Standard\Rdf;
 use \Psr\Log\LoggerInterface;
 
+/**
+ * This class acts as a facade. It provides methods to access feed-io main features
+ *
+ * <code>
+ *   // $client is a \FeedIo\Adapter\ClientInterface instance, $logger a \Psr\Log\LoggerInterface
+ *   $feedIo = new FeedIo($client, $logger);
+ *
+ *   // read a feed. Output is a Result instance
+ *   $result = $feedIo->read('http://somefeed.org/feed.rss');
+ *
+ *   // use the feed
+ *   $feed = $result->getFeed();
+ *   echo $feed->getTitle();
+ * 
+ *   // and its items
+ *   foreach ( $feed as $item ) {
+ *       echo $item->getTitle();
+ *       echo $item->getDescription();
+ *   }
+ * 
+ * </code>
+ *
+ * <code>
+ *   // build the feed to publish
+ *   $feed = new \FeedIo\Feed;
+ *   $feed->setTitle('title');
+ *   // ...
+ *   
+ *   // add items to it
+ *   $item = new \FeedIo\Feed\Item
+ *   $item->setTitle('my great post');
+ *
+ *   // want to publish a media ? no problem
+ *   $media = new \FeedIo\Feed\Item\Media
+ *   $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
+ *   $media->setType('audio/mpeg');
+ *
+ *   // add it to the item
+ *   $item->addMedia($media);
+ * 
+ *   // add the item to the feed (almost there)
+ *   $feed->add($item);
+ *   
+ *   // format it in atom
+ *   $feedIo->toAtom($feed);
+ * </code>
+ *
+ */
 class FeedIo
 {
 
@@ -62,6 +110,8 @@ class FeedIo
     }
     
     /**
+     * Loads main standards (RSS, RDF, Atom) in current object's attributes
+     *
      * @return $this
      */
     protected function loadCommonStandards()
@@ -75,6 +125,8 @@ class FeedIo
     }
     
     /**
+     * Returns main standards
+     *
      * @return array
      */
     public function getCommonStandards()
