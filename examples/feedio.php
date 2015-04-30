@@ -22,7 +22,7 @@ foreach( $result->getFeed() as $item ) {
     echo "item title : {$item->getTitle()} \n ";
 
     // let's turn php.net into a PodCast
-    $media = new \FeedIo\Feed\Item\Media
+    $media = new \FeedIo\Feed\Item\Media;
     $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
     $media->setType('audio/mpeg');
  
