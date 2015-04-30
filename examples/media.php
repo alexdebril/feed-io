@@ -16,7 +16,7 @@ $feed = new \FeedIo\Feed;
 $item = $feed->newItem();
 
 // build the media
-$media = new \FeedIo\Feed\Item\Media
+$media = new \FeedIo\Feed\Item\Media;
 $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
 $media->setType('audio/mpeg');
  
