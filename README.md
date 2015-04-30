@@ -13,8 +13,10 @@
 - Atom / RSS read and write support
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
+- Enclosure support to handle external medias like audio content
 - PSR compliant logging
 - Content filtering to fetch only the newest items
+- Malformed feeds auto correction
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
 - Guzzle Client integration
@@ -111,4 +113,15 @@ $dom = $feedIo->toAtom($feed);
 $dom = $feedIo->format($feed, 'atom');
 
 ```
+
+## building a feed including medias
+
+```php
+// build the feed
+$feed = new FeedIo\Feed;
+$feed->setTitle('...');
+
+
+```
+
 
