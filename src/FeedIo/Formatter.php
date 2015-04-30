@@ -13,6 +13,14 @@ use FeedIo\Feed\ItemInterface;
 use FeedIo\Rule\OptionalField;
 use Psr\Log\LoggerInterface;
 
+/** 
+ * Turns a FeedInterface instance into a XML document. 
+ *
+ * Depends on : 
+ *  - FeedIo\StandardAbstract
+ *  - Psr\Log\LoggerInterface
+ * 
+ */
 class Formatter
 {
 

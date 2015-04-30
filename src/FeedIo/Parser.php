@@ -16,6 +16,14 @@ use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
 
+/** 
+ * Parses a DOM document if its format matches the parser's standard
+ *
+ * Depends on : 
+ *  - FeedIo\StandardAbstract
+ *  - Psr\Log\LoggerInterface
+ * 
+ */
 class Parser
 {
 

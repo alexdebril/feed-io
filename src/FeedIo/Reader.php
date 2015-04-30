@@ -16,6 +16,16 @@ use FeedIo\Reader\Result;
 use FeedIo\Reader\NoAccurateParserException;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Consumes feeds and return corresponding Result instances
+ * 
+ * Depends on : 
+ *  - FeedIo\Adapter\ClientInterface
+ *  - Psr\Log\LoggerInterface
+ * 
+ * A Reader instance MUST have at least one parser added with the addParser() method to read feeds
+ * It will throw a NoAccurateParserException if it cannot find a suitable parser for the feed.
+ */
 class Reader
 {
     /**
