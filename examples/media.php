@@ -23,6 +23,9 @@ $media->setType('audio/mpeg');
 // add it to the item
 $item->addMedia($media);
 
+// add the item to the feed
+$feed->add($item);
+
 $client = new \FeedIo\Adapter\NullClient();
 
 $logger = new \Psr\Log\NullLogger();
