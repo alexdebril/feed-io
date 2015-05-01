@@ -33,3 +33,4 @@ $logger = new \Psr\Log\NullLogger();
 $feedIo = new \FeedIo\FeedIo($client, $logger);
 $domDocument = $feedIo->toAtom($result->getFeed());
 echo $domDocument->saveXML();
+

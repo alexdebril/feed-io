@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 22/02/15
- * Time: 23:18
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -32,3 +34,4 @@ foreach( $result->getFeed() as $item ) {
 
 $domDocument = $feedIo->toAtom($result->getFeed());
 echo $domDocument->saveXML();
+
