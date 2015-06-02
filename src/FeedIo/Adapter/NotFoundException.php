@@ -10,8 +10,9 @@
 
 namespace FeedIo\Adapter;
 
+use FeedIo\FeedIoException;
 
-class NotFoundException extends \Exception
+class NotFoundException extends FeedIoException
 {
 
 }

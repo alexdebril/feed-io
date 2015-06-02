@@ -10,8 +10,9 @@
 
 namespace FeedIo\Parser;
 
+use FeedIo\FeedIoException; 
 
-class MissingFieldsException extends \Exception
+class MissingFieldsException extends FeedIoException
 {
 
 }

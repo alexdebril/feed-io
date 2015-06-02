@@ -10,8 +10,9 @@
 
 namespace FeedIo\Reader;
 
+use FeedIo\FeedIoException;
 
-class ReadErrorException extends \Exception
+class ReadErrorException extends FeedIoException
 {
 
 }

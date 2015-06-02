@@ -10,8 +10,9 @@
 
 namespace FeedIo\Reader;
 
+use FeedIo\FeedIoException;
 
-class NoAccurateParserException extends \Exception
+class NoAccurateParserException extends FeedIoException
 {
 
 }

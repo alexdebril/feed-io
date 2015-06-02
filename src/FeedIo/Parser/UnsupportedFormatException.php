@@ -10,8 +10,9 @@
 
 namespace FeedIo\Parser;
 
+use FeedIo\FeedIoException;
 
-class UnsupportedFormatException extends \Exception
+class UnsupportedFormatException extends FeedIoException
 {
 
 }

@@ -8,11 +8,8 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Adapter;
+namespace FeedIo;
 
-use FeedIo\FeedIoException;
 
-class ServerErrorException extends FeedIoException
-{
-
-}
+class FeedIoException extends \RuntimeException
+{}
