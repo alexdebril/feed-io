@@ -26,7 +26,7 @@ class Media implements MediaInterface
     /**
      * @var int
      */
-    protected $lenght;
+    protected $length;
     
     /**
      * @return string
@@ -69,19 +69,41 @@ class Media implements MediaInterface
     /**
      * @return string
      */
-    public function getLenght()
+    public function getLength()
     {
-        return $this->lenght;
+        return $this->length;
     }
     
     /**
+     * @param string $length
+     * @return $this
+     */   
+    public function setLength($length)
+    {
+        $this->length = intval($length);
+    
+        return $this;
+    }   
+
+    
+    /**
+     * @deprecated 
+     * @return string
+     */
+    public function getLenght()
+    {
+        trigger_error('deprecated call to a mispelled method. Please call getLength() instead');
+        return $this->getLength();
+    }
+    
+    /**
+     * @deprecated
      * @param string $lenght
      * @return $this
      */   
     public function setLenght($lenght)
-    {
-        $this->lenght = intval($lenght);
-    
-        return $this;
+    {        
+        trigger_error('deprecated call to a mispelled method. Please call setLength() instead');
+        return $this->setLength($lenght);
     }
 }

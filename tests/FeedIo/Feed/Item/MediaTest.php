@@ -28,11 +28,11 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('image/jpeg', $this->object->getType());
     }
     
-    public function testSetLenght()
+    public function testSetLength()
     {
-        $this->object->setLenght('87669');
-        $this->assertInternalType('integer', $this->object->getLenght());
-        $this->assertEquals(87669, $this->object->getLenght());
+        $this->object->setLength('87669');
+        $this->assertInternalType('integer', $this->object->getLength());
+        $this->assertEquals(87669, $this->object->getLength());
     }
     
     public function testAttributes()

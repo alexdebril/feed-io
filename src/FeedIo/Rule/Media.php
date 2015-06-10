@@ -50,7 +50,7 @@ class Media extends RuleAbstract
         $media = $item->newMedia();
         $media->setType($this->getAttributeValue($element, 'type'))
               ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-              ->setLenght($this->getAttributeValue($element, 'lenght'));
+              ->setLength($this->getAttributeValue($element, 'length'));
               
         $item->addMedia($media);
 
@@ -83,7 +83,7 @@ class Media extends RuleAbstract
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
         $element->setAttribute('type', $media->getType());
-        $element->setAttribute('lenght', $media->getLenght());
+        $element->setAttribute('length', $media->getLength());
         
         return $element;
     }

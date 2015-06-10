@@ -32,7 +32,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $document = new \DomDocument();
         $media = $document->createElement('enclosure');
         $media->setAttribute('url', 'http://localhost');
-        $media->setAttribute('lenght', '12345');
+        $media->setAttribute('length', '12345');
         $media->setAttribute('type', 'audio/mp3');
 
         $item = new Item();
@@ -43,7 +43,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         foreach ( $item->getMedias() as $itemMedia ) {
             $this->assertInternalType('string', $itemMedia->getType());
             $this->assertInternalType('string', $itemMedia->getUrl());
-            $this->assertInternalType('integer', $itemMedia->getLenght());
+            $this->assertInternalType('integer', $itemMedia->getLength());
             
             $this->assertEquals($media->getAttribute('url'), $itemMedia->getUrl());
             $count++;
@@ -60,7 +60,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         
         $media->setType('audio')
               ->setUrl('http://localhost')
-              ->setLenght(123);
+              ->setLength(123);
               
         $item->addMedia($media);
         
@@ -76,7 +76,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($media->getUrl(), $element->getAttribute('url'));        
         $this->assertEquals($media->getType(), $element->getAttribute('type'));
-        $this->assertEquals($media->getLenght(), $element->getAttribute('lenght'));
+        $this->assertEquals($media->getLength(), $element->getAttribute('length'));
     }
     
 }
