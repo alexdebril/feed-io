@@ -21,7 +21,7 @@
 - A generic HTTP ClientInterface
 - Guzzle Client integration
 
-Keep informed about new releases and incoming features : http://blog.debril.fr/category/feed-io
+Keep informed about new releases and incoming features : http://debril.org/category/feed-io
 
 # Installation
 
