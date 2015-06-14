@@ -37,7 +37,9 @@ XML;
 
         $this->assertEquals($this->body, $response->getBody());
         $this->assertEquals(array(), $response->getHeaders());
-        $this->assertEquals('header', $response->getHeader('name'));
+        $this->assertEquals('Tue, 15 Nov 1994 12:45:26 GMT', $response->getHeader('name'));
+        $this->assertInstanceOf('\DateTime', $response->getLastModified());
+        $this->assertEquals(1994,  $response->getLastModified()->format('Y'));
     }
 
     /**
@@ -83,9 +85,10 @@ XML;
     {
         $response = $this->getMockForAbstractClass('\GuzzleHttp\Message\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue($this->body));
-        $response->expects($this->any())->method('getHeader')->will($this->returnValue('header'));
+        $response->expects($this->any())->method('getHeader')->will($this->returnValue('Tue, 15 Nov 1994 12:45:26 GMT'));
         $response->expects($this->any())->method('getHeaders')->will($this->returnValue(array()));
-
+        $response->expects($this->any())->method('hasHeader')->will($this->returnValue(true));
+        
         $client = $this->getMockForAbstractClass('\GuzzleHttp\ClientInterface');
         $client->expects($this->any())->method('get')->will($this->returnValue($response));
 

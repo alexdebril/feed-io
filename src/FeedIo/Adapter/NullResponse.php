@@ -23,6 +23,14 @@ class NullResponse implements ResponseInterface
     {
         return null;
     }
+    
+    /**
+     * @return \DateTime
+     */
+    public function getLastModified()
+    {
+        return new \DateTime('@0');
+    }
 
     /**
      * @return array

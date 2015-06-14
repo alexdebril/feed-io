@@ -19,6 +19,9 @@ use \GuzzleHttp\Message\ResponseInterface as GuzzleResponseInterface;
  */
 class Response implements ResponseInterface
 {
+
+    const HTTP_LAST_MODIFIED = 'Last-Modified';
+
     /**
      * @var \GuzzleHttp\Message\ResponseInterface
      */
@@ -38,6 +41,18 @@ class Response implements ResponseInterface
     public function getBody()
     {
         return $this->guzzleResponse->getBody();
+    }
+    
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastModified()
+    {
+        if ( $this->guzzleResponse->hasHeader(static::HTTP_LAST_MODIFIED) ) {
+            return \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
+        }
+        
+        return null;
     }
 
     /**

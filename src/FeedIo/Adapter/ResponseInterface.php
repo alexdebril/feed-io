@@ -23,6 +23,11 @@ interface ResponseInterface
     public function getBody();
 
     /**
+     * @return \DateTime
+     */
+    public function getLastModified();
+
+    /**
      * @return array
      */
     public function getHeaders();
