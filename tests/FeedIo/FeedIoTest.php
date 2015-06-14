@@ -25,6 +25,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $response->expects($this->any())->method('getBody')->will($this->returnValue(
             file_get_contents(dirname(__FILE__) . "/../samples/expected-atom.xml")
         ));
+        $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
         $this->object = new FeedIo($client, new \Psr\Log\NullLogger());
     }
