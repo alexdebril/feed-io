@@ -49,7 +49,9 @@ class Response implements ResponseInterface
     public function getLastModified()
     {
         if ( $this->guzzleResponse->hasHeader(static::HTTP_LAST_MODIFIED) ) {
-            return \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
+            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
+            
+            return false === $lastModified ? null:$lastModified;
         }
         
         return null;
