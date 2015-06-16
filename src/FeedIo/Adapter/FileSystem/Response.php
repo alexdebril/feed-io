@@ -31,7 +31,7 @@ class Response implements ResponseInterface
 
     /**
      * @param string $fileContent
-     * @param \DateTime $mastModified
+     * @param \DateTime $lastModified
      */
     public function __construct($fileContent, \DateTime $lastModified)
     {
