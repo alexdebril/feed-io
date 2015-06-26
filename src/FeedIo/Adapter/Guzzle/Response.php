@@ -11,7 +11,7 @@
 namespace FeedIo\Adapter\Guzzle;
 
 use FeedIo\Adapter\ResponseInterface;
-use GuzzleHttp\Message\ResponseInterface as GuzzleResponseInterface;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 /**
  * Guzzle dependent HTTP Response
@@ -22,16 +22,16 @@ class Response implements ResponseInterface
     const HTTP_LAST_MODIFIED = 'Last-Modified';
 
     /**
-     * @var \GuzzleHttp\Message\ResponseInterface
+     * @var \Psr\Http\Message\ResponseInterface
      */
-    protected $guzzleResponse;
+    protected $psrResponse;
 
     /**
-     * @param GuzzleResponseInterface $guzzleResponse
+     * @param \Psr\Http\Message\ResponseInterface
      */
-    public function __construct(GuzzleResponseInterface $guzzleResponse)
+    public function __construct(PsrResponseInterface $psrResponse)
     {
-        $this->guzzleResponse = $guzzleResponse;
+        $this->psrResponse = $psrResponse;
     }
 
     /**
@@ -39,7 +39,7 @@ class Response implements ResponseInterface
      */
     public function getBody()
     {
-        return $this->guzzleResponse->getBody();
+        return $this->psrResponse->getBody();
     }
 
     /**
@@ -47,7 +47,7 @@ class Response implements ResponseInterface
      */
     public function getLastModified()
     {
-        if ($this->guzzleResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
+        if ($this->psrResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
             $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
 
             return false === $lastModified ? null : $lastModified;
@@ -61,7 +61,7 @@ class Response implements ResponseInterface
      */
     public function getHeaders()
     {
-        return $this->guzzleResponse->getHeaders();
+        return $this->psrResponse->getHeaders();
     }
 
     /**
@@ -70,6 +70,6 @@ class Response implements ResponseInterface
      */
     public function getHeader($name)
     {
-        return $this->guzzleResponse->getHeader($name);
+        return $this->psrResponse->getHeader($name);
     }
 }

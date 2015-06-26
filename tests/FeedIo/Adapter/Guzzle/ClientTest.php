@@ -28,7 +28,7 @@ XML;
 
     public function testGetResponse()
     {
-        $response = $this->object->getResponse('somewhere', new \DateTime());
+        $response = $this->object->getResponse('http://somewhere', new \DateTime());
         $this->assertInstanceOf('\FeedIo\Adapter\ResponseInterface', $response);
 
         $this->assertEquals($this->body, $response->getBody());
@@ -64,12 +64,12 @@ XML;
     {
         $exception = new BadResponseException(
             'message',
-            new \GuzzleHttp\Message\Request('get', 'http://test'),
-            new \GuzzleHttp\Message\Response("{$statusCode}")
+            new \GuzzleHttp\Psr7\Request('get', 'http://test'),
+            new \GuzzleHttp\Psr7\Response("{$statusCode}")
         );
 
         $guzzleClient = $this->getMockForAbstractClass('\GuzzleHttp\ClientInterface');
-        $guzzleClient->expects($this->any())->method('get')->will($this->throwException($exception));
+        $guzzleClient->expects($this->any())->method('request')->will($this->throwException($exception));
 
         return $guzzleClient;
     }
@@ -79,14 +79,14 @@ XML;
      */
     protected function getGuzzleClient()
     {
-        $response = $this->getMockForAbstractClass('\GuzzleHttp\Message\ResponseInterface');
+        $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue($this->body));
         $response->expects($this->any())->method('getHeader')->will($this->returnValue('Tue, 15 Nov 1994 12:45:26 GMT'));
         $response->expects($this->any())->method('getHeaders')->will($this->returnValue(array()));
         $response->expects($this->any())->method('hasHeader')->will($this->returnValue(true));
 
-        $client = $this->getMockForAbstractClass('\GuzzleHttp\ClientInterface');
-        $client->expects($this->any())->method('get')->will($this->returnValue($response));
+        $client = $this->getMock('\GuzzleHttp\Client');
+        $client->expects($this->any())->method('request')->will($this->returnValue($response));
 
         return $client;
     }
