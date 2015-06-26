@@ -84,7 +84,7 @@ class Parser
     /**
      * @param DOMDocument $document
      * @param FeedInterface $feed
-     * @return FeedInterface
+     * @return \FeedIo\FeedInterface
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
@@ -97,7 +97,9 @@ class Parser
         $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
         $element = $this->standard->getMainElement($document);
 
-        return $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());
+        $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());
+
+        return $feed;
     }
 
     /**
@@ -128,10 +130,10 @@ class Parser
     }
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $item
      * @param \DOMElement $element
      * @param RuleSet $ruleSet
-     * @return ItemInterface
+     * @return NodeInterface
      */
     public function parseNode(NodeInterface $item, \DOMElement $element, RuleSet $ruleSet)
     {
@@ -152,12 +154,12 @@ class Parser
 
     /**
      * @param FeedInterface $feed
-     * @param ItemInterface $item
+     * @param NodeInterface $item
      * @return $this
      */
-    public function addValidItem(FeedInterface $feed, ItemInterface $item)
+    public function addValidItem(FeedInterface $feed, NodeInterface $item)
     {
-        if ($this->isValid($item)) {
+        if ($item instanceof ItemInterface && $this->isValid($item)) {
             $feed->add($item);
         }
 
