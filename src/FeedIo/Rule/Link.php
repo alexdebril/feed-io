@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 31/10/14
- * Time: 12:02
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FeedIo\Rule;
