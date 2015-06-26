@@ -10,8 +10,6 @@
  
 namespace FeedIo\Rule;
 
-
-use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;

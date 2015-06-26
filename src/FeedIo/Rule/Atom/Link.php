@@ -8,8 +8,6 @@
 
 namespace FeedIo\Rule\Atom;
 
-
-use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
