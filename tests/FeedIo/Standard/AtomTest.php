@@ -5,9 +5,7 @@
  * Date: 11/12/14
  * Time: 23:34
  */
-
 namespace FeedIo\Standard;
-
 
 use FeedIo\Rule\DateTimeBuilder;
 
@@ -39,5 +37,4 @@ class AtomTest extends \PHPUnit_Framework_TestCase
             str_replace("\n", '', $dom->saveXML())
         );
     }
-
 }

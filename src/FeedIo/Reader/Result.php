@@ -23,7 +23,7 @@ use FeedIo\FeedInterface;
  * - value of the 'modifiedSince' header sent throught the request
  * - the raw response
  * - the DOM document
- * - URL of the feed 
+ * - URL of the feed
  */
 class Result
 {
@@ -59,9 +59,9 @@ class Result
     protected $url;
 
     /**
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
+     * @param \DOMDocument      $document
+     * @param FeedInterface     $feed
+     * @param \DateTime         $modifiedSince
      * @param ResponseInterface $response
      * @param $url
      */
@@ -127,5 +127,4 @@ class Result
     {
         return $this->url;
     }
-
 }

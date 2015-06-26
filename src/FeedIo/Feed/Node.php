@@ -10,9 +10,18 @@
 
 namespace FeedIo\Feed;
 
+use FeedIo\Feed\Node\Element;
+use FeedIo\Feed\Node\ElementIterator;
+use FeedIo\Feed\Node\ElementInterface;
 
 class Node implements NodeInterface
 {
+
+    /**
+     * @var \ArrayIterator
+     */
+    protected $elements;
+
     /**
      * @var string
      */
@@ -38,6 +47,103 @@ class Node implements NodeInterface
      */
     protected $link;
 
+    public function __construct()
+    {
+        $this->elements = new \ArrayIterator();
+    }
+
+    /**
+     * @param  string $name  element name
+     * @param  string $value element value
+     * @return $this
+     */
+    public function set($name, $value)
+    {
+        $element = $this->newElement();
+
+        $element->setName($name);
+        $element->setValue($value);
+
+        $this->addElement($element);
+
+        return $this;
+    }
+
+    /**
+     * @return ElementInterface
+     */
+    public function newElement()
+    {
+        return new Element();
+    }
+
+    /**
+     * @param  string $name element name
+     * @return mixed
+     */
+    public function getValue($name)
+    {
+        foreach ($this->getElementIterator($name) as $element) {
+            return $element->getValue();
+        }
+
+        return;
+    }
+
+    /**
+     * @param  string          $name element name
+     * @return ElementIterator
+     */
+    public function getElementIterator($name)
+    {
+        return new ElementIterator($this->elements, $name);
+    }
+
+    /**
+     * @param  string  $name element name
+     * @return boolean true if the element exists
+     */
+    public function hasElement($name)
+    {
+        $filter = $this->getElementIterator($name);
+
+        return $filter->count() > 0;
+    }
+
+    /**
+     * @param  ElementInterface $element
+     * @return $this
+     */
+    public function addElement(ElementInterface $element)
+    {
+        $this->elements->append($element);
+
+        return $this;
+    }
+
+    /**
+     * Returns all the item's optional elements
+     * @return \ArrayIterator
+     */
+    public function getAllElements()
+    {
+        return $this->elements;
+    }
+
+    /**
+     * Returns the item's optional elements tag names
+     * @return array
+     */
+    public function listElements()
+    {
+        $out = array();
+        foreach ($this->elements as $element) {
+            $out[] = $element->getName();
+        }
+
+        return $out;
+    }
+
     /**
      * @return string
      */
@@ -47,7 +153,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $title
+     * @param  string $title
      * @return $this
      */
     public function setTitle($title)
@@ -66,7 +172,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $publicId
+     * @param  string $publicId
      * @return $this
      */
     public function setPublicId($publicId)
@@ -85,7 +191,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $description
+     * @param  string $description
      * @return $this
      */
     public function setDescription($description)
@@ -104,7 +210,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param \DateTime $lastModified
+     * @param  \DateTime $lastModified
      * @return $this
      */
     public function setLastModified(\DateTime $lastModified)
@@ -123,7 +229,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $link
+     * @param  string $link
      * @return $this
      */
     public function setLink($link)
@@ -132,5 +238,4 @@ class Node implements NodeInterface
 
         return $this;
     }
-
 }

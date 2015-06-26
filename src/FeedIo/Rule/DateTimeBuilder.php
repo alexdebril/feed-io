@@ -10,7 +10,6 @@
 
 namespace FeedIo\Rule;
 
-
 class DateTimeBuilder
 {
     /**
@@ -55,7 +54,7 @@ class DateTimeBuilder
     }
 
     /**
-     * @param array $dateFormats
+     * @param  array $dateFormats
      * @return $this
      */
     public function setDateFormats(array $dateFormats)
@@ -75,8 +74,8 @@ class DateTimeBuilder
 
     /**
      *
-     * @param string $date
-     * @return string|false date Format
+     * @param  string                   $date
+     * @return string|false             date Format
      * @throws InvalidArgumentException
      */
     public function guessDateFormat($date)
@@ -85,6 +84,7 @@ class DateTimeBuilder
             $test = \DateTime::createFromFormat($format, $date);
             if ($test instanceof \DateTime) {
                 $this->lastGuessedFormat = $format;
+
                 return $format;
             }
         }
@@ -94,21 +94,22 @@ class DateTimeBuilder
 
     /**
      * Creates a DateTime instance for the given string. Default format is RFC2822
-     * @param string $string
+     * @param  string                   $string
      * @return \DateTime
      * @throws InvalidArgumentException
      */
     public function convertToDateTime($string)
     {
-        foreach( [$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format ) {
+        foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
             $date = \DateTime::createFromFormat($format, $string);
-            if ( $date instanceof \DateTime ) {
+            if ($date instanceof \DateTime) {
                 $date->setTimezone($this->getTimezone());
+
                 return $date;
             }
         }
 
-        throw new \InvalidArgumentException('Impossible to convert date : ' . $string);
+        throw new \InvalidArgumentException('Impossible to convert date : '.$string);
     }
 
     /**
@@ -126,5 +127,4 @@ class DateTimeBuilder
     {
         $this->timezone = $timezone;
     }
-
 }

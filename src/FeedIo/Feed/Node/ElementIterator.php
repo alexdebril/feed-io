@@ -8,8 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Feed\Item;
-
+namespace FeedIo\Feed\Node;
 
 /**
  * Iterator to filter elements by name
@@ -21,17 +20,17 @@ class ElementIterator extends \FilterIterator
      * @var string $name Element name to accept
      */
     protected $name;
-    
+
     /**
      * @param \Iterator $iterator Set of elements to filter
-     * @param string $name Element name to accept
+     * @param string    $name     Element name to accept
      */
     public function __construct(\Iterator $iterator, $name)
     {
         parent::__construct($iterator);
         $this->name = $name;
     }
-    
+
     /**
      * override PHP's count implementation.
      * @return int
@@ -39,13 +38,13 @@ class ElementIterator extends \FilterIterator
     public function count()
     {
         $count = 0;
-        foreach ( $this as $item ) {
+        foreach ($this as $node) {
             $count++;
         }
-        
+
         return $count;
     }
-    
+
     /**
      * @return boolean True if the current element's name matches the expected one
      */

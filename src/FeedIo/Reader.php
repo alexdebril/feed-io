@@ -18,11 +18,11 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Consumes feeds and return corresponding Result instances
- * 
- * Depends on : 
+ *
+ * Depends on :
  *  - FeedIo\Adapter\ClientInterface
  *  - Psr\Log\LoggerInterface
- * 
+ *
  * A Reader instance MUST have at least one parser added with the addParser() method to read feeds
  * It will throw a NoAccurateParserException if it cannot find a suitable parser for the feed.
  */
@@ -54,19 +54,19 @@ class Reader
     }
 
     /**
-     * @param Parser $parser
+     * @param  Parser $parser
      * @return $this
      */
     public function addParser(Parser $parser)
     {
-        $this->logger->debug("new parser added : " . get_class($parser->getStandard()));
+        $this->logger->debug("new parser added : ".get_class($parser->getStandard()));
         $this->parsers[] = $parser;
 
         return $this;
     }
 
     /**
-     * @param string $body
+     * @param  string       $body
      * @return \DOMDocument
      */
     public function loadDocument($body)
@@ -90,8 +90,8 @@ class Reader
 
     /**
      * @param $url
-     * @param FeedInterface $feed
-     * @param \DateTime $modifiedSince
+     * @param  FeedInterface         $feed
+     * @param  \DateTime             $modifiedSince
      * @return \FeedIo\Reader\Result
      * @throws ReadErrorException
      */
@@ -111,6 +111,7 @@ class Reader
             $this->parseDocument($document, $feed);
 
             $this->logger->info("{$url} successfully parsed");
+
             return new Result($document, $feed, $modifiedSince, $response, $url);
         } catch (\Exception $e) {
             $this->logger->warning("{$url} read error : {$e->getMessage()}");
@@ -119,8 +120,8 @@ class Reader
     }
 
     /**
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
+     * @param  \DOMDocument                      $document
+     * @param  FeedInterface                     $feed
      * @return FeedInterface
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
@@ -128,13 +129,13 @@ class Reader
     public function parseDocument(\DOMDocument $document, FeedInterface $feed)
     {
         $parser = $this->getAccurateParser($document);
-        $this->logger->debug("accurate parser : " . get_class($parser));
+        $this->logger->debug("accurate parser : ".get_class($parser));
 
         return $parser->parse($document, $feed);
     }
 
     /**
-     * @param \DOMDocument $document
+     * @param  \DOMDocument                     $document
      * @return ParserAbstract
      * @throws Reader\NoAccurateParserException
      */
@@ -150,5 +151,4 @@ class Reader
         $this->logger->error($message);
         throw new NoAccurateParserException($message);
     }
-
 }

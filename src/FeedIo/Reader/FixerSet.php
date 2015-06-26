@@ -16,7 +16,7 @@ class FixerSet
 {
 
     protected $fixers = array();
-    
+
     /**
      * @param \FeedIo\Reader\FixerAbstract
      * @return $this
@@ -24,21 +24,20 @@ class FixerSet
     public function add(FixerAbstract $fixer)
     {
         $this->fixers[] = $fixer;
-        
+
         return $this;
     }
-    
+
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function correct(FeedInterface $feed)
     {
-        foreach( $this->fixers as $fixer ) {
+        foreach ($this->fixers as $fixer) {
             $fixer->correct($feed);
         }
-    
+
         return $this;
     }
-    
 }

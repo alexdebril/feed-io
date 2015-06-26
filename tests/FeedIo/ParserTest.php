@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-
 use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
 use Psr\Log\NullLogger;
@@ -64,8 +63,8 @@ XML;
         $this->assertInstanceOf('\Iterator', $feed->getElementIterator('description'));
         $iterator = $feed->getElementIterator('description');
         $count = 0;
-        foreach ( $feed->getElementIterator('description') as $element ) {
-            $this->assertInstanceOf('\FeedIo\Feed\Item\ElementInterface', $element);
+        foreach ($iterator as $element) {
+            $this->assertInstanceOf('\FeedIo\Feed\Node\ElementInterface', $element);
             $this->assertEquals('feed-io is a library', $element->getValue());
             $count++;
         }
@@ -138,7 +137,7 @@ RSS;
     }
 
     /**
-     * @param boolean $returnValue
+     * @param  boolean                 $returnValue
      * @return \FeedIo\FilterInterface
      */
     protected function getFilterMock($returnValue)
@@ -150,5 +149,4 @@ RSS;
 
         return $filter;
     }
-
 }

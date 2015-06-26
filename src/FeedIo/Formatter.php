@@ -10,18 +10,17 @@
 
 namespace FeedIo;
 
-
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Rule\OptionalField;
 use Psr\Log\LoggerInterface;
 
-/** 
- * Turns a FeedInterface instance into a XML document. 
+/**
+ * Turns a FeedInterface instance into a XML document.
  *
- * Depends on : 
+ * Depends on :
  *  - FeedIo\StandardAbstract
  *  - Psr\Log\LoggerInterface
- * 
+ *
  */
 class Formatter
 {
@@ -38,7 +37,7 @@ class Formatter
 
     /**
      * @param StandardAbstract $standard
-     * @param LoggerInterface $logger
+     * @param LoggerInterface  $logger
      */
     public function __construct(StandardAbstract $standard, LoggerInterface $logger)
     {
@@ -46,10 +45,9 @@ class Formatter
         $this->logger = $logger;
     }
 
-
     /**
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
+     * @param  \DOMDocument  $document
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function setHeaders(\DOMDocument $document, FeedInterface $feed)
@@ -64,17 +62,17 @@ class Formatter
     }
 
     /**
-     * @param \DOMDocument $document
-     * @param ItemInterface $item
+     * @param  \DOMDocument  $document
+     * @param  NodeInterface $node
      * @return $this
      */
-    public function addItem(\DOMDocument $document, ItemInterface $item)
+    public function addItem(\DOMDocument $document, NodeInterface $node)
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
-        $elements = $this->buildElements($rules, $document, $item);
+        $elements = $this->buildElements($rules, $document, $node);
 
-        foreach( $elements as $element ) {
+        foreach ($elements as $element) {
             $domItem->appendChild($element);
         }
 
@@ -84,32 +82,32 @@ class Formatter
     }
 
     /**
-     * @param RuleSet $ruleSet
-     * @param \DOMDocument $document
-     * @param ItemInterface $item
+     * @param  RuleSet       $ruleSet
+     * @param  \DOMDocument  $document
+     * @param  NodeInterface $node
      * @return array
      */
-    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, ItemInterface $item)
+    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, NodeInterface $node)
     {
-        $rules = $this->getAllRules($ruleSet, $item);
+        $rules = $this->getAllRules($ruleSet, $node);
         $elements = array();
-        foreach( $rules as $rule ) {
-            $elements[] = $rule->createElement($document, $item);
+        foreach ($rules as $rule) {
+            $elements[] = $rule->createElement($document, $node);
         }
 
         return array_filter($elements);
     }
 
     /**
-     * @param RuleSet $ruleSet
-     * @param ItemInterface $item
+     * @param  RuleSet              $ruleSet
+     * @param  NodeInterface        $node
      * @return array|\ArrayIterator
      */
-    public function getAllRules(RuleSet $ruleSet, ItemInterface $item)
+    public function getAllRules(RuleSet $ruleSet, NodeInterface $node)
     {
         $rules = $ruleSet->getRules();
-        $optionalFields = $item->listElements();
-        foreach( $optionalFields as $optionalField ) {
+        $optionalFields = $node->listElements();
+        foreach ($optionalFields as $optionalField) {
             $rules[] = new OptionalField($optionalField);
         }
 
@@ -135,7 +133,7 @@ class Formatter
     }
 
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return string
      */
     public function toString(FeedInterface $feed)
@@ -146,7 +144,7 @@ class Formatter
     }
 
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return \DomDocument
      */
     public function toDom(FeedInterface $feed)
@@ -160,8 +158,8 @@ class Formatter
     }
 
     /**
-     * @param \DOMDocument $document
-     * @param FeedInterface $feed
+     * @param  \DOMDocument  $document
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function setItems(\DOMDocument $document, FeedInterface $feed)
@@ -172,5 +170,4 @@ class Formatter
 
         return $this;
     }
-
 }

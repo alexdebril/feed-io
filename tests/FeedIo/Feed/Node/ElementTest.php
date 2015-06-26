@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Feed\Item;
+namespace FeedIo\Feed\Node;
 
 class ElementTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,37 +16,37 @@ class ElementTest extends \PHPUnit_Framework_TestCase
      * @var \FeedIo\Feed\Item\Element
      */
     protected $object;
-    
+
     public function testSetName()
     {
-        $element = new Element;
+        $element = new Element();
         $element->setName('foo');
-        
+
         $this->assertEquals('foo', $element->getName());
     }
-    
+
     public function testSetValue()
     {
-        $element = new Element;
+        $element = new Element();
         $text = 'lorem ipsum';
-        
+
         $element->setValue($text);
         $this->assertEquals($text, $element->getValue());
     }
-    
+
     public function testAttributes()
     {
-        $element = new Element;
+        $element = new Element();
         $element->setAttribute('url', 'http://foo.com');
-        
+
         $this->assertEquals('http://foo.com', $element->getAttribute('url'));
-        
+
         $this->assertEquals(array('url' => 'http://foo.com'), $element->getAttributes());
     }
 
     public function testGetNullAttribute()
     {
-        $element = new Element;
+        $element = new Element();
         $this->assertNull($element->getAttribute('null'));
     }
 }

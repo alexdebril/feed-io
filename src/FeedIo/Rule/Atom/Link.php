@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 22/11/14
- * Time: 15:50
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FeedIo\Rule\Atom;
 
-
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
@@ -18,14 +19,14 @@ class Link extends RuleAbstract
     const NODE_NAME = 'link';
 
     /**
-     * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        if ( $element->hasAttribute('href') ) {
-            $item->setLink($element->getAttribute('href'));
+        if ($element->hasAttribute('href')) {
+            $node->setLink($element->getAttribute('href'));
         }
 
         return $this;
@@ -34,16 +35,15 @@ class Link extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
         $element = $document->createElement(static::NODE_NAME);
-        $element->setAttribute('href', $item->getLink());
+        $element->setAttribute('href', $node->getLink());
 
         return $element;
     }
-
 }

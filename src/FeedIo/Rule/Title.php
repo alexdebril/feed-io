@@ -10,7 +10,7 @@
 
 namespace FeedIo\Rule;
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Title extends RuleAbstract
@@ -18,13 +18,13 @@ class Title extends RuleAbstract
     const NODE_NAME = 'title';
 
     /**
-     * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $item->setTitle($element->nodeValue);
+        $node->setTitle($element->nodeValue);
 
         return $this;
     }
@@ -32,15 +32,14 @@ class Title extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        $title = htmlspecialchars($item->getTitle());
+        $title = htmlspecialchars($node->getTitle());
+
         return $document->createElement(static::NODE_NAME, $title);
     }
-
-
 }

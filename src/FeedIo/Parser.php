@@ -10,19 +10,20 @@
 
 namespace FeedIo;
 
-use \DOMDocument;
+use DOMDocument;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
 
-/** 
+/**
  * Parses a DOM document if its format matches the parser's standard
  *
- * Depends on : 
+ * Depends on :
  *  - FeedIo\StandardAbstract
  *  - Psr\Log\LoggerInterface
- * 
+ *
  */
 class Parser
 {
@@ -44,7 +45,7 @@ class Parser
 
     /**
      * @param StandardAbstract $standard
-     * @param LoggerInterface $logger
+     * @param LoggerInterface  $logger
      */
     public function __construct(StandardAbstract $standard, LoggerInterface $logger)
     {
@@ -70,7 +71,7 @@ class Parser
     }
 
     /**
-     * @param FilterInterface $filter
+     * @param  FilterInterface $filter
      * @return $this
      */
     public function addFilter(FilterInterface $filter)
@@ -81,9 +82,9 @@ class Parser
     }
 
     /**
-     * @param DOMDocument $document
-     * @param FeedInterface $feed
-     * @return FeedInterface
+     * @param  DOMDocument                       $document
+     * @param  FeedInterface                     $feed
+     * @return \FeedIo\FeedInterface
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
@@ -96,12 +97,14 @@ class Parser
         $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
         $element = $this->standard->getMainElement($document);
 
-        return $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());
+        $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());
+
+        return $feed;
     }
 
     /**
-     * @param DOMDocument $document
-     * @param array $mandatoryFields
+     * @param  DOMDocument            $document
+     * @param  array                  $mandatoryFields
      * @return $this
      * @throws MissingFieldsException
      */
@@ -118,7 +121,7 @@ class Parser
         }
 
         if (!empty($errors)) {
-            $message = "missing mandatory field(s) : " . implode(',', $errors);
+            $message = "missing mandatory field(s) : ".implode(',', $errors);
             $this->logger->warning($message);
             throw new MissingFieldsException($message);
         }
@@ -127,12 +130,12 @@ class Parser
     }
 
     /**
-     * @param ItemInterface $item
-     * @param \DOMElement $element
-     * @param RuleSet $ruleSet
-     * @return ItemInterface
+     * @param  NodeInterface $item
+     * @param  \DOMElement   $element
+     * @param  RuleSet       $ruleSet
+     * @return NodeInterface
      */
-    public function parseNode(ItemInterface $item, \DOMElement $element, RuleSet $ruleSet)
+    public function parseNode(NodeInterface $item, \DOMElement $element, RuleSet $ruleSet)
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
@@ -150,13 +153,13 @@ class Parser
     }
 
     /**
-     * @param FeedInterface $feed
-     * @param ItemInterface $item
+     * @param  FeedInterface $feed
+     * @param  NodeInterface $item
      * @return $this
      */
-    public function addValidItem(FeedInterface $feed, ItemInterface $item)
+    public function addValidItem(FeedInterface $feed, NodeInterface $item)
     {
-        if ($this->isValid($item)) {
+        if ($item instanceof ItemInterface && $this->isValid($item)) {
             $feed->add($item);
         }
 
@@ -164,7 +167,7 @@ class Parser
     }
 
     /**
-     * @param ItemInterface $item
+     * @param  ItemInterface $item
      * @return bool
      */
     public function isValid(ItemInterface $item)
@@ -177,5 +180,4 @@ class Parser
 
         return true;
     }
-
 }

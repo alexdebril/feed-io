@@ -14,5 +14,4 @@ use FeedIo\FeedIoException;
 
 class NoAccurateParserException extends FeedIoException
 {
-
 }

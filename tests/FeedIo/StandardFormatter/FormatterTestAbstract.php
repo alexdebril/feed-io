@@ -5,7 +5,6 @@
  * Date: 13/12/14
  * Time: 18:21
  */
-
 namespace FeedIo\StandardFormatter;
 
 use FeedIo\Feed;
@@ -59,7 +58,6 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
 
     protected function getSampleFile()
     {
-        return dirname(__FILE__) . "/../../samples/" . static::SAMPLE_FILE;
+        return dirname(__FILE__)."/../../samples/".static::SAMPLE_FILE;
     }
-
 }

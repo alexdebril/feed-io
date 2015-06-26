@@ -10,7 +10,6 @@
 
 namespace FeedIo\Standard;
 
-
 use DOMDocument;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
@@ -19,31 +18,31 @@ use FeedIo\Rule\Media;
 use FeedIo\StandardAbstract;
 
 class Rss extends StandardAbstract
-{  
+{
 
     /**
      * Format version
      */
     const VERSION = '2.0';
-    
+
     /**
      * RSS document must have a <rss> root node
      */
     const ROOT_NODE_TAGNAME = 'rss';
-    
+
     /**
-     * <channel> node contains feed's metadata 
+     * <channel> node contains feed's metadata
      */
     const CHANNEL_NODE_TAGNAME = 'channel';
-    
+
     /**
      * publication date
      */
     const DATE_NODE_TAGNAME = 'pubDate';
-    
+
     /**
      * Formats the document according to the standard's specification
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return mixed
      */
     public function format(\DOMDocument $document)
@@ -59,7 +58,7 @@ class Rss extends StandardAbstract
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return boolean
      */
     public function canHandle(\DOMDocument $document)
@@ -68,7 +67,7 @@ class Rss extends StandardAbstract
     }
 
     /**
-     * @param DOMDocument $document
+     * @param  DOMDocument $document
      * @return \DomElement
      */
     public function getMainElement(\DOMDocument $document)
@@ -105,5 +104,4 @@ class Rss extends StandardAbstract
 
         return $ruleSet;
     }
-
 }

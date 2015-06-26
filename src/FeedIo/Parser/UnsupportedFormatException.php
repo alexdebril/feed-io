@@ -14,5 +14,4 @@ use FeedIo\FeedIoException;
 
 class UnsupportedFormatException extends FeedIoException
 {
-
 }

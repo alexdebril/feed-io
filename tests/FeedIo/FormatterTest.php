@@ -5,9 +5,7 @@
  * Date: 23/11/14
  * Time: 17:44
  */
-
 namespace FeedIo;
-
 
 use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
@@ -62,7 +60,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $rules);
 
         $ruleNames = array('title', 'description');
-        foreach( $rules as $rule ) {
+        foreach ($rules as $rule) {
             $this->assertEquals(current($ruleNames), $rule->getNodeName());
             next($ruleNames);
         }

@@ -5,9 +5,7 @@
  * Date: 22/11/14
  * Time: 11:57
  */
-
 namespace FeedIo\Parser;
-
 
 use FeedIo\Feed;
 use FeedIo\Parser;
@@ -71,7 +69,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
 
         $item = $feed->current();
         $this->assertInstanceOf('\FeedIo\Feed\ItemInterface', $item);
-        if ( $item instanceof \FeedIo\Feed\ItemInterface ){
+        if ($item instanceof \FeedIo\Feed\ItemInterface) {
             $this->assertNotEmpty($item->getTitle());
             $this->assertNotEmpty($item->getDescription());
             $this->assertNotEmpty($item->getPublicId());
@@ -88,7 +86,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
      */
     protected function buildDomDocument($filename)
     {
-        $file = dirname(__FILE__) . "/../../samples/{$filename}";
+        $file = dirname(__FILE__)."/../../samples/{$filename}";
         $domDocument = new \DOMDocument();
         $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
 

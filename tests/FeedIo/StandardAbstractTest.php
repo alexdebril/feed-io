@@ -10,10 +10,7 @@
 
 namespace FeedIo;
 
-
-use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
-use Psr\Log\NullLogger;
 
 class StandardAbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -74,5 +71,4 @@ class StandardAbstractTest extends \PHPUnit_Framework_TestCase
         $ruleSet = $method->invoke($this->object);
         $this->assertInstanceOf('\FeedIo\RuleSet', $ruleSet);
     }
-
 }

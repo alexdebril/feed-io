@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-
 class RuleSetTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -30,15 +29,15 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($rule, $this->object->get('node'));
     }
-    
+
     public function testAddAliases()
     {
         $name = 'mainNode';
         $aliases = array('node1', 'node2');
-        
+
         $this->object->addAliases($name, $aliases);
         $this->assertEquals($name, $this->object->getNameForAlias('node1'));
-        
+
         $this->assertEquals($name, $this->object->getNameForAlias($name));
     }
 
@@ -46,8 +45,7 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
     {
         $rule = $this->getMockForAbstractClass('\FeedIo\RuleAbstract');
         $this->object->add($rule, array('alias'));
-    
+
         $this->assertEquals($rule, $this->object->get('alias'));
     }
 }
- 

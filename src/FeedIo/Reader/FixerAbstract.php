@@ -19,7 +19,7 @@ abstract class FixerAbstract
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;   
+    protected $logger;
 
     /**
      * @param \Psr\Log\LoggerInterface
@@ -28,10 +28,9 @@ abstract class FixerAbstract
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        
+
         return $this;
     }
 
     abstract public function correct(FeedInterface $feed);
-    
 }

@@ -10,11 +10,10 @@
 
 namespace FeedIo\Adapter\FileSystem;
 
-
 use FeedIo\Adapter\ResponseInterface;
 
 /**
- * 
+ *
  */
 class Response implements ResponseInterface
 {
@@ -23,14 +22,14 @@ class Response implements ResponseInterface
      * @var string
      */
     protected $fileContent;
-    
+
     /**
      * @var \DateTime
      */
     protected $lastModified;
 
     /**
-     * @param string $fileContent
+     * @param string    $fileContent
      * @param \DateTime $lastModified
      */
     public function __construct($fileContent, \DateTime $lastModified)
@@ -56,7 +55,7 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return string
      */
     public function getHeader($name)
@@ -68,8 +67,7 @@ class Response implements ResponseInterface
      * @return \DateTime
      */
     public function getLastModified()
-    {   
+    {
         return $this->lastModified;
     }
-
 }

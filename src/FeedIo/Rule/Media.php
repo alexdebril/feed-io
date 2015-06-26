@@ -10,8 +10,10 @@
 
 namespace FeedIo\Rule;
 
+use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Media extends RuleAbstract
@@ -30,29 +32,31 @@ class Media extends RuleAbstract
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return $this
      */
     public function setUrlAttributeName($name)
     {
         $this->urlAttributeName = $name;
-        
+
         return $this;
     }
 
     /**
-     * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $media = $item->newMedia();
-        $media->setType($this->getAttributeValue($element, 'type'))
-              ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-              ->setLength($this->getAttributeValue($element, 'length'));
-              
-        $item->addMedia($media);
+        if ($node instanceof ItemInterface) {
+            $media = $node->newMedia();
+            $media->setType($this->getAttributeValue($element, 'type'))
+                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
+                ->setLength($this->getAttributeValue($element, 'length'));
+
+            $node->addMedia($media);
+        }
 
         return $this;
     }
@@ -60,22 +64,24 @@ class Media extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        foreach ( $item->getMedias() as $media ) {        
-            return $this->createMediaElement($document, $media);
+        if ($node instanceof ItemInterface) {
+            foreach ($node->getMedias() as $media) {
+                return $this->createMediaElement($document, $media);
+            }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * @param \DomDocument $document
-     * @param MediaInterface $media
+     * @param  \DomDocument   $document
+     * @param  MediaInterface $media
      * @return \DomElement
      */
     public function createMediaElement(\DomDocument $document, MediaInterface $media)
@@ -84,8 +90,7 @@ class Media extends RuleAbstract
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
         $element->setAttribute('type', $media->getType());
         $element->setAttribute('length', $media->getLength());
-        
+
         return $element;
     }
-
 }

@@ -5,9 +5,7 @@
  * Date: 21/04/15
  * Time: 22:31
  */
-
 namespace FeedIo\Reader;
-
 
 use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
@@ -21,7 +19,7 @@ class FixerMock extends FixerAbstract
     protected $logger;
 
     /**
-     * @param LoggerInterface $logger
+     * @param  LoggerInterface $logger
      * @return $this
      */
     public function setLogger(LoggerInterface $logger)
@@ -32,13 +30,13 @@ class FixerMock extends FixerAbstract
     }
 
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function correct(FeedInterface $feed)
     {
         $feed->setTitle('corrected');
+
         return $this;
     }
-
 }

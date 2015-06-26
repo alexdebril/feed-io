@@ -23,7 +23,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMockForAbstractClass('\FeedIo\Adapter\ClientInterface');
         $response = $this->getMock('FeedIo\Adapter\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue(
-            file_get_contents(dirname(__FILE__) . "/../samples/expected-atom.xml")
+            file_get_contents(dirname(__FILE__)."/../samples/expected-atom.xml")
         ));
         $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
@@ -56,37 +56,36 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
     {
         $standards = $this->object->getCommonStandards();
         $this->assertInternalType('array', $standards);
-        foreach( $standards as $standard ) {
+        foreach ($standards as $standard) {
             $this->assertInstanceOf('\FeedIo\StandardAbstract', $standard);
         }
     }
-    
+
     public function testGetBaseFixers()
     {
         $fixers = $this->object->getBaseFixers();
-        
-        foreach ( $fixers as $fixer ) {
+
+        foreach ($fixers as $fixer) {
             $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
         }
-        
     }
 
     public function testAddFixer()
     {
         $fixer = $this->getMockForAbstractClass('FeedIo\Reader\FixerAbstract');
-        
+
         $this->object->addFixer($fixer);
         $fixerSet = $this->object->getFixerSet();
-        
+
         $this->assertAttributeContains($fixer, 'fixers', $fixerSet);
     }
-    
+
     /**
      * @covers FeedIo\FeedIo::addStandard
      */
     public function testAddStandard()
     {
-        $this->object->addStandard('atom2', new Atom(new DateTimeBuilder()) );
+        $this->object->addStandard('atom2', new Atom(new DateTimeBuilder()));
         $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom2'));
     }
 

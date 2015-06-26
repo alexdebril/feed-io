@@ -13,7 +13,6 @@ namespace FeedIo\Rule;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 
-
 class MediaTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -28,7 +27,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testSetProperty()
-    {        
+    {
         $document = new \DomDocument();
         $media = $document->createElement('enclosure');
         $media->setAttribute('url', 'http://localhost');
@@ -38,45 +37,44 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $this->object->setProperty($item, $media);
         $this->assertTrue($item->hasMedia());
-        
+
         $count = 0;
-        foreach ( $item->getMedias() as $itemMedia ) {
+        foreach ($item->getMedias() as $itemMedia) {
             $this->assertInternalType('string', $itemMedia->getType());
             $this->assertInternalType('string', $itemMedia->getUrl());
             $this->assertInternalType('integer', $itemMedia->getLength());
-            
+
             $this->assertEquals($media->getAttribute('url'), $itemMedia->getUrl());
             $count++;
         }
-        
+
         $this->assertEquals(1, $count);
     }
- 
+
     public function testCreateElement()
     {
         $item = new Item();
-        $this->assertNull($this->object->createElement(new \DomDocument, $item));
-        $media = new \FeedIo\Feed\Item\Media;
-        
+        $this->assertNull($this->object->createElement(new \DomDocument(), $item));
+        $media = new \FeedIo\Feed\Item\Media();
+
         $media->setType('audio')
               ->setUrl('http://localhost')
               ->setLength(123);
-              
+
         $item->addMedia($media);
-        
-        $element = $this->object->createMediaElement(new \DomDocument, $media);
-        
+
+        $element = $this->object->createMediaElement(new \DomDocument(), $media);
+
         $this->assertMediaEqualsElement($media, $element);
-        
-        $secondElement = $this->object->createElement(new \DomDocument, $item);
+
+        $secondElement = $this->object->createElement(new \DomDocument(), $item);
         $this->assertMediaEqualsElement($media, $element);
     }
-    
-    protected function assertMediaEqualsElement( MediaInterface $media, \DomElement $element)
+
+    protected function assertMediaEqualsElement(MediaInterface $media, \DomElement $element)
     {
-        $this->assertEquals($media->getUrl(), $element->getAttribute('url'));        
+        $this->assertEquals($media->getUrl(), $element->getAttribute('url'));
         $this->assertEquals($media->getType(), $element->getAttribute('type'));
         $this->assertEquals($media->getLength(), $element->getAttribute('length'));
     }
-    
 }

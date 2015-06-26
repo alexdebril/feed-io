@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 31/10/14
- * Time: 12:02
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace FeedIo\Rule;
 
-
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
@@ -17,13 +18,13 @@ class Link extends RuleAbstract
     const NODE_NAME = 'link';
 
     /**
-     * @param ItemInterface $item
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $item->setLink($element->nodeValue);
+        $node->setLink($element->nodeValue);
 
         return $this;
     }
@@ -31,13 +32,12 @@ class Link extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        return $document->createElement($this->getNodeName(), $item->getLink());
+        return $document->createElement($this->getNodeName(), $node->getLink());
     }
-
 }

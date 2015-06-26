@@ -5,9 +5,7 @@
  * Date: 31/10/14
  * Time: 12:14
  */
-
 namespace FeedIo\Rule;
-
 
 use FeedIo\Feed\Item;
 

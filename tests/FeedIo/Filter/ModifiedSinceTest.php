@@ -10,7 +10,6 @@
 
 namespace FeedIo\Filter;
 
-
 use FeedIo\Feed\Item;
 
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
@@ -45,6 +44,4 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $this->assertFalse($this->object->isValid($item));
     }
-
 }
- 

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require __DIR__.DIRECTORY_SEPARATOR.'bootstrap.php';
 
 $client = new \FeedIo\Adapter\Guzzle\Client(new GuzzleHttp\Client());
 

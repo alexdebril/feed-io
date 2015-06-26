@@ -10,7 +10,6 @@
 
 namespace FeedIo\Adapter\FileSystem;
 
-
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -27,17 +26,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetResponse()
     {
         $response = $this->object->getResponse(
-            __DIR__ . '/../../../samples/sample-atom.xml', 
+            __DIR__.'/../../../samples/sample-atom.xml',
             new \DateTime()
         );
         $this->assertInstanceOf('\FeedIo\Adapter\ResponseInterface', $response);
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/../../../samples/sample-atom.xml'), $response->getBody());
+        $this->assertEquals(file_get_contents(__DIR__.'/../../../samples/sample-atom.xml'), $response->getBody());
 
         $this->assertEquals(array(), $response->getHeaders());
         $this->assertEquals('', $response->getHeader('name'));
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
-        
     }
 
     /**
@@ -48,5 +46,4 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $client = new Client();
         $client->getResponse('/opt/nowhere.xml', new \DateTime());
     }
-
 }

@@ -23,7 +23,7 @@ class StructureTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $ruleSet = new RuleSet();
-        $ruleSet->add(new Title);
+        $ruleSet->add(new Title());
         $this->object = new Structure('foo', $ruleSet);
     }
 
@@ -35,12 +35,12 @@ class StructureTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $ruleSet = new RuleSet();
-        $ruleSet->add(new Title);
+        $ruleSet->add(new Title());
         $structure = new Structure('foo', $ruleSet);
-        
+
         $this->assertAttributeEquals($ruleSet, 'ruleSet', $structure);
     }
-    
+
     public function testSet()
     {
         $document = new \DomDocument();
@@ -48,24 +48,22 @@ class StructureTest extends \PHPUnit_Framework_TestCase
         $document->appendChild($foo);
         $bar = $document->createElement('title', 'hello');
         $foo->appendChild($bar);
-        
-        $item = new Item;
+
+        $item = new Item();
         $this->object->setProperty($item, $foo);
         $this->assertEquals('hello', $item->getTitle());
     }
 
     public function testCreateElement()
     {
-        $item = new Item;
+        $item = new Item();
         $item->setTitle('foo-bar');
-        
+
         $document = new \DomDocument();
-        
+
         $element = $this->object->createElement($document, $item);
- 
+
         $node = '<foo><title>foo-bar</title></foo>';
         $this->assertEquals($node, $document->saveXML($element));
     }
-
 }
- 
