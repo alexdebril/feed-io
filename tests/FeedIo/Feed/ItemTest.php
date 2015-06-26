@@ -119,7 +119,11 @@ class ItemTest extends \PHPUnit_Framework_TestCase
 
         $this->object->addElement($element2);
 
-        $this->assertEquals(array('foo', 'bar'), $this->object->listElements());
+        $elements = array();
+        foreach($this->object->listElements() as $element) {
+            $elements[] = $element;
+        }
+        $this->assertEquals(array('foo', 'bar'), $elements);
     }
 
     public function testNewMedia()
