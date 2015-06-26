@@ -55,12 +55,12 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getLenght();
+    public function getLength();
     
     /**
-     * @param string $lenght
+     * @param string $length
      * @return $this
      */   
-    public function setLenght($lenght);
+    public function setLength($length);
     
 }

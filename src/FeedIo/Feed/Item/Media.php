@@ -85,25 +85,4 @@ class Media implements MediaInterface
         return $this;
     }   
 
-    
-    /**
-     * @deprecated 
-     * @return string
-     */
-    public function getLenght()
-    {
-        trigger_error('deprecated call to a mispelled method. Please call getLength() instead');
-        return $this->getLength();
-    }
-    
-    /**
-     * @deprecated
-     * @param string $lenght
-     * @return $this
-     */   
-    public function setLenght($lenght)
-    {        
-        trigger_error('deprecated call to a mispelled method. Please call setLength() instead');
-        return $this->setLength($lenght);
-    }
 }
