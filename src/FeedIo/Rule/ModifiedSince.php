@@ -10,7 +10,7 @@
 
 namespace FeedIo\Rule;
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\DateRuleAbstract;
 
 class ModifiedSince extends DateRuleAbstract
@@ -18,13 +18,13 @@ class ModifiedSince extends DateRuleAbstract
     const NODE_NAME = 'pubDate';
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $item->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
+        $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
 
         return $this;
     }
@@ -33,14 +33,14 @@ class ModifiedSince extends DateRuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
         return $document->createElement(
             $this->getNodeName(),
-            $item->getLastModified()->format($this->getDefaultFormat())
+            $node->getLastModified()->format($this->getDefaultFormat())
         );
     }
 

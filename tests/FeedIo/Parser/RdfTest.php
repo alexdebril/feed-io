@@ -33,7 +33,7 @@ class RdfTest extends ParserTestAbstract
         $document = $this->buildDomDocument(static::SAMPLE_FILE);
         $feed = $this->object->parse($document, new Feed());
         $this->assertInstanceOf('\FeedIo\Feed', $feed);
-        
+
         $this->assertNotEmpty($feed->getTitle(), 'title must not be empty');
         $this->assertNotEmpty($feed->getLink(), 'link must not be empty');
         $this->assertNotEmpty($feed->getLastModified(), 'lastModified must not be empty');

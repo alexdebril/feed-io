@@ -12,6 +12,7 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;
 
@@ -37,16 +38,16 @@ class Structure extends RuleAbstract
     }
     
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return mixed
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        foreach ($element->childNodes as $node) {
-            if ( $node instanceOf \DomElement ) {
-                $rule = $this->ruleSet->get($node->tagName);
-                $rule->setProperty($item, $node);
+        foreach ($element->childNodes as $domNode) {
+            if ($domNode instanceOf \DomElement) {
+                $rule = $this->ruleSet->get($domNode->tagName);
+                $rule->setProperty($node, $domNode);
             }
         }
 
@@ -57,14 +58,14 @@ class Structure extends RuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
         $element = $document->createElement($this->getNodeName());
-        foreach ( $this->ruleSet->getRules() as $rule ) {
-            $element->appendChild($rule->createElement($document, $item));
+        foreach ($this->ruleSet->getRules() as $rule) {
+            $element->appendChild($rule->createElement($document, $node));
         }
 
         return $element;

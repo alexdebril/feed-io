@@ -11,7 +11,7 @@
 namespace FeedIo\Feed;
 
 
-use FeedIo\Feed\Item\Element;
+use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Item\Media;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
@@ -39,7 +39,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->object->addElement($element2);
         $iterator = $this->object->getElementIterator('foo');
         
-        $this->assertInstanceOf('\FeedIo\Feed\Item\ElementIterator', $iterator);
+        $this->assertInstanceOf('\FeedIo\Feed\Node\ElementIterator', $iterator);
         $this->assertTrue($iterator->count() > 0);
         
         $count = 0;
@@ -53,7 +53,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     
     public function testNewElement()
     {
-        $this->assertInstanceOf('\FeedIo\Feed\Item\ElementInterface', $this->object->newElement());
+        $this->assertInstanceOf('\FeedIo\Feed\Node\ElementInterface', $this->object->newElement());
     }
     
     public function testSet()

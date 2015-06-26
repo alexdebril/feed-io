@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Feed\Item;
+namespace FeedIo\Feed\Node;
 
 class ElementTest extends \PHPUnit_Framework_TestCase
 {

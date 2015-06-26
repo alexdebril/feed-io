@@ -11,7 +11,7 @@
 namespace FeedIo;
 
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 
 abstract class RuleAbstract
 {
@@ -55,19 +55,19 @@ abstract class RuleAbstract
     /**
      * Sets the accurate $item property according to the DomElement content
      *
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return mixed
      */
-    abstract public function setProperty(ItemInterface $item, \DOMElement $element);
+    abstract public function setProperty(NodeInterface $node, \DOMElement $element);
 
     /**
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    abstract public function createElement(\DomDocument $document, ItemInterface $item);
+    abstract public function createElement(\DomDocument $document, NodeInterface $node);
 
 }

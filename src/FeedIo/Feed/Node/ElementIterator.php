@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo\Feed\Item;
+namespace FeedIo\Feed\Node;
 
 
 /**
@@ -39,7 +39,7 @@ class ElementIterator extends \FilterIterator
     public function count()
     {
         $count = 0;
-        foreach ( $this as $item ) {
+        foreach ( $this as $node ) {
             $count++;
         }
         

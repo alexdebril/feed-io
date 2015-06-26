@@ -9,7 +9,7 @@
 namespace FeedIo\Rule;
 
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
@@ -17,13 +17,13 @@ class Link extends RuleAbstract
     const NODE_NAME = 'link';
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return mixed
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $item->setLink($element->nodeValue);
+        $node->setLink($element->nodeValue);
 
         return $this;
     }
@@ -32,12 +32,12 @@ class Link extends RuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        return $document->createElement($this->getNodeName(), $item->getLink());
+        return $document->createElement($this->getNodeName(), $node->getLink());
     }
 
 }

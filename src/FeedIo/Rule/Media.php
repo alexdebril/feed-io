@@ -10,8 +10,10 @@
 
 namespace FeedIo\Rule;
 
+use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
 class Media extends RuleAbstract
@@ -41,18 +43,20 @@ class Media extends RuleAbstract
     }
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $media = $item->newMedia();
-        $media->setType($this->getAttributeValue($element, 'type'))
-              ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-              ->setLength($this->getAttributeValue($element, 'length'));
-              
-        $item->addMedia($media);
+        if ( $node instanceof ItemInterface ) {
+            $media = $node->newMedia();
+            $media->setType($this->getAttributeValue($element, 'type'))
+                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
+                ->setLength($this->getAttributeValue($element, 'length'));
+
+            $node->addMedia($media);
+        }
 
         return $this;
     }
@@ -61,13 +65,15 @@ class Media extends RuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        foreach ( $item->getMedias() as $media ) {        
-            return $this->createMediaElement($document, $media);
+        if ( $node instanceof ItemInterface ) {
+            foreach ($node->getMedias() as $media) {
+                return $this->createMediaElement($document, $media);
+            }
         }
 
         return null;

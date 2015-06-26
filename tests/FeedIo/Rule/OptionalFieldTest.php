@@ -10,7 +10,7 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\Item;
-use FeedIo\Feed\Item\Element;
+use FeedIo\Feed\Node\Element;
 
 class OptionalFieldTest extends \PHPUnit_Framework_TestCase
 {

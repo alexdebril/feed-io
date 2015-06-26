@@ -10,7 +10,6 @@
 
 namespace FeedIo\Feed;
 
-use FeedIo\Feed\Item\ElementInterface;
 use FeedIo\Feed\Item\MediaInterface;
 
 /**
@@ -29,68 +28,6 @@ use FeedIo\Feed\Item\MediaInterface;
  */
 interface ItemInterface extends NodeInterface
 {
-
-    /**
-     * returns a new ElementInterface
-     *
-     * @return \FeedIo\Feed\Item\ElementInterface
-     */
-    public function newElement();
-    
-    /**
-     * returns an element's value
-     *
-     * @param string $name element name
-     * @return mixed
-     */
-    public function getValue($name);
-    
-    /**
-     * creates a new ElementInterface called $name and sets its value to $value
-     *
-     * @param string $name element name
-     * @param string $value element value
-     * @return $this
-     */      
-    public function set($name, $value);
-    
-    /**
-     * returns the ElementIterator to iterate over ElementInterface instances called $name
-     *
-     * @param string $name element name
-     * @return \FeedIo\Feed\Item\ElementIterator
-     */
-    public function getElementIterator($name);
-    
-    /**
-     * returns true if an ElementInterface instance called $name exists
-     *
-     * @param string $name element name
-     * @return boolean true if the element exists
-     */   
-    public function hasElement($name);
-    
-    /**
-     * adds $element to the object's attributes
-     *
-     * @param Element $element
-     * @return $this
-     */
-    public function addElement(ElementInterface $element);
-
-    /**
-     * Returns all the item's elements
-     *
-     * @return \ArrayIterator
-     */
-    public function getAllElements();
-
-    /**
-     * Returns the item's elements tag names
-     *
-     * @return array
-     */
-    public function listElements();
     
     /**
      * adds $media to the object's attributes

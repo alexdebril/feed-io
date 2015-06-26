@@ -11,7 +11,7 @@
 namespace FeedIo;
 
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Rule\OptionalField;
 use Psr\Log\LoggerInterface;
 
@@ -65,14 +65,14 @@ class Formatter
 
     /**
      * @param \DOMDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return $this
      */
-    public function addItem(\DOMDocument $document, ItemInterface $item)
+    public function addItem(\DOMDocument $document, NodeInterface $node)
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
-        $elements = $this->buildElements($rules, $document, $item);
+        $elements = $this->buildElements($rules, $document, $node);
 
         foreach( $elements as $element ) {
             $domItem->appendChild($element);
@@ -86,15 +86,15 @@ class Formatter
     /**
      * @param RuleSet $ruleSet
      * @param \DOMDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return array
      */
-    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, ItemInterface $item)
+    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, NodeInterface $node)
     {
-        $rules = $this->getAllRules($ruleSet, $item);
+        $rules = $this->getAllRules($ruleSet, $node);
         $elements = array();
         foreach( $rules as $rule ) {
-            $elements[] = $rule->createElement($document, $item);
+            $elements[] = $rule->createElement($document, $node);
         }
 
         return array_filter($elements);
@@ -102,13 +102,13 @@ class Formatter
 
     /**
      * @param RuleSet $ruleSet
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return array|\ArrayIterator
      */
-    public function getAllRules(RuleSet $ruleSet, ItemInterface $item)
+    public function getAllRules(RuleSet $ruleSet, NodeInterface $node)
     {
         $rules = $ruleSet->getRules();
-        $optionalFields = $item->listElements();
+        $optionalFields = $node->listElements();
         foreach( $optionalFields as $optionalField ) {
             $rules[] = new OptionalField($optionalField);
         }

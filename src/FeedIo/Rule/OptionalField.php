@@ -12,7 +12,8 @@ namespace FeedIo\Rule;
 
 
 use FeedIo\Feed\ItemInterface;
-use FeedIo\Feed\Item\ElementInterface;
+use FeedIo\Feed\NodeInterface;
+use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\RuleAbstract;
 
 class OptionalField extends RuleAbstract
@@ -21,16 +22,16 @@ class OptionalField extends RuleAbstract
     const NODE_NAME = 'default';
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $domElement
      * @return $this
      */
-    public function setProperty(ItemInterface $item, \DOMElement $domElement)
+    public function setProperty(NodeInterface $node, \DOMElement $domElement)
     {
-        $element = $item->newElement();
+        $element = $node->newElement();
         $element->setName($domElement->nodeName);
         $element->setValue($domElement->nodeValue);
-        $item->addElement($element);
+        $node->addElement($element);
 
         return $this;
     }
@@ -39,14 +40,13 @@ class OptionalField extends RuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-       $domElement = $document->createElement($this->getNodeName());
-       
-        foreach ( $item->getElementIterator($this->getNodeName()) as $element) {
+        $domElement = $document->createElement($this->getNodeName());
+        foreach ($node->getElementIterator($this->getNodeName()) as $element) {
             $this->buildDomElement($domElement, $element);
         }
 

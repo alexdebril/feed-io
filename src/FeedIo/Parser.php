@@ -12,6 +12,7 @@ namespace FeedIo;
 
 use \DOMDocument;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
 use Psr\Log\LoggerInterface;
@@ -132,7 +133,7 @@ class Parser
      * @param RuleSet $ruleSet
      * @return ItemInterface
      */
-    public function parseNode(ItemInterface $item, \DOMElement $element, RuleSet $ruleSet)
+    public function parseNode(NodeInterface $item, \DOMElement $element, RuleSet $ruleSet)
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {

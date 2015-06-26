@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
 
 /**
@@ -17,7 +18,7 @@ use FeedIo\Feed\ItemInterface;
  * Represents the top node of a news feed
  * @package FeedIo
  */
-interface FeedInterface extends \Iterator, ItemInterface
+interface FeedInterface extends \Iterator, NodeInterface
 {
 
     /**

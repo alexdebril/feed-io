@@ -34,10 +34,5 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $this->object->getLength());
         $this->assertEquals(87669, $this->object->getLength());
     }
-    
-    public function testAttributes()
-    {
-
-    }
 
 }

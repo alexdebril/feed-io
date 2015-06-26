@@ -11,7 +11,7 @@
 namespace FeedIo\Rule\Atom;
 
 
-use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;
 use FeedIo\Rule\Media;
@@ -39,16 +39,16 @@ class LinkNode extends RuleAbstract
     }
 
     /**
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @param \DOMElement $element
      * @return mixed
      */
-    public function setProperty(ItemInterface $item, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         if ( $element->hasAttribute('rel') ) {
-            $this->ruleSet->get($element->getAttribute('rel'))->setProperty($item, $element);
+            $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
         } else {
-            $this->ruleSet->getDefault()->setProperty($item, $element);
+            $this->ruleSet->getDefault()->setProperty($node, $element);
         }
 
         return $this;
@@ -58,12 +58,12 @@ class LinkNode extends RuleAbstract
      * creates the accurate DomElement content according to the $item's property
      *
      * @param \DomDocument $document
-     * @param ItemInterface $item
+     * @param NodeInterface $node
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, ItemInterface $item)
+    public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        return $this->ruleSet->getDefault()->createElement($document, $item);
+        return $this->ruleSet->getDefault()->createElement($document, $node);
     }
 
 }

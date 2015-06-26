@@ -11,10 +11,11 @@
 namespace FeedIo;
 
 
+use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
 
-class Feed extends Item implements FeedInterface
+class Feed extends Node implements FeedInterface
 {
     /**
      * @var \ArrayIterator
@@ -23,8 +24,9 @@ class Feed extends Item implements FeedInterface
 
     public function __construct()
     {
+        $this->items = new \ArrayIterator;
+
         parent::__construct();
-        $this->items = new \ArrayIterator(array());
     }
 
     /**
