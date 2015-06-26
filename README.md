@@ -121,6 +121,17 @@ $dom = $feedIo->format($feed, 'atom');
 $feed = new FeedIo\Feed;
 $feed->setTitle('...');
 
+$item = $feed->newItem();
+
+// build the media
+$media = new \FeedIo\Feed\Item\Media
+$media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
+$media->setType('audio/mpeg');
+ 
+// add it to the item
+$item->addMedia($media);
+
+$feed->add($item);
 
 ```
 
