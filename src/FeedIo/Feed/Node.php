@@ -136,12 +136,9 @@ class Node implements NodeInterface
      */
     public function listElements()
     {
-        $out = array();
         foreach ($this->elements as $element) {
-            $out[] = $element->getName();
+            yield $element->getName();
         }
-
-        return $out;
     }
 
     /**

@@ -43,7 +43,7 @@ class Client implements ClientInterface
     public function getResponse($url, \DateTime $modifiedSince)
     {
         try {
-            return new Response($this->guzzleClient->get($url));
+            return new Response($this->guzzleClient->request('get', $url));
         } catch (BadResponseException $e) {
             switch ((int) $e->getResponse()->getStatusCode()) {
                 case 404:
