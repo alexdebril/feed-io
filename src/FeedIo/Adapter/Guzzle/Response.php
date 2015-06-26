@@ -35,7 +35,7 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return string
+     * @return \Psr\Http\Message\StreamInterface
      */
     public function getBody()
     {
@@ -66,7 +66,7 @@ class Response implements ResponseInterface
 
     /**
      * @param  string       $name
-     * @return array|string
+     * @return string[]
      */
     public function getHeader($name)
     {
