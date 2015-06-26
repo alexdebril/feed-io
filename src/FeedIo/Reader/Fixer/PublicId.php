@@ -17,31 +17,30 @@ class PublicId extends FixerAbstract
 {
 
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return $this
      */
     public function correct(FeedInterface $feed)
     {
-        if ( is_null($feed->getPublicId()) ) {
+        if (is_null($feed->getPublicId())) {
             $this->logger->notice("correct public id for feed {$feed->getTitle()}");
             $feed->setPublicId($feed->getLink());
             $this->fixItems($feed);
         }
-        
+
         return $this;
     }
 
     /**
-     * @param FeedInterface $feed
+     * @param  FeedInterface $feed
      * @return $this
      */
     protected function fixItems(FeedInterface $feed)
     {
-        foreach ( $feed as $item ) {
+        foreach ($feed as $item) {
             $item->setPublicId($item->getLink());
         }
-        
+
         return $this;
     }
-    
 }

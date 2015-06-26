@@ -10,9 +10,7 @@
 
 namespace FeedIo\Rule;
 
-
 use FeedIo\Feed\Item;
-use FeedIo\Rule\DateTimeBuilder;
 
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 {

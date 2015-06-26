@@ -5,12 +5,9 @@
  * Date: 25/01/15
  * Time: 14:47
  */
-
 namespace FeedIo\Adapter\Guzzle;
 
-
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ClientException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +15,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     protected $body = <<<XML
 <xml><feed><title>a great stream</title></feed></xml>
 XML;
-
 
     /**
      * @var \FeedIo\Adapter\Guzzle\Client
@@ -88,11 +84,10 @@ XML;
         $response->expects($this->any())->method('getHeader')->will($this->returnValue('Tue, 15 Nov 1994 12:45:26 GMT'));
         $response->expects($this->any())->method('getHeaders')->will($this->returnValue(array()));
         $response->expects($this->any())->method('hasHeader')->will($this->returnValue(true));
-        
+
         $client = $this->getMockForAbstractClass('\GuzzleHttp\ClientInterface');
         $client->expects($this->any())->method('get')->will($this->returnValue($response));
 
         return $client;
     }
-
 }

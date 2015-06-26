@@ -10,7 +10,6 @@
 
 namespace FeedIo\Rule;
 
-
 class DateTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -51,7 +50,6 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $format = $this->object->guessDateFormat($date->format(\DateTime::ATOM));
         $this->assertEquals(\DateTime::ATOM, $format);
     }
-
 
     public function testDontGuessDateFormat()
     {

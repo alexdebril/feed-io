@@ -8,18 +8,18 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require __DIR__.DIRECTORY_SEPARATOR.'bootstrap.php';
 
-$feed = new \FeedIo\Feed;
+$feed = new \FeedIo\Feed();
 
 // ask for a new Item
 $item = $feed->newItem();
 
 // build the media
-$media = new \FeedIo\Feed\Item\Media;
+$media = new \FeedIo\Feed\Item\Media();
 $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
 $media->setType('audio/mpeg');
- 
+
 // add it to the item
 $item->addMedia($media);
 
@@ -33,4 +33,3 @@ $logger = new \Psr\Log\NullLogger();
 $feedIo = new \FeedIo\FeedIo($client, $logger);
 $domDocument = $feedIo->toAtom($result->getFeed());
 echo $domDocument->saveXML();
-

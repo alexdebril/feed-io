@@ -10,7 +10,6 @@
 
 namespace FeedIo\Rule;
 
-
 use FeedIo\Feed\Item;
 
 class TitleTest extends \PHPUnit_Framework_TestCase
@@ -50,6 +49,4 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::TITLE, $element->nodeValue);
         $this->assertEquals('title', $element->nodeName);
     }
-
 }
- 

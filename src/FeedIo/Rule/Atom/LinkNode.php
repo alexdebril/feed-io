@@ -10,7 +10,6 @@
 
 namespace FeedIo\Rule\Atom;
 
-
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;
@@ -32,20 +31,20 @@ class LinkNode extends RuleAbstract
     public function __construct($nodeName = null)
     {
         parent::__construct($nodeName);
-        $mediaRule = new Media;
+        $mediaRule = new Media();
         $mediaRule->setUrlAttributeName('href');
         $this->ruleSet = new RuleSet(new Link('related'));
         $this->ruleSet->add($mediaRule);
     }
 
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return mixed
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        if ( $element->hasAttribute('rel') ) {
+        if ($element->hasAttribute('rel')) {
             $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
         } else {
             $this->ruleSet->getDefault()->setProperty($node, $element);
@@ -57,13 +56,12 @@ class LinkNode extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
         return $this->ruleSet->getDefault()->createElement($document, $node);
     }
-
 }

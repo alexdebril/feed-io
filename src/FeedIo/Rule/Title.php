@@ -18,8 +18,8 @@ class Title extends RuleAbstract
     const NODE_NAME = 'title';
 
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return $this
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
@@ -32,15 +32,14 @@ class Title extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
         $title = htmlspecialchars($node->getTitle());
+
         return $document->createElement(static::NODE_NAME, $title);
     }
-
-
 }

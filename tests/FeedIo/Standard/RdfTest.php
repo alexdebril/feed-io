@@ -10,7 +10,6 @@
 
 namespace FeedIo\Standard;
 
-
 use FeedIo\Rule\DateTimeBuilder;
 
 class RdfTest extends \PHPUnit_Framework_TestCase
@@ -40,5 +39,4 @@ class RdfTest extends \PHPUnit_Framework_TestCase
             str_replace("\n", '', $dom->saveXML())
         );
     }
-
 }

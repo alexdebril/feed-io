@@ -10,7 +10,6 @@
 
 namespace FeedIo\Rule\Atom;
 
-
 use FeedIo\Feed\Item;
 
 class LinkTest extends \PHPUnit_Framework_TestCase
@@ -49,5 +48,4 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::LINK, $element->getAttribute('href'));
         $this->assertEquals('link', $element->nodeName);
     }
-
 }

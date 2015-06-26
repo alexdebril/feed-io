@@ -16,23 +16,22 @@ class MediaTest extends \PHPUnit_Framework_TestCase
      * @var \FeedIo\Feed\Item\Media
      */
     protected $object;
-    
+
     protected function setUp()
     {
-        $this->object = new Media;
+        $this->object = new Media();
     }
-    
+
     public function testSetType()
     {
         $this->object->setType('image/jpeg');
         $this->assertEquals('image/jpeg', $this->object->getType());
     }
-    
+
     public function testSetLength()
     {
         $this->object->setLength('87669');
         $this->assertInternalType('integer', $this->object->getLength());
         $this->assertEquals(87669, $this->object->getLength());
     }
-
 }

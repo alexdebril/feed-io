@@ -49,12 +49,12 @@ class Node implements NodeInterface
 
     public function __construct()
     {
-        $this->elements = new \ArrayIterator;
+        $this->elements = new \ArrayIterator();
     }
 
     /**
-     * @param string $name element name
-     * @param string $value element value
+     * @param  string $name  element name
+     * @param  string $value element value
      * @return $this
      */
     public function set($name, $value)
@@ -74,24 +74,24 @@ class Node implements NodeInterface
      */
     public function newElement()
     {
-        return new Element;
+        return new Element();
     }
 
     /**
-     * @param string $name element name
+     * @param  string $name element name
      * @return mixed
      */
     public function getValue($name)
     {
-        foreach ( $this->getElementIterator($name) as $element ) {
+        foreach ($this->getElementIterator($name) as $element) {
             return $element->getValue();
         }
 
-        return null;
+        return;
     }
 
     /**
-     * @param string $name element name
+     * @param  string          $name element name
      * @return ElementIterator
      */
     public function getElementIterator($name)
@@ -100,7 +100,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $name element name
+     * @param  string  $name element name
      * @return boolean true if the element exists
      */
     public function hasElement($name)
@@ -111,7 +111,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param ElementInterface $element
+     * @param  ElementInterface $element
      * @return $this
      */
     public function addElement(ElementInterface $element)
@@ -137,7 +137,7 @@ class Node implements NodeInterface
     public function listElements()
     {
         $out = array();
-        foreach ( $this->elements as $element ) {
+        foreach ($this->elements as $element) {
             $out[] = $element->getName();
         }
 
@@ -153,7 +153,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $title
+     * @param  string $title
      * @return $this
      */
     public function setTitle($title)
@@ -172,7 +172,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $publicId
+     * @param  string $publicId
      * @return $this
      */
     public function setPublicId($publicId)
@@ -191,7 +191,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $description
+     * @param  string $description
      * @return $this
      */
     public function setDescription($description)
@@ -210,7 +210,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param \DateTime $lastModified
+     * @param  \DateTime $lastModified
      * @return $this
      */
     public function setLastModified(\DateTime $lastModified)
@@ -229,7 +229,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $link
+     * @param  string $link
      * @return $this
      */
     public function setLink($link)
@@ -238,5 +238,4 @@ class Node implements NodeInterface
 
         return $this;
     }
-
 }

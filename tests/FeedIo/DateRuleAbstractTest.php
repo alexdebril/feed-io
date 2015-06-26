@@ -5,9 +5,7 @@
  * Date: 22/11/14
  * Time: 11:04
  */
-
 namespace FeedIo;
-
 
 use FeedIo\Rule\DateTimeBuilder;
 

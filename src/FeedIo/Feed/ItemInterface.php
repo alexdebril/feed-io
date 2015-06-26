@@ -21,41 +21,40 @@ use FeedIo\Feed\Item\MediaInterface;
  * - ElementInterface instances for nodes not related to a known property of the ItemInterface instance
  *
  * ElementInterface instances are accessed using two methods :
- * 
+ *
  * - ItemInterface::getElementIterator($name). Use it to read an array of elements or if you need to get an ElementInterface instance
  * - ItemInterface::getValue($name). use it to get the element's v    lue
- * 
+ *
  */
 interface ItemInterface extends NodeInterface
 {
-    
+
     /**
      * adds $media to the object's attributes
      *
-     * @param MediaInterface $media
+     * @param  MediaInterface $media
      * @return $this
-     */  
+     */
     public function addMedia(MediaInterface $media);
-    
+
     /**
      * returns the current object's medias
      *
      * @return \ArrayIterator
      */
     public function getMedias();
-    
+
     /**
      * returns true if at least one MediaInterface exists in the object's attributes
      *
      * @return boolean
      */
     public function hasMedia();
-    
+
     /**
      * returns a new MediaInterface
      *
      * @return MediaInterface
      */
     public function newMedia();
-    
 }

@@ -18,8 +18,8 @@ class ModifiedSince extends DateRuleAbstract
     const NODE_NAME = 'pubDate';
 
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return $this
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
@@ -32,8 +32,8 @@ class ModifiedSince extends DateRuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
@@ -43,6 +43,4 @@ class ModifiedSince extends DateRuleAbstract
             $node->getLastModified()->format($this->getDefaultFormat())
         );
     }
-
-
 }

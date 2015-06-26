@@ -10,7 +10,6 @@
 
 namespace FeedIo\Parser;
 
-
 use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rdf;
@@ -27,7 +26,7 @@ class RdfTest extends ParserTestAbstract
     {
         return new Rdf(new DateTimeBuilder());
     }
-    
+
     public function testParseBody()
     {
         $document = $this->buildDomDocument(static::SAMPLE_FILE);
@@ -41,7 +40,7 @@ class RdfTest extends ParserTestAbstract
 
         $item = $feed->current();
         $this->assertInstanceOf('\FeedIo\Feed\ItemInterface', $item);
-        if ( $item instanceof \FeedIo\Feed\ItemInterface ){
+        if ($item instanceof \FeedIo\Feed\ItemInterface) {
             $this->assertNotEmpty($item->getTitle());
             $this->assertNotEmpty($item->getDescription());
             $this->assertNotEmpty($item->getLastModified());

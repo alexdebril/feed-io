@@ -24,7 +24,7 @@ interface FeedInterface extends \Iterator, NodeInterface
     /**
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
-     * @param ItemInterface $item
+     * @param  ItemInterface $item
      * @return Feed
      */
     public function add(ItemInterface $item);

@@ -5,12 +5,10 @@
  * Date: 13/12/14
  * Time: 18:49
  */
-
 namespace FeedIo\StandardFormatter;
 
-
 use FeedIo\Rule\DateTimeBuilder;
-use \FeedIo\Standard\Rss;
+use FeedIo\Standard\Rss;
 
 class RssTest extends FormatterTestAbstract
 {
@@ -25,5 +23,4 @@ class RssTest extends FormatterTestAbstract
             new DateTimeBuilder()
         );
     }
-
 }

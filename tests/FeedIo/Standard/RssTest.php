@@ -5,9 +5,7 @@
  * Date: 12/12/14
  * Time: 00:38
  */
-
 namespace FeedIo\Standard;
-
 
 use FeedIo\Rule\DateTimeBuilder;
 
@@ -38,5 +36,4 @@ class RssTest extends \PHPUnit_Framework_TestCase
             str_replace("\n", '', $dom->saveXML())
         );
     }
-
 }

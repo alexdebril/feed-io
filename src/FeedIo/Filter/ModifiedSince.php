@@ -10,7 +10,6 @@
 
 namespace FeedIo\Filter;
 
-
 use FeedIo\Feed\ItemInterface;
 use FeedIo\FilterInterface;
 
@@ -30,16 +29,15 @@ class ModifiedSince implements FilterInterface
     }
 
     /**
-     * @param ItemInterface $item
+     * @param  ItemInterface $item
      * @return bool
      */
     public function isValid(ItemInterface $item)
     {
-        if ( $item->getLastModified() instanceof \DateTime ) {
+        if ($item->getLastModified() instanceof \DateTime) {
             return $item->getLastModified() > $this->date;
         }
 
         return false;
     }
-
 }

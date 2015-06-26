@@ -10,7 +10,6 @@
 
 namespace FeedIo\Parser;
 
-
 use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
@@ -19,7 +18,7 @@ class AtomTest extends ParserTestAbstract
 {
 
     const SAMPLE_FILE = 'sample-atom.xml';
-    
+
     const ENCLOSURE_FILE = 'enclosure-atom.xml';
     /**
      * @var \FeedIo\Parser\Atom
@@ -33,23 +32,23 @@ class AtomTest extends ParserTestAbstract
     {
         return new Atom(new DateTimeBuilder());
     }
-    
+
     public function testEnclosure()
     {
         $document = $this->buildDomDocument(static::ENCLOSURE_FILE);
         $feed = $this->object->parse($document, new Feed());
-        
+
         $count = 0;
-        foreach ( $feed as $item ) {
+        foreach ($feed as $item) {
             $count++;
             $this->assertTrue($item->hasMedia());
             $media = $item->getMedias()->current();
-            
+
             $this->assertInstanceOf('\FeedIo\Feed\Item\MediaInterface', $media);
             $this->assertEquals('video/mpeg', $media->getType());
             $this->assertInternalType('string', $media->getUrl());
         }
-        
+
         $this->assertEquals(1, $count);
     }
 }

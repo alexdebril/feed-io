@@ -15,31 +15,30 @@ use FeedIo\Feed\Item\MediaInterface;
 
 class Item extends Node implements ItemInterface
 {
-    
+
     /**
      * @var \ArrayIterator
      */
     protected $medias;
-    
+
     public function __construct()
     {
-        $this->medias = new \ArrayIterator;
+        $this->medias = new \ArrayIterator();
 
         parent::__construct();
     }
 
-
     /**
-     * @param MediaInterface $media
+     * @param  MediaInterface $media
      * @return $this
-     */      
+     */
     public function addMedia(MediaInterface $media)
     {
         $this->medias->append($media);
-        
+
         return $this;
     }
-    
+
     /**
      * @return \ArrayIterator
      */
@@ -47,7 +46,7 @@ class Item extends Node implements ItemInterface
     {
         return $this->medias;
     }
-    
+
     /**
      * @return boolean
      */
@@ -55,13 +54,12 @@ class Item extends Node implements ItemInterface
     {
         return $this->medias->count() > 0;
     }
-    
+
     /**
      * @return MediaInterface
      */
     public function newMedia()
     {
-        return new Media;
+        return new Media();
     }
-
 }

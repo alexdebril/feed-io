@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\NodeInterface;
@@ -18,32 +18,32 @@ class Structure extends RuleAbstract
 {
 
     const NODE_NAME = 'structure';
-    
+
     /**
      * @var \FeedIo\RuleSet
      */
     protected $ruleSet;
-    
+
     /**
-     * @param string $nodeName
+     * @param string  $nodeName
      * @param RuleSet $ruleSet
      */
     public function __construct($nodeName = null, $ruleSet = null)
     {
         parent::__construct($nodeName);
-    
-        $this->ruleSet = is_null($ruleSet) ? new RuleSet:$ruleSet;
+
+        $this->ruleSet = is_null($ruleSet) ? new RuleSet() : $ruleSet;
     }
-    
+
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return mixed
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         foreach ($element->childNodes as $domNode) {
-            if ($domNode instanceOf \DomElement) {
+            if ($domNode instanceof \DomElement) {
                 $rule = $this->ruleSet->get($domNode->tagName);
                 $rule->setProperty($node, $domNode);
             }
@@ -55,8 +55,8 @@ class Structure extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
@@ -68,5 +68,4 @@ class Structure extends RuleAbstract
 
         return $element;
     }
-
 }

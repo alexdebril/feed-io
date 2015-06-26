@@ -5,9 +5,7 @@
  * Date: 05/12/14
  * Time: 22:46
  */
-
 namespace FeedIo;
-
 
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\ModifiedSince;
@@ -56,20 +54,20 @@ abstract class StandardAbstract
 
     /**
      * Formats the document according to the standard's specification
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return mixed
      */
     abstract public function format(\DOMDocument $document);
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return mixed
      */
     abstract public function canHandle(\DOMDocument $document);
 
     /**
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return \DomElement
      */
     abstract public function getMainElement(\DOMDocument $document);
@@ -136,7 +134,7 @@ abstract class StandardAbstract
     }
 
     /**
-     * @param string $tagName
+     * @param  string        $tagName
      * @return ModifiedSince
      */
     public function getModifiedSinceRule($tagName)
@@ -158,5 +156,4 @@ abstract class StandardAbstract
 
         return $ruleSet;
     }
-
 }

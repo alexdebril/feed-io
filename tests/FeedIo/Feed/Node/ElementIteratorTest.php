@@ -16,37 +16,35 @@ class ElementIteratorTest extends \PHPUnit_Framework_TestCase
      * @var \FeedIo\Feed\Item\ElementIterator
      */
     protected $object;
-    
+
     protected function setUp()
     {
-        $array = new \ArrayIterator;
-        
-        $element1 = new Element;
+        $array = new \ArrayIterator();
+
+        $element1 = new Element();
         $element1->setName('foo');
-        
-        $element2 = new Element;
+
+        $element2 = new Element();
         $element2->setName('bar');
-    
+
         $array->append($element1);
         $array->append($element2);
-        
+
         $this->object = new ElementIterator($array, 'foo');
     }
-    
-    
+
     public function testValid()
     {
-        foreach( $this->object as $element ) {
+        foreach ($this->object as $element) {
             $this->assertEquals('foo', $element->getName());
         }
     }
-    
+
     public function testCount()
     {
         $this->assertEquals(1, $this->object->count());
-        
-        $filter = new ElementIterator(new \ArrayIterator, 'foo');
+
+        $filter = new ElementIterator(new \ArrayIterator(), 'foo');
         $this->assertEquals(0, $filter->count());
     }
-    
 }

@@ -21,9 +21,9 @@ class NullResponse implements ResponseInterface
      */
     public function getBody()
     {
-        return null;
+        return;
     }
-    
+
     /**
      * @return \DateTime
      */
@@ -41,12 +41,11 @@ class NullResponse implements ResponseInterface
     }
 
     /**
-     * @param string $name
+     * @param  string       $name
      * @return array|string
      */
     public function getHeader($name)
     {
         return $name;
     }
-
 }

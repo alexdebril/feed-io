@@ -10,7 +10,6 @@
 
 namespace FeedIo\Reader;
 
-
 use FeedIo\Feed;
 
 class ResultTest extends \PHPUnit_Framework_TestCase
@@ -48,5 +47,4 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\FeedIo\Adapter\ResponseInterface', $this->object->getresponse());
         $this->assertEquals('http://localhost', $this->object->getUrl());
     }
-
 }

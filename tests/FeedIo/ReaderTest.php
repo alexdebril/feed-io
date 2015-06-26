@@ -11,7 +11,6 @@
 namespace FeedIo;
 
 use FeedIo\Adapter\ServerErrorException;
-use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 use FeedIo\Rule\DateTimeBuilder;
 
@@ -69,7 +68,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
         $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
-        $file = dirname(__FILE__) . "/../samples/rss/sample-rss.xml";
+        $file = dirname(__FILE__)."/../samples/rss/sample-rss.xml";
         $domDocument = new \DOMDocument();
         $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
         $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(
@@ -77,6 +76,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             ));
 
         $parser = new Parser($standard, new NullLogger());
+
         return $parser;
     }
 
@@ -165,7 +165,5 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader($this->getFaultyClientMock(), new NullLogger());
         $reader->read('fault', new Feed());
-
     }
-
 }

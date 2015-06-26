@@ -10,7 +10,6 @@
 
 namespace FeedIo\Adapter\Guzzle;
 
-
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ServerErrorException;
@@ -35,8 +34,8 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string $url
-     * @param \DateTime $modifiedSince
+     * @param  string                               $url
+     * @param  \DateTime                            $modifiedSince
      * @throws \FeedIo\Adapter\NotFoundException
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
@@ -46,7 +45,7 @@ class Client implements ClientInterface
         try {
             return new Response($this->guzzleClient->get($url));
         } catch (BadResponseException $e) {
-            switch( (int) $e->getResponse()->getStatusCode() ) {
+            switch ((int) $e->getResponse()->getStatusCode()) {
                 case 404:
                     throw new NotFoundException($e->getMessage());
                 default:
@@ -54,5 +53,4 @@ class Client implements ClientInterface
             }
         }
     }
-
 }

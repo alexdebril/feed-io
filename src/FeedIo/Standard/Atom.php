@@ -5,9 +5,7 @@
  * Date: 22/11/14
  * Time: 11:45
  */
-
 namespace FeedIo\Standard;
-
 
 use DOMDocument;
 use FeedIo\Rule\Atom\LinkNode;
@@ -26,7 +24,7 @@ class Atom extends StandardAbstract
 
     /**
      * Formats the document according to the standard's specification
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return \DOMDocument
      */
     public function format(\DOMDocument $document)
@@ -40,7 +38,7 @@ class Atom extends StandardAbstract
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return mixed
      */
     public function canHandle(\DOMDocument $document)
@@ -49,7 +47,7 @@ class Atom extends StandardAbstract
     }
 
     /**
-     * @param DOMDocument $document
+     * @param  DOMDocument $document
      * @return \DomElement
      */
     public function getMainElement(\DOMDocument $document)
@@ -84,5 +82,4 @@ class Atom extends StandardAbstract
 
         return $ruleSet;
     }
-
 }

@@ -32,24 +32,24 @@ class Media extends RuleAbstract
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return $this
      */
     public function setUrlAttributeName($name)
     {
         $this->urlAttributeName = $name;
-        
+
         return $this;
     }
 
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $element
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $element
      * @return $this
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        if ( $node instanceof ItemInterface ) {
+        if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
             $media->setType($this->getAttributeValue($element, 'type'))
                 ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
@@ -64,24 +64,24 @@ class Media extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        if ( $node instanceof ItemInterface ) {
+        if ($node instanceof ItemInterface) {
             foreach ($node->getMedias() as $media) {
                 return $this->createMediaElement($document, $media);
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * @param \DomDocument $document
-     * @param MediaInterface $media
+     * @param  \DomDocument   $document
+     * @param  MediaInterface $media
      * @return \DomElement
      */
     public function createMediaElement(\DomDocument $document, MediaInterface $media)
@@ -90,8 +90,7 @@ class Media extends RuleAbstract
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
         $element->setAttribute('type', $media->getType());
         $element->setAttribute('length', $media->getLength());
-        
+
         return $element;
     }
-
 }

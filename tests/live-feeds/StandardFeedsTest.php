@@ -1,7 +1,6 @@
 <?php
 namespace FeedIo;
 
-use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 
 class StandardFeedsTest extends \PHPUnit_Framework_TestCase
@@ -20,11 +19,10 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
         $guzzle = new \GuzzleHttp\Client();
         $client = new \FeedIo\Adapter\Guzzle\Client($guzzle);
         $logger = new \Psr\Log\NullLogger();
-        
+
         $this->object = new FeedIo($client, $logger);
     }
-    
-    
+
     /**
      * @dataProvider provideUrls
      */
@@ -37,9 +35,8 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             throw $e;
             $this->markTestIncomplete("read error : {$e->getMessage()}");
         }
-        
     }
-    
+
     protected function performAssertions(\FeedIo\Reader\Result $result)
     {
         $feed = $result->getFeed();
@@ -50,15 +47,15 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
                 'link' => $feed->getLink(),
             )
         );
-        
+
         $this->assertInstanceOf('\DateTime', $feed->getLastModified());
-        
-        foreach ( $feed as $item ) {
+
+        foreach ($feed as $item) {
             $this->performItemAssertions($item);
         }
     }
-    
-    protected function performItemAssertions(\FeedIo\Feed\ItemInterface $item) 
+
+    protected function performItemAssertions(\FeedIo\Feed\ItemInterface $item)
     {
         $this->assertInstanceOf('\DateTime', $item->getLastModified());
         $this->performStringAssertions(
@@ -69,7 +66,7 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-    
+
     protected function performStringAssertions(array $strings)
     {
         foreach ($strings as $name => $string) {
@@ -78,7 +75,7 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             $this->assertEncodingIsUtf8($string, $name);
         }
     }
-   
+
     protected function assertEncodingIsUtf8($string, $name)
     {
         return $this->assertTrue(mb_check_encoding($string, 'utf-8'), "$name must be utf-8 encoded");
@@ -91,26 +88,26 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
     {
         $urls = $this->getUrls();
         $out = array();
-        
-        foreach( $urls as $url ) {
+
+        foreach ($urls as $url) {
             $out[] = array($url);
         }
-        
+
         return $out;
     }
-    
+
     protected function getUrls()
     {
         $localhost = array(
-            
+
             'http://127.0.0.1:8080/feed-io/tests/samples/expected-atom.xml',
-            'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom.xml',          
+            'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/sample-atom-html.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/rss/expected-rss.xml',
-            'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',            
+            'http://127.0.0.1:8080/feed-io/tests/samples/rss/sample-rss.xml',
             'http://127.0.0.1:8080/feed-io/tests/samples/sample-rdf.xml',
         );
-        
+
         $urls = array(
             'http://feeds.bbci.co.uk/news/rss.xml?edition=uk',
             'http://feeds.feedburner.com/dailyjs',
@@ -142,23 +139,25 @@ class StandardFeedsTest extends \PHPUnit_Framework_TestCase
             'http://www.slate.fr/rss.xml',
             'http://xkcd.com/rss.xml',
         );
-        
-        return $this->isLocalhostUp() ? array_merge($localhost, $urls):$urls;
+
+        return $this->isLocalhostUp() ? array_merge($localhost, $urls) : $urls;
     }
-    
+
     /**
      *
      */
     protected function isLocalhostUp()
     {
-        $client = new \GuzzleHttp\Client;
-        
+        $client = new \GuzzleHttp\Client();
+
         try {
             $response = $client->get('http://127.0.0.1:8080/feed-io/tests/');
+
             return 200 === (int) $response->getStatusCode();
         } catch (\Exception $e) {
             return false;
         }
+
         return true;
     }
 }

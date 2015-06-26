@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require __DIR__.DIRECTORY_SEPARATOR.'bootstrap.php';
 
 // new DateTimeBuilder : it will be used by the parser to convert formatted dates into DateTime instances
 $dateTimeBuilder = new \FeedIo\Rule\DateTimeBuilder();
@@ -22,7 +22,7 @@ $standard = new \FeedIo\Standard\Rss($dateTimeBuilder);
 $parser = new \FeedIo\Parser($standard, new \Psr\Log\NullLogger());
 
 // the file is sample-rss.xml
-$file = dirname(__FILE__) . "/../tests/samples/rss/sample-rss.xml";
+$file = dirname(__FILE__)."/../tests/samples/rss/sample-rss.xml";
 
 // we load it using the Dom library
 $document = new DOMDocument();
@@ -36,6 +36,6 @@ $feed = $parser->parse($document, new \FeedIo\Feed());
 echo "feed's title : {$feed->getTitle()} \n";
 
 // FeedInterface extends \Iterator, we can iterate through it
-foreach ( $feed as $item ) {
+foreach ($feed as $item) {
     echo "item's title : {$item->getTitle()} \n";
 }

@@ -12,7 +12,6 @@ namespace FeedIo\Feed;
 
 use FeedIo\Feed\Node\ElementInterface;
 
-
 /**
  * Describes a node instance
  *
@@ -30,7 +29,7 @@ interface NodeInterface
     /**
      * Sets nodes's title
      *
-     * @param string $title
+     * @param  string $title
      * @return $this
      */
     public function setTitle($title);
@@ -45,7 +44,7 @@ interface NodeInterface
     /**
      * sets node's public id
      *
-     * @param string $id
+     * @param  string $id
      * @return $this
      */
     public function setPublicId($id);
@@ -60,7 +59,7 @@ interface NodeInterface
     /**
      * Sets node's description
      *
-     * @param string $description
+     * @param  string $description
      * @return $this
      */
     public function setDescription($description);
@@ -75,7 +74,7 @@ interface NodeInterface
     /**
      * Sets the node's last modified date
      *
-     * @param \DateTime $lastModified
+     * @param  \DateTime $lastModified
      * @return $this
      */
     public function setLastModified(\DateTime $lastModified);
@@ -90,7 +89,7 @@ interface NodeInterface
     /**
      * Sets the nodes's link
      *
-     * @param string $link
+     * @param  string $link
      * @return $this
      */
     public function setLink($link);
@@ -105,7 +104,7 @@ interface NodeInterface
     /**
      * returns an element's value
      *
-     * @param string $name element name
+     * @param  string $name element name
      * @return mixed
      */
     public function getValue($name);
@@ -113,8 +112,8 @@ interface NodeInterface
     /**
      * creates a new ElementInterface called $name and sets its value to $value
      *
-     * @param string $name element name
-     * @param string $value element value
+     * @param  string $name  element name
+     * @param  string $value element value
      * @return $this
      */
     public function set($name, $value);
@@ -122,7 +121,7 @@ interface NodeInterface
     /**
      * returns the ElementIterator to iterate over ElementInterface instances called $name
      *
-     * @param string $name element name
+     * @param  string                            $name element name
      * @return \FeedIo\Feed\Node\ElementIterator
      */
     public function getElementIterator($name);
@@ -130,7 +129,7 @@ interface NodeInterface
     /**
      * returns true if an ElementInterface instance called $name exists
      *
-     * @param string $name element name
+     * @param  string  $name element name
      * @return boolean true if the element exists
      */
     public function hasElement($name);
@@ -138,7 +137,7 @@ interface NodeInterface
     /**
      * adds $element to the object's attributes
      *
-     * @param ElementInterface $element
+     * @param  ElementInterface $element
      * @return $this
      */
     public function addElement(ElementInterface $element);
@@ -156,5 +155,4 @@ interface NodeInterface
      * @return array
      */
     public function listElements();
-
 }

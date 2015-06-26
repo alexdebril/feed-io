@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-
 use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
@@ -24,7 +23,7 @@ class Feed extends Node implements FeedInterface
 
     public function __construct()
     {
-        $this->items = new \ArrayIterator;
+        $this->items = new \ArrayIterator();
 
         parent::__construct();
     }
@@ -67,7 +66,7 @@ class Feed extends Node implements FeedInterface
      * Checks if current position is valid
      * @link http://php.net/manual/en/iterator.valid.php
      * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *                 Returns true on success or false on failure.
      */
     public function valid()
     {
@@ -86,7 +85,7 @@ class Feed extends Node implements FeedInterface
     }
 
     /**
-     * @param ItemInterface $item
+     * @param  ItemInterface $item
      * @return $this
      */
     public function add(ItemInterface $item)
@@ -103,5 +102,4 @@ class Feed extends Node implements FeedInterface
     {
         return new Item();
     }
-
 }

@@ -10,16 +10,14 @@
 
 namespace FeedIo;
 
-
 use FeedIo\Feed\ItemInterface;
 
 interface FilterInterface
 {
 
     /**
-     * @param ItemInterface $item
+     * @param  ItemInterface $item
      * @return bool
      */
     public function isValid(ItemInterface $item);
-
 }

@@ -20,8 +20,8 @@ class OptionalField extends RuleAbstract
     const NODE_NAME = 'default';
 
     /**
-     * @param NodeInterface $node
-     * @param \DOMElement $domElement
+     * @param  NodeInterface $node
+     * @param  \DOMElement   $domElement
      * @return $this
      */
     public function setProperty(NodeInterface $node, \DOMElement $domElement)
@@ -37,8 +37,8 @@ class OptionalField extends RuleAbstract
     /**
      * creates the accurate DomElement content according to the $item's property
      *
-     * @param \DomDocument $document
-     * @param NodeInterface $node
+     * @param  \DomDocument  $document
+     * @param  NodeInterface $node
      * @return \DomElement
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
@@ -54,12 +54,11 @@ class OptionalField extends RuleAbstract
     public function buildDomElement(\DomElement $domElement, ElementInterface $element)
     {
         $domElement->nodeValue = $element->getValue();
-        
-        foreach ( $element->getAttributes() as $name => $value ) {
+
+        foreach ($element->getAttributes() as $name => $value) {
             $domElement->setAttribute($name, $value);
         }
-        
+
         return $domElement;
     }
-
 }

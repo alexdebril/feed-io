@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-use FeedIo\Feed;
 
 class FeedTest extends \PHPUnit_Framework_TestCase
 {
@@ -89,8 +88,4 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(new \ArrayIterator(array($item)), 'items', $this->object);
         $this->assertEquals($this->object->current(), $item);
     }
-
-
-
 }
- 

@@ -10,7 +10,6 @@
 
 namespace FeedIo\Standard;
 
-
 use DOMDocument;
 use FeedIo\RuleSet;
 use FeedIo\Rule\Structure;
@@ -22,12 +21,12 @@ class Rdf extends Rss
      * Format version
      */
     const VERSION = '1.0';
-    
+
     /**
      * RDF document must have a <rdf> root node
      */
     const ROOT_NODE_TAGNAME = 'rdf';
-    
+
     /**
      * publication date
      */
@@ -35,7 +34,7 @@ class Rdf extends Rss
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param \DOMDocument $document
+     * @param  \DOMDocument $document
      * @return boolean
      */
     public function canHandle(\DOMDocument $document)
@@ -44,7 +43,7 @@ class Rdf extends Rss
     }
 
     /**
-     * @param DOMDocument $document
+     * @param  DOMDocument $document
      * @return \DomElement
      */
     public function getMainElement(\DOMDocument $document)
@@ -57,10 +56,9 @@ class Rdf extends Rss
      */
     public function buildFeedRuleSet()
     {
-        $ruleSet = new RuleSet;
+        $ruleSet = new RuleSet();
         $ruleSet->add(new Structure(static::CHANNEL_NODE_TAGNAME, $this->buildItemRuleSet()));
-        
+
         return $ruleSet;
     }
-
 }

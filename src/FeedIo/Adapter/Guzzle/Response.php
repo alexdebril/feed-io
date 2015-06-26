@@ -10,9 +10,8 @@
 
 namespace FeedIo\Adapter\Guzzle;
 
-
 use FeedIo\Adapter\ResponseInterface;
-use \GuzzleHttp\Message\ResponseInterface as GuzzleResponseInterface;
+use GuzzleHttp\Message\ResponseInterface as GuzzleResponseInterface;
 
 /**
  * Guzzle dependent HTTP Response
@@ -42,19 +41,19 @@ class Response implements ResponseInterface
     {
         return $this->guzzleResponse->getBody();
     }
-    
+
     /**
      * @return \DateTime|null
      */
     public function getLastModified()
     {
-        if ( $this->guzzleResponse->hasHeader(static::HTTP_LAST_MODIFIED) ) {
+        if ($this->guzzleResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
             $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
-            
-            return false === $lastModified ? null:$lastModified;
+
+            return false === $lastModified ? null : $lastModified;
         }
-        
-        return null;
+
+        return;
     }
 
     /**
@@ -66,12 +65,11 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @param string $name
+     * @param  string       $name
      * @return array|string
      */
     public function getHeader($name)
     {
         return $this->guzzleResponse->getHeader($name);
     }
-
 }

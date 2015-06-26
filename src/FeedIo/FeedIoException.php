@@ -10,6 +10,6 @@
 
 namespace FeedIo;
 
-
 class FeedIoException extends \RuntimeException
-{}
+{
+}
