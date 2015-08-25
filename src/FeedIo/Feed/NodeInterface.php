@@ -11,6 +11,7 @@
 namespace FeedIo\Feed;
 
 use FeedIo\Feed\Node\ElementInterface;
+use FeedIo\Feed\Node\CategoryInterface;
 
 /**
  * Describes a node instance
@@ -93,6 +94,28 @@ interface NodeInterface
      * @return $this
      */
     public function setLink($link);
+
+    /**
+     * returns node's categories
+     *
+     * @return \ArrayIterator
+     */
+    public function getCategories();
+
+    /**
+     * adds a category to the node
+     *
+     * @param \FeedIo\Feed\Node\CategoryInterface $category
+     * @return $this
+     */
+    public function addCategory(CategoryInterface $category);
+
+    /**
+     * returns a new CategoryInterface
+     *
+     * @return \FeedIo\Feed\Node\CategoryInterface
+     */
+    public function newCategory();
 
     /**
      * returns a new ElementInterface

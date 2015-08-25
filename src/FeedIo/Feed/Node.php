@@ -10,6 +10,9 @@
 
 namespace FeedIo\Feed;
 
+use FeedIo\Feed\Node\Category;
+use FeedIo\Feed\Node\CategoryInterface;
+
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementIterator;
 use FeedIo\Feed\Node\ElementInterface;
@@ -21,6 +24,11 @@ class Node implements NodeInterface
      * @var \ArrayIterator
      */
     protected $elements;
+    
+    /**
+     * @var \ArrayIterator
+     */
+    protected $categories;
 
     /**
      * @var string
@@ -50,6 +58,7 @@ class Node implements NodeInterface
     public function __construct()
     {
         $this->elements = new \ArrayIterator();
+        $this->categories = new \ArrayIterator();
     }
 
     /**
@@ -68,7 +77,40 @@ class Node implements NodeInterface
 
         return $this;
     }
+    
+    /**
+     * returns node's categories
+     *
+     * @return \ArrayIterator
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 
+    /**
+     * adds a category to the node
+     *
+     * @param \FeedIo\Feed\Node\CategoryInterface $category
+     * @return $this
+     */
+    public function addCategory(CategoryInterface $category)
+    {
+        $this->categories->append($category);
+        
+        return $this;
+    }
+
+    /**
+     * returns a new CategoryInterface
+     *
+     * @return \FeedIo\Feed\Node\CategoryInterface
+     */
+    public function newCategory()
+    {
+        return new Category();
+    }
+    
     /**
      * @return ElementInterface
      */
