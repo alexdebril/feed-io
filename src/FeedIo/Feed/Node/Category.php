@@ -37,7 +37,7 @@ class Category implements CategoryInterface
     }
     
     /**
-     * @param  string $name
+     * @param  string $term
      * @return $this
      */
     public function setTerm($term)
@@ -56,7 +56,7 @@ class Category implements CategoryInterface
     }
     
     /**
-     * @param  string $name
+     * @param  string $scheme
      * @return $this
      */
     public function setScheme($scheme)
@@ -75,7 +75,7 @@ class Category implements CategoryInterface
     }
     
     /**
-     * @param  string $name
+     * @param  string $label
      * @return $this
      */
     public function setLabel($label)

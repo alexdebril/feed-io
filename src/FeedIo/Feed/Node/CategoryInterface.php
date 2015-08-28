@@ -23,7 +23,7 @@ interface CategoryInterface
     public function getTerm();
     
     /**
-     * @param  string $name
+     * @param  string $term
      * @return $this
      */
     public function setTerm($term);
@@ -34,7 +34,7 @@ interface CategoryInterface
     public function getScheme();
     
     /**
-     * @param  string $name
+     * @param  string $scheme
      * @return $this
      */
     public function setScheme($scheme);
@@ -45,7 +45,7 @@ interface CategoryInterface
     public function getLabel();
     
     /**
-     * @param  string $name
+     * @param  string $label
      * @return $this
      */
     public function setLabel($label);
