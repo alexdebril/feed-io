@@ -11,6 +11,7 @@ use DOMDocument;
 use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
+use FeedIo\Rule\Atom\Category;
 use FeedIo\StandardAbstract;
 
 class Atom extends StandardAbstract
@@ -79,6 +80,17 @@ class Atom extends StandardAbstract
     {
         $ruleSet = $this->buildFeedRuleSet();
         $ruleSet->add(new Description('content'));
+
+        return $ruleSet;
+    }    
+    
+    /**
+     * @return RuleSet
+     */
+    protected function buildBaseRuleSet()
+    {
+        $ruleSet = parent::buildBaseRuleSet();
+        $ruleSet->add(new Category());
 
         return $ruleSet;
     }

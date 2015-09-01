@@ -15,6 +15,7 @@ use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
+use FeedIo\Rule\Category;
 use FeedIo\StandardAbstract;
 
 class Rss extends StandardAbstract
@@ -103,5 +104,17 @@ class Rss extends StandardAbstract
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
 
         return $ruleSet;
+    }    
+    
+    /**
+     * @return RuleSet
+     */
+    protected function buildBaseRuleSet()
+    {
+        $ruleSet = parent::buildBaseRuleSet();
+        $ruleSet->add(new Category());
+
+        return $ruleSet;
     }
+    
 }

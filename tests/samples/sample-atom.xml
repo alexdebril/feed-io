@@ -8,7 +8,7 @@
     <link href="http://example.org/" />
     <id>urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6</id>
     <updated>2003-12-13T18:30:02Z</updated>
-
+    <category term="sample" label="sample" domain="http://localhost" />
 
     <entry>
         <title>Atom-Powered Robots Run Amok</title>
@@ -26,6 +26,7 @@
             <email>johndoe@example.com</email>
             <uri>http://johndoe.com</uri>
         </author>
+        <category term="something" label="something" domain="http://localhost" />
     </entry>
 
     <entry>

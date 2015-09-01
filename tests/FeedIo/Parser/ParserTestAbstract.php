@@ -67,6 +67,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($feed->getLastModified(), 'lastModified must not be empty');
         $this->assertTrue($feed->valid(), 'the feed must contain an item');
 
+        $this->runCategoriesTest($feed);
         $item = $feed->current();
         $this->assertInstanceOf('\FeedIo\Feed\ItemInterface', $item);
         if ($item instanceof \FeedIo\Feed\ItemInterface) {
@@ -77,7 +78,20 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
             $this->assertNotEmpty($item->getLink());
             $this->assertCount(1, $item->getAllElements());
             $this->assertTrue($item->hasElement('author'));
+            $this->runCategoriesTest($item);
         }
+    }
+
+    protected function runCategoriesTest(\FeedIo\Feed\NodeInterface $node)
+    {
+        $categories = $node->getCategories();
+        $this->assertCount(1, $categories);
+        
+        $category = $categories->current();
+        $this->assertInstanceOf('\FeedIo\Feed\Node\CategoryInterface', $category);
+        
+        $this->assertNotEmpty($category->getTerm());
+        $this->assertNotEmpty($category->getLabel());
     }
 
     /**

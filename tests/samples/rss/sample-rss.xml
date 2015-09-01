@@ -3,13 +3,15 @@
     <channel>
         <title>RSS Title</title>
         <description>This is an example of an RSS feed</description>
-        <guid>1</guid>
+        <guid>1</guid>        
+        <category domain="http:/localhost">sample</category>
         <link>http://www.someexamplerssdomain.com/main.html</link>
         <lastBuildDate>Mon, 06 Sep 2010 00:01:00 GMT</lastBuildDate>
         <pubDate>Mon, 06 Sep 2009 16:45:00 GMT</pubDate>
         <ttl>1800</ttl>
 
         <item>
+            <category domain="http:/localhost">something</category>
             <title>Example entry</title>
             <description>Here is some text containing an interesting description.</description>
             <link>http://www.wikipedia.org/</link>
