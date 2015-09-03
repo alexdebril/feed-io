@@ -9,6 +9,7 @@ namespace FeedIo\StandardFormatter;
 
 use FeedIo\Feed;
 use FeedIo\Feed\Item;
+use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter;
 use Psr\Log\NullLogger;
 
@@ -34,13 +35,18 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
 
     public function testFormat()
     {
+        $category = new Category();
+        $category->setTerm('sample');
+        $category->setLabel('sample');
+        $category->setScheme('http://localhost');
         $date = new \DateTime('2014/12/01');
         $feed = new Feed();
         $feed->setTitle('sample title');
         $feed->setLastModified($date);
         $feed->setLink('http://localhost');
         $feed->setPublicId(1);
-
+        $feed->addCategory($category);
+        
         $item = new Item();
         $item->setPublicId(42);
         $item->setLastModified($date);
@@ -48,7 +54,7 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
         $item->setDescription('A great description');
         $item->setLink('http://localhost/item/1');
         $item->set('author', 'name');
-
+        $item->addCategory($category);
         $feed->add($item);
 
         $formatter = new Formatter($this->standard, new NullLogger());

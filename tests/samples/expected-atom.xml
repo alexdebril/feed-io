@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>sample title</title>
+    <category  label="sample" scheme="http://localhost" term="sample" />
     <link href="http://localhost"/>
     <id>1</id>
     <updated>Mon, 01 Dec 2014 00:00:00 +0000</updated>
+    
     <entry>
         <title>item title</title>
+        <category  label="sample" scheme="http://localhost" term="sample" />
         <link href="http://localhost/item/1"/>
         <id>42</id>
         <updated>Mon, 01 Dec 2014 00:00:00 +0000</updated>
