@@ -40,13 +40,15 @@ class Category extends RuleAbstract
      *
      * @param  \DomDocument  $document
      * @param  NodeInterface $node
-     * @return \DomElement
+     * @return \DomElement|null
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
         foreach( $node->getCategories() as $category ) {
             return $this->createCategoryElement($document, $category);
         }
+        
+        return;
     }
     
     /**

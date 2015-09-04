@@ -69,6 +69,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         $category->setLabel('foo');
         
         $item = new Item;
+        $this->assertNull($this->object->createElement(new \DomDocument, $item));
         $item->addCategory($category);
         
         $element = $this->object->createElement(new \DomDocument, $item);
