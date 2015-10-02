@@ -25,13 +25,26 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
 
     public function testSetProperty()
     {
-        $element = new \DOMElement('test', 'a test value');
+        $document = new \DomDocument();
+        $element = $document->createElement('test', 'a test value');
+        $element->setAttribute('foo', 'bar');
 
         $item = new Item();
         $this->object->setProperty($item, $element);
 
         $this->assertTrue($item->hasElement('test'));
         $this->assertEquals('a test value', $item->getValue('test'));
+        
+        $itemElements = $item->getElementIterator('test');
+        
+        $count = 0;
+        foreach ($itemElements as $itemElement) {
+            $count++;
+            $this->assertEquals('bar', $itemElement->getAttribute('foo'));
+        }
+        
+        $this->assertEquals(1, $count);
+        
     }
 
     public function testCreateElement()

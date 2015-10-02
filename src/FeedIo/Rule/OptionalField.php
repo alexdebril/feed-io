@@ -29,6 +29,9 @@ class OptionalField extends RuleAbstract
         $element = $node->newElement();
         $element->setName($domElement->nodeName);
         $element->setValue($domElement->nodeValue);
+        foreach($domElement->attributes as $attribute) {
+            $element->setAttribute($attribute->name, $attribute->value);
+        }
         $node->addElement($element);
 
         return $this;
