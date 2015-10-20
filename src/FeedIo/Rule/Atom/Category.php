@@ -12,7 +12,6 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Node\CategoryInterface;
 use FeedIo\Feed\NodeInterface;
-use FeedIo\RuleAbstract;
 
 class Category extends \FeedIo\Rule\Category
 {
