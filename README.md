@@ -33,11 +33,11 @@ Use Composer to add feed-io into your project's requirements :
 
 feed-io requires : 
 
-- php 5.4+
+- php 5.5+
 - psr/log 1.0
 
 it suggests : 
-- guzzlehttp/guzzle 4.1+
+- guzzlehttp/guzzle 6.0+
 - monolog/monolog 1.10+
 
 # Fetching the repository
