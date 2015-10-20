@@ -25,23 +25,19 @@ Keep informed about new releases and incoming features : http://debril.org/categ
 
 # Installation
 
-Edit composer.json and add the following line in the "require" section:
+Use Composer to add feed-io into your project's requirements :
 
-    "debril/feed-io": "dev-master"
-
-then, ask Composer to install it:
-
-    composer.phar update debril/feed-io
+    composer require debril/feed-io
     
 # Requirements
 
 feed-io requires : 
 
-- php 5.4+
+- php 5.5+
 - psr/log 1.0
 
 it suggests : 
-- guzzlehttp/guzzle 4.1+
+- guzzlehttp/guzzle 6.0+
 - monolog/monolog 1.10+
 
 # Fetching the repository
