@@ -30,6 +30,17 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $this->object->init($feed);
     }
 
+    public function testInit()
+    {
+        $feed = new Feed();
+        $date = new \DateTime('-15 days');
+        $feed->setLastModified($date);
+
+        $this->object->init($feed);
+        
+        $this->assertAttributeEquals($date, 'date', $this->object);
+    }
+
     public function testIsValid()
     {
         $item = new Item();
