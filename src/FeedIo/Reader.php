@@ -66,6 +66,21 @@ class Reader
     }
 
     /**
+     * adds a filter to every parsers
+     * 
+     * @param \FeedIo\FilterInterface $filter
+     * @return $this
+     */
+    public function addFilter(FilterInterface $filter)
+    {
+        foreach ($this->parsers as $parser) {
+            $parser->addFilter($filter);
+        }
+        
+        return $this;
+    }
+
+    /**
      * @param  string       $body
      * @return \DOMDocument
      */
