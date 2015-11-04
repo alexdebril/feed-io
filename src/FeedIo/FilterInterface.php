@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-use FeedIo\FilterInterface;
 use FeedIo\Feed\ItemInterface;
 
 interface FilterInterface
