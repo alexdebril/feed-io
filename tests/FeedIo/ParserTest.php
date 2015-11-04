@@ -98,6 +98,18 @@ XML;
         $this->assertTrue($this->object->isValid($item));
     }
 
+    public function testInitFilters()
+    {
+        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
+        
+        $filter->expects($this->once())
+            ->method('init')
+            ->will($this->returnValue($filter));
+            
+        $this->object->addFilter($filter);
+        $this->object->initFilters(new Feed);
+    }
+
     public function testIsNotValid()
     {
         $item = new Item();
