@@ -82,7 +82,6 @@ class Parser
     }
 
     /**
-     * @param  FilterInterface $filter
      * @return $this
      */
     public function initFilters(FeedInterface $feed)
