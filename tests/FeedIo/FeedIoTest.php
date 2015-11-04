@@ -69,15 +69,21 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
         }
     }
-
-    public function testAddFixer()
+    
+    public function testGetBaseFilters()
     {
-        $fixer = $this->getMockForAbstractClass('FeedIo\Reader\FixerAbstract');
+        $filters = $this->object->getBaseFilters();
 
-        $this->object->addFixer($fixer);
-        $fixerSet = $this->object->getFixerSet();
+        foreach ($filters as $filter) {
+            $this->assertInstanceOf('\FeedIo\FilterInterface', $filter);
+        }
+    }
+    
+    public function testAddFilter()
+    {
+        $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');
 
-        $this->assertAttributeContains($fixer, 'fixers', $fixerSet);
+        $this->object->addFilter($filter);
     }
 
     /**

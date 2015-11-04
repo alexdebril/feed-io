@@ -107,6 +107,7 @@ class FeedIo
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
         $this->loadFixerSet();
+        $this->loadFilters();
     }
 
     /**
@@ -121,6 +122,19 @@ class FeedIo
             $this->addStandard($name, $standard);
         }
 
+        return $this;
+    }
+    
+    /**
+     * adds a filter to the reader
+     *
+     * @param \FeedIo\FilterInterface $filter
+     * @return $this
+     */
+    public function addFilter(FilterInterface $filter)
+    {
+        $this->getReader()->addFilter($filter);
+        
         return $this;
     }
 
@@ -176,7 +190,21 @@ class FeedIo
 
         return $this;
     }
+    
+    /**
+     * @return $this
+     */
+    protected function loadFilters()
+    {
+        $filters = $this->getBaseFilters();
 
+        foreach ($filters as $filter) {
+            $this->addFilter($filter);
+        }
+
+        return $this;
+    }
+    
     /**
      * @param  FixerAbstract $fixer
      * @return $this
@@ -200,7 +228,17 @@ class FeedIo
 
         );
     }
-
+    
+    /**
+     * @return array
+     */
+    public function getBaseFilters()
+    {
+        return array(
+            new Filter\ModifiedSince(),
+        );
+    }
+    
     /**
      * @return \FeedIo\Rule\DateTimeBuilder
      */
