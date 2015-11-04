@@ -11,6 +11,7 @@
 namespace FeedIo\Filter;
 
 use FeedIo\Feed\Item;
+use FeedIo\Feed;
 
 class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,11 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->object = new ModifiedSince(new \DateTime('-10 days'));
+        $this->object = new ModifiedSince();
+        $feed = new Feed();
+        $feed->setLastModified(new \DateTime('-10 days'));
+
+        $this->object->init($feed);
     }
 
     public function testIsValid()

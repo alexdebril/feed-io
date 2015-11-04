@@ -10,6 +10,7 @@
 
 namespace FeedIo\Filter;
 
+use FeedIo\FeedInterface;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\FilterInterface;
 
@@ -21,11 +22,14 @@ class ModifiedSince implements FilterInterface
     protected $date;
 
     /**
-     * @param \DateTime $date
+     * @param FeedInterface $feed
+     * @return $this
      */
-    public function __construct(\DateTime $date)
+    public function init(FeedInterface $feed)
     {
-        $this->date = $date;
+        $this->date = $feed->getLastModified();
+
+        return $this;
     }
 
     /**

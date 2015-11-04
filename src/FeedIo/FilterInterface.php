@@ -10,10 +10,18 @@
 
 namespace FeedIo;
 
+use FeedIo\FilterInterface;
 use FeedIo\Feed\ItemInterface;
 
 interface FilterInterface
 {
+
+    /**
+     * @param FeedInterface $feed
+     * @return $this
+     */
+    public function init(FeedInterface $feed);
+
 
     /**
      * @param  ItemInterface $item
