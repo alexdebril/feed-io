@@ -61,6 +61,11 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testFixerSet()
+    {
+        $this->assertInstanceOf('\FeedIo\Reader\FixerSet', $this->object->getFixerSet());
+    }
+
     public function testGetBaseFixers()
     {
         $fixers = $this->object->getBaseFixers();
