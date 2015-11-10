@@ -44,7 +44,7 @@ class Category extends RuleAbstract
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        if ( is_array($node->getCategories()) ) {
+        if ( ! is_null($node->getCategories()) ) {
             foreach( $node->getCategories() as $category ) {
                 return $this->createCategoryElement($document, $category);
             }
