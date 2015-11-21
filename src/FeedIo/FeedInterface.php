@@ -22,10 +22,22 @@ interface FeedInterface extends \Iterator, NodeInterface
 {
 
     /**
+     * This method MUST return the feed's full URL
+     * @return string
+     */
+    public function getUrl();
+    
+    /**
+     * @param string $url
+     * @return FeedInterface
+     */
+    public function setUrl($url);
+    
+    /**
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
      * @param  ItemInterface $item
-     * @return Feed
+     * @return FeedInterface
      */
     public function add(ItemInterface $item);
 
