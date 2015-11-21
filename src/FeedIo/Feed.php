@@ -21,11 +21,35 @@ class Feed extends Node implements FeedInterface
      */
     protected $items;
 
+    /**
+     * @var string $url
+     */
+    protected $url;
+
     public function __construct()
     {
         $this->items = new \ArrayIterator();
 
         parent::__construct();
+    }
+
+    /**
+     * @return string $url
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     * @return FeedInterface
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        
+        return $this;
     }
 
     /**

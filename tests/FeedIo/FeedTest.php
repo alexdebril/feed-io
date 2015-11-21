@@ -88,4 +88,14 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(new \ArrayIterator(array($item)), 'items', $this->object);
         $this->assertEquals($this->object->current(), $item);
     }
+    
+    public function testUrl()
+    {
+        $url = 'http://localhost';
+        
+        $feed = new Feed;
+        $feed->setUrl($url);
+        
+        $this->assertEquals($url, $feed->getUrl());
+    }
 }
