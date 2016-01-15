@@ -179,7 +179,7 @@ class Node implements NodeInterface
     public function listElements()
     {
         foreach ($this->elements as $element) {
-            yield $element->getName();
+            yield ($element->getName());
         }
     }
 
