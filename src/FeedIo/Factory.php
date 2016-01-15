@@ -15,12 +15,6 @@ use FeedIo\Factory\LoggerBuilderInterface;
 use FeedIo\Factory\ClientBuilderInterface;
 use FeedIo\Factory\BuilderInterface;
 
-use \FeedIo\Adapter\Guzzle\Client;
-use GuzzleHttp\Client as GuzzleClient;
-
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
 class Factory
 {
    
