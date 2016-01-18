@@ -34,17 +34,21 @@ class Factory
     protected $loggerBuilder;
     
     static public function create(
-            array $clientConfig = [
-                    'builder' => 'GuzzleClient',
-                    'config' => [],
-            ],
             array $loggerConfig = [
                     'builder' => 'NullLogger',
                     'config' => [],
+            ],
+            array $clientConfig = [
+                    'builder' => 'GuzzleClient',
+                    'config' => [],
             ]
+
     )
     {
         $factory = new static();
+        $clientConfig['config'] = isset($clientConfig['config']) ? $clientConfig['config']:[];
+        $loggerConfig['config'] = isset($loggerConfig['config']) ? $loggerConfig['config']:[];
+        
         $factory->setClientBuilder(
                 $factory->getBuilder($clientConfig['builder'], $clientConfig['config']))
                 ->setLoggerBuilder(
@@ -67,7 +71,7 @@ class Factory
 
     public function getBuilder($builder, array $args = [])
     {
-        $class = "\FeedIo\Factory\Builder\{$builder}Builder";
+        $class = "\FeedIo\Factory\Builder\\{$builder}Builder";
         
         if ( ! class_exists($class) ) {
             $class = $builder;
