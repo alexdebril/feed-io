@@ -12,16 +12,15 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.5.0",        
+        "guzzlehttp/guzzle": "~6.0",
         "psr/log": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1.0",
-        "guzzlehttp/guzzle": "~6.0",
         "monolog/monolog": "1.10.*@dev"
     },
     "suggest": {
-        "guzzlehttp/guzzle": "HTTP communication",
         "monolog/monolog": "Allows to handle logs"
     },
     "autoload": {
