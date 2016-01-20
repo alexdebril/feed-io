@@ -42,6 +42,22 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         
     } 
     
+    public function testExtractConfig()
+    {
+        $config = ['foo' => 'bar'];
+        $builderConfig = ['config' => $config];
+        $factory = new Factory();
+        $this->assertEquals($config, $factory->extractConfig($builderConfig));
+        
+    }
+    
+    public function testExtractEmptyConfig()
+    {
+        $builderConfig = [];
+        $factory = new Factory();
+        $this->assertEquals([], $factory->extractConfig($builderConfig));
+        
+    }
     public function testCreate()
     {
         $factory = Factory::create();

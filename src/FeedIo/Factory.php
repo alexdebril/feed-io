@@ -46,16 +46,23 @@ class Factory
     )
     {
         $factory = new static();
-        $clientConfig['config'] = isset($clientConfig['config']) ? $clientConfig['config']:[];
-        $loggerConfig['config'] = isset($loggerConfig['config']) ? $loggerConfig['config']:[];
         
         $factory->setClientBuilder(
-                $factory->getBuilder($clientConfig['builder'], $clientConfig['config']))
+                $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig)))
                 ->setLoggerBuilder(
-                $factory->getBuilder($loggerConfig['builder'], $loggerConfig['config']));
+                $factory->getBuilder($loggerConfig['builder'],$factory->extractConfig($loggerConfig)));
                 
                 
         return $factory;        
+    }
+    
+    /**
+     * @param $builderConfig
+     * @return array
+     */
+    public function extractConfig(array $builderConfig)
+    {
+        return isset($builderConfig['config']) ? $builderConfig['config']:[];
     }
     
     /**
