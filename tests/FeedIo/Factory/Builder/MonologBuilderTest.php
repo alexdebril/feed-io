@@ -27,6 +27,15 @@ class MonologBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Monolog\Handler\StreamHandler', $handler);
     }
     
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testNewInvalidHandler()
+    {
+        $builder = new MonologBuilder();
+        $handler = $builder->newHandler('stdClass', []);
+    }
+    
     public function testGetLogger()
     {
         $builder = new MonologBuilder();
