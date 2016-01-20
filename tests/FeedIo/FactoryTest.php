@@ -64,6 +64,17 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\FeedIo\Factory', $factory);
     }
     
+    public function testGetBuilder()
+    {
+        $factory = new Factory();
+        $this->assertInstanceOf('\FeedIo\Factory\Builder\\MonologBuilder', $factory->getBuilder('monolog'));
+    }
+    
+    public function testGetExternalBuilder()
+    {
+        $factory = new Factory();
+        $this->assertInstanceOf('stdClass', $factory->getBuilder('stdClass'));       
+    }
     public function testCreateWithMonolog()
     {
         $factory = Factory::create(['builder' => 'monolog']);
