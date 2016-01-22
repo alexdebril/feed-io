@@ -27,26 +27,34 @@ Keep informed about new releases and incoming features : http://debril.org/categ
 
 Use Composer to add feed-io into your project's requirements :
 
+```sh
     composer require debril/feed-io
-    
+ ```
+
 # Requirements
 
 feed-io requires : 
 
 - php 5.5+
 - psr/log 1.0
+- guzzlehttp/guzzle 6.0+
 
 it suggests : 
-- guzzlehttp/guzzle 6.0+
 - monolog/monolog 1.10+
+
+Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
 
 # Fetching the repository
 
 Do this if you want to contribute (and you're welcome to do so):
 
-    git clone https://github.com/alexdebril/feed-gio.git
+```sh
+    git clone https://github.com/alexdebril/feed-io.git
+ 
+    cd feed-io/
 
-    composer.phar install
+    composer install
+```
 
 # Unit Testing
 
@@ -54,7 +62,7 @@ You can run the unit test suites using the following command in the library's so
 
 ```sh
 
-make test
+    make test
 
 ```
 
@@ -67,16 +75,8 @@ feed-io is designed to read feeds across the internet and to publish your own. I
 
 ```php
 
-// first dependency : the HTTP client
-// here we use Guzzle as a dependency for the client
-$guzzle = new GuzzleHttp\Client();
-$client = new FeedIo\Adapter\Guzzle\Client($guzzle);
-
-// second dependency : a PSR-3 logger
-$logger = new Psr\Log\NullLogger();
-
-// now create FeedIo's instance
-$feedIo = new FeedIo\FeedIo($client, $logger);
+// create a simple FeedIo instance
+$feedIo = \FeedIo\Factory::create()->getFeedIo();
 
 // read a feed
 $result = $feedIo->read($url);
@@ -130,5 +130,38 @@ $item->addMedia($media);
 $feed->add($item);
 
 ```
+## activate logging
 
+feed-io natively supports PSR-3 logging, you can activate it by choosing a 'builder' in the factory :
+
+```php
+
+$feedIo = \FeedIo\Factory::create(['builder' => 'monolog'])->getFeedIo();
+
+```
+
+feed-io only provides a builder to create Monolog\Logger instances. You can write your own, as long as the Builder implements BuilderInterface.
+
+## Building a FeedIo instance without the factory
+
+To create a new FeedIo instance you only need to inject two dependencies :
+
+ - an HTTP Client implementing FeedIo\Adapter\ClientInterface. It can be wrapper for an external library like FeedIo\Adapter\Guzzle\Client
+- a PSR-3 logger implementing Psr\Log\LoggerInterface
+
+```php
+
+// first dependency : the HTTP client
+// here we use Guzzle as a dependency for the client
+$guzzle = new GuzzleHttp\Client();
+// Guzzle is wrapped in this adapter which is a FeedIo\Adapter\ClientInterface  implementation
+$client = new FeedIo\Adapter\Guzzle\Client($guzzle);
+
+// second dependency : a PSR-3 logger
+$logger = new Psr\Log\NullLogger();
+
+// now create FeedIo's instance
+$feedIo = new FeedIo\FeedIo($client, $logger);
+
+```
 
