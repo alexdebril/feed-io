@@ -1,7 +1,7 @@
 all: clean coverage
 
 test: 
-	vendor/bin/phpunit  --strict -v
+	vendor/bin/phpunit 
 
 test-live-feeds:
 	vendor/bin/phpunit -c phpunit-feeds.xml
