@@ -35,8 +35,8 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClientMock()
     {
-        $client = $this->getMock('FeedIo\Adapter\ClientInterface');
-        $response = $this->getMock('FeedIo\Adapter\ResponseInterface');
+        $client = $this->createMock('FeedIo\Adapter\ClientInterface');
+        $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue('<rss></rss>'));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
 
@@ -48,7 +48,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFaultyClientMock()
     {
-        $client = $this->getMock('FeedIo\Adapter\ClientInterface');
+        $client = $this->createMock('FeedIo\Adapter\ClientInterface');
         $client->expects($this->any())->method('getResponse')->will(
             $this->throwException(new ServerErrorException())
         );

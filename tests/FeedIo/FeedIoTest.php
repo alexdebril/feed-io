@@ -21,7 +21,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $client = $this->getMockForAbstractClass('\FeedIo\Adapter\ClientInterface');
-        $response = $this->getMock('FeedIo\Adapter\ResponseInterface');
+        $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue(
             file_get_contents(dirname(__FILE__)."/../samples/expected-atom.xml")
         ));

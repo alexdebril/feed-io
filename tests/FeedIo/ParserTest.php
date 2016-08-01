@@ -28,11 +28,15 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $date->addDateFormat(\DateTime::ATOM);
         $standard = $this->getMockForAbstractClass(
             '\FeedIo\StandardAbstract',
-            array($date)
+            array($date),
+            'StandardMock',
+            true,
+            true,
+            true,
+            ['canHandle', 'getMainElement', 'buildFeedRuleSet']
         );
         $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
-        $standard->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
         $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(new \DOMElement('test')));
 
         $this->object = new Parser($standard, new NullLogger());
