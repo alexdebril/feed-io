@@ -85,7 +85,7 @@ XML;
         $response->expects($this->any())->method('getHeaders')->will($this->returnValue(array()));
         $response->expects($this->any())->method('hasHeader')->will($this->returnValue(true));
 
-        $client = $this->getMock('\GuzzleHttp\Client');
+        $client = $this->createMock('\GuzzleHttp\Client');
         $client->expects($this->any())->method('request')->will($this->returnValue($response));
 
         return $client;
