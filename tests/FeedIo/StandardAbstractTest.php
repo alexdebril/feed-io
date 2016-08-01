@@ -31,7 +31,6 @@ class StandardAbstractTest extends \PHPUnit_Framework_TestCase
         $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));
         $this->object->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue(new RuleSet()));
         $this->object->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue(new RuleSet()));
-        $this->object->expects($this->any())->method('parseBody')->will($this->returnValue(new Feed()));
         $this->object->expects($this->any())->method('getMainElement')->will($this->returnValue(new \DOMElement('test')));
     }
 

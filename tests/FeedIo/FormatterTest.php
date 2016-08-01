@@ -26,7 +26,15 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $ruleSet->add(new Title());
         $document = new \DOMDocument();
         $document->loadXML('<channel><feed></feed></channel>');
-        $standard = $this->getMockForAbstractClass('\FeedIo\StandardAbstract', array(new DateTimeBuilder()));
+        $standard = $this->getMockForAbstractClass(
+            '\FeedIo\StandardAbstract',
+            array(new DateTimeBuilder()),
+            'StandardMock',
+            true,
+            true,
+            true,
+            ['format', 'getMainElement', 'setHeaders', 'buildFeedRuleSet', 'buildItemRuleSet']
+        );
         $standard->expects($this->any())->method('format')->will($this->returnValue(
             $document
         ));
