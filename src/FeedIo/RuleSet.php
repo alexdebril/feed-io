@@ -47,11 +47,11 @@ class RuleSet
     }
 
     /**
-     * @return \ArrayIterator
+     * @return array
      */
     public function getRules()
     {
-        return $this->rules;
+        return $this->rules->getArrayCopy();
     }
 
     /**
@@ -61,7 +61,6 @@ class RuleSet
     public function add(RuleAbstract $rule, array $aliases = array())
     {
         $this->rules->offsetSet(strtolower($rule->getNodeName()), $rule);
-
         $this->addAliases($rule->getNodeName(), $aliases);
 
         return $this;
