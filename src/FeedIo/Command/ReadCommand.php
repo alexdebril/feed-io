@@ -54,3 +54,4 @@ class ReadCommand extends Command
         }
     }
 }
+
