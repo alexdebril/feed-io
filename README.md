@@ -35,9 +35,9 @@ Use Composer to add feed-io into your project's requirements :
 
 feed-io requires : 
 
-- php 5.5+
+- php 5.6+
 - psr/log 1.0
-- guzzlehttp/guzzle 6.0+
+- guzzlehttp/guzzle 6.2+
 
 it suggests : 
 - monolog/monolog 1.10+
