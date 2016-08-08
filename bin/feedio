@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->setName('feed-io : the CLI feed reader');
+
+$application->add(new \FeedIo\Command\ReadCommand());
+
+$application->run();
