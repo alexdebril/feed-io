@@ -2,6 +2,7 @@ language: php
 
 php:
   - 5.6
+  - 7.0
 
 script : phpunit --coverage-clover=coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
@@ -9,4 +10,4 @@ before_script:
   - composer require guzzlehttp/guzzle:${GUZZLE_VERSION}
 
 env:
-  - GUZZLE_VERSION="~6.0"
+  - GUZZLE_VERSION="~6.2"
