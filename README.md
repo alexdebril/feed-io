@@ -11,6 +11,7 @@
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve RSS / Atom feeds. It features:
 
 - Atom / RSS read and write support
+- a Command line interface to read feeds
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
 - Enclosure support to handle external medias like audio content
@@ -33,13 +34,13 @@ Use Composer to add feed-io into your project's requirements :
 
 # Requirements
 
-feed-io requires : 
+feed-io requires :
 
 - php 5.6+
 - psr/log 1.0
 - guzzlehttp/guzzle 6.2+
 
-it suggests : 
+it suggests :
 - monolog/monolog 1.10+
 
 Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
@@ -50,7 +51,7 @@ Do this if you want to contribute (and you're welcome to do so):
 
 ```sh
     git clone https://github.com/alexdebril/feed-io.git
- 
+
     cd feed-io/
 
     composer install
@@ -69,9 +70,23 @@ You can run the unit test suites using the following command in the library's so
 Usage
 =====
 
-feed-io is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php) :
+## CLI
+
+Let's suppose you installed feed-io using Composer, you can use its command line client to read feeds from your terminal :
+
+```shell
+./vendor/bin/feedio read http://php.net/feed.atom
+```
+
+You can specify the number of items you want to read using the --count option. The instruction below will display the latest item :
+
+```shell
+./vendor/bin/feedio read -c 1 http://php.net/feed.atom
+```
 
 ## reading
+
+feed-io is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php) :
 
 ```php
 
@@ -123,7 +138,7 @@ $item = $feed->newItem();
 $media = new \FeedIo\Feed\Item\Media
 $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
 $media->setType('audio/mpeg');
- 
+
 // add it to the item
 $item->addMedia($media);
 
@@ -164,4 +179,3 @@ $logger = new Psr\Log\NullLogger();
 $feedIo = new FeedIo\FeedIo($client, $logger);
 
 ```
-
