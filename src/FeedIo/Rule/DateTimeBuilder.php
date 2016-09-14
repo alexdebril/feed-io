@@ -25,6 +25,9 @@ class DateTimeBuilder
         'Y-m-d\TH:i:s.uP',
         'Y-m-d',
         'd/m/Y',
+        'D, d M Y H:i O',
+        'D, d M Y H:i:s O',
+        'D M d Y H:i:s e',
     ];
 
     /**
@@ -100,6 +103,7 @@ class DateTimeBuilder
      */
     public function convertToDateTime($string)
     {
+        $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
             $date = \DateTime::createFromFormat($format, $string);
             if ($date instanceof \DateTime) {
