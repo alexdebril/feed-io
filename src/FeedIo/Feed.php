@@ -14,7 +14,7 @@ use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
 
-class Feed extends Node implements FeedInterface
+class Feed extends Node implements FeedInterface, \JsonSerializable
 {
     /**
      * @var \ArrayIterator
@@ -125,5 +125,30 @@ class Feed extends Node implements FeedInterface
     public function newItem()
     {
         return new Item();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $items = [];
+
+        foreach( $this->items as $item ) {
+            $items[] = $item->toArray();
+        }
+
+        $properties = parent::toArray();
+        $properties['items'] = $items;
+
+        return $properties;
     }
 }

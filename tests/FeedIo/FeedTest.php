@@ -98,4 +98,29 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($url, $feed->getUrl());
     }
+
+    public function testToArray()
+    {
+        $item = new Feed\Item();
+        $item->setTitle('foo-bar');
+        $this->object->add($item);
+
+        $out = $this->object->toArray();
+
+        $this->assertEquals('foo-bar', $out['items'][0]['title']);
+    }
+
+    public function testJsonSerialize()
+    {
+        $item = new Feed\Item();
+        $item->setTitle('foo-bar');
+        $this->object->add($item);
+        $this->object->setTitle('hello');
+        $this->object->setLastModified(new \DateTime());
+
+        $json = json_encode($this->object);
+
+        $this->assertInternalType('string', $json);
+        $this->assertInstanceOf('stdClass', json_decode($json));
+    }
 }
