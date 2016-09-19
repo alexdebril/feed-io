@@ -92,6 +92,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $category = new Category();
         $category->setLabel('test');
         $this->object->set('foo', 'bar')
+            ->setLastModified(new \DateTime())
             ->setTitle('my title')
             ->addCategory($category)
             ->setDescription('lorem ipsum');
@@ -102,6 +103,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('my title', $out['title']);
         $this->assertEquals('bar', $out['elements']['foo']);
         $this->assertEquals('test', $out['categories'][0]);
+        $this->assertInternalType('string', $out['lastModified']);
     }
 
     public function testAddCategory()

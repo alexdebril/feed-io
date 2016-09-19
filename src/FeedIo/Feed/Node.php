@@ -307,6 +307,12 @@ class Node implements NodeInterface
     {
         $properties = get_object_vars($this);
 
+        foreach( $properties as $name => $property ) {
+            if ( $property instanceof \DateTime ) {
+                $properties[$name] = $property->format(\DateTime::ATOM);
+            }
+        }
+
         $properties['elements'] = iterator_to_array($this->getElementsGenerator());
         $properties['categories'] = iterator_to_array($this->getCategoriesGenerator());
 
