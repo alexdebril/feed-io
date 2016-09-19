@@ -89,6 +89,16 @@ class Node implements NodeInterface
     }
 
     /**
+     * @return \Generator
+     */
+    public function getCategoriesGenerator()
+    {
+        foreach( $this->categories as $category ) {
+            yield $category->getlabel();
+        }
+    }
+
+    /**
      * adds a category to the node
      *
      * @param \FeedIo\Feed\Node\CategoryInterface $category
@@ -180,6 +190,18 @@ class Node implements NodeInterface
     {
         foreach ($this->elements as $element) {
             yield ($element->getName());
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function getElementsGenerator()
+    {
+        $elements = $this->getAllElements();
+
+        foreach( $elements as $element ) {
+            yield $element->getName() => $element->getValue();
         }
     }
 
@@ -277,4 +299,24 @@ class Node implements NodeInterface
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $properties = get_object_vars($this);
+
+        foreach( $properties as $name => $property ) {
+            if ( $property instanceof \DateTime ) {
+                $properties[$name] = $property->format(\DateTime::ATOM);
+            }
+        }
+
+        $properties['elements'] = iterator_to_array($this->getElementsGenerator());
+        $properties['categories'] = iterator_to_array($this->getCategoriesGenerator());
+
+        return $properties;
+    }
+
 }

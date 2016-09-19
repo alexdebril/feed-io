@@ -10,6 +10,8 @@
 
 namespace FeedIo\Feed;
 
+use FeedIo\Feed\Node\Category;
+
 class NodeTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -62,7 +64,48 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('\FeedIo\Feed\Node\CategoryInterface', $this->object->newCategory());
     }
-    
+
+    public function testGetCategoryAsGenerator()
+    {
+        $category = new Category();
+        $category->setLabel('test');
+
+        $this->object->addCategory($category);
+
+        $categories = $this->object->getCategoriesGenerator();
+
+        $this->assertEquals('test', $categories->current());
+    }
+
+    public function testGetElementsAsGenerator()
+    {
+        $this->object->set('foo', 'bar');
+
+        $elements = $this->object->getElementsGenerator();
+
+        $this->assertEquals('foo', $elements->key());
+        $this->assertEquals('bar', $elements->current());
+    }
+
+    public function testToArray()
+    {
+        $category = new Category();
+        $category->setLabel('test');
+        $this->object->set('foo', 'bar')
+            ->setLastModified(new \DateTime())
+            ->setTitle('my title')
+            ->addCategory($category)
+            ->setDescription('lorem ipsum');
+
+        $out = $this->object->toArray();
+
+        $this->assertEquals('lorem ipsum', $out['description']);
+        $this->assertEquals('my title', $out['title']);
+        $this->assertEquals('bar', $out['elements']['foo']);
+        $this->assertEquals('test', $out['categories'][0]);
+        $this->assertInternalType('string', $out['lastModified']);
+    }
+
     public function testAddCategory()
     {
         $category = new \FeedIo\Feed\Node\Category;
