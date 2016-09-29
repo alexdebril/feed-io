@@ -18,6 +18,8 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
 
     const DESCRIPTION = 'lorem ipsum';
 
+    const HTML_DESCRIPTION = '<h1>a title</h1><div><p>A paragraph</p><p>second paragraph</p></div>';
+
     protected function setUp()
     {
         $this->object = new Description();
@@ -31,9 +33,24 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     public function testSet()
     {
         $item = new Item();
+        $document = new \DOMDocument();
+        $element = $document->createElement('description', self::DESCRIPTION);
+        $document->appendChild($element);
 
-        $this->object->setProperty($item, new \DOMElement('description', self::DESCRIPTION));
+        $this->object->setProperty($item, $element);
         $this->assertEquals(self::DESCRIPTION, $item->getDescription());
+    }
+
+    public function testSetProperty()
+    {
+        $item = new Item();
+
+        $document = new \DOMDocument();
+        $element = $document->createElement('description', self::HTML_DESCRIPTION);
+        $document->appendChild($element);
+
+        $this->object->setProperty($item, $element);
+        $this->assertEquals(htmlentities(self::HTML_DESCRIPTION), $item->getDescription());
     }
 
     public function testCreateElement()
