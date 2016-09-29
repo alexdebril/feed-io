@@ -22,7 +22,12 @@ class Description extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
-        $node->setDescription($element->nodeValue);
+        $string = '';
+        foreach($element->childNodes as $childNode) {
+            $string .= $element->ownerDocument->saveXML($childNode);
+        }
+
+        $node->setDescription($string);
 
         return $this;
     }
