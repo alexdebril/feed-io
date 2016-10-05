@@ -152,17 +152,30 @@ class Parser
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
-                if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
-                    $newItem = $this->parseNode($item->newItem(), $node, $this->standard->getItemRuleSet());
-                    $this->addValidItem($item, $newItem);
-                } else {
-                    $rule = $ruleSet->get($node->tagName);
-                    $rule->setProperty($item, $node);
-                }
+                $this->handleNode($item, $node, $ruleSet);
             }
         }
 
         return $item;
+    }
+
+    /**
+     * @param NodeInterface $item
+     * @param \DOMElement $node
+     * @param RuleSet $ruleSet
+     * @return $this
+     */
+    protected function handleNode(NodeInterface $item, \DOMElement $node, RuleSet $ruleSet)
+    {
+        if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
+            $newItem = $this->parseNode($item->newItem(), $node, $this->standard->getItemRuleSet());
+            $this->addValidItem($item, $newItem);
+        } else {
+            $rule = $ruleSet->get($node->tagName);
+            $rule->setProperty($item, $node);
+        }
+
+        return $this;
     }
 
     /**
