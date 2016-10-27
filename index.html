@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Feed-io by alexdebril</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Feed-io</h1>
+      <h2 class="project-tagline">A PHP library to read and write feeds in the RSS or Atom format</h2>
+      <a href="https://github.com/alexdebril/feed-io" class="btn">View on GitHub</a>
+      <a href="https://github.com/alexdebril/feed-io/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/alexdebril/feed-io/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="feed-io" class="anchor" href="#feed-io" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>feed-io</h1>
+
+<p><a href="https://github.com/alexdebril/feed-io">feed-io</a> is a PHP library built to consume and serve RSS / Atom feeds. It features:</p>
+
+<ul>
+<li>Atom / RSS read and write support</li>
+<li>a Command line interface to read feeds</li>
+<li>HTTP Headers support when reading feeds in order to save network traffic</li>
+<li>Detection of the format (RSS / Atom) when reading feeds</li>
+<li>Enclosure support to handle external medias like audio content</li>
+<li>PSR compliant logging</li>
+<li>Content filtering to fetch only the newest items</li>
+<li>Malformed feeds auto correction</li>
+<li>DateTime detection and conversion</li>
+<li>A generic HTTP ClientInterface</li>
+<li>Guzzle Client integration</li>
+</ul>
+
+<p>Keep informed about new releases and incoming features : <a href="http://debril.org/category/feed-io">http://debril.org/category/feed-io</a></p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Installation</h1>
+
+<p>Use Composer to add feed-io into your project's requirements :</p>
+
+<div class="highlight highlight-source-shell"><pre>    composer require debril/feed-io</pre></div>
+
+<h1>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p>feed-io requires :</p>
+
+<ul>
+<li>php 5.6+</li>
+<li>psr/log 1.0</li>
+<li>guzzlehttp/guzzle 6.2+</li>
+</ul>
+
+<p>it suggests :</p>
+
+<ul>
+<li>monolog/monolog 1.10+</li>
+</ul>
+
+<p>Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.</p>
+
+<h1>
+<a id="fetching-the-repository" class="anchor" href="#fetching-the-repository" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fetching the repository</h1>
+
+<p>Do this if you want to contribute (and you're welcome to do so):</p>
+
+<div class="highlight highlight-source-shell"><pre>    git clone https://github.com/alexdebril/feed-io.git
+
+    <span class="pl-c1">cd</span> feed-io/
+
+    composer install</pre></div>
+
+<h1>
+<a id="unit-testing" class="anchor" href="#unit-testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Unit Testing</h1>
+
+<p>You can run the unit test suites using the following command in the library's source directory:</p>
+
+<div class="highlight highlight-source-shell"><pre>
+    make <span class="pl-c1">test</span>
+</pre></div>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a id="cli" class="anchor" href="#cli" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CLI</h2>
+
+<p>Let's suppose you installed feed-io using Composer, you can use its command line client to read feeds from your terminal :</p>
+
+<div class="highlight highlight-source-shell"><pre>./vendor/bin/feedio <span class="pl-c1">read</span> http://php.net/feed.atom</pre></div>
+
+<p>You can specify the number of items you want to read using the --count option. The instruction below will display the latest item :</p>
+
+<div class="highlight highlight-source-shell"><pre>./vendor/bin/feedio <span class="pl-c1">read</span> -c 1 http://php.net/feed.atom</pre></div>
+
+<h2>
+<a id="reading" class="anchor" href="#reading" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>reading</h2>
+
+<p>feed-io is designed to read feeds across the internet and to publish your own. Its main class is <a href="https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php">FeedIo</a> :</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// create a simple FeedIo instance</span></span>
+<span class="pl-s1"><span class="pl-smi">$feedIo</span> <span class="pl-k">=</span> <span class="pl-c1">\FeedIo\</span><span class="pl-c1">Factory</span><span class="pl-k">::</span>create()<span class="pl-k">-&gt;</span>getFeedIo();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// read a feed</span></span>
+<span class="pl-s1"><span class="pl-smi">$result</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>read(<span class="pl-smi">$url</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// or read a feed since a certain date</span></span>
+<span class="pl-s1"><span class="pl-smi">$result</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>readSince(<span class="pl-smi">$url</span>, <span class="pl-k">new</span> <span class="pl-c1">\DateTime</span>(<span class="pl-s"><span class="pl-pds">'</span>-7 days<span class="pl-pds">'</span></span>));</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// get title</span></span>
+<span class="pl-s1"><span class="pl-smi">$feedTitle</span> <span class="pl-k">=</span> <span class="pl-smi">$result</span><span class="pl-k">-&gt;</span>getFeed()<span class="pl-k">-&gt;</span>getTitle();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// iterate through items</span></span>
+<span class="pl-s1"><span class="pl-k">foreach</span>( <span class="pl-smi">$result</span><span class="pl-k">-&gt;</span>getFeed() <span class="pl-k">as</span> <span class="pl-smi">$item</span> ) {</span>
+<span class="pl-s1">    <span class="pl-smi">$item</span><span class="pl-k">-&gt;</span>getTitle();</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"></span></pre></div>
+
+<h2>
+<a id="formatting-an-object-into-a-xml-stream" class="anchor" href="#formatting-an-object-into-a-xml-stream" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>formatting an object into a XML stream</h2>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// build the feed</span></span>
+<span class="pl-s1"><span class="pl-smi">$feed</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">FeedIo\</span><span class="pl-c1">Feed</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$feed</span><span class="pl-k">-&gt;</span>setTitle(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// convert it into Atom</span></span>
+<span class="pl-s1"><span class="pl-smi">$dom</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>toAtom(<span class="pl-smi">$feed</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// or ...</span></span>
+<span class="pl-s1"><span class="pl-smi">$dom</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>format(<span class="pl-smi">$feed</span>, <span class="pl-s"><span class="pl-pds">'</span>atom<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span></pre></div>
+
+<h2>
+<a id="building-a-feed-including-medias" class="anchor" href="#building-a-feed-including-medias" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>building a feed including medias</h2>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c">// build the feed</span></span>
+<span class="pl-s1"><span class="pl-smi">$feed</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">FeedIo\</span><span class="pl-c1">Feed</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$feed</span><span class="pl-k">-&gt;</span>setTitle(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$item</span> <span class="pl-k">=</span> <span class="pl-smi">$feed</span><span class="pl-k">-&gt;</span>newItem();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// build the media</span></span>
+<span class="pl-s1"><span class="pl-smi">$media</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\FeedIo\Feed\Item\</span><span class="pl-c1">Media</span></span>
+<span class="pl-s1"><span class="pl-smi">$media</span><span class="pl-k">-&gt;</span>setUrl(<span class="pl-s"><span class="pl-pds">'</span>http://yourdomain.tld/medias/some-podcast.mp3<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$media</span><span class="pl-k">-&gt;</span>setType(<span class="pl-s"><span class="pl-pds">'</span>audio/mpeg<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// add it to the item</span></span>
+<span class="pl-s1"><span class="pl-smi">$item</span><span class="pl-k">-&gt;</span>addMedia(<span class="pl-smi">$media</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$feed</span><span class="pl-k">-&gt;</span>add(<span class="pl-smi">$item</span>);</span>
+<span class="pl-s1"></span></pre></div>
+
+<h2>
+<a id="activate-logging" class="anchor" href="#activate-logging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>activate logging</h2>
+
+<p>feed-io natively supports PSR-3 logging, you can activate it by choosing a 'builder' in the factory :</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$feedIo</span> <span class="pl-k">=</span> <span class="pl-c1">\FeedIo\</span><span class="pl-c1">Factory</span><span class="pl-k">::</span>create([<span class="pl-s"><span class="pl-pds">'</span>builder<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>monolog<span class="pl-pds">'</span></span>])<span class="pl-k">-&gt;</span>getFeedIo();</span>
+<span class="pl-s1"></span></pre></div>
+
+<p>feed-io only provides a builder to create Monolog\Logger instances. You can write your own, as long as the Builder implements BuilderInterface.</p>
+
+<h2>
+<a id="building-a-feedio-instance-without-the-factory" class="anchor" href="#building-a-feedio-instance-without-the-factory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Building a FeedIo instance without the factory</h2>
+
+<p>To create a new FeedIo instance you only need to inject two dependencies :</p>
+
+<ul>
+<li>an HTTP Client implementing FeedIo\Adapter\ClientInterface. It can be wrapper for an external library like FeedIo\Adapter\Guzzle\Client
+
+<ul>
+<li>a PSR-3 logger implementing Psr\Log\LoggerInterface</li>
+</ul>
+</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// first dependency : the HTTP client</span></span>
+<span class="pl-s1"><span class="pl-c">// here we use Guzzle as a dependency for the client</span></span>
+<span class="pl-s1"><span class="pl-smi">$guzzle</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GuzzleHttp\</span><span class="pl-c1">Client</span>();</span>
+<span class="pl-s1"><span class="pl-c">// Guzzle is wrapped in this adapter which is a FeedIo\Adapter\ClientInterface  implementation</span></span>
+<span class="pl-s1"><span class="pl-smi">$client</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">FeedIo\Adapter\Guzzle\</span><span class="pl-c1">Client</span>(<span class="pl-smi">$guzzle</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// second dependency : a PSR-3 logger</span></span>
+<span class="pl-s1"><span class="pl-smi">$logger</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Psr\Log\</span><span class="pl-c1">NullLogger</span>();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// now create FeedIo's instance</span></span>
+<span class="pl-s1"><span class="pl-smi">$feedIo</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">FeedIo\</span><span class="pl-c1">FeedIo</span>(<span class="pl-smi">$client</span>, <span class="pl-smi">$logger</span>);</span>
+<span class="pl-s1"></span></pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/alexdebril/feed-io">Feed-io</a> is maintained by <a href="https://github.com/alexdebril">alexdebril</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
