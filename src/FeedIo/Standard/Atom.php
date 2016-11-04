@@ -79,7 +79,7 @@ class Atom extends StandardAbstract
     public function buildItemRuleSet()
     {
         $ruleSet = $this->buildFeedRuleSet();
-        $ruleSet->add(new Description('content'));
+        $ruleSet->add(new Description('content'), ['summary']);
 
         return $ruleSet;
     }    
