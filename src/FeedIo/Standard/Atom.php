@@ -1,10 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 22/11/14
- * Time: 11:45
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace FeedIo\Standard;
 
 use DOMDocument;
@@ -79,7 +82,7 @@ class Atom extends StandardAbstract
     public function buildItemRuleSet()
     {
         $ruleSet = $this->buildFeedRuleSet();
-        $ruleSet->add(new Description('content'));
+        $ruleSet->add(new Description('content'), ['summary']);
 
         return $ruleSet;
     }    
