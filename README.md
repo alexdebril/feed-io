@@ -105,7 +105,7 @@ $feedTitle = $result->getFeed()->getTitle();
 
 // iterate through items
 foreach( $result->getFeed() as $item ) {
-    $item->getTitle();
+    echo $item->getTitle();
 }
 
 ```
