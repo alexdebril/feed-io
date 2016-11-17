@@ -23,8 +23,12 @@ class Description extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         $string = '';
-        foreach($element->childNodes as $childNode) {
-            $string .= $element->ownerDocument->saveXML($childNode);
+        if ( $element->firstChild->nodeType == XML_CDATA_SECTION_NODE ) {
+            $string = $element->firstChild->textContent;
+        } else {
+            foreach($element->childNodes as $childNode) {
+                $string .= $element->ownerDocument->saveXML($childNode);
+            }
         }
 
         $node->setDescription($string);
