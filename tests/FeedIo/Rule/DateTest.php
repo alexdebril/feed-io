@@ -63,9 +63,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->object->setDateFormats($formats);
 
         $date = new \DateTime('now');
-        $this->assertEquals($date, $this->object->convertToDateTime($date->format(\DateTime::ATOM)));
+        $this->assertEquals($date->format(\DateTime::ATOM), $this->object->convertToDateTime($date->format(\DateTime::ATOM))->format(\DateTime::ATOM));
         $this->assertEquals(\DateTime::ATOM, $this->object->getLastGuessedFormat());
-        $this->assertEquals($date, $this->object->convertToDateTime($date->format(\DateTime::RFC1036)));
+        $this->assertEquals($date->format(\DateTime::ATOM), $this->object->convertToDateTime($date->format(\DateTime::RFC1036))->format(\DateTime::ATOM));
         $this->assertEquals(\DateTime::RFC1036, $this->object->getLastGuessedFormat());
     }
 
