@@ -27,9 +27,14 @@ class Factory
      * @var \FeedIo\Adapter\ClientInterface
      */
     protected $client;
-    
+
     /**
-     * @var FeedIo\Factory\LoggerBuilderInterface
+     * @var \FeedIo\Factory\ClientBuilderInterface
+     */
+    protected $clientBuilder;
+
+    /**
+     * @var \FeedIo\Factory\LoggerBuilderInterface
      */
     protected $loggerBuilder;
     
@@ -78,7 +83,7 @@ class Factory
 
     public function getBuilder($builder, array $args = [])
     {
-        $class = "\FeedIo\Factory\Builder\\{$builder}Builder";
+        $class = "\\FeedIo\\Factory\\Builder\\{$builder}Builder";
         
         if ( ! class_exists($class) ) {
             $class = $builder;

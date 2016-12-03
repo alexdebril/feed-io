@@ -34,7 +34,7 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $element = new \DOMElement('pubDate', $date->format(\DateTime::ATOM));
         $this->object->setProperty($item, $element);
 
-        $this->assertEquals($date, $item->getLastModified());
+        $this->assertEquals($date->format(\DateTime::ATOM), $item->getLastModified()->format(\DateTime::ATOM));
     }
 
     public function testAddedFormat()
@@ -50,7 +50,7 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $dateTimeBuilder->addDateFormat(\DateTime::RSS);
 
         $modifiedSince->setProperty($item, $element);
-        $this->assertEquals($dateTime, $item->getLastModified());
+        $this->assertEquals($dateTime->format(\DateTime::ATOM), $item->getLastModified()->format(\DateTime::ATOM));
     }
 
     public function testGetDate()

@@ -42,8 +42,8 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('\DomDocument', $this->object->getDocument());
         $this->assertInstanceOf('\FeedIo\FeedInterface', $this->object->getFeed());
-        $this->assertEquals($this->resultDate, $this->object->getDate());
-        $this->assertEquals($this->modifiedSince, $this->object->getModifiedSince());
+        $this->assertEquals($this->resultDate->format(\DateTime::ATOM), $this->object->getDate()->format(\DateTime::ATOM));
+        $this->assertEquals($this->modifiedSince->format(\DateTime::ATOM), $this->object->getModifiedSince()->format(\DateTime::ATOM));
         $this->assertInstanceOf('\FeedIo\Adapter\ResponseInterface', $this->object->getresponse());
         $this->assertEquals('http://localhost', $this->object->getUrl());
     }
