@@ -75,15 +75,6 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         }
     }
     
-    public function testGetBaseFilters()
-    {
-        $filters = $this->object->getBaseFilters();
-
-        foreach ($filters as $filter) {
-            $this->assertInstanceOf('\FeedIo\FilterInterface', $filter);
-        }
-    }
-    
     public function testAddFilter()
     {
         $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');

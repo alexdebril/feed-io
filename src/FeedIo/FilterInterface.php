@@ -16,13 +16,6 @@ interface FilterInterface
 {
 
     /**
-     * @param FeedInterface $feed
-     * @return $this
-     */
-    public function init(FeedInterface $feed);
-
-
-    /**
      * @param  ItemInterface $item
      * @return bool
      */
