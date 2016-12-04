@@ -12,3 +12,8 @@ before_script:
 
 env:
   - GUZZLE_VERSION="~6.2"
+matrix:
+  exlude:
+    - php: 7.1
+    script
+    
