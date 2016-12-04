@@ -23,4 +23,5 @@ echo "feed title : {$result->getFeed()->getTitle()} \n ";
 $newItems = $result->getFeed();
 foreach($newItems as $value) {
     echo $value->getTitle()  . ' : ' .  $value->getLastModified()->format(\DateTime::ATOM) . PHP_EOL;
+    echo $value->getDescription() . PHP_EOL;
 }
