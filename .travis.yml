@@ -15,5 +15,5 @@ env:
 matrix:
   exlude:
     - php: 7.1
-    script
+    script: phpunit
     
