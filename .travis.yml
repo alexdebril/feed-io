@@ -12,3 +12,4 @@ before_script:
 
 env:
   - GUZZLE_VERSION="~6.2"
+
