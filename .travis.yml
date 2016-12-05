@@ -26,7 +26,7 @@ matrix:
 
 before_script:
   - composer require guzzlehttp/guzzle:${GUZZLE_VERSION}
-&
+
 script : $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
 
 after_script:
