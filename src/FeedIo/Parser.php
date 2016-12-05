@@ -82,18 +82,6 @@ class Parser
     }
 
     /**
-     * @return $this
-     */
-    public function initFilters(FeedInterface $feed)
-    {
-        foreach ($this->filters as $filter) {
-            $filter->init($feed);
-        }
-
-        return $this;
-    }
-
-    /**
      * @param  DOMDocument                       $document
      * @param  FeedInterface                     $feed
      * @return \FeedIo\FeedInterface
@@ -106,7 +94,6 @@ class Parser
             throw new UnsupportedFormatException('this is not a supported format');
         }
 
-        $this->initFilters($feed);
         $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
         $element = $this->standard->getMainElement($document);
 

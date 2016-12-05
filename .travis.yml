@@ -4,11 +4,34 @@ php:
   - 5.6
   - 7.0
   - 7.1
+  - nightly
 
-script : phpunit --coverage-clover=coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+env:
+  global:
+    - PHPUNIT_BIN='vendor/bin/phpunit'
+    - PHPUNIT_CONFIG='phpunit.xml.dist'
+    - PHPUNIT_FLAGS='--stop-on-failure --verbose'
+    - GUZZLE_VERSION="~6.2"
+
+matrix:
+  include:
+    - php: '5.6'
+      env:
+          - PHPUNIT_FLAGS="--stop-on-failure --verbose --coverage-text --coverage-clover=coverage.xml"
+  allow_failures:
+    - php: nightly
 
 before_script:
   - composer require guzzlehttp/guzzle:${GUZZLE_VERSION}
 
-env:
-  - GUZZLE_VERSION="~6.2"
+script : $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
+
+after_script:
+  - |
+    if [ -f "coverage.xml" ]; then
+      echo 'sending clover to Scrutinizer'
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+      echo 'done'
+    fi
+

@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use FeedIo\Filter\ModifiedSince;
 use FeedIo\Reader;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
@@ -107,7 +108,6 @@ class FeedIo
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
         $this->loadFixerSet();
-        $this->loadFilters();
     }
 
     /**
@@ -190,21 +190,7 @@ class FeedIo
 
         return $this;
     }
-    
-    /**
-     * @return $this
-     */
-    protected function loadFilters()
-    {
-        $filters = $this->getBaseFilters();
 
-        foreach ($filters as $filter) {
-            $this->addFilter($filter);
-        }
-
-        return $this;
-    }
-    
     /**
      * @param  FixerAbstract $fixer
      * @return $this
@@ -226,16 +212,6 @@ class FeedIo
             new Reader\Fixer\LastModified(),
             new Reader\Fixer\PublicId(),
 
-        );
-    }
-    
-    /**
-     * @return array
-     */
-    public function getBaseFilters()
-    {
-        return array(
-            new Filter\ModifiedSince(),
         );
     }
     
@@ -276,6 +252,10 @@ class FeedIo
     {
         if (is_null($feed)) {
             $feed = new Feed();
+        }
+
+        if ($modifiedSince instanceof \DateTime) {
+            $this->addFilter(new ModifiedSince($modifiedSince));
         }
 
         $this->logAction($feed, "read access : $url into a %s instance");
