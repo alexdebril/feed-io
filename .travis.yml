@@ -11,7 +11,7 @@ env:
     - PHPUNIT_BIN='vendor/bin/phpunit'
     - PHPUNIT_CONFIG='phpunit.xml.dist'
     - PHPUNIT_FLAGS='--stop-on-failure --verbose'
-    - UPLOAD_CLOVER="wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.xml"
+    - UPLOAD_CLOVER='wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.xml'
     - GUZZLE_VERSION="~6.2"
 
 matrix:
