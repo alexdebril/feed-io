@@ -34,3 +34,4 @@ after_script:
       php ocular.phar code-coverage:upload --format=php-clover coverage.xml
       echo 'done'
     fi
+
