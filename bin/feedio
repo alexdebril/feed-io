@@ -9,9 +9,33 @@ foreach( [__DIR__.'/../vendor/autoload.php',  __DIR__.'/../../../autoload.php'] 
 
 use Symfony\Component\Console\Application;
 
-$application = new Application();
-$application->setName('feed-io : the CLI feed reader');
+if ( class_exists('Symfony\Component\Console\Application') ) {
+    $application = new Application();
+    $application->setName('feed-io : the CLI feed reader');
 
-$application->add(new \FeedIo\Command\ReadCommand());
+    $application->add(new \FeedIo\Command\ReadCommand());
+    $application->run();
+} else {
+    main($argc, $argv);
+    exit;
+}
 
-$application->run();
+/**
+ * This function is invoked if symfony/console is not installed
+ */
+function main($argc, $argv) {
+    if ( $argc < 2 ) {
+        echo 'feed-io version 2.4' . PHP_EOL;
+        echo 'Usage : ' . PHP_EOL;
+        echo "\t feed-io [url]" . PHP_EOL;
+        exit;
+    }
+
+    $feedIo = \FeedIo\Factory::create()->getFeedIo();
+    $feed = array_reverse(iterator_to_array($feedIo->read($argv[$argc-1])->getFeed()));
+
+    foreach( $feed as $i => $item ) {
+        echo "\033[32m{$item->getLastModified()->format(\DateTime::ATOM)} : \033[34m{$item->getTitle()}\033[0m";
+        echo strip_tags(nl2br($item->getDescription())) . PHP_EOL;
+    }
+}
