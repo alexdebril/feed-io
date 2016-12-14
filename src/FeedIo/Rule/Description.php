@@ -23,7 +23,7 @@ class Description extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         $string = '';
-        if ( $element->firstChild->nodeType == XML_CDATA_SECTION_NODE ) {
+        if ( $element->firstChild && $element->firstChild->nodeType == XML_CDATA_SECTION_NODE ) {
             $string = $element->firstChild->textContent;
         } else {
             foreach($element->childNodes as $childNode) {
