@@ -34,7 +34,7 @@ class RuleSetTest extends \PHPUnit_Framework_TestCase
 
     public function testAddAliases()
     {
-        $name = 'mainNode';
+        $name = 'main-node';
         $aliases = array('node1', 'node2');
 
         $this->object->addAliases($name, $aliases);

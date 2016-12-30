@@ -74,7 +74,7 @@ class RuleSet
     public function addAliases($name, array $aliases)
     {
         foreach ($aliases as $alias) {
-            $this->aliases[$alias] = $name;
+            $this->aliases[strtolower($alias)] = strtolower($name);
         }
 
         return $this;
