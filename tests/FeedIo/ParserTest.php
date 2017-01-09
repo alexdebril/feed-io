@@ -140,6 +140,16 @@ RSS;
         );
     }
 
+    public function testAddResetFilters()
+    {
+        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
+
+        $this->object->addFilter($filter);
+        $this->assertAttributeCount(1, 'filters', $this->object);
+        $this->object->resetFilters();
+        $this->assertAttributeCount(0, 'filters', $this->object);
+    }
+
     /**
      * @param  boolean                 $returnValue
      * @return \FeedIo\FilterInterface
