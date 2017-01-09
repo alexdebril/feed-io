@@ -81,6 +81,19 @@ class Reader
     }
 
     /**
+     * Reset filters on every parsers
+     * @return $this
+     */
+    public function resetFilters()
+    {
+        foreach ($this->parsers as $parser) {
+            $parser->resetFilters();
+        }
+
+        return $this;
+    }
+
+    /**
      * @param  string       $body
      * @return \DOMDocument
      */

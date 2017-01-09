@@ -277,6 +277,16 @@ class FeedIo
     }
 
     /**
+     * @return $this
+     */
+    public function resetFilters()
+    {
+        $this->getReader()->resetFilters();
+
+        return $this;
+    }
+
+    /**
      * @param  FeedInterface $feed
      * @param  string        $standard Standard's name
      * @return \DomDocument
