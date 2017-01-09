@@ -82,6 +82,17 @@ class Parser
     }
 
     /**
+     * Reset filters
+     * @return $this
+     */
+    public function resetFilters()
+    {
+        $this->filters = [];
+
+        return $this;
+    }
+
+    /**
      * @param  DOMDocument                       $document
      * @param  FeedInterface                     $feed
      * @return \FeedIo\FeedInterface
