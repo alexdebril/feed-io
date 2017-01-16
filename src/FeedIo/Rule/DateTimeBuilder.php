@@ -23,11 +23,13 @@ class DateTimeBuilder
         \DateTime::RSS,
         \DateTime::W3C,
         'Y-m-d\TH:i:s.uP',
+        'Y-m-d\TH:i:s',
         'Y-m-d',
         'd/m/Y',
         'D, d M Y H:i O',
         'D, d M Y H:i:s O',
         'D M d Y H:i:s e',
+        '*, m#d#Y - H:i',
     ];
 
     /**
