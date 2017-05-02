@@ -12,6 +12,8 @@ namespace FeedIo\Feed;
 
 use FeedIo\Feed\Item\Media;
 use FeedIo\Feed\Item\MediaInterface;
+use FeedIo\Feed\Item\Author;
+use FeedIo\Feed\Item\AuthorInterface;
 
 class Item extends Node implements ItemInterface
 {
@@ -20,6 +22,11 @@ class Item extends Node implements ItemInterface
      * @var \ArrayIterator
      */
     protected $medias;
+
+    /**
+     * @var AuthorInterface
+     */
+    protected $author;
 
     public function __construct()
     {
@@ -61,5 +68,32 @@ class Item extends Node implements ItemInterface
     public function newMedia()
     {
         return new Media();
+    }
+
+    /**
+     * @return AuthorInterface
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param  AuthorInterface $author
+     * @return $this
+     */
+    public function setAuthor(AuthorInterface $author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return AuthorInterface
+     */
+    public function newAuthor()
+    {
+        return new Author();
     }
 }

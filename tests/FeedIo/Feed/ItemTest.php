@@ -12,6 +12,7 @@ namespace FeedIo\Feed;
 
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Item\Media;
+use FeedIo\Feed\Item\Author;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
@@ -163,5 +164,19 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(1, $count);
+    }
+
+    public function testSetAuthor()
+    {
+        $author = new Author();
+        $author->setName('test');
+
+        $this->object->setAuthor($author);
+        $this->assertEquals($author->getName(), $this->object->getAuthor()->getName());
+    }
+
+    public function testNewAuthor()
+    {
+        $this->assertInstanceOf('\FeedIo\Feed\Item\AuthorInterface', $this->object->newAuthor());
     }
 }
