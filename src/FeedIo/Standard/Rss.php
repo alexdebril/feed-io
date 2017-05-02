@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 use DOMDocument;
+use FeedIo\Rule\Author;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
@@ -97,6 +98,7 @@ class Rss extends StandardAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
+            ->add(new Author())
             ->add(new Link())
             ->add(new PublicId())
             ->add(new Description())
@@ -104,8 +106,8 @@ class Rss extends StandardAbstract
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
 
         return $ruleSet;
-    }    
-    
+    }
+
     /**
      * @return RuleSet
      */
@@ -116,5 +118,5 @@ class Rss extends StandardAbstract
 
         return $ruleSet;
     }
-    
+
 }

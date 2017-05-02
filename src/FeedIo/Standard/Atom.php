@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 use DOMDocument;
+use FeedIo\Rule\Atom\Author;
 use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
@@ -82,11 +83,13 @@ class Atom extends StandardAbstract
     public function buildItemRuleSet()
     {
         $ruleSet = $this->buildFeedRuleSet();
-        $ruleSet->add(new Description('content'), ['summary']);
+        $ruleSet
+            ->add(new Author())
+            ->add(new Description('content'), ['summary']);
 
         return $ruleSet;
-    }    
-    
+    }
+
     /**
      * @return RuleSet
      */
