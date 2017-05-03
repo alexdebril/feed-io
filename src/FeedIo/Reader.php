@@ -67,7 +67,7 @@ class Reader
 
     /**
      * adds a filter to every parsers
-     * 
+     *
      * @param \FeedIo\FilterInterface $filter
      * @return $this
      */
@@ -76,7 +76,7 @@ class Reader
         foreach ($this->parsers as $parser) {
             $parser->addFilter($filter);
         }
-        
+
         return $this;
     }
 
@@ -135,7 +135,7 @@ class Reader
             $response = $this->client->getResponse($url, $modifiedSince);
 
             $this->logger->debug("response ok, now turning it into a DomDocument");
-            $document = $this->loadDocument($response->getBody());
+            $document = $this->loadDocument(trim($response->getBody()));
             $this->parseDocument($document, $feed);
 
             $this->logger->info("{$url} successfully parsed");
