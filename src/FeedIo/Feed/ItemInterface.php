@@ -11,6 +11,7 @@
 namespace FeedIo\Feed;
 
 use FeedIo\Feed\Item\MediaInterface;
+use FeedIo\Feed\Item\AuthorInterface;
 
 /**
  * Describes an Item instance
@@ -57,4 +58,27 @@ interface ItemInterface extends NodeInterface
      * @return MediaInterface
      */
     public function newMedia();
+
+    /**
+     * returns the author attribute
+     *
+     * @return AuthorInterface
+     */
+    public function getAuthor();
+
+    /**
+     * sets $author to the object's attributes
+     *
+     * @param  AuthorInterface $author
+     * @return $this
+     */
+    public function setAuthor(AuthorInterface $author);
+
+    /**
+     * returns a new AuthorInterface
+     *
+     * @return AuthorInterface
+     */
+    public function newAuthor();
+
 }

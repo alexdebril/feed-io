@@ -77,7 +77,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
             $this->assertNotEmpty($item->getLastModified());
             $this->assertNotEmpty($item->getLink());
             $this->assertCount(1, $item->getAllElements());
-            $this->assertTrue($item->hasElement('author'));
+            $this->assertTrue($item->hasElement('extra'));
             $this->runCategoriesTest($item);
         }
     }
@@ -86,10 +86,10 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
     {
         $categories = $node->getCategories();
         $this->assertCount(1, $categories);
-        
+
         $category = $categories->current();
         $this->assertInstanceOf('\FeedIo\Feed\Node\CategoryInterface', $category);
-        
+
         $this->assertNotEmpty($category->getTerm());
         $this->assertNotEmpty($category->getLabel());
     }
