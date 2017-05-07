@@ -77,16 +77,6 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test', $categories->current());
     }
 
-    public function testGetElementsAsGenerator()
-    {
-        $this->object->set('foo', 'bar');
-
-        $elements = $this->object->getElementsGenerator();
-
-        $this->assertEquals('foo', $elements->key());
-        $this->assertEquals('bar', $elements->current());
-    }
-
     public function testToArray()
     {
         $category = new Category();
