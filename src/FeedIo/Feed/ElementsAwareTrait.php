@@ -22,6 +22,14 @@ trait ElementsAwareTrait
     protected $elements;
 
     /**
+     * initialize the elements property before use
+     */
+    protected function initElements()
+    {
+        $this->elements = new \ArrayIterator();
+    }
+
+    /**
      * @return ElementInterface
      */
     public function newElement()
