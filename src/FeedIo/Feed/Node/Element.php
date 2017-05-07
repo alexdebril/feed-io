@@ -10,8 +10,11 @@
 
 namespace FeedIo\Feed\Node;
 
+use FeedIo\Feed\ElementsAwareTrait;
+
 class Element implements ElementInterface
 {
+    use ElementsAwareTrait;
 
     /**
      * @var string
@@ -27,6 +30,11 @@ class Element implements ElementInterface
      * @var array
      */
     protected $attributes = array();
+
+    public function __construct()
+    {
+        $this->initElements();
+    }
 
     /**
      * @return string
