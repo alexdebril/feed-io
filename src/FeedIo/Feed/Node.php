@@ -49,7 +49,7 @@ class Node implements NodeInterface
 
     public function __construct()
     {
-        $this->elements = new \ArrayIterator();
+        $this->initElements();
         $this->categories = new \ArrayIterator();
     }
 
