@@ -26,15 +26,48 @@ class OptionalField extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $domElement)
     {
-        $element = $node->newElement();
-        $element->setName($domElement->nodeName);
-        $element->setValue($domElement->nodeValue);
-        foreach($domElement->attributes as $attribute) {
-            $element->setAttribute($attribute->name, $attribute->value);
-        }
+        $element = $this->createElementFromDomNode($node, $domElement);
+
         $node->addElement($element);
 
         return $this;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param ElementInterface $element
+     * @param \DOMNode $domNode
+     */
+    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode)
+    {
+        if (!$domNode->hasChildNodes() || $domNode->childNodes->item(0) instanceof \DOMText) {
+            // no elements to add
+            return;
+        }
+
+        $childNodeList = $domNode->childNodes;
+        foreach ($childNodeList as $childNode) {
+            $element->addElement($this->createElementFromDomNode($node, $childNode));
+        }
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param \DOMNode $domNode
+     * @return ElementInterface
+     */
+    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode)
+    {
+        $element = $node->newElement();
+        $element->setName($domNode->nodeName);
+        $element->setValue($domNode->nodeValue);
+
+        foreach ($domNode->attributes as $attribute) {
+            $element->setAttribute($attribute->name, $attribute->value);
+        }
+        $this->addSubElements($node, $element, $domNode);
+
+        return $element;
     }
 
     /**
