@@ -105,6 +105,37 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('a test value', $element->nodeValue);
     }
 
+    public function testCreateElementWithSubElements()
+    {
+        $subElement = new Element();
+        $subElement->setName('subDefault');
+        $subElement->setValue('defaultValue');
+
+        $element = new Element();
+        $element->setName('default');
+        $element->addElement($subElement);
+
+        $item = new Item();
+        $item->addElement($element);
+
+        $domElement = $this->object->createElement(new \DOMDocument(), $item);
+
+        $subElementCount = 0;
+
+        /** @var \DOMNode $childNode */
+        foreach ($domElement->childNodes as $childNode) {
+            if ($childNode instanceof \DOMText) {
+                continue;
+            }
+            $subElementCount++;
+
+            $this->assertEquals('subDefault', $childNode->nodeName);
+            $this->assertEquals('defaultValue', $childNode->nodeValue);
+        }
+
+        $this->assertEquals(1, $subElementCount);
+    }
+
     public function testCreateElementWithAttributes()
     {
         $element = new Element();
