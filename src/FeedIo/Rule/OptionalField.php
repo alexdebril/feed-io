@@ -95,6 +95,13 @@ class OptionalField extends RuleAbstract
             $domElement->setAttribute($name, $value);
         }
 
+        /** @var ElementInterface $subElement */
+        foreach ($element->getAllElements() as $subElement) {
+            $subDomElement = $domElement->ownerDocument->createElement($subElement->getName());
+            $this->buildDomElement($subDomElement, $subElement);
+            $domElement->appendChild($subDomElement);
+        }
+
         return $domElement;
     }
 }
