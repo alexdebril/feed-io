@@ -40,15 +40,34 @@ class OptionalField extends RuleAbstract
      */
     private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode)
     {
-        if (!$domNode->hasChildNodes() || $domNode->childNodes->item(0) instanceof \DOMText) {
+        if (!$domNode->hasChildNodes() || !$this->hasSubElements($domNode)) {
             // no elements to add
             return;
         }
 
         $childNodeList = $domNode->childNodes;
         foreach ($childNodeList as $childNode) {
+            if ($childNode instanceof \DOMText) {
+                continue;
+            }
+
             $element->addElement($this->createElementFromDomNode($node, $childNode));
         }
+    }
+
+    /**
+     * @param \DOMNode $domNode
+     * @return bool
+     */
+    private function hasSubElements(\DOMNode $domNode)
+    {
+        foreach ($domNode->childNodes as $childDomNode) {
+            if (!$childDomNode instanceof \DOMText) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
