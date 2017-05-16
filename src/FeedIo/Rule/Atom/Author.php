@@ -28,9 +28,9 @@ class Author extends RuleAbstract
     {
         if ($node instanceof ItemInterface) {
           $author = $node->newAuthor();
-          $author->setName($this->getAttributeValue($element, 'name'));
-          $author->setUri($this->getAttributeValue($element, 'uri'));
-          $author->setEmail($this->getAttributeValue($element, 'email'));
+          $author->setName($this->getChildValue($element, 'name'));
+          $author->setUri($this->getChildValue($element, 'uri'));
+          $author->setEmail($this->getChildValue($element, 'email'));
           $node->setAuthor($author);
         }
 
@@ -48,13 +48,14 @@ class Author extends RuleAbstract
     {
         if ($node instanceof ItemInterface  && !is_null($node->getAuthor())) {
             $element = $document->createElement(static::NODE_NAME);
-            $element->setAttribute('name', $node->getAuthor()->getName());
-            $element->setAttribute('uri', $node->getAuthor()->getUri());
-            $element->setAttribute('email', $node->getAuthor()->getEmail());
+            $element->appendChild($document->createElement('name', $node->getAuthor()->getName()));
+            $element->appendChild($document->createElement('uri', $node->getAuthor()->getUri()));
+            $element->appendChild($document->createElement('email', $node->getAuthor()->getEmail()));
 
             return $element;
         }
 
         return;
     }
+
 }

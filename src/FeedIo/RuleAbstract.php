@@ -52,6 +52,21 @@ abstract class RuleAbstract
     }
 
     /**
+     * @param  \DOMElement $element
+     * @param  string      $name
+     * @return string|null
+     */
+    public function getChildValue(\DOMElement $element, $name)
+    {
+        $list = $element->getElementsByTagName($name);
+        if ( $list->length > 0 ) {
+            return $list->item(0)->nodeValue;
+        }
+
+        return;
+    }
+
+    /**
      * Sets the accurate $item property according to the DomElement content
      *
      * @param  NodeInterface $node
