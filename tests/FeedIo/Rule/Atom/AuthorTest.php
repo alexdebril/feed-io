@@ -32,14 +32,25 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
         $document = new \DOMDocument();
 
         $author = $document->createElement('author');
-        $author->setAttribute('name', 'John Doe');
-        $author->setAttribute('uri', 'http://localhost');
-        $author->setAttribute('email', 'john@localhost');
+
+        $author->appendChild($document->createElement('name', 'John Doe'));
+        $author->appendChild($document->createElement('uri', 'http://localhost'));
+        $author->appendChild($document->createElement('email', 'john@localhost'));
 
         $this->object->setProperty($item, $author);
         $this->assertEquals('John Doe', $item->getAuthor()->getName());
         $this->assertEquals('http://localhost', $item->getAuthor()->getUri());
         $this->assertEquals('john@localhost', $item->getAuthor()->getEmail());
+    }
+
+    public function testGetChildValue()
+    {
+        $document = new \DOMDocument();
+
+        $author = $document->createElement('author');
+        $author->appendChild($document->createElement('name', 'John Doe'));
+
+        $this->assertEquals('John Doe', $this->object->getChildValue($author, 'name'));
     }
 
     public function testCreateElement()
@@ -51,11 +62,14 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
         $author->setEmail('john@localhost');
         $item->setAuthor($author);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $document = new \DOMDocument();
+        $element = $this->object->createElement($document, $item);
+        $document->appendChild($element);
         $this->assertInstanceOf('\DomElement', $element);
         $this->assertEquals('author', $element->nodeName);
-        $this->assertEquals('John Doe', $element->getAttribute('name'));
-        $this->assertEquals('http://localhost', $element->getAttribute('uri'));
-        $this->assertEquals('john@localhost', $element->getAttribute('email'));
+
+        $this->assertXmlStringEqualsXmlString(
+            '<?xml version="1.0"?><author><name>John Doe</name><uri>http://localhost</uri><email>john@localhost</email></author>',
+            $document->saveXML());
     }
 }
