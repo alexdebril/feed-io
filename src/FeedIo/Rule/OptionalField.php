@@ -26,15 +26,67 @@ class OptionalField extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $domElement)
     {
-        $element = $node->newElement();
-        $element->setName($domElement->nodeName);
-        $element->setValue($domElement->nodeValue);
-        foreach($domElement->attributes as $attribute) {
-            $element->setAttribute($attribute->name, $attribute->value);
-        }
+        $element = $this->createElementFromDomNode($node, $domElement);
+
         $node->addElement($element);
 
         return $this;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param ElementInterface $element
+     * @param \DOMNode $domNode
+     */
+    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode)
+    {
+        if (!$domNode->hasChildNodes() || !$this->hasSubElements($domNode)) {
+            // no elements to add
+            return;
+        }
+
+        $childNodeList = $domNode->childNodes;
+        foreach ($childNodeList as $childNode) {
+            if ($childNode instanceof \DOMText) {
+                continue;
+            }
+
+            $element->addElement($this->createElementFromDomNode($node, $childNode));
+        }
+    }
+
+    /**
+     * @param \DOMNode $domNode
+     * @return bool
+     */
+    private function hasSubElements(\DOMNode $domNode)
+    {
+        foreach ($domNode->childNodes as $childDomNode) {
+            if (!$childDomNode instanceof \DOMText) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param \DOMNode $domNode
+     * @return ElementInterface
+     */
+    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode)
+    {
+        $element = $node->newElement();
+        $element->setName($domNode->nodeName);
+        $element->setValue($domNode->nodeValue);
+
+        foreach ($domNode->attributes as $attribute) {
+            $element->setAttribute($attribute->name, $attribute->value);
+        }
+        $this->addSubElements($node, $element, $domNode);
+
+        return $element;
     }
 
     /**
@@ -60,6 +112,13 @@ class OptionalField extends RuleAbstract
 
         foreach ($element->getAttributes() as $name => $value) {
             $domElement->setAttribute($name, $value);
+        }
+
+        /** @var ElementInterface $subElement */
+        foreach ($element->getAllElements() as $subElement) {
+            $subDomElement = $domElement->ownerDocument->createElement($subElement->getName());
+            $this->buildDomElement($subDomElement, $subElement);
+            $domElement->appendChild($subDomElement);
         }
 
         return $domElement;
