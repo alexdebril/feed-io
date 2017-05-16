@@ -45,7 +45,16 @@ class OptionalField extends RuleAbstract
             return;
         }
 
-        $childNodeList = $domNode->childNodes;
+        $this->addElementsFromNodeList($node, $element, $domNode->childNodes);
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param ElementInterface $element
+     * @param \DOMNodeList $childNodeList
+     */
+    private function addElementsFromNodeList(NodeInterface $node, ElementInterface $element, \DOMNodeList $childNodeList)
+    {
         foreach ($childNodeList as $childNode) {
             if ($childNode instanceof \DOMText) {
                 continue;
