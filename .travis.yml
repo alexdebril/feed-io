@@ -22,6 +22,7 @@ matrix:
     - php: nightly
 
 before_script:
+  - composer config --global repo.packagist composer https://packagist.org
   - composer require guzzlehttp/guzzle:${GUZZLE_VERSION}
 
 script : $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
