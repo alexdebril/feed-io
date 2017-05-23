@@ -37,8 +37,11 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($feed->getLink(), $feed->getPublicId());
 
-        foreach ($feed as $item) {
-            $this->assertEquals($item->getLink(), $item->getPublicId());
+        foreach ($feed as $idx => $item) {
+            if ( 0 === $idx )
+                $this->assertEquals($item->getLink(), $item->getPublicId());
+            else
+                $this->assertEquals('2', $item->getPublicId());
         }
     }
 
@@ -47,8 +50,13 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
         $item1 = new Item();
         $item1->setLink('http://localhost/1');
 
+        $item2 = new Item();
+        $item2->setLink('http://localhost/2');
+        $item2->setPublicId('2');
+
         $feed = new Feed();
         $feed->add($item1)->setLink('http://localhost/');
+        $feed->add($item2);
 
         return $feed;
     }

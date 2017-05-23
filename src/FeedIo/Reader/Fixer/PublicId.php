@@ -11,6 +11,7 @@
 namespace FeedIo\Reader\Fixer;
 
 use FeedIo\FeedInterface;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\Reader\FixerAbstract;
 
 class PublicId extends FixerAbstract
@@ -22,13 +23,23 @@ class PublicId extends FixerAbstract
      */
     public function correct(FeedInterface $feed)
     {
-        if (is_null($feed->getPublicId())) {
-            $this->logger->notice("correct public id for feed {$feed->getTitle()}");
-            $feed->setPublicId($feed->getLink());
-            $this->fixItems($feed);
-        }
+        $this->fixNode($feed);
+
+        $this->fixItems($feed);
 
         return $this;
+    }
+
+    /**
+     * @param  NodeInterface $node
+     * @return $this
+     */
+    protected function fixNode(NodeInterface $node)
+    {
+        if (is_null($node->getPublicId())) {
+            $this->logger->notice("correct public id for node {$node->getTitle()}");
+            $node->setPublicId($node->getLink());
+        }
     }
 
     /**
@@ -38,9 +49,10 @@ class PublicId extends FixerAbstract
     protected function fixItems(FeedInterface $feed)
     {
         foreach ($feed as $item) {
-            $item->setPublicId($item->getLink());
+            $this->fixNode($item);
         }
 
         return $this;
     }
+
 }
