@@ -29,5 +29,11 @@
     },
     "autoload": {
         "psr-4": {"FeedIo\\": "src/FeedIo"}
-    }
+    },
+    
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    }    
 }
