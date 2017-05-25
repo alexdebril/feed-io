@@ -258,7 +258,7 @@ class FeedIo
             $this->addFilter(new ModifiedSince($modifiedSince));
         }
 
-        $this->logAction($feed, "read access : $url into a %s instance");
+        $this->logAction($feed, "read access : $url into a feed instance");
         $result = $this->reader->read($url, $feed, $modifiedSince);
 
         $this->fixerSet->correct($result->getFeed());
@@ -293,7 +293,7 @@ class FeedIo
      */
     public function format(FeedInterface $feed, $standard)
     {
-        $this->logAction($feed, "formatting a %s in $standard format");
+        $this->logAction($feed, "formatting a feed in $standard format");
 
         $formatter = new Formatter($this->getStandard($standard), $this->logger);
 
@@ -341,7 +341,7 @@ class FeedIo
     protected function logAction(FeedInterface $feed, $message)
     {
         $class = get_class($feed);
-        $this->logger->debug(sprintf($message, $class));
+        $this->logger->debug("$message (feed class : $class)");
 
         return $this;
     }
