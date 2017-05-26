@@ -10,9 +10,10 @@
 
 namespace FeedIo\Feed\Node;
 
+use FeedIo\Feed\ElementsAwareInterface;
 use FeedIo\Feed\ElementsAwareTrait;
 
-class Element implements ElementInterface
+class Element implements ElementInterface, ElementsAwareInterface
 {
     use ElementsAwareTrait;
 

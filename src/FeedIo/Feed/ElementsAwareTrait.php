@@ -39,19 +39,6 @@ trait ElementsAwareTrait
 
     /**
      * @param  string $name element name
-     * @return mixed
-     */
-    public function getValue($name)
-    {
-        foreach ($this->getElementIterator($name) as $element) {
-            return $element->getValue();
-        }
-
-        return;
-    }
-
-    /**
-     * @param  string $name element name
      * @return ElementIterator
      */
     public function getElementIterator($name)
