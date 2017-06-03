@@ -42,6 +42,8 @@ class Rss extends StandardAbstract
      */
     const DATE_NODE_TAGNAME = 'pubDate';
 
+    protected $mandatoryFields = ['channel'];
+
     /**
      * Formats the document according to the standard's specification
      * @param  \DOMDocument $document
