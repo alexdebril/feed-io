@@ -14,7 +14,7 @@ use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
 
-class Feed extends Node implements FeedInterface, \JsonSerializable
+class Feed extends Node implements FeedInterface, \JsonSerializable, \Iterator
 {
     /**
      * @var \ArrayIterator
