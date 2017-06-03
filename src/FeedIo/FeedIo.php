@@ -214,7 +214,20 @@ class FeedIo
 
         );
     }
-    
+
+    /**
+     * @param array $formats
+     * @return $this
+     */
+    public function addDateFormats(array $formats)
+    {
+        foreach( $formats as $format ) {
+            $this->getDateTimeBuilder()->addDateFormat($format);
+        }
+
+        return $this;
+    }
+
     /**
      * @return \FeedIo\Rule\DateTimeBuilder
      */
