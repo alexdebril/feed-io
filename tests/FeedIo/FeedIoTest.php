@@ -61,6 +61,13 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testAddDateFormats()
+    {
+        $this->object->addDateFormats(['YYYY/M/Y']);
+
+        $this->assertAttributeContains('YYYY/M/Y', 'dateFormats', $this->object->getDateTimeBuilder());
+    }
+
     public function testFixerSet()
     {
         $this->assertInstanceOf('\FeedIo\Reader\FixerSet', $this->object->getFixerSet());
