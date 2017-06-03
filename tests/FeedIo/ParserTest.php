@@ -12,13 +12,14 @@ namespace FeedIo;
 
 use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Standard\Rss;
 use Psr\Log\NullLogger;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \FeedIo\ParserAbstract
+     * @var \FeedIo\Parser
      */
     protected $object;
 
@@ -148,6 +149,22 @@ RSS;
         $this->assertAttributeCount(1, 'filters', $this->object);
         $this->object->resetFilters();
         $this->assertAttributeCount(0, 'filters', $this->object);
+    }
+
+    /**
+     * @expectedException \FeedIo\Parser\MissingFieldsException
+     */
+    public function testParseEmptyRssFeed()
+    {
+        $rss = <<<RSS
+<rss version="2.0"></rss>
+RSS;
+        $document = new \DOMDocument();
+        $document->loadXML($rss);
+        $parser = new Parser(new Rss(
+            new DateTimeBuilder()
+        ), new NullLogger());
+        $parser->parse($document, new Feed());
     }
 
     /**
