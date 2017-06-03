@@ -13,10 +13,10 @@ namespace FeedIo\Feed;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Feed\Node\CategoryInterface;
 
-class Node implements NodeInterface
+class Node implements NodeInterface, ElementsAwareInterface
 {
     use ElementsAwareTrait;
-    
+
     /**
      * @var \ArrayIterator
      */
@@ -206,6 +206,19 @@ class Node implements NodeInterface
         $this->link = $link;
 
         return $this;
+    }
+
+    /**
+     * @param  string $name element name
+     * @return mixed
+     */
+    public function getValue($name)
+    {
+        foreach ($this->getElementIterator($name) as $element) {
+            return $element->getValue();
+        }
+
+        return;
     }
 
     /**

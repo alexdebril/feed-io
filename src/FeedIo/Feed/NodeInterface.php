@@ -118,13 +118,6 @@ interface NodeInterface
     public function newCategory();
 
     /**
-     * returns a new ElementInterface
-     *
-     * @return \FeedIo\Feed\Node\ElementInterface
-     */
-    public function newElement();
-
-    /**
      * returns an element's value
      *
      * @param  string $name element name
@@ -140,42 +133,4 @@ interface NodeInterface
      * @return $this
      */
     public function set($name, $value);
-
-    /**
-     * returns the ElementIterator to iterate over ElementInterface instances called $name
-     *
-     * @param  string                            $name element name
-     * @return \FeedIo\Feed\Node\ElementIterator
-     */
-    public function getElementIterator($name);
-
-    /**
-     * returns true if an ElementInterface instance called $name exists
-     *
-     * @param  string  $name element name
-     * @return boolean true if the element exists
-     */
-    public function hasElement($name);
-
-    /**
-     * adds $element to the object's attributes
-     *
-     * @param  ElementInterface $element
-     * @return $this
-     */
-    public function addElement(ElementInterface $element);
-
-    /**
-     * Returns all the item's elements
-     *
-     * @return \ArrayIterator
-     */
-    public function getAllElements();
-
-    /**
-     * Returns the item's elements tag names
-     *
-     * @return array
-     */
-    public function listElements();
 }
