@@ -78,6 +78,11 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->object->convertToDateTime('foo');
     }
 
+    public function teststringToDateTime()
+    {
+        $this->assertInstanceOf('\DateTime', $this->object->stringToDateTime('10 september 2017'));
+    }
+
     public function testSetTimezone()
     {
         $this->object->setTimezone(new \DateTimeZone(self::ALTERNATE_TIMEZONE));

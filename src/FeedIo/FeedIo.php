@@ -104,7 +104,7 @@ class FeedIo
     public function __construct(ClientInterface $client, LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->dateTimeBuilder = new DateTimeBuilder();
+        $this->dateTimeBuilder = new DateTimeBuilder($logger);
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
         $this->loadFixerSet();
@@ -124,7 +124,7 @@ class FeedIo
 
         return $this;
     }
-    
+
     /**
      * adds a filter to the reader
      *
@@ -134,7 +134,7 @@ class FeedIo
     public function addFilter(FilterInterface $filter)
     {
         $this->getReader()->addFilter($filter);
-        
+
         return $this;
     }
 
