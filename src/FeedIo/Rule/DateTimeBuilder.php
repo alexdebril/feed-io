@@ -93,7 +93,7 @@ class DateTimeBuilder
     }
 
     /**
-     *
+     * Tries to guess the date's format from the list
      * @param  string                   $date
      * @return string|false             date Format
      * @throws InvalidArgumentException
