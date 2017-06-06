@@ -10,7 +10,6 @@
 
 namespace FeedIo\Feed;
 
-use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\Feed\Node\CategoryInterface;
 
 /**
