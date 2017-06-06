@@ -10,6 +10,9 @@
 
 namespace FeedIo\Rule;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+
 class DateTimeBuilder
 {
     /**
@@ -38,12 +41,24 @@ class DateTimeBuilder
     protected $timezone;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @var string
      */
     protected $lastGuessedFormat = \DateTime::RFC2822;
 
-    public function __construct()
+    /**
+     * @param \Psr\Log\LoggerInterface        $logger
+     */
+    public function __construct(LoggerInterface $logger = null)
     {
+        if ( is_null($logger) ) {
+            $logger = new NullLogger;
+        }
+        $this->logger = $logger;
         $this->setTimezone(new \DateTimeZone(date_default_timezone_get()));
     }
 
@@ -101,7 +116,6 @@ class DateTimeBuilder
      * Creates a DateTime instance for the given string. Default format is RFC2822
      * @param  string                   $string
      * @return \DateTime
-     * @throws InvalidArgumentException
      */
     public function convertToDateTime($string)
     {
@@ -115,7 +129,26 @@ class DateTimeBuilder
             }
         }
 
-        throw new \InvalidArgumentException('Impossible to convert date : '.$string);
+        return $this->stringToDateTime($string);
+    }
+
+    /**
+     * Creates a DateTime instance for the given string if the format was not catch from the list
+     * @param  string                   $string
+     * @return \DateTime
+     * @throws InvalidArgumentException
+     */
+    public function stringToDateTime($string)
+    {
+        $this->logger->notice("unsupported date format, use strtotime() to build the DateTime instance : {$string}");
+
+        if ( false === strtotime($string) ) {
+            throw new \InvalidArgumentException('Impossible to convert date : '.$string);
+        }
+        $date = new \DateTime($string);
+        $date->setTimezone($this->getTimezone());
+
+        return $date;
     }
 
     /**
