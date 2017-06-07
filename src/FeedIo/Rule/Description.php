@@ -31,7 +31,7 @@ class Description extends RuleAbstract
             }
         }
 
-        $node->setDescription($string);
+        $node->setDescription(htmlspecialchars_decode($string));
 
         return $this;
     }

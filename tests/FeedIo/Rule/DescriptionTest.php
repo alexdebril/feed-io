@@ -50,7 +50,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
         $document->appendChild($element);
 
         $this->object->setProperty($item, $element);
-        $this->assertEquals(htmlentities(self::HTML_DESCRIPTION), $item->getDescription());
+        $this->assertEquals(self::HTML_DESCRIPTION, $item->getDescription());
     }
 
     public function testCreateElement()
