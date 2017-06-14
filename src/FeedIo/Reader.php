@@ -11,6 +11,7 @@
 namespace FeedIo;
 
 use FeedIo\Adapter\ClientInterface;
+use FeedIo\Reader\Document;
 use FeedIo\Reader\ReadErrorException;
 use FeedIo\Reader\Result;
 use FeedIo\Reader\NoAccurateParserException;
@@ -94,29 +95,6 @@ class Reader
     }
 
     /**
-     * @param  string       $body
-     * @return \DOMDocument
-     */
-    public function loadDocument($body)
-    {
-        set_error_handler(
-
-            /**
-             * @param string $errno
-             */
-            function ($errno, $errstr) {
-                throw new \InvalidArgumentException("malformed xml string. parsing error : $errstr ($errno)");
-            }
-        );
-
-        $domDocument = new \DOMDocument();
-        $domDocument->loadXML($body);
-        restore_error_handler();
-
-        return $domDocument;
-    }
-
-    /**
      * @param $url
      * @param  FeedInterface         $feed
      * @param  \DateTime             $modifiedSince
@@ -135,7 +113,7 @@ class Reader
             $response = $this->client->getResponse($url, $modifiedSince);
 
             $this->logger->debug("response ok, now turning it into a DomDocument");
-            $document = $this->loadDocument(trim($response->getBody()));
+            $document = new Document($response->getBody());
             $this->parseDocument($document, $feed);
 
             $this->logger->info("{$url} successfully parsed");
@@ -148,13 +126,13 @@ class Reader
     }
 
     /**
-     * @param  \DOMDocument                      $document
-     * @param  FeedInterface                     $feed
+     * @param Document $document
+     * @param FeedInterface $feed
      * @return FeedInterface
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(\DOMDocument $document, FeedInterface $feed)
+    public function parseDocument(Document $document, FeedInterface $feed)
     {
         $parser = $this->getAccurateParser($document);
         $this->logger->debug("accurate parser : ".get_class($parser));
@@ -163,11 +141,11 @@ class Reader
     }
 
     /**
-     * @param  \DOMDocument                     $document
+     * @param  Document                     $document
      * @return ParserAbstract
      * @throws Reader\NoAccurateParserException
      */
-    public function getAccurateParser(\DOMDocument $document)
+    public function getAccurateParser(Document $document)
     {
         foreach ($this->parsers as $parser) {
             if ($parser->getStandard()->canHandle($document)) {

@@ -1,12 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 05/12/14
- * Time: 22:46
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 namespace FeedIo;
 
+use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\ModifiedSince;
 use FeedIo\Rule\Title;
@@ -61,10 +64,10 @@ abstract class StandardAbstract
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param  \DOMDocument $document
+     * @param  Document $document
      * @return mixed
      */
-    abstract public function canHandle(\DOMDocument $document);
+    abstract public function canHandle(Document $document);
 
     /**
      * @param  \DOMDocument $document
