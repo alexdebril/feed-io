@@ -17,9 +17,8 @@ use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Atom\Category;
-use FeedIo\StandardAbstract;
 
-class Atom extends StandardAbstract
+class Atom extends XmlAbstract
 {
     /**
      * Atom document must have a <feed> root node

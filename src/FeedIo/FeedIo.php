@@ -161,11 +161,26 @@ class FeedIo
     {
         $name = strtolower($name);
         $this->standards[$name] = $standard;
-        $this->reader->addParser(
-                            new Parser($standard, $this->logger)
-                        );
+        $parser = $this->newParser($standard->getSyntaxFormat(), $standard);
+        $this->reader->addParser($parser);
 
         return $this;
+    }
+
+    /**
+     * @param string $format
+     * @param StandardAbstract $standard
+     * @return object
+     */
+    public function newParser($format, StandardAbstract $standard)
+    {
+        $reflection = new \ReflectionClass("FeedIo\\Parser\\{$format}Parser");
+
+        if ( ! $reflection->isSubclassOf('FeedIo\ParserAbstract') ) {
+            throw new \InvalidArgumentException();
+        }
+
+        return $reflection->newInstanceArgs([$standard, $this->logger]);
     }
 
     /**

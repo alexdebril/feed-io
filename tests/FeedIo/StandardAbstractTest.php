@@ -25,7 +25,7 @@ class StandardAbstractTest extends \PHPUnit_Framework_TestCase
         $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);
         $this->object = $this->getMockForAbstractClass(
-            '\FeedIo\StandardAbstract',
+            '\FeedIo\Standard\XmlAbstract',
             array($date)
         );
         $this->object->expects($this->any())->method('canHandle')->will($this->returnValue(true));

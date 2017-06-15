@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use FeedIo\ParserAbstract;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Reader\Document;
 use FeedIo\Reader\ReadErrorException;
@@ -58,7 +59,7 @@ class Reader
      * @param  Parser $parser
      * @return $this
      */
-    public function addParser(Parser $parser)
+    public function addParser(ParserAbstract $parser)
     {
         $this->logger->debug("new parser added : ".get_class($parser->getStandard()));
         $this->parsers[] = $parser;

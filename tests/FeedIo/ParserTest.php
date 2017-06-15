@@ -11,6 +11,8 @@
 namespace FeedIo;
 
 use FeedIo\Feed\Item;
+use FeedIo\Parser\XmlParser as Parser;
+use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 use Psr\Log\NullLogger;
@@ -47,7 +49,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     {
         $document = new \DOMDocument();
         $document->loadXML('<feed><items></items></feed>');
-        $feed = $this->object->parse($document, new Feed());
+        $feed = $this->object->parse(new Document($document->saveXml()), new Feed());
         $this->assertInstanceOf('FeedIo\Feed', $feed);
     }
 
@@ -91,7 +93,7 @@ XML;
         $standard->expects($this->any())->method('canHandle')->will($this->returnValue(false));
         $parser = new Parser($standard, new NullLogger());
 
-        $parser->parse($document, new Feed());
+        $parser->parse(new Document($document->saveXML()), new Feed());
     }
 
     public function testIsValid()
@@ -123,8 +125,8 @@ RSS;
         $document = new \DOMDocument();
         $document->loadXML($rss);
         $this->assertInstanceOf(
-            '\FeedIo\Parser',
-            $this->object->checkBodyStructure($document, array('channel', 'title'))
+            '\FeedIo\ParserAbstract',
+            $this->object->checkBodyStructure(new Document($document->saveXML()), array('channel', 'title'))
         );
     }
 
@@ -137,7 +139,7 @@ RSS;
         $document->loadXML('<rss></rss>');
         $this->assertInstanceOf(
             '\FeedIo\Parser',
-            $this->object->checkBodyStructure($document, array('channel'))
+            $this->object->checkBodyStructure(new Document($document->saveXML()), array('channel'))
         );
     }
 
@@ -164,7 +166,7 @@ RSS;
         $parser = new Parser(new Rss(
             new DateTimeBuilder()
         ), new NullLogger());
-        $parser->parse($document, new Feed());
+        $parser->parse(new Document($document->saveXML()), new Feed());
     }
 
     /**

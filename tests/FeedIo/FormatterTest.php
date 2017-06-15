@@ -27,7 +27,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $document = new \DOMDocument();
         $document->loadXML('<channel><feed></feed></channel>');
         $standard = $this->getMockForAbstractClass(
-            '\FeedIo\StandardAbstract',
+            '\FeedIo\Standard\XmlAbstract',
             array(new DateTimeBuilder()),
             'StandardMock',
             true,

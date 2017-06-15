@@ -49,7 +49,7 @@ class Result
     protected $response;
 
     /**
-     * @var \DomDocument
+     * @var Document
      */
     protected $document;
 
@@ -59,14 +59,14 @@ class Result
     protected $url;
 
     /**
-     * @param \DOMDocument      $document
+     * @param Document      $document
      * @param FeedInterface     $feed
      * @param \DateTime         $modifiedSince
      * @param ResponseInterface $response
      * @param $url
      */
     public function __construct(
-        \DOMDocument $document,
+        Document $document,
         FeedInterface $feed,
         \DateTime $modifiedSince,
         ResponseInterface $response,

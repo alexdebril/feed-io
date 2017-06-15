@@ -18,9 +18,8 @@ use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
-use FeedIo\StandardAbstract;
 
-class Rss extends StandardAbstract
+class Rss extends XmlAbstract
 {
 
     /**
