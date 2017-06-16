@@ -29,5 +29,27 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($document->isXml());
     }
 
+    public function testGetJsonAsArray()
+    {
+        $document = new Document('{"foo": "bar"}');
+        $this->assertInternalType('array', $document->getJsonAsArray());
+    }
 
+    /**
+     * @expectedException \LogicException
+     */
+    public function testLoadWrongDoucment()
+    {
+        $document = new Document('something wrong');
+        $document->getDOMDocument();
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testLoadWrongJsonDoucment()
+    {
+        $document = new Document('something wrong');
+        $document->getJsonAsArray();
+    }
 }

@@ -89,6 +89,16 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $this->object->addFilter($filter);
     }
 
+    public function testResetFilters()
+    {
+        $this->object->resetFilters();
+    }
+
+    public function testWithModifiedSince()
+    {
+        $this->object->read('http://localhost', new Feed(), new \DateTime());
+    }
+
     /**
      * @covers FeedIo\FeedIo::addStandard
      */

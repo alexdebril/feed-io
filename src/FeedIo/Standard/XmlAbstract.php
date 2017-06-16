@@ -75,14 +75,6 @@ abstract class XmlAbstract extends StandardAbstract
     }
 
     /**
-     * @return XmlParser
-     */
-    public function newParser()
-    {
-        return new XmlParser($this, $this->logger);
-    }
-
-    /**
      * Returns the RuleSet used to parse the feed's main node
      * @return \FeedIo\RuleSet
      */

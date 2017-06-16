@@ -45,18 +45,13 @@ class XmlParser extends ParserAbstract
 
     /**
      * @param  Document                       $document
-     * @param  FeedInterface                     $feed
+     * @param  FeedInterface                  $feed
      * @return \FeedIo\FeedInterface
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
-    public function parse(Document $document, FeedInterface $feed)
+    public function parseContent(Document $document, FeedInterface $feed)
     {
-        if (!$this->standard->canHandle($document)) {
-            throw new UnsupportedFormatException('this is not a supported format');
-        }
-
-        $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
         $element = $this->standard->getMainElement($document->getDOMDocument());
 
         $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());

@@ -38,11 +38,6 @@ abstract class StandardAbstract
     protected $dateTimeBuilder;
 
     /**
-     * @var string
-     */
-    protected $syntaxFormat = '';
-
-    /**
      * @param \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
      */
     public function __construct(DateTimeBuilder $dateTimeBuilder)

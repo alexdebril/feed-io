@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use FeedIo\Parser\UnsupportedFormatException;
 use FeedIo\Reader\Document;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
@@ -52,11 +53,33 @@ abstract class ParserAbstract
     }
 
     /**
+     * Tries to parse the document
+     *
+     * @param Document $document
+     * @param FeedInterface $feed
+     * @return \FeedIo\FeedInterface
+     * @throws \FeedIo\Parser\UnsupportedFormatException
+     */
+    public function parse(Document $document, FeedInterface $feed)
+    {
+        if (!$this->standard->canHandle($document)) {
+            throw new UnsupportedFormatException('this is not a supported format');
+        }
+
+        $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
+        $this->parseContent($document, $feed);
+
+        return $feed;
+    }
+
+    /**
+     * This method is called by parse() if and only if the checkBodyStructure was successful
+     *
      * @param Document $document
      * @param FeedInterface $feed
      * @return \FeedIo\FeedInterface
      */
-    abstract public function parse(Document $document, FeedInterface $feed);
+    abstract public function parseContent(Document $document, FeedInterface $feed);
 
     /**
      * @param  Document            $document

@@ -17,6 +17,7 @@ use FeedIo\Reader\FixerAbstract;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Atom;
+use FeedIo\Standard\Json;
 use FeedIo\Standard\Rss;
 use FeedIo\Standard\Rdf;
 use Psr\Log\LoggerInterface;
@@ -146,6 +147,7 @@ class FeedIo
     public function getCommonStandards()
     {
         return array(
+            'json' => new Json($this->dateTimeBuilder),
             'atom' => new Atom($this->dateTimeBuilder),
             'rss' => new Rss($this->dateTimeBuilder),
             'rdf' => new Rdf($this->dateTimeBuilder),
