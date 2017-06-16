@@ -14,7 +14,6 @@ namespace FeedIo\Standard;
 use FeedIo\Parser\XmlParser;
 use FeedIo\StandardAbstract;
 use FeedIo\RuleSet;
-use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\ModifiedSince;
 use FeedIo\Rule\Title;
 

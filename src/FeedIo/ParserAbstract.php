@@ -56,7 +56,7 @@ abstract class ParserAbstract
      * @param FeedInterface $feed
      * @return \FeedIo\FeedInterface
      */
-    abstract function parse(Document $document, FeedInterface $feed);
+    abstract public function parse(Document $document, FeedInterface $feed);
 
     /**
      * @param  Document            $document
