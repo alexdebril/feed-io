@@ -5,11 +5,13 @@
  * Date: 23/11/14
  * Time: 17:44
  */
-namespace FeedIo;
+namespace FeedIo\Formatter;
 
+use FeedIo\Feed;
 use FeedIo\Feed\Item;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\Title;
+use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 
 class FormatterTest extends \PHPUnit_Framework_TestCase
@@ -45,7 +47,7 @@ class FormatterTest extends \PHPUnit_Framework_TestCase
         $standard->expects($this->any())->method('buildFeedRuleSet')->will($this->returnValue($ruleSet));
         $standard->expects($this->any())->method('buildItemRuleSet')->will($this->returnValue($ruleSet));
 
-        $this->object = new Formatter($standard, new NullLogger());
+        $this->object = new XmlFormatter($standard);
     }
 
     public function testGetEmptyDocument()

@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 
+use FeedIo\JsonFormatter;
 use FeedIo\Reader\Document;
 use FeedIo\RuleSet;
 use FeedIo\StandardAbstract;
@@ -28,5 +29,14 @@ class Json extends StandardAbstract
     {
         return $document->isJson();
     }
+
+    /**
+     * @return JsonFormatter
+     */
+    public function getFormatter()
+    {
+        return new JsonFormatter();
+    }
+
 
 }

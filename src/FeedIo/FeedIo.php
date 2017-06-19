@@ -317,15 +317,15 @@ class FeedIo
     /**
      * @param  FeedInterface $feed
      * @param  string        $standard Standard's name
-     * @return \DomDocument
+     * @return string
      */
     public function format(FeedInterface $feed, $standard)
     {
         $this->logAction($feed, "formatting a feed in $standard format");
 
-        $formatter = new Formatter($this->getStandard($standard), $this->logger);
+        $formatter = $this->getStandard($standard)->getFormatter();
 
-        return $formatter->toDom($feed);
+        return $formatter->toString($feed);
     }
 
     /**

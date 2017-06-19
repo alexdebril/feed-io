@@ -53,6 +53,11 @@ abstract class StandardAbstract
     abstract public function canHandle(Document $document);
 
     /**
+     * @return \FeedIo\FormatterInterface
+     */
+    abstract public function getFormatter();
+
+    /**
      * @return string
      */
     public function getDefaultDateFormat()

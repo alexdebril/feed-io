@@ -8,21 +8,23 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo;
+namespace FeedIo\Formatter;
 
 use FeedIo\Feed\NodeInterface;
+use FeedIo\FeedInterface;
 use FeedIo\Rule\OptionalField;
-use Psr\Log\LoggerInterface;
+use FeedIo\RuleSet;
+use FeedIo\Standard\XmlAbstract;
+use FeedIo\FormatterInterface;
 
 /**
  * Turns a FeedInterface instance into a XML document.
  *
  * Depends on :
  *  - FeedIo\StandardAbstract
- *  - Psr\Log\LoggerInterface
  *
  */
-class Formatter
+class XmlFormatter implements FormatterInterface
 {
 
     /**
@@ -31,18 +33,11 @@ class Formatter
     protected $standard;
 
     /**
-     * @var LoggerInterface
+     * @param XmlAbstract $standard
      */
-    protected $logger;
-
-    /**
-     * @param StandardAbstract $standard
-     * @param LoggerInterface  $logger
-     */
-    public function __construct(StandardAbstract $standard, LoggerInterface $logger)
+    public function __construct(XmlAbstract $standard)
     {
         $this->standard = $standard;
-        $this->logger = $logger;
     }
 
     /**

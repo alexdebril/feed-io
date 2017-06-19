@@ -171,7 +171,8 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->format($feed, 'atom');
-        $this->assertInstanceOf('DomDocument', $document);
+
+        $this->assertInternalType('string', $document);
     }
 
     /**
@@ -182,8 +183,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toRss($feed);
-        $this->assertInstanceOf('DomDocument', $document);
-        $this->assertEquals('rss', $document->documentElement->tagName);
+        $this->assertInternalType('string', $document);
     }
 
     /**
@@ -194,8 +194,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toAtom($feed);
-        $this->assertInstanceOf('DomDocument', $document);
-        $this->assertEquals('feed', $document->documentElement->tagName);
+        $this->assertInternalType('string', $document);
     }
 
     /**

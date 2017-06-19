@@ -12,6 +12,7 @@ namespace FeedIo\Standard;
 
 
 use FeedIo\Parser\XmlParser;
+use FeedIo\Formatter\XmlFormatter;
 use FeedIo\StandardAbstract;
 use FeedIo\RuleSet;
 use FeedIo\Rule\ModifiedSince;
@@ -72,6 +73,14 @@ abstract class XmlAbstract extends StandardAbstract
     public function getItemNodeName()
     {
         return static::ITEM_NODE;
+    }
+
+    /**
+     * @return XmlFormatter
+     */
+    public function getFormatter()
+    {
+        return new XmlFormatter($this);
     }
 
     /**
