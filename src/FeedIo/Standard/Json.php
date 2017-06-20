@@ -20,6 +20,8 @@ class Json extends StandardAbstract
 
     const SYNTAX_FORMAT = 'Json';
 
+    protected $mandatoryFields = ['version', 'title', 'items'];
+
     /**
      * @param Document $document
      * @return bool

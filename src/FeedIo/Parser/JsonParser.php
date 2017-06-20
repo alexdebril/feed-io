@@ -39,9 +39,23 @@ class JsonParser extends ParserAbstract
         return $feed;
     }
 
+    /**
+     * @param Document $document
+     * @param array $mandatoryFields
+     * @return $this
+     * @throws MissingFieldsException
+     */
     public function checkBodyStructure(Document $document, array $mandatoryFields)
     {
-        // TODO: Implement checkBodyStructure() method.
+        $data = $document->getJsonAsArray();
+
+        foreach($mandatoryFields as $mandatoryField) {
+            if ( ! array_key_exists($mandatoryField, $data) ) {
+                throw new MissingFieldsException("Missing {$mandatoryField} in the JSON Feed");
+            }
+        }
+
+        return $this;
     }
 
     /**
