@@ -12,6 +12,7 @@ namespace FeedIo;
 
 
 use FeedIo\Feed\Item;
+use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\JsonFormatter;
 
 class JsonFormatterTest extends \PHPUnit_Framework_TestCase
@@ -36,8 +37,18 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase
         $formatter = new JsonFormatter();
         $string = $formatter->toString($feed);
 
-        var_dump($string);
         $this->assertJson($string);
+        $json = json_decode($string, true);
+
+        $this->assertEquals('feed title', $json['title']);
+        $this->assertCount(2, $json['items']);
+
+        foreach($json['items'] as $item) {
+            $this->assertArrayHasKey('title', $item);
+            $this->assertArrayHasKey('url', $item);
+            $this->assertArrayHasKey('author', $item);
+            $this->assertArrayHasKey('date_published', $item);
+        }
     }
 
     public function testIsHtml()
@@ -60,6 +71,9 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase
         $media->setUrl('http://something');
         $item->addMedia($media);
 
+        $item->setLink('http://item-url');
+        $item->addCategory(new Category());
+        $item->setLastModified(new \DateTime());
         $item->setTitle($title);
         $item->setDescription($description);
 
