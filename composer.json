@@ -1,7 +1,7 @@
 {
     "name": "debril/feed-io",
-    "description": "PHP library built to consume and serve RSS / Atom feeds",
-    "keywords": ["rss", "atom", "feed", "news", "CLI", "client"],
+    "description": "PHP library built to consume and serve JSONFeed / RSS / Atom feeds",
+    "keywords": ["rss", "atom","jsonfeed", "feed", "news", "CLI", "client"],
     "homepage": "https://feed-io.net",
     "type": "library",
     "license": "MIT",
