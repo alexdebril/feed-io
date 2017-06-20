@@ -198,6 +198,17 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers FeedIo\FeedIo::toJson
+     */
+    public function testToJson()
+    {
+        $feed = new Feed();
+        $feed->setLastModified(new \DateTime());
+        $document = $this->object->toJson($feed);
+        $this->assertInternalType('string', $document);
+    }
+
+    /**
      * @covers FeedIo\FeedIo::getStandard
      */
     public function testGetStandard()

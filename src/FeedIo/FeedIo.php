@@ -330,7 +330,7 @@ class FeedIo
 
     /**
      * @param  \FeedIo\FeedInterface $feed
-     * @return \DomDocument
+     * @return string
      */
     public function toRss(FeedInterface $feed)
     {
@@ -339,12 +339,22 @@ class FeedIo
 
     /**
      * @param  \FeedIo\FeedInterface $feed
-     * @return \DomDocument
+     * @return string
      */
     public function toAtom(FeedInterface $feed)
     {
         return $this->format($feed, 'atom');
     }
+
+    /**
+     * @param  \FeedIo\FeedInterface $feed
+     * @return string
+     */
+    public function toJson(FeedInterface $feed)
+    {
+        return $this->format($feed, 'json');
+    }
+
 
     /**
      * @param  string                   $name
