@@ -11,17 +11,14 @@
 namespace FeedIo\Parser;
 
 
-use DOMDocument;
 use FeedIo\Parser;
 use FeedIo\RuleSet;
 use FeedIo\FeedInterface;
-use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\ParserAbstract;
 use FeedIo\Reader\Document;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
-use Psr\Log\LoggerInterface;
 
 /**
  * Parses a DOM document if its format matches the parser's standard

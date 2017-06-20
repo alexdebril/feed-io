@@ -13,11 +13,8 @@ namespace FeedIo\Parser;
 
 use FeedIo\Feed\Item;
 use FeedIo\FeedInterface;
-use FeedIo\MissingFieldsException;
 use FeedIo\ParserAbstract;
 use FeedIo\Reader\Document;
-use FeedIo\Rule\Json\RuleSet;
-use FeedIo\Rule\Json\Title;
 
 class JsonParser extends ParserAbstract
 {

@@ -16,11 +16,7 @@ use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Adapter\ClientInterface;
-use FeedIo\Standard\Atom;
-use FeedIo\Standard\Json;
 use FeedIo\Standard\Loader;
-use FeedIo\Standard\Rss;
-use FeedIo\Standard\Rdf;
 use Psr\Log\LoggerInterface;
 
 /**

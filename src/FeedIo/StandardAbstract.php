@@ -11,8 +11,6 @@ namespace FeedIo;
 
 use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
-use FeedIo\Rule\ModifiedSince;
-use FeedIo\Rule\Title;
 
 abstract class StandardAbstract
 {

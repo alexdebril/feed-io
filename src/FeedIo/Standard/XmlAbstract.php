@@ -11,7 +11,6 @@
 namespace FeedIo\Standard;
 
 
-use FeedIo\Parser\XmlParser;
 use FeedIo\Formatter\XmlFormatter;
 use FeedIo\StandardAbstract;
 use FeedIo\RuleSet;
