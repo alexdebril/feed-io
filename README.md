@@ -9,9 +9,9 @@
 [![PHP Tested versions](https://php-eye.com/badge/debril/feed-io/tested.svg)](https://php-eye.com/package/debril/feed-io)
 [![Dependency Status](https://www.versioneye.com/php/debril:feed-io/2.3.1/badge?style=flat-square)](https://www.versioneye.com/php/debril:feed-io/2.3.1)
 
-[feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve RSS / Atom feeds. It features:
+[feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
-- Atom / RSS read and write support
+- JSONFeed / Atom / RSS read and write support
 - a Command line interface to read feeds
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
