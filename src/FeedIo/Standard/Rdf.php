@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 use DOMDocument;
+use FeedIo\Reader\Document;
 use FeedIo\RuleSet;
 use FeedIo\Rule\Structure;
 
@@ -34,12 +35,12 @@ class Rdf extends Rss
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param  \DOMDocument $document
+     * @param  Document $document
      * @return boolean
      */
-    public function canHandle(\DOMDocument $document)
+    public function canHandle(Document $document)
     {
-        return false !== strpos($document->documentElement->tagName, static::ROOT_NODE_TAGNAME);
+        return false !== strpos($document->getDOMDocument()->documentElement->tagName, static::ROOT_NODE_TAGNAME);
     }
 
     /**

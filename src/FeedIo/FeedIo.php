@@ -16,9 +16,7 @@ use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Adapter\ClientInterface;
-use FeedIo\Standard\Atom;
-use FeedIo\Standard\Rss;
-use FeedIo\Standard\Rdf;
+use FeedIo\Standard\Loader;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -145,11 +143,9 @@ class FeedIo
      */
     public function getCommonStandards()
     {
-        return array(
-            'atom' => new Atom($this->dateTimeBuilder),
-            'rss' => new Rss($this->dateTimeBuilder),
-            'rdf' => new Rdf($this->dateTimeBuilder),
-        );
+        $loader = new Loader();
+
+        return $loader->getCommonStandards($this->getDateTimeBuilder());
     }
 
     /**
@@ -161,11 +157,26 @@ class FeedIo
     {
         $name = strtolower($name);
         $this->standards[$name] = $standard;
-        $this->reader->addParser(
-                            new Parser($standard, $this->logger)
-                        );
+        $parser = $this->newParser($standard->getSyntaxFormat(), $standard);
+        $this->reader->addParser($parser);
 
         return $this;
+    }
+
+    /**
+     * @param string $format
+     * @param StandardAbstract $standard
+     * @return object
+     */
+    public function newParser($format, StandardAbstract $standard)
+    {
+        $reflection = new \ReflectionClass("FeedIo\\Parser\\{$format}Parser");
+
+        if ( ! $reflection->isSubclassOf('FeedIo\ParserAbstract') ) {
+            throw new \InvalidArgumentException();
+        }
+
+        return $reflection->newInstanceArgs([$standard, $this->logger]);
     }
 
     /**
@@ -302,20 +313,20 @@ class FeedIo
     /**
      * @param  FeedInterface $feed
      * @param  string        $standard Standard's name
-     * @return \DomDocument
+     * @return string
      */
     public function format(FeedInterface $feed, $standard)
     {
         $this->logAction($feed, "formatting a feed in $standard format");
 
-        $formatter = new Formatter($this->getStandard($standard), $this->logger);
+        $formatter = $this->getStandard($standard)->getFormatter();
 
-        return $formatter->toDom($feed);
+        return $formatter->toString($feed);
     }
 
     /**
      * @param  \FeedIo\FeedInterface $feed
-     * @return \DomDocument
+     * @return string
      */
     public function toRss(FeedInterface $feed)
     {
@@ -324,12 +335,22 @@ class FeedIo
 
     /**
      * @param  \FeedIo\FeedInterface $feed
-     * @return \DomDocument
+     * @return string
      */
     public function toAtom(FeedInterface $feed)
     {
         return $this->format($feed, 'atom');
     }
+
+    /**
+     * @param  \FeedIo\FeedInterface $feed
+     * @return string
+     */
+    public function toJson(FeedInterface $feed)
+    {
+        return $this->format($feed, 'json');
+    }
+
 
     /**
      * @param  string                   $name

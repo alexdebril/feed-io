@@ -24,7 +24,7 @@ class Author implements AuthorInterface
     protected $uri;
 
     /**
-     * @var int
+     * @var string
      */
     protected $email;
 

@@ -11,14 +11,14 @@
 namespace FeedIo\Standard;
 
 use DOMDocument;
+use FeedIo\Reader\Document;
 use FeedIo\Rule\Atom\Author;
 use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Atom\Category;
-use FeedIo\StandardAbstract;
 
-class Atom extends StandardAbstract
+class Atom extends XmlAbstract
 {
     /**
      * Atom document must have a <feed> root node
@@ -43,12 +43,12 @@ class Atom extends StandardAbstract
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param  \DOMDocument $document
+     * @param  Document $document
      * @return mixed
      */
-    public function canHandle(\DOMDocument $document)
+    public function canHandle(Document $document)
     {
-        return self::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
+        return self::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
     /**

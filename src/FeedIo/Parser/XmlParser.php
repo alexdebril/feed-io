@@ -8,14 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace FeedIo;
+namespace FeedIo\Parser;
 
-use DOMDocument;
-use FeedIo\Feed\ItemInterface;
+
+use FeedIo\Parser;
+use FeedIo\RuleSet;
+use FeedIo\FeedInterface;
 use FeedIo\Feed\NodeInterface;
+use FeedIo\ParserAbstract;
+use FeedIo\Reader\Document;
 use FeedIo\Parser\MissingFieldsException;
 use FeedIo\Parser\UnsupportedFormatException;
-use Psr\Log\LoggerInterface;
 
 /**
  * Parses a DOM document if its format matches the parser's standard
@@ -25,41 +28,8 @@ use Psr\Log\LoggerInterface;
  *  - Psr\Log\LoggerInterface
  *
  */
-class Parser
+class XmlParser extends ParserAbstract
 {
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var array[FilterInterface]
-     */
-    protected $filters = array();
-
-    /**
-     * @var StandardAbstract
-     */
-    protected $standard;
-
-    /**
-     * @param StandardAbstract $standard
-     * @param LoggerInterface  $logger
-     */
-    public function __construct(StandardAbstract $standard, LoggerInterface $logger)
-    {
-        $this->standard = $standard;
-        $this->logger = $logger;
-    }
-
-    /**
-     * @return StandardAbstract
-     */
-    public function getStandard()
-    {
-        return $this->standard;
-    }
 
     /**
      * @param $tagName
@@ -71,42 +41,15 @@ class Parser
     }
 
     /**
-     * @param  FilterInterface $filter
-     * @return $this
-     */
-    public function addFilter(FilterInterface $filter)
-    {
-        $this->filters[] = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Reset filters
-     * @return $this
-     */
-    public function resetFilters()
-    {
-        $this->filters = [];
-
-        return $this;
-    }
-
-    /**
-     * @param  DOMDocument                       $document
-     * @param  FeedInterface                     $feed
+     * @param  Document                       $document
+     * @param  FeedInterface                  $feed
      * @return \FeedIo\FeedInterface
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
-    public function parse(DOMDocument $document, FeedInterface $feed)
+    public function parseContent(Document $document, FeedInterface $feed)
     {
-        if (!$this->standard->canHandle($document)) {
-            throw new UnsupportedFormatException('this is not a supported format');
-        }
-
-        $this->checkBodyStructure($document, $this->standard->getMandatoryFields());
-        $element = $this->standard->getMainElement($document);
+        $element = $this->standard->getMainElement($document->getDOMDocument());
 
         $this->parseNode($feed, $element, $this->standard->getFeedRuleSet());
 
@@ -114,16 +57,16 @@ class Parser
     }
 
     /**
-     * @param  DOMDocument            $document
+     * @param  Document            $document
      * @param  array                  $mandatoryFields
      * @return $this
      * @throws MissingFieldsException
      */
-    public function checkBodyStructure(DOMDocument $document, array $mandatoryFields)
+    public function checkBodyStructure(Document $document, array $mandatoryFields)
     {
         $errors = array();
 
-        $element = $document->documentElement;
+        $element = $document->getDOMDocument()->documentElement;
         foreach ($mandatoryFields as $field) {
             $list = $element->getElementsByTagName($field);
             if (0 === $list->length) {
@@ -176,32 +119,5 @@ class Parser
         return $this;
     }
 
-    /**
-     * @param  FeedInterface $feed
-     * @param  NodeInterface $item
-     * @return $this
-     */
-    public function addValidItem(FeedInterface $feed, NodeInterface $item)
-    {
-        if ($item instanceof ItemInterface && $this->isValid($item)) {
-            $feed->add($item);
-        }
 
-        return $this;
-    }
-
-    /**
-     * @param  ItemInterface $item
-     * @return bool
-     */
-    public function isValid(ItemInterface $item)
-    {
-        foreach ($this->filters as $filter) {
-            if (!$filter->isValid($item)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

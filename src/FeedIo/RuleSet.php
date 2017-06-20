@@ -96,7 +96,8 @@ class RuleSet
     }
 
     /**
-     * @param string $alias
+     * @param $alias
+     * @return string
      */
     public function getNameForAlias($alias)
     {

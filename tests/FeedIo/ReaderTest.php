@@ -11,8 +11,10 @@
 namespace FeedIo;
 
 use FeedIo\Adapter\ServerErrorException;
+use FeedIo\Parser\XmlParser;
 use Psr\Log\NullLogger;
 use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Reader\Document;
 
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -62,7 +64,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     protected function getParser()
     {
         $standard = $this->getMockForAbstractClass(
-            '\FeedIo\StandardAbstract',
+            '\FeedIo\Standard\XmlAbstract',
             array(new DateTimeBuilder())
         );
         $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
@@ -75,24 +77,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
                 $domDocument->documentElement->getElementsByTagName('channel')->item(0)
             ));
 
-        $parser = new Parser($standard, new NullLogger());
+        $parser = new XmlParser($standard, new NullLogger());
 
         return $parser;
-    }
-
-    public function testLoadDocument()
-    {
-        $document = $this->object->loadDocument('<foo></foo>');
-        $this->assertInstanceOf('\DomDocument', $document);
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testLoadMalformedDocument()
-    {
-        $document = $this->object->loadDocument('<foo></bar>');
-        $this->assertInstanceOf('\DomDocument', $document);
     }
 
     /**
@@ -108,9 +95,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testGetAccurateParser()
     {
         $this->object->addParser($this->getParser());
-        $parser = $this->object->getAccurateParser(new \DOMDocument());
+        $parser = $this->object->getAccurateParser(new Document(''));
 
-        $this->assertInstanceOf('\FeedIo\Parser', $parser);
+        $this->assertInstanceOf('\FeedIo\ParserAbstract', $parser);
     }
 
     /**
@@ -118,13 +105,13 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccurateParserFailure()
     {
-        $this->object->getAccurateParser(new \DOMDocument());
+        $this->object->getAccurateParser(new Document(''));
     }
 
     public function testParseDocument()
     {
         $this->object->addParser($this->getParser());
-        $feed = $this->object->parseDocument(new \DOMDocument(), new Feed());
+        $feed = $this->object->parseDocument(new Document('<feed></feed>'), new Feed());
 
         $this->assertInstanceOf('\FeedIo\Feed', $feed);
         $this->assertEquals('This is an example of an RSS feed', $feed->getValue('description'));
@@ -143,7 +130,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($url, $result->getUrl());
         $this->assertEquals($modifiedSince, $result->getModifiedSince());
-        $this->assertInstanceOf('\DOMDocument', $result->getDocument());
+        $this->assertInstanceOf('\FeedIo\Reader\Document', $result->getDocument());
     }
 
     /**

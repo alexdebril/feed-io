@@ -8,7 +8,8 @@
 namespace FeedIo\Parser;
 
 use FeedIo\Feed;
-use FeedIo\Parser;
+use FeedIo\Parser\XmlParser as Parser;
+use FeedIo\Reader\Document;
 use Psr\Log\NullLogger;
 
 abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
@@ -40,7 +41,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
     public function testGetMainElement()
     {
         $document = $this->buildDomDocument(static::SAMPLE_FILE);
-        $element = $this->object->getStandard()->getMainElement($document);
+        $element = $this->object->getStandard()->getMainElement($document->getDOMDocument());
         $this->assertInstanceOf('\DomElement', $element);
     }
 
@@ -96,7 +97,7 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $filename
-     * @return \DOMDocument
+     * @return Document
      */
     protected function buildDomDocument($filename)
     {
@@ -104,6 +105,6 @@ abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
         $domDocument = new \DOMDocument();
         $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
 
-        return $domDocument;
+        return new Document($domDocument->saveXML());
     }
 }

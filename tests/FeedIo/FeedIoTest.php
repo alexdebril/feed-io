@@ -89,6 +89,16 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $this->object->addFilter($filter);
     }
 
+    public function testResetFilters()
+    {
+        $this->object->resetFilters();
+    }
+
+    public function testWithModifiedSince()
+    {
+        $this->object->read('http://localhost', new Feed(), new \DateTime());
+    }
+
     /**
      * @covers FeedIo\FeedIo::addStandard
      */
@@ -161,7 +171,8 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->format($feed, 'atom');
-        $this->assertInstanceOf('DomDocument', $document);
+
+        $this->assertInternalType('string', $document);
     }
 
     /**
@@ -172,8 +183,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toRss($feed);
-        $this->assertInstanceOf('DomDocument', $document);
-        $this->assertEquals('rss', $document->documentElement->tagName);
+        $this->assertInternalType('string', $document);
     }
 
     /**
@@ -184,8 +194,18 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toAtom($feed);
-        $this->assertInstanceOf('DomDocument', $document);
-        $this->assertEquals('feed', $document->documentElement->tagName);
+        $this->assertInternalType('string', $document);
+    }
+
+    /**
+     * @covers FeedIo\FeedIo::toJson
+     */
+    public function testToJson()
+    {
+        $feed = new Feed();
+        $feed->setLastModified(new \DateTime());
+        $document = $this->object->toJson($feed);
+        $this->assertInternalType('string', $document);
     }
 
     /**

@@ -1,27 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 05/12/14
- * Time: 22:46
+/*
+ * This file is part of the feed-io package.
+ *
+ * (c) Alexandre Debril <alex.debril@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 namespace FeedIo;
 
+use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
-use FeedIo\Rule\ModifiedSince;
-use FeedIo\Rule\Title;
 
 abstract class StandardAbstract
 {
-    /**
-     * Name of the node containing all the feed's items
-     */
-    const ITEM_NODE = 'item';
 
     /**
      * DateTime default format
      */
     const DATETIME_FORMAT = \DateTime::RFC2822;
+
+    /**
+     * Supported format
+     */
+    const SYNTAX_FORMAT = '';
 
     /**
      * @var array
@@ -34,17 +36,6 @@ abstract class StandardAbstract
     protected $dateTimeBuilder;
 
     /**
-     * RuleSet used to parse the feed's main node
-     * @var \FeedIo\RuleSet
-     */
-    protected $feedRuleSet;
-
-    /**
-     * @var \FeedIo\RuleSet
-     */
-    protected $itemRuleSet;
-
-    /**
      * @param \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
      */
     public function __construct(DateTimeBuilder $dateTimeBuilder)
@@ -53,44 +44,16 @@ abstract class StandardAbstract
     }
 
     /**
-     * Formats the document according to the standard's specification
-     * @param  \DOMDocument $document
-     * @return mixed
-     */
-    abstract public function format(\DOMDocument $document);
-
-    /**
      * Tells if the parser can handle the feed or not
-     * @param  \DOMDocument $document
-     * @return mixed
+     * @param  Document $document
+     * @return boolean
      */
-    abstract public function canHandle(\DOMDocument $document);
+    abstract public function canHandle(Document $document);
 
     /**
-     * @param  \DOMDocument $document
-     * @return \DomElement
+     * @return \FeedIo\FormatterInterface
      */
-    abstract public function getMainElement(\DOMDocument $document);
-
-    /**
-     * Builds and returns a rule set to parse the root node
-     * @return \FeedIo\RuleSet
-     */
-    abstract public function buildFeedRuleSet();
-
-    /**
-     * Builds and returns a rule set to parse an item
-     * @return \FeedIo\RuleSet
-     */
-    abstract public function buildItemRuleSet();
-
-    /**
-     * @return string
-     */
-    public function getItemNodeName()
-    {
-        return static::ITEM_NODE;
-    }
+    abstract public function getFormatter();
 
     /**
      * @return string
@@ -109,51 +72,12 @@ abstract class StandardAbstract
     }
 
     /**
-     * Returns the RuleSet used to parse the feed's main node
-     * @return \FeedIo\RuleSet
+     * Returns the Format supported by the standard (XML, JSON, Text...)
+     * @return string
      */
-    public function getFeedRuleSet()
+    public function getSyntaxFormat()
     {
-        if (is_null($this->feedRuleSet)) {
-            $this->feedRuleSet = $this->buildFeedRuleSet();
-        }
-
-        return $this->feedRuleSet;
+        return static::SYNTAX_FORMAT;
     }
 
-    /**
-     * @return \FeedIo\RuleSet
-     */
-    public function getItemRuleSet()
-    {
-        if (is_null($this->itemRuleSet)) {
-            $this->itemRuleSet = $this->buildItemRuleSet();
-        }
-
-        return $this->itemRuleSet;
-    }
-
-    /**
-     * @param  string        $tagName
-     * @return ModifiedSince
-     */
-    public function getModifiedSinceRule($tagName)
-    {
-        $rule = new ModifiedSince($tagName);
-        $rule->setDefaultFormat($this->getDefaultDateFormat());
-        $rule->setDateTimeBuilder($this->dateTimeBuilder);
-
-        return $rule;
-    }
-
-    /**
-     * @return RuleSet
-     */
-    protected function buildBaseRuleSet()
-    {
-        $ruleSet = $ruleSet = new RuleSet();
-        $ruleSet->add(new Title());
-
-        return $ruleSet;
-    }
 }

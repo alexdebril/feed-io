@@ -11,6 +11,7 @@
 namespace FeedIo\Reader;
 
 use FeedIo\Feed;
+use FeedIo\Reader\Document;
 
 class ResultTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +31,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
         $this->object = new Result(
-            new \DOMDocument(),
+            new Document('<feed></feed>'),
             new Feed(),
             $this->modifiedSince,
             $response,
@@ -40,7 +41,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
     public function testResult()
     {
-        $this->assertInstanceOf('\DomDocument', $this->object->getDocument());
+        $this->assertInstanceOf('\FeedIo\Reader\Document', $this->object->getDocument());
         $this->assertInstanceOf('\FeedIo\FeedInterface', $this->object->getFeed());
         $this->assertEquals($this->resultDate->format(\DateTime::ATOM), $this->object->getDate()->format(\DateTime::ATOM));
         $this->assertEquals($this->modifiedSince->format(\DateTime::ATOM), $this->object->getModifiedSince()->format(\DateTime::ATOM));

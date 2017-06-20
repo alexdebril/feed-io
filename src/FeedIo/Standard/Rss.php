@@ -11,15 +11,15 @@
 namespace FeedIo\Standard;
 
 use DOMDocument;
+use FeedIo\Reader\Document;
 use FeedIo\Rule\Author;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
-use FeedIo\StandardAbstract;
 
-class Rss extends StandardAbstract
+class Rss extends XmlAbstract
 {
 
     /**
@@ -62,12 +62,12 @@ class Rss extends StandardAbstract
 
     /**
      * Tells if the parser can handle the feed or not
-     * @param  \DOMDocument $document
+     * @param  Document $document
      * @return boolean
      */
-    public function canHandle(\DOMDocument $document)
+    public function canHandle(Document $document)
     {
-        return static::ROOT_NODE_TAGNAME === $document->documentElement->tagName;
+        return static::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
     /**

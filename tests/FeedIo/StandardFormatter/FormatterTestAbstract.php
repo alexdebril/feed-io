@@ -10,7 +10,7 @@ namespace FeedIo\StandardFormatter;
 use FeedIo\Feed;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
-use FeedIo\Formatter;
+use FeedIo\Formatter\XmlFormatter;
 use Psr\Log\NullLogger;
 
 abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
@@ -57,7 +57,7 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
         $item->addCategory($category);
         $feed->add($item);
 
-        $formatter = new Formatter($this->standard, new NullLogger());
+        $formatter = new XmlFormatter($this->standard);
         $document = $formatter->toDom($feed);
         $this->assertXmlStringEqualsXmlFile($this->getSampleFile(), $document->saveXML());
     }
