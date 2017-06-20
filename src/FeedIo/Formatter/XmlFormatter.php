@@ -28,7 +28,7 @@ class XmlFormatter implements FormatterInterface
 {
 
     /**
-     * @var StandardAbstract
+     * @var XmlAbstract
      */
     protected $standard;
 
