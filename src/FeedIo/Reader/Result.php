@@ -89,7 +89,7 @@ class Result
     }
 
     /**
-     * @return \DomDocument
+     * @return Document
      */
     public function getDocument()
     {

@@ -64,7 +64,7 @@ You can run the unit test suites using the following command in the library's so
 
 ```sh
 
-    make test
+    ./vendor/bin/phpunit
 
 ```
 
@@ -119,10 +119,10 @@ $feed = new FeedIo\Feed;
 $feed->setTitle('...');
 
 // convert it into Atom
-$dom = $feedIo->toAtom($feed);
+$atomString = $feedIo->toAtom($feed);
 
 // or ...
-$dom = $feedIo->format($feed, 'atom');
+$atomString = $feedIo->format($feed, 'atom');
 
 ```
 
@@ -180,3 +180,23 @@ $logger = new Psr\Log\NullLogger();
 $feedIo = new FeedIo\FeedIo($client, $logger);
 
 ```
+
+Another example with Monolog configured to write on the standard output :
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$client = new Client(new GuzzleClient());
+$logger = new Logger('default', [new StreamHandler('php://stdout')]);
+
+$feedIo = new FeedIo($client, $logger);
+
+```
+
+## Online documentation and API reference
+
+The whole documentation and API reference is available at https://feed-io.net/documentation.html
