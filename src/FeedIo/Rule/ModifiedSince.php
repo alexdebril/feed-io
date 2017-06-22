@@ -38,9 +38,11 @@ class ModifiedSince extends DateRuleAbstract
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
+        $date = is_null($node->getLastModified()) ? new \DateTime():$node->getLastModified();
+
         return $document->createElement(
             $this->getNodeName(),
-            $node->getLastModified()->format($this->getDefaultFormat())
+            $date->format($this->getDefaultFormat())
         );
     }
 }
