@@ -27,6 +27,8 @@ class Atom extends XmlAbstract
 
     const ITEM_NODE = 'entry';
 
+    const DATETIME_FORMAT = \DateTime::ATOM;
+
     /**
      * Formats the document according to the standard's specification
      * @param  \DOMDocument $document
