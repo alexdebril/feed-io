@@ -33,7 +33,7 @@ class MonologBuilderTest extends \PHPUnit_Framework_TestCase
     public function testNewInvalidHandler()
     {
         $builder = new MonologBuilder();
-        $handler = $builder->newHandler('stdClass', []);
+        $builder->newHandler('stdClass', []);
     }
     
     public function testGetLogger()
