@@ -19,6 +19,18 @@ use \GuzzleHttp\Client as GuzzleClient;
  */
 class GuzzleClientBuilder implements ClientBuilderInterface
 {
+    /**
+     * @var array
+     */
+    private $config = [];
+
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $this->config = $config;
+    }
 
     /**
      * This method MUST return a \FeedIo\Adapter\ClientInterface instance
@@ -26,7 +38,7 @@ class GuzzleClientBuilder implements ClientBuilderInterface
      */
     public function getClient()
     {
-        return new Client(new GuzzleClient);
+        return new Client(new GuzzleClient($this->config));
     }
  
     /**
