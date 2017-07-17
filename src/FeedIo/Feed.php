@@ -151,4 +151,12 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
 
         return $properties;
     }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->items);
+    }
 }
