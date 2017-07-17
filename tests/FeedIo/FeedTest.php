@@ -120,4 +120,14 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $json);
         $this->assertInstanceOf('stdClass', json_decode($json));
     }
+
+    public function testCount()
+    {
+        $this->assertCount(0, $this->object);
+
+        $this->object->add(new Feed\Item());
+        $this->object->add(new Feed\Item());
+
+        $this->assertCount(2, $this->object);
+    }
 }
