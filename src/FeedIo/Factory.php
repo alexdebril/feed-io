@@ -17,12 +17,12 @@ use FeedIo\Factory\BuilderInterface;
 
 class Factory
 {
-   
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
-    
+
     /**
      * @var \FeedIo\Adapter\ClientInterface
      */
@@ -37,39 +37,66 @@ class Factory
      * @var \FeedIo\Factory\LoggerBuilderInterface
      */
     protected $loggerBuilder;
-    
-    static public function create(
-            array $loggerConfig = [
-                    'builder' => 'NullLogger',
-                    'config' => [],
-            ],
-            array $clientConfig = [
-                    'builder' => 'GuzzleClient',
-                    'config' => [],
-            ]
 
-    )
-    {
+    static public function create(
+        array $loggerConfig = [
+            'builder' => 'NullLogger',
+            'config' => [],
+        ],
+        array $clientConfig = [
+            'builder' => 'GuzzleClient',
+            'config' => [],
+        ]
+
+    ) {
         $factory = new static();
-        
+
         $factory->setClientBuilder(
-                $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig)))
-                ->setLoggerBuilder(
-                $factory->getBuilder($loggerConfig['builder'],$factory->extractConfig($loggerConfig)));
-                
-                
-        return $factory;        
+            $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig)))
+            ->setLoggerBuilder(
+                $factory->getBuilder($loggerConfig['builder'], $factory->extractConfig($loggerConfig)));
+
+
+        return $factory;
     }
-    
+
+    public function setClientBuilder(ClientBuilderInterface $clientBuilder)
+    {
+        $this->clientBuilder = $clientBuilder;
+
+        return $this;
+    }
+
+    /**
+     * @param string $builder
+     * @param array  $args
+     *
+     * @return object
+     */
+    public function getBuilder($builder, array $args = [])
+    {
+        $class = "\\FeedIo\\Factory\\Builder\\{$builder}Builder";
+
+        if (!class_exists($class)) {
+            $class = $builder;
+        }
+
+        $reflection = new \ReflectionClass($class);
+
+        // Pass args only if constructor has
+        return $reflection->newInstanceArgs([$args]);
+    }
+
     /**
      * @param $builderConfig
+     *
      * @return array
      */
     public function extractConfig(array $builderConfig)
     {
-        return isset($builderConfig['config']) ? $builderConfig['config']:[];
+        return isset($builderConfig['config']) ? $builderConfig['config'] : [];
     }
-    
+
     /**
      * @return \FeedIo\FeedIo
      */
@@ -78,47 +105,34 @@ class Factory
         return new FeedIo(
             $this->clientBuilder->getClient(),
             $this->loggerBuilder->getLogger()
-            );
+        );
     }
 
-    public function getBuilder($builder, array $args = [])
-    {
-        $class = "\\FeedIo\\Factory\\Builder\\{$builder}Builder";
-        
-        if ( ! class_exists($class) ) {
-            $class = $builder;
-        }
-        
-        $reflection = new \ReflectionClass($class);
-        
-        return $reflection->newInstanceArgs($args);
-    }
-    
+    /**
+     * @param LoggerBuilderInterface $loggerBuilder
+     *
+     * @return $this
+     */
     public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder)
     {
         $this->loggerBuilder = $loggerBuilder;
-        
+
         return $this;
     }
-    
-    public function setClientBuilder(ClientBuilderInterface $clientBuilder)
-    {
-        $this->clientBuilder = $clientBuilder;
-    
-        return $this;
-    }
-    
+
     /**
      * @param  BuilderInterface $builder
+     *
      * @return boolean true if the dependency is met
      */
     public function checkDependency(BuilderInterface $builder)
     {
-        if ( ! class_exists($builder->getMainClassName()) ) {
+        if (!class_exists($builder->getMainClassName())) {
             $message = "missing {$builder->getPackageName()}, please install it using composer : composer require {$builder->getPackageName()}";
             throw new MissingDependencyException($message);
         }
-        
+
         return true;
     }
+
 }
