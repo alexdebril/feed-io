@@ -97,6 +97,12 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
                 'builder' => 'Monolog',
                 'config' => [
                     'foo' => true,
+                    'handlers' => [
+                        [
+                            'class' => 'Monolog\Handler\NullHandler',
+                            'params' => [],
+                        ],
+                    ],
                 ],
             ],
             [
