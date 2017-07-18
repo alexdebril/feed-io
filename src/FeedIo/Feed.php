@@ -71,7 +71,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      */
     public function next()
     {
-        return $this->items->next();
+        $this->items->next();
     }
 
     /**
@@ -105,7 +105,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      */
     public function rewind()
     {
-        return $this->items->rewind();
+        $this->items->rewind();
     }
 
     /**
@@ -150,5 +150,13 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
         $properties['items'] = $items;
 
         return $properties;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->items);
     }
 }
