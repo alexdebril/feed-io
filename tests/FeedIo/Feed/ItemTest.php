@@ -121,7 +121,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->object->addElement($element2);
 
         $elements = array();
-        foreach($this->object->listElements() as $element) {
+        foreach ($this->object->listElements() as $element) {
             $elements[] = $element;
         }
         $this->assertEquals(array('foo', 'bar'), $elements);

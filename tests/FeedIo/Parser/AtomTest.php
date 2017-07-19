@@ -16,7 +16,6 @@ use FeedIo\Standard\Atom;
 
 class AtomTest extends ParserTestAbstract
 {
-
     const SAMPLE_FILE = 'sample-atom.xml';
 
     const ENCLOSURE_FILE = 'enclosure-atom.xml';

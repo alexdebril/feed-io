@@ -70,6 +70,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0"?><author><name>John Doe</name><uri>http://localhost</uri><email>john@localhost</email></author>',
-            $document->saveXML());
+            $document->saveXML()
+        );
     }
 }

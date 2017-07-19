@@ -14,7 +14,6 @@ use FeedIo\Feed;
 
 class FixerSetTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testAdd()
     {
         $fixer = $this->getMockForAbstractClass('\FeedIo\Reader\FixerAbstract');

@@ -12,7 +12,6 @@ namespace FeedIo\Adapter;
 
 class NullClientTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetResponse()
     {
         $client = new NullClient();

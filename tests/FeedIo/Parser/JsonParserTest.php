@@ -8,7 +8,6 @@
 
 namespace FeedIo\Parser;
 
-
 use FeedIo\Feed;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
@@ -17,7 +16,6 @@ use Psr\Log\NullLogger;
 
 class JsonParserTest extends \PHPUnit_Framework_TestCase
 {
-
     public function getDocument()
     {
         $file = dirname(__FILE__)."/../../samples/feed.json";
@@ -26,12 +24,11 @@ class JsonParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParseContent()
     {
-        $parser = new JsonParser(new Json( new DateTimeBuilder()), new NullLogger());
+        $parser = new JsonParser(new Json(new DateTimeBuilder()), new NullLogger());
         $feed = new Feed();
 
         $parser->parse($this->getDocument(), $feed);
 
         $this->assertEquals('JSON Feed', $feed->getTitle());
     }
-
 }

@@ -16,7 +16,6 @@ use FeedIo\Standard\Rdf;
 
 class RdfTest extends ParserTestAbstract
 {
-
     const SAMPLE_FILE = 'sample-rdf.xml';
 
     /**

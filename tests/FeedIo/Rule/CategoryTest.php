@@ -34,7 +34,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         $count = 0;
         foreach ($item->getCategories() as $category) {
             $count++;
-            $this->assertEquals('foo', $category->getTerm());                    
+            $this->assertEquals('foo', $category->getTerm());
             $this->assertEquals('foo', $category->getLabel());
         }
         
@@ -76,5 +76,4 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals('foo', $element->nodeValue);
     }
-    
 }
