@@ -31,10 +31,13 @@
     "autoload": {
         "psr-4": {"FeedIo\\": "src/FeedIo"}
     },
-    
+    "scripts": {
+        "install-hook": "chmod +x pre-commit.sh && cp pre-commit.sh .git/hooks/pre-commit",
+        "pre-autoload-dump": "composer install-hook"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
         }
-    }    
+    }
 }
