@@ -120,5 +120,4 @@ class Rss extends XmlAbstract
 
         return $ruleSet;
     }
-
 }

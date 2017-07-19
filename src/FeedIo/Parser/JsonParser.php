@@ -10,7 +10,6 @@
 
 namespace FeedIo\Parser;
 
-
 use FeedIo\Feed\Item;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
@@ -32,7 +31,7 @@ class JsonParser extends ParserAbstract
         $feed->setLink($this->readOffset($data, 'feed_url'));
         $feed->setUrl($this->readOffset($data, 'home_page_url'));
 
-        if ( array_key_exists('items', $data) ) {
+        if (array_key_exists('items', $data)) {
             $this->parseItems($data['items'], $feed);
         }
 
@@ -49,8 +48,8 @@ class JsonParser extends ParserAbstract
     {
         $data = $document->getJsonAsArray();
 
-        foreach($mandatoryFields as $mandatoryField) {
-            if ( ! array_key_exists($mandatoryField, $data) ) {
+        foreach ($mandatoryFields as $mandatoryField) {
+            if (! array_key_exists($mandatoryField, $data)) {
                 throw new MissingFieldsException("Missing {$mandatoryField} in the JSON Feed");
             }
         }
@@ -65,7 +64,7 @@ class JsonParser extends ParserAbstract
      */
     public function parseItems(array $items, FeedInterface $feed)
     {
-        foreach( $items as $dataItem ) {
+        foreach ($items as $dataItem) {
             $item = new Item();
             $item->setPublicId($this->readOffset($dataItem, 'id'));
             $item->setTitle($this->readOffset($dataItem, 'title'));
@@ -86,7 +85,7 @@ class JsonParser extends ParserAbstract
      */
     public function readOffset(array $data, $offsetName, $default = null)
     {
-        if (array_key_exists($offsetName, $data) ){
+        if (array_key_exists($offsetName, $data)) {
             return $data[$offsetName];
         }
 

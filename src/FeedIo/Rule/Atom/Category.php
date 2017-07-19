@@ -28,7 +28,7 @@ class Category extends \FeedIo\Rule\Category
         ->setLabel($this->getAttributeValue($element, 'label'))
         ->setTerm($this->getAttributeValue($element, 'term'));
         
-        $node->addCategory($category);        
+        $node->addCategory($category);
 
         return $this;
     }

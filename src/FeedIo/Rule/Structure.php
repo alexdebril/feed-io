@@ -16,7 +16,6 @@ use FeedIo\RuleSet;
 
 class Structure extends RuleAbstract
 {
-
     const NODE_NAME = 'structure';
 
     /**

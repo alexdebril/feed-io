@@ -11,7 +11,6 @@
 
 namespace FeedIo\Standard;
 
-
 use FeedIo\Rule\DateTimeBuilder;
 
 class Loader
@@ -28,7 +27,6 @@ class Loader
             'atom' => new Atom($builder),
             'rss' => new Rss($builder),
             'rdf' => new Rdf($builder),
-        );        
+        );
     }
-    
 }

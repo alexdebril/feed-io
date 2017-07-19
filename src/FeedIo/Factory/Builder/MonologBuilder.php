@@ -18,7 +18,6 @@ use Monolog\Logger;
  */
 class MonologBuilder implements LoggerBuilderInterface
 {
-
     protected $loggerName = 'feed-io';
 
     protected $handlersConfig = [
@@ -46,7 +45,7 @@ class MonologBuilder implements LoggerBuilderInterface
     {
         $logger = new Logger($this->loggerName);
         
-        foreach ( $this->handlersConfig as $config ) {
+        foreach ($this->handlersConfig as $config) {
             $handler = $this->newHandler($config['class'], $config['params']);
             $logger->pushHandler($handler);
         }
@@ -63,7 +62,7 @@ class MonologBuilder implements LoggerBuilderInterface
     {
         $reflection = new \ReflectionClass($class);
         
-        if ( ! $reflection->implementsInterface('Monolog\Handler\HandlerInterface') ) {
+        if (! $reflection->implementsInterface('Monolog\Handler\HandlerInterface')) {
             throw new \InvalidArgumentException();
         }
         
@@ -87,5 +86,4 @@ class MonologBuilder implements LoggerBuilderInterface
     {
         return 'monolog/monolog';
     }
-    
 }

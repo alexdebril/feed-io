@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-
 interface FormatterInterface
 {
 
@@ -19,5 +18,4 @@ interface FormatterInterface
      * @return string
      */
     public function toString(FeedInterface $feed);
-
 }

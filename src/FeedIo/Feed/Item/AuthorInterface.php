@@ -49,5 +49,4 @@ interface AuthorInterface
      * @return $this
      */
     public function setEmail($email);
-
 }

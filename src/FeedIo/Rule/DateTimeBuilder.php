@@ -55,7 +55,7 @@ class DateTimeBuilder
      */
     public function __construct(LoggerInterface $logger = null)
     {
-        if ( is_null($logger) ) {
+        if (is_null($logger)) {
             $logger = new NullLogger;
         }
         $this->logger = $logger;
@@ -142,7 +142,7 @@ class DateTimeBuilder
     {
         $this->logger->notice("unsupported date format, use strtotime() to build the DateTime instance : {$string}");
 
-        if ( false === strtotime($string) ) {
+        if (false === strtotime($string)) {
             throw new \InvalidArgumentException('Impossible to convert date : '.$string);
         }
         $date = new \DateTime($string);

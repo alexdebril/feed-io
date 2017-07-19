@@ -50,7 +50,7 @@ class Category implements CategoryInterface
     /**
      * @return string
      */
-    public function getScheme()    
+    public function getScheme()
     {
         return $this->scheme;
     }
@@ -69,7 +69,7 @@ class Category implements CategoryInterface
     /**
      * @return string
      */
-    public function getLabel()    
+    public function getLabel()
     {
         return $this->label;
     }
@@ -84,5 +84,4 @@ class Category implements CategoryInterface
         
         return $this;
     }
-    
 }

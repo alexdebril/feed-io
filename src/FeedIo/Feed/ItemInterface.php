@@ -80,5 +80,4 @@ interface ItemInterface extends NodeInterface
      * @return AuthorInterface
      */
     public function newAuthor();
-
 }

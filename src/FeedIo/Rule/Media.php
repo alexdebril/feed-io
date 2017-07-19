@@ -18,7 +18,6 @@ use FeedIo\RuleAbstract;
 
 class Media extends RuleAbstract
 {
-
     const NODE_NAME = 'enclosure';
 
     protected $urlAttributeName = 'url';

@@ -27,5 +27,4 @@ interface BuilderInterface
      * @return string
      */
     public function getPackageName();
-
 }

@@ -18,7 +18,6 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
  */
 class Response implements ResponseInterface
 {
-
     const HTTP_LAST_MODIFIED = 'Last-Modified';
 
     /**

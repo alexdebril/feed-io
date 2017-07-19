@@ -16,7 +16,6 @@ use FeedIo\RuleAbstract;
 
 class Author extends RuleAbstract
 {
-
     const NODE_NAME = 'author';
 
     /**
@@ -27,9 +26,9 @@ class Author extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         if ($node instanceof ItemInterface) {
-          $author = $node->newAuthor();
-          $author->setName($element->nodeValue);
-          $node->setAuthor($author);
+            $author = $node->newAuthor();
+            $author->setName($element->nodeValue);
+            $node->setAuthor($author);
         }
 
         return $this;
@@ -50,5 +49,4 @@ class Author extends RuleAbstract
 
         return;
     }
-
 }

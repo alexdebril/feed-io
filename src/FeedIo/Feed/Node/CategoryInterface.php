@@ -49,5 +49,4 @@ interface CategoryInterface
      * @return $this
      */
     public function setLabel($label);
-    
 }

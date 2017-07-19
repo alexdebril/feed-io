@@ -16,7 +16,6 @@ use FeedIo\RuleAbstract;
 
 class OptionalField extends RuleAbstract
 {
-
     const NODE_NAME = 'default';
 
     /**

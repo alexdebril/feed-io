@@ -10,7 +10,6 @@
 
 namespace FeedIo\Standard;
 
-
 use FeedIo\Formatter\XmlFormatter;
 use FeedIo\StandardAbstract;
 use FeedIo\RuleSet;

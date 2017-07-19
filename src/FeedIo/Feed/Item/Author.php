@@ -84,5 +84,4 @@ class Author implements AuthorInterface
 
         return $this;
     }
-
 }

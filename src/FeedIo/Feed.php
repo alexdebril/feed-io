@@ -142,7 +142,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     {
         $items = [];
 
-        foreach( $this->items as $item ) {
+        foreach ($this->items as $item) {
             $items[] = $item->toArray();
         }
 

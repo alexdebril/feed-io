@@ -10,7 +10,6 @@
 
 namespace FeedIo\Parser;
 
-
 use FeedIo\Parser;
 use FeedIo\RuleSet;
 use FeedIo\FeedInterface;
@@ -118,6 +117,4 @@ class XmlParser extends ParserAbstract
 
         return $this;
     }
-
-
 }

@@ -58,5 +58,4 @@ class GuzzleClientBuilder implements ClientBuilderInterface
     {
         return 'guzzlehttp/guzzle';
     }
-    
 }
