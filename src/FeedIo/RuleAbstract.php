@@ -59,7 +59,7 @@ abstract class RuleAbstract
     public function getChildValue(\DOMElement $element, $name)
     {
         $list = $element->getElementsByTagName($name);
-        if ( $list->length > 0 ) {
+        if ($list->length > 0) {
             return $list->item(0)->nodeValue;
         }
 

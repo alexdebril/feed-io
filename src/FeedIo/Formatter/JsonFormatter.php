@@ -49,7 +49,7 @@ class JsonFormatter implements FormatterInterface
      */
     public function itemsToArray(FeedInterface $feed)
     {
-        foreach($feed as $item) {
+        foreach ($feed as $item) {
             yield $this->itemToArray($item);
         }
     }
@@ -99,7 +99,7 @@ class JsonFormatter implements FormatterInterface
      */
     public function handleAuthor(Feed\ItemInterface $item, array &$array)
     {
-        if ( ! is_null($item->getAuthor()) ) {
+        if (! is_null($item->getAuthor())) {
             $array['author'] = array_filter([
                 'name' => $item->getAuthor()->getName(),
                 'url' => $item->getAuthor()->getUri(),
@@ -116,7 +116,7 @@ class JsonFormatter implements FormatterInterface
      */
     public function handleMedia(Feed\ItemInterface $item, array &$array)
     {
-        if ( $item->hasMedia() ) {
+        if ($item->hasMedia()) {
             $array['image'] = $item->getMedias()->current()->getUrl();
         }
 
@@ -130,11 +130,10 @@ class JsonFormatter implements FormatterInterface
      */
     public function handleDate(Feed\ItemInterface $item, array &$array)
     {
-        if( ! is_null($item->getLastModified()) ) {
+        if (! is_null($item->getLastModified())) {
             $array['date_published'] = $item->getLastModified()->format(\DateTime::RFC3339);
         }
 
         return $array;
     }
-
 }

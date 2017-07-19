@@ -16,7 +16,6 @@ use FeedIo\RuleAbstract;
 
 class Category extends RuleAbstract
 {
-
     const NODE_NAME = 'category';
         
     /**
@@ -30,7 +29,7 @@ class Category extends RuleAbstract
         $category->setScheme($this->getAttributeValue($element, 'domain'))
         ->setLabel($element->nodeValue)
         ->setTerm($element->nodeValue);
-        $node->addCategory($category);        
+        $node->addCategory($category);
 
         return $this;
     }
@@ -44,8 +43,8 @@ class Category extends RuleAbstract
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        if ( ! is_null($node->getCategories()) ) {
-            foreach( $node->getCategories() as $category ) {
+        if (! is_null($node->getCategories())) {
+            foreach ($node->getCategories() as $category) {
                 return $this->createCategoryElement($document, $category);
             }
         }

@@ -105,14 +105,12 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $categories = $this->object->getCategories();
         
         $count = 0;
-        foreach( $categories as $testedCategory ) {
+        foreach ($categories as $testedCategory) {
             $count++;
             $this->assertEquals('term', $testedCategory->getTerm());
             $this->assertEquals($category, $testedCategory);
         }
         
         $this->assertEquals(1, $count);
-        
     }
-    
 }

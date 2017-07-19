@@ -41,12 +41,13 @@ class ReadCommand extends Command
 
         $limit = $this->getLimit($input);
 
-        foreach( $feed as $i => $item ) {
+        foreach ($feed as $i => $item) {
             $output->writeln("<info>{$item->getLastModified()->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
             $output->writeln("{$item->getDescription()}");
 
-            if ( ! is_null($limit) && $limit === $i+1 )
+            if (! is_null($limit) && $limit === $i+1) {
                 break;
+            }
         }
     }
 
@@ -67,11 +68,10 @@ class ReadCommand extends Command
      */
     public function getLimit(InputInterface $input)
     {
-        if ( $input->hasOption('count') ) {
+        if ($input->hasOption('count')) {
             return intval($input->getOption('count'));
         }
 
         return null;
     }
 }
-

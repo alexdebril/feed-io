@@ -17,7 +17,6 @@ use FeedIo\Rule\Media;
 
 class LinkNode extends RuleAbstract
 {
-
     const NODE_NAME = 'link';
 
     /**

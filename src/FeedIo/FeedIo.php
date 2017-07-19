@@ -172,7 +172,7 @@ class FeedIo
     {
         $reflection = new \ReflectionClass("FeedIo\\Parser\\{$format}Parser");
 
-        if ( ! $reflection->isSubclassOf('FeedIo\ParserAbstract') ) {
+        if (! $reflection->isSubclassOf('FeedIo\ParserAbstract')) {
             throw new \InvalidArgumentException();
         }
 
@@ -232,7 +232,7 @@ class FeedIo
      */
     public function addDateFormats(array $formats)
     {
-        foreach( $formats as $format ) {
+        foreach ($formats as $format) {
             $this->getDateTimeBuilder()->addDateFormat($format);
         }
 

@@ -14,7 +14,6 @@ use FeedIo\FeedInterface;
 
 class FixerSet
 {
-
     protected $fixers = array();
 
     /**

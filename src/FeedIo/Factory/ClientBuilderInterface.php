@@ -21,5 +21,4 @@ interface ClientBuilderInterface extends BuilderInterface
      * @return \FeedIo\Adapter\ClientInterface
      */
     public function getClient();
-
 }

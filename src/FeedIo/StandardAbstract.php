@@ -79,5 +79,4 @@ abstract class StandardAbstract
     {
         return static::SYNTAX_FORMAT;
     }
-
 }

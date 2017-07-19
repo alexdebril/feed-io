@@ -21,5 +21,4 @@ interface LoggerBuilderInterface extends BuilderInterface
      * @return \Psr\Log\LoggerInterface
      */
     public function getLogger();
-
 }

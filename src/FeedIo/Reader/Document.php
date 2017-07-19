@@ -10,7 +10,6 @@
 
 namespace FeedIo\Reader;
 
-
 class Document
 {
 
@@ -68,7 +67,7 @@ class Document
      */
     public function getDOMDocument()
     {
-        if ( is_null($this->domDocument) ) {
+        if (is_null($this->domDocument)) {
             $this->domDocument = $this->loadDomDocument();
         }
 
@@ -80,7 +79,7 @@ class Document
      */
     public function getJsonAsArray()
     {
-        if ( is_null($this->jsonArray) ) {
+        if (is_null($this->jsonArray)) {
             $this->jsonArray = $this->loadJsonAsArray();
         }
 
@@ -92,7 +91,7 @@ class Document
      */
     protected function loadDomDocument()
     {
-        if ( ! $this->isXml() ) {
+        if (! $this->isXml()) {
             throw new \LogicException('this document is not a XML stream');
         }
 
@@ -118,11 +117,10 @@ class Document
      */
     protected function loadJsonAsArray()
     {
-        if ( ! $this->isJson() ) {
+        if (! $this->isJson()) {
             throw new \LogicException('this document is not a JSON stream');
         }
 
         return json_decode($this->content, true);
     }
-
 }

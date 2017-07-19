@@ -85,7 +85,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      */
     public function getCategoriesGenerator()
     {
-        foreach( $this->categories as $category ) {
+        foreach ($this->categories as $category) {
             yield $category->getlabel();
         }
     }
@@ -228,8 +228,8 @@ class Node implements NodeInterface, ElementsAwareInterface
     {
         $properties = get_object_vars($this);
 
-        foreach( $properties as $name => $property ) {
-            if ( $property instanceof \DateTime ) {
+        foreach ($properties as $name => $property) {
+            if ($property instanceof \DateTime) {
                 $properties[$name] = $property->format(\DateTime::ATOM);
             }
         }
@@ -239,5 +239,4 @@ class Node implements NodeInterface, ElementsAwareInterface
 
         return $properties;
     }
-
 }

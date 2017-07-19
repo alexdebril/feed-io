@@ -11,7 +11,6 @@ use GuzzleHttp\Exception\BadResponseException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $body = <<<XML
 <xml><feed><title>a great stream</title></feed></xml>
 XML;
@@ -35,7 +34,7 @@ XML;
         $this->assertEquals(array(), $response->getHeaders());
         $this->assertEquals('Tue, 15 Nov 1994 12:45:26 GMT', $response->getHeader('name'));
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
-        $this->assertEquals(1994,  $response->getLastModified()->format('Y'));
+        $this->assertEquals(1994, $response->getLastModified()->format('Y'));
     }
 
     /**

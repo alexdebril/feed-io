@@ -3,9 +3,8 @@ namespace FeedIo;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCheckDependency()
-    {   
+    {
         $factory = new Factory();
         $this->assertTrue($factory->checkDependency(
             $this->getBuilder('stdClass', 'php/php')
@@ -16,7 +15,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      * @expectedException \FeedIo\Factory\MissingDependencyException
      */
     public function testCheckMissingDependency()
-    {   
+    {
         $factory = new Factory();
         $factory->checkDependency(
             $this->getBuilder('IDontExist', 'php/php')
@@ -30,7 +29,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         
         $factory->setLoggerBuilder($loggerBuilder);
         $this->assertAttributeInstanceOf('\FeedIo\Factory\LoggerBuilderInterface', 'loggerBuilder', $factory);
-    } 
+    }
     
     public function testSetClientBuilder()
     {
@@ -39,8 +38,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             
         $factory->setClientBuilder($clientBuilder);
         $this->assertAttributeInstanceOf('\FeedIo\Factory\ClientBuilderInterface', 'clientBuilder', $factory);
-        
-    } 
+    }
     
     public function testExtractConfig()
     {
@@ -48,7 +46,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $builderConfig = ['config' => $config];
         $factory = new Factory();
         $this->assertEquals($config, $factory->extractConfig($builderConfig));
-        
     }
     
     public function testExtractEmptyConfig()
@@ -56,7 +53,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $builderConfig = [];
         $factory = new Factory();
         $this->assertEquals([], $factory->extractConfig($builderConfig));
-        
     }
     public function testCreate()
     {
@@ -148,10 +144,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         
         return $builder;
     }
-    
 }
 
-class ExternalBuilder {
+class ExternalBuilder
+{
     public function __construct(array $config)
     {
     }

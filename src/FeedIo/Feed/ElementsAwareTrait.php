@@ -99,5 +99,4 @@ trait ElementsAwareTrait
             yield $element->getName() => $element->getValue();
         }
     }
-
 }

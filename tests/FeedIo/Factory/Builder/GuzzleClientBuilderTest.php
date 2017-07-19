@@ -6,7 +6,6 @@ use Monolog\Logger;
 
 class GuzzleClientBuilderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetMainClassName()
     {
         $builder = new GuzzleClientBuilder();
@@ -24,5 +23,4 @@ class GuzzleClientBuilderTest extends \PHPUnit_Framework_TestCase
         $builder = new GuzzleClientBuilder();
         $this->assertInstanceOf('\FeedIo\Adapter\ClientInterface', $builder->getClient());
     }
-
 }

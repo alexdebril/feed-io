@@ -10,14 +10,12 @@
 
 namespace FeedIo\Standard;
 
-
 use FeedIo\Formatter\JsonFormatter;
 use FeedIo\Reader\Document;
 use FeedIo\StandardAbstract;
 
 class Json extends StandardAbstract
 {
-
     const SYNTAX_FORMAT = 'Json';
 
     protected $mandatoryFields = ['version', 'title', 'items'];
@@ -38,5 +36,4 @@ class Json extends StandardAbstract
     {
         return new JsonFormatter();
     }
-
 }

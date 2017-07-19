@@ -16,7 +16,6 @@ use FeedIo\Standard\Rss;
 
 class RssTest extends ParserTestAbstract
 {
-
     const SAMPLE_FILE = 'rss/sample-rss.xml';
 
     const ENCLOSURE_FILE = 'rss/rss-enclosure.xml';

@@ -14,7 +14,6 @@ use FeedIo\Feed;
 
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testIsJson()
     {
         $document = new Document('{"json": "value"}');

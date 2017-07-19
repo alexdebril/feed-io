@@ -54,5 +54,4 @@ class PublicId extends FixerAbstract
 
         return $this;
     }
-
 }

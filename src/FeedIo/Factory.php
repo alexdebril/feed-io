@@ -38,7 +38,7 @@ class Factory
      */
     protected $loggerBuilder;
 
-    static public function create(
+    public static function create(
         array $loggerConfig = [
             'builder' => 'NullLogger',
             'config' => [],
@@ -52,9 +52,11 @@ class Factory
         $factory = new static();
 
         $factory->setClientBuilder(
-            $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig)))
+            $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig))
+        )
             ->setLoggerBuilder(
-                $factory->getBuilder($loggerConfig['builder'], $factory->extractConfig($loggerConfig)));
+                $factory->getBuilder($loggerConfig['builder'], $factory->extractConfig($loggerConfig))
+            );
 
 
         return $factory;
@@ -134,5 +136,4 @@ class Factory
 
         return true;
     }
-
 }

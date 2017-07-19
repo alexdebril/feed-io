@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": ">=5.5.0",
-        "monolog/monolog": "1.*"
+        "monolog/monolog": "1.*",
+        "friendsofphp/php-cs-fixer": "^2.4"
     },
     "suggest": {
         "monolog/monolog": "Allows to handle logs",
@@ -30,10 +31,13 @@
     "autoload": {
         "psr-4": {"FeedIo\\": "src/FeedIo"}
     },
-    
+    "scripts": {
+        "install-hook": "chmod +x pre-commit.sh && cp pre-commit.sh .git/hooks/pre-commit",
+        "pre-autoload-dump": "composer install-hook"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
         }
-    }    
+    }
 }

@@ -45,5 +45,4 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($term, $this->object->getTerm());
     }
-    
 }

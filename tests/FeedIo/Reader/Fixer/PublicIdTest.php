@@ -38,10 +38,11 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($feed->getLink(), $feed->getPublicId());
 
         foreach ($feed as $idx => $item) {
-            if ( 0 === $idx )
+            if (0 === $idx) {
                 $this->assertEquals($item->getLink(), $item->getPublicId());
-            else
+            } else {
                 $this->assertEquals('2', $item->getPublicId());
+            }
         }
     }
 

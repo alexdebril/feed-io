@@ -10,16 +10,12 @@
 
 namespace FeedIo;
 
-
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\JsonFormatter;
 
 class JsonFormatterTest extends \PHPUnit_Framework_TestCase
 {
-
-
-
     public function testToString()
     {
         $items = [
@@ -30,7 +26,7 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase
         $feed = new Feed();
         $feed->setTitle('feed title');
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $feed->add($item);
         }
 
@@ -43,7 +39,7 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('feed title', $json['title']);
         $this->assertCount(2, $json['items']);
 
-        foreach($json['items'] as $item) {
+        foreach ($json['items'] as $item) {
             $this->assertArrayHasKey('title', $item);
             $this->assertArrayHasKey('url', $item);
             $this->assertArrayHasKey('author', $item);
@@ -79,5 +75,4 @@ class JsonFormatterTest extends \PHPUnit_Framework_TestCase
 
         return $item;
     }
-
 }

@@ -15,7 +15,6 @@ use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
 {
-
     const NODE_NAME = 'link';
 
     /**
