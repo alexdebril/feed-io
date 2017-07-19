@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": ">=5.5.0",
-        "monolog/monolog": "1.*"
+        "monolog/monolog": "1.*",
+        "friendsofphp/php-cs-fixer": "^2.4"
     },
     "suggest": {
         "monolog/monolog": "Allows to handle logs",
