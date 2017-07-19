@@ -1,2 +1,3 @@
 artifacts/
 vendor/
+.php_cs.cache
