@@ -39,6 +39,14 @@ class Response implements ResponseInterface
     }
 
     /**
+    * @return boolean
+    */
+    public function isModified()
+    {
+        return true;
+    }
+
+    /**
      * @return string
      */
     public function getBody()

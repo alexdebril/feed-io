@@ -25,6 +25,14 @@ class NullResponse implements ResponseInterface
     }
 
     /**
+    * @return boolean
+    */
+    public function isModified()
+    {
+        return true;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getLastModified()

@@ -37,4 +37,9 @@ interface ResponseInterface
      * @return string
      */
     public function getHeader($name);
+
+    /**
+     * @return boolean
+     */
+    public function isModified();
 }
