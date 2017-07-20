@@ -153,4 +153,40 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $reader = new Reader($this->getFaultyClientMock(), new NullLogger());
         $reader->read('fault', new Feed());
     }
+
+    public function testHandleResponse()
+    {
+        $feed = new Feed();
+
+        $standard = $this->getMockForAbstractClass(
+            '\FeedIo\Standard\XmlAbstract',
+            [new DateTimeBuilder()]
+        );
+        $standard->expects($this->any())->method('canHandle')->will($this->returnValue(true));
+
+        $parser = $this->getMockForAbstractClass(
+            '\FeedIo\ParserAbstract',
+            [$standard, new NullLogger()]
+        );
+
+        $parser->expects($this->once())->method('checkBodyStructure')->will($this->returnValue(true));
+        $parser->expects($this->once())->method('parseContent')->will($this->returnValue($feed));
+
+        $this->object->addParser($parser);
+
+        $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
+        $response->expects($this->once())->method('isModified')->will($this->returnValue(true));
+
+        $this->object->handleResponse($response, $feed);
+    }
+
+    public function testHandleEmptyResponse()
+    {
+        $feed = new Feed();
+
+        $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
+        $response->expects($this->once())->method('isModified')->will($this->returnValue(false));
+
+        $this->object->handleResponse($response, $feed);
+    }
 }

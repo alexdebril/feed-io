@@ -43,7 +43,13 @@ class Client implements ClientInterface
     public function getResponse($url, \DateTime $modifiedSince)
     {
         try {
-            return new Response($this->guzzleClient->request('get', $url));
+            $options = [
+                'headers' => [
+                    'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
+                ]
+            ];
+
+            return new Response($this->guzzleClient->request('get', $url, $options));
         } catch (BadResponseException $e) {
             switch ((int) $e->getResponse()->getStatusCode()) {
                 case 404:

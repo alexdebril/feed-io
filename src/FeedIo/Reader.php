@@ -12,6 +12,7 @@ namespace FeedIo;
 
 use FeedIo\ParserAbstract;
 use FeedIo\Adapter\ClientInterface;
+use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Reader\Document;
 use FeedIo\Reader\ReadErrorException;
 use FeedIo\Reader\Result;
@@ -111,19 +112,33 @@ class Reader
         }
 
         try {
+            $this->logger->info("hitting {$url}");
             $response = $this->client->getResponse($url, $modifiedSince);
-
-            $this->logger->debug("response ok, now turning it into a DomDocument");
-            $document = new Document($response->getBody());
-            $this->parseDocument($document, $feed);
-
-            $this->logger->info("{$url} successfully parsed");
+            $document = $this->handleResponse($response, $feed);
 
             return new Result($document, $feed, $modifiedSince, $response, $url);
         } catch (\Exception $e) {
             $this->logger->warning("{$url} read error : {$e->getMessage()}");
             throw new ReadErrorException($e);
         }
+    }
+
+    /**
+     * @param  ResponseInterface     $response
+     * @param  FeedInterface         $feed
+     * @return Document
+     */
+    public function handleResponse(ResponseInterface $response, FeedInterface $feed)
+    {
+        $this->logger->debug("response ok, now turning it into a document");
+        $document = new Document($response->getBody());
+
+        if ($response->isModified()) {
+            $this->logger->info("the stream is modified, parsing it");
+            $this->parseDocument($document, $feed);
+        }
+
+        return $document;
     }
 
     /**
