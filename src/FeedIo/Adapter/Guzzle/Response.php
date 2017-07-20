@@ -34,6 +34,14 @@ class Response implements ResponseInterface
     }
 
     /**
+     * @return boolean
+     */
+    public function isModified()
+    {
+        return $this->psrResponse->getStatusCode() == 200;
+    }
+
+    /**
      * @return \Psr\Http\Message\StreamInterface
      */
     public function getBody()

@@ -22,6 +22,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getMockForAbstractClass('\FeedIo\Adapter\ClientInterface');
         $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
+        $response->expects($this->any())->method('isModified')->will($this->returnValue(true));
         $response->expects($this->any())->method('getBody')->will($this->returnValue(
             file_get_contents(dirname(__FILE__)."/../samples/expected-atom.xml")
         ));
@@ -81,7 +82,7 @@ class FeedIoTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
         }
     }
-    
+
     public function testAddFilter()
     {
         $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');
