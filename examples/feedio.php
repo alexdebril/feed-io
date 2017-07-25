@@ -33,4 +33,4 @@ foreach ($result->getFeed() as $item) {
 }
 
 $domDocument = $feedIo->toAtom($result->getFeed());
-echo $domDocument->saveXML();
+echo $domDocument;
