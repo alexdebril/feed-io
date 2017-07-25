@@ -45,7 +45,7 @@ class Category extends RuleAbstract
     {
         if (! is_null($node->getCategories())) {
             foreach ($node->getCategories() as $category) {
-                return $this->createCategoryElement($document, $category);
+                yield $this->createCategoryElement($document, $category);
             }
         }
         
