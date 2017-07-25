@@ -87,7 +87,12 @@ class XmlFormatter implements FormatterInterface
         $rules = $this->getAllRules($ruleSet, $node);
         $elements = array();
         foreach ($rules as $rule) {
-            $elements[] = $rule->createElement($document, $node);
+            $element = $rule->createElement($document, $node);
+            if ($element instanceof \Traversable) {
+                $elements = array_merge($elements, iterator_to_array($element));
+            } else {
+                $elements[] = $element;
+            }
         }
 
         return array_filter($elements);

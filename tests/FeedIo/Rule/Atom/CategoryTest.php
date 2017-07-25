@@ -68,7 +68,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
         $item = new Item;
         $item->addCategory($category);
         
-        $element = $this->object->createElement(new \DomDocument, $item);
+        $element = iterator_to_array($this->object->createElement(new \DomDocument, $item))[0];
         
         $this->assertEquals('foo', $element->getAttribute('label'));
     }

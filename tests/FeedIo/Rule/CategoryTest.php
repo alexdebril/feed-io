@@ -65,15 +65,15 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
     
     public function testCreateElement()
     {
+        $item = new Item;
+        $this->assertCount(0, iterator_to_array($this->object->createElement(new \DomDocument, $item)));
+
         $category = new \FeedIo\Feed\Node\Category();
         $category->setLabel('foo');
-        
-        $item = new Item;
-        $this->assertNull($this->object->createElement(new \DomDocument, $item));
         $item->addCategory($category);
         
-        $element = $this->object->createElement(new \DomDocument, $item);
-        
+        $element = iterator_to_array($this->object->createElement(new \DomDocument, $item))[0];
+
         $this->assertEquals('foo', $element->nodeValue);
     }
 }
