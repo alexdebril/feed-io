@@ -38,7 +38,7 @@ class Response implements ResponseInterface
      */
     public function isModified()
     {
-        return $this->psrResponse->getStatusCode() == 200;
+        return $this->psrResponse->getStatusCode() != 304 && strlen($this->psrResponse->getBody()) > 0;
     }
 
     /**
