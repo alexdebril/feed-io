@@ -36,6 +36,9 @@
         "pre-autoload-dump": "composer install-hook"
     },
     "config": {
+        "platform": {
+            "php": "7.0.21"
+        },
         "preferred-install": {
             "*": "dist"
         }
