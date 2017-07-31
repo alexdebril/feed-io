@@ -37,7 +37,7 @@ Use Composer to add feed-io into your project's requirements :
 
 feed-io requires :
 
-- php 5.6+
+- php 7.0+
 - psr/log 1.0
 - guzzlehttp/guzzle 6.2+
 
