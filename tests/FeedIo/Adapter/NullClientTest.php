@@ -10,7 +10,9 @@
 
 namespace FeedIo\Adapter;
 
-class NullClientTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class NullClientTest extends TestCase
 {
     public function testGetResponse()
     {

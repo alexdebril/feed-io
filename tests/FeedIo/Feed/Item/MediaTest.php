@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Item;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class MediaTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Item\Media

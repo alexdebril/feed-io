@@ -1,7 +1,9 @@
 <?php
 namespace FeedIo\Factory\Builder;
 
-class NullLoggerBuilderTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class NullLoggerBuilderTest extends TestCase
 {
     public function testGetMainClassName()
     {

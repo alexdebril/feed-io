@@ -11,7 +11,9 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
 
-class OptionalFieldTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class OptionalFieldTest extends TestCase
 {
 
     /**

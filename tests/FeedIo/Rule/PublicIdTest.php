@@ -9,7 +9,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class PublicIdTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class PublicIdTest extends TestCase
 {
 
     /**

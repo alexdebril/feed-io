@@ -13,7 +13,9 @@ namespace FeedIo\Rule;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class MediaTest extends TestCase
 {
 
     /**

@@ -9,7 +9,9 @@ namespace FeedIo\Standard;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-class AtomTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class AtomTest extends TestCase
 {
     const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"/>';

@@ -12,7 +12,9 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-class LinkNodeTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class LinkNodeTest extends TestCase
 {
 
     /**

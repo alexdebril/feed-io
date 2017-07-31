@@ -9,7 +9,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class LinkTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class LinkTest extends TestCase
 {
 
     /**

@@ -4,7 +4,9 @@ namespace FeedIo\Factory\Builder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-class GuzzleClientBuilderTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class GuzzleClientBuilderTest extends TestCase
 {
     public function testGetMainClassName()
     {

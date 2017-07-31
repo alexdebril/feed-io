@@ -13,7 +13,9 @@ namespace FeedIo\Rule;
 use FeedIo\RuleSet;
 use FeedIo\Feed\Item;
 
-class StructureTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class StructureTest extends TestCase
 {
     /**
      * @var Structure

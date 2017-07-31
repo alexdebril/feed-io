@@ -10,7 +10,9 @@
 
 namespace FeedIo;
 
-class FeedTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class FeedTest extends TestCase
 {
 
     /**

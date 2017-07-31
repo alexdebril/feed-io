@@ -12,7 +12,9 @@ namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-class StandardAbstractTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class StandardAbstractTest extends TestCase
 {
 
     /**

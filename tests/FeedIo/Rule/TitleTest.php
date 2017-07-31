@@ -12,7 +12,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class TitleTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class TitleTest extends TestCase
 {
     /**
      * @var Title

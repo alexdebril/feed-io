@@ -12,7 +12,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ModifiedSinceTest extends TestCase
 {
     /**
      * @var \FeedIo\Rule\ModifiedSince

@@ -11,8 +11,9 @@ use FeedIo\Feed;
 use FeedIo\Parser\XmlParser as Parser;
 use FeedIo\Reader\Document;
 use Psr\Log\NullLogger;
+use \PHPUnit\Framework\TestCase;
 
-abstract class ParserTestAbstract extends \PHPUnit_Framework_TestCase
+abstract class ParserTestAbstract extends TestCase
 {
     /**
      * @var \FeedIo\ParserAbstract

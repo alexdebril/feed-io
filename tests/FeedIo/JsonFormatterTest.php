@@ -14,7 +14,9 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\JsonFormatter;
 
-class JsonFormatterTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class JsonFormatterTest extends TestCase
 {
     public function testToString()
     {

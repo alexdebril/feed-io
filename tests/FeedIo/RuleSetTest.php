@@ -12,7 +12,9 @@ namespace FeedIo;
 
 use FeedIo\Rule\OptionalField;
 
-class RuleSetTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class RuleSetTest extends TestCase
 {
     /**
      * @var RuleSet

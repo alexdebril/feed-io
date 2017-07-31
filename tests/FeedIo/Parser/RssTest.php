@@ -14,6 +14,8 @@ use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 
+use \PHPUnit\Framework\TestCase;
+
 class RssTest extends ParserTestAbstract
 {
     const SAMPLE_FILE = 'rss/sample-rss.xml';

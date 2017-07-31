@@ -10,6 +10,8 @@ namespace FeedIo\StandardFormatter;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 
+use \PHPUnit\Framework\TestCase;
+
 class RssTest extends FormatterTestAbstract
 {
     const SAMPLE_FILE = 'rss/expected-rss.xml';

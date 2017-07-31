@@ -3,7 +3,9 @@ namespace FeedIo;
 
 use FeedIo\Standard\Atom;
 
-class StandardFeedsTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class StandardFeedsTest extends TestCase
 {
     /**
      * @var FeedIo
