@@ -14,7 +14,9 @@ use FeedIo\Rule\Title;
 use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 
-class FormatterTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class FormatterTest extends TestCase
 {
 
     /**

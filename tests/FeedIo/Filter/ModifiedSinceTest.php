@@ -13,7 +13,9 @@ namespace FeedIo\Filter;
 use FeedIo\Feed\Item;
 use FeedIo\Feed;
 
-class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ModifiedSinceTest extends TestCase
 {
 
     /**

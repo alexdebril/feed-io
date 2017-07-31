@@ -14,7 +14,9 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Json;
 use Psr\Log\NullLogger;
 
-class JsonParserTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class JsonParserTest extends TestCase
 {
     public function getDocument()
     {

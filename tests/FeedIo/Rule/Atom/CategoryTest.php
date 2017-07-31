@@ -12,7 +12,9 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-class CategoryTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class CategoryTest extends TestCase
 {
     /**
      * @var \FeedIo\Rule\Atom\Category

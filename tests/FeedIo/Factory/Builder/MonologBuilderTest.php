@@ -4,7 +4,9 @@ namespace FeedIo\Factory\Builder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-class MonologBuilderTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class MonologBuilderTest extends TestCase
 {
     public function testGetMainClassName()
     {

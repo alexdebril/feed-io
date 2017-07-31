@@ -12,7 +12,9 @@ namespace FeedIo\Feed;
 
 use FeedIo\Feed\Node\Category;
 
-class NodeTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class NodeTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Node

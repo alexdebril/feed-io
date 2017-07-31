@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Node;
 
-class ElementIteratorTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ElementIteratorTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Item\ElementIterator

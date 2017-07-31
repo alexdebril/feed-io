@@ -14,7 +14,9 @@ use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Item\Media;
 use FeedIo\Feed\Item\Author;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ItemTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Item

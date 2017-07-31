@@ -14,6 +14,8 @@ use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 
+use \PHPUnit\Framework\TestCase;
+
 class AtomTest extends ParserTestAbstract
 {
     const SAMPLE_FILE = 'sample-atom.xml';

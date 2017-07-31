@@ -10,6 +10,8 @@ namespace FeedIo\Reader;
 use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
 
+use \PHPUnit\Framework\TestCase;
+
 class FixerMock extends FixerAbstract
 {
 

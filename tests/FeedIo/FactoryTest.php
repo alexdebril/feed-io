@@ -1,7 +1,9 @@
 <?php
 namespace FeedIo;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class FactoryTest extends TestCase
 {
     public function testCheckDependency()
     {

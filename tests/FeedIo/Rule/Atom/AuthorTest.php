@@ -7,7 +7,9 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-class AuthorTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class AuthorTest extends TestCase
 {
 
     /**

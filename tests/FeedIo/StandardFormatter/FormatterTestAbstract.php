@@ -12,8 +12,9 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\XmlFormatter;
 use Psr\Log\NullLogger;
+use \PHPUnit\Framework\TestCase;
 
-abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
+abstract class FormatterTestAbstract extends TestCase
 {
 
     /**

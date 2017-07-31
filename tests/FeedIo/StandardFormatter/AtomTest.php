@@ -10,6 +10,8 @@ namespace FeedIo\StandardFormatter;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 
+use \PHPUnit\Framework\TestCase;
+
 class AtomTest extends FormatterTestAbstract
 {
     const SAMPLE_FILE = 'expected-atom.xml';

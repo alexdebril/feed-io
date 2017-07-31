@@ -13,7 +13,9 @@ namespace FeedIo\Reader;
 use FeedIo\Feed;
 use FeedIo\Reader\Document;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ResultTest extends TestCase
 {
     /**
      * @var \FeedIo\Reader\Result

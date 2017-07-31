@@ -9,7 +9,9 @@ namespace FeedIo\Adapter\Guzzle;
 
 use GuzzleHttp\Exception\BadResponseException;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ClientTest extends TestCase
 {
     protected $body = <<<XML
 <xml><feed><title>a great stream</title></feed></xml>

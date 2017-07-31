@@ -10,7 +10,9 @@
 
 namespace FeedIo\Rule;
 
-class DateTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class DateTest extends TestCase
 {
     /**
      * Timezone used to test a timezone switch.

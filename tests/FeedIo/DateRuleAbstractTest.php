@@ -9,7 +9,9 @@ namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-class DateRuleAbstractTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class DateRuleAbstractTest extends TestCase
 {
 
     /**

@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed;
 
-class ElementsAwareTraitTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ElementsAwareTraitTest extends TestCase
 {
     public function testGetElementsAsGenerator()
     {
