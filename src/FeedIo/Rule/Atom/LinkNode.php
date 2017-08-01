@@ -53,14 +53,18 @@ class LinkNode extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        return $this->ruleSet->getDefault()->createElement($document, $node);
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $this->ruleSet->getDefault()->apply($document, $rootElement, $node);
     }
 }
