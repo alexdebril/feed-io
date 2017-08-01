@@ -35,23 +35,23 @@ class Category extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement|null
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        if (! is_null($node->getCategories())) {
-            foreach ($node->getCategories() as $category) {
-                yield $this->createCategoryElement($document, $category);
-            }
-        }
-        
-        return;
+        return !! $node->getCategories();
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        foreach ($node->getCategories() as $category) {
+            $rootElement->appendChild($this->createCategoryElement($document, $category));
+        }
+    }
+
     /**
      * @param  \DomDocument   $document
      * @param  CategoryInterface $category
@@ -63,7 +63,9 @@ class Category extends RuleAbstract
             $this->getNodeName(),
             is_null($category->getTerm()) ? $category->getLabel():$category->getTerm()
             );
-        $element->setAttribute('domain', $category->getScheme());
+        if ( !! $category->getScheme() ) {
+            $element->setAttribute('domain', $category->getScheme());
+        }
 
         return $element;
     }
