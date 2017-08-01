@@ -10,6 +10,7 @@
 
 namespace FeedIo\Rule;
 
+use FeedIo\Feed\ElementsAwareInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\RuleAbstract;
@@ -97,23 +98,6 @@ class OptionalField extends RuleAbstract
         return $element;
     }
 
-    /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
-     */
-    public function createElement(\DomDocument $document, NodeInterface $node)
-    {
-        $domElement = $document->createElement($this->getNodeName());
-        foreach ($node->getElementIterator($this->getNodeName()) as $element) {
-            $this->buildDomElement($domElement, $element);
-        }
-
-        return $domElement;
-    }
-
     public function buildDomElement(\DomElement $domElement, ElementInterface $element)
     {
         $domElement->nodeValue = $element->getValue();
@@ -130,5 +114,28 @@ class OptionalField extends RuleAbstract
         }
 
         return $domElement;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return $node instanceof ElementsAwareInterface;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $domElement = $document->createElement($this->getNodeName());
+        if ($node instanceof ElementsAwareInterface) {
+            foreach ($node->getElementIterator($this->getNodeName()) as $element) {
+                $this->buildDomElement($domElement, $element);
+            }
+        }
+
+        $rootElement->appendChild($domElement);
     }
 }
