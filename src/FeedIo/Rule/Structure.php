@@ -52,19 +52,25 @@ class Structure extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $element = $document->createElement($this->getNodeName());
+
+        /** @var RuleAbstract $rule */
         foreach ($this->ruleSet->getRules() as $rule) {
-            $element->appendChild($rule->createElement($document, $node));
+            $rule->apply($document, $element, $node);
         }
 
-        return $element;
+        $rootElement->appendChild($element);
     }
 }
