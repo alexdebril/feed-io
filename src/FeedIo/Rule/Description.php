@@ -36,16 +36,20 @@ class Description extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DOMDocument  $document
-     * @param  NodeInterface $node
-     * @return \DOMElement
+     * @inheritDoc
      */
-    public function createElement(\DOMDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return !! $node->getDescription();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $description = htmlspecialchars($node->getDescription());
 
-        return $document->createElement($this->getNodeName(), $description);
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $description));
     }
 }
