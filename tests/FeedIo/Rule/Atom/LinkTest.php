@@ -55,7 +55,7 @@ class LinkTest extends TestCase
         $this->assertEquals('link', $addedElement->nodeName);
 
         $document->appendChild($rootElement);
-        
+
         $this->assertXmlStringEqualsXmlString(
             '<feed><link href="http://localhost"/></feed>',
             $document->saveXML()
