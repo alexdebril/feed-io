@@ -30,14 +30,18 @@ class Link extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        return $document->createElement($this->getNodeName(), $node->getLink());
+        return !! $node->getLink();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getLink()));
     }
 }
