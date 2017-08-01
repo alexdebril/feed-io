@@ -81,7 +81,7 @@ class XmlFormatter implements FormatterInterface
         $rules = $this->getAllRules($ruleSet, $node);
 
         foreach ($rules as $rule) {
-            $rule->addElement($document, $rootElement, $node);
+            $rule->apply($document, $rootElement, $node);
         }
     }
 
