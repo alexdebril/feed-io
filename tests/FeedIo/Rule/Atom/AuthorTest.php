@@ -65,13 +65,17 @@ class AuthorTest extends TestCase
         $item->setAuthor($author);
 
         $document = new \DOMDocument();
-        $element = $this->object->createElement($document, $item);
-        $document->appendChild($element);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals('author', $element->nodeName);
+        $rootElement = $document->createElement('feed');
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertInstanceOf('\DomElement', $addedElement);
+        $this->assertEquals('author', $addedElement->nodeName);
+        $document->appendChild($rootElement);
 
         $this->assertXmlStringEqualsXmlString(
-            '<?xml version="1.0"?><author><name>John Doe</name><uri>http://localhost</uri><email>john@localhost</email></author>',
+            '<?xml version="1.0"?><feed><author><name>John Doe</name><uri>http://localhost</uri><email>john@localhost</email></author></feed>',
             $document->saveXML()
         );
     }
