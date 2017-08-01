@@ -67,6 +67,20 @@ abstract class RuleAbstract
     }
 
     /**
+     * adds the accurate DomElement content according to the node's property
+     *
+     * @param \DomDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
+     */
+    public function apply(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        if ($this->hasValue($node)) {
+            $this->addElement($document, $rootElement, $node);
+        }
+    }
+
+    /**
      * Sets the accurate $item property according to the DomElement content
      *
      * @param  NodeInterface $node
@@ -76,11 +90,19 @@ abstract class RuleAbstract
     abstract public function setProperty(NodeInterface $node, \DOMElement $element);
 
     /**
-     * creates the accurate DomElement content according to the $item's property
+     * Tells if the node contains the expected value
      *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @param NodeInterface $node
+     * @return bool
      */
-    abstract public function createElement(\DomDocument $document, NodeInterface $node);
+    abstract protected function hasValue(NodeInterface $node) : bool;
+
+    /**
+     * Creates and adds the element(s) to the docuement's rootElement
+     *
+     * @param \DomDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
+     */
+    abstract protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void;
 }

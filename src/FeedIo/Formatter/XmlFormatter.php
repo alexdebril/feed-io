@@ -48,10 +48,8 @@ class XmlFormatter implements FormatterInterface
     public function setHeaders(\DOMDocument $document, FeedInterface $feed)
     {
         $rules = $this->standard->getFeedRuleSet();
-        $elements = $this->buildElements($rules, $document, $feed);
-        foreach ($elements as $element) {
-            $this->standard->getMainElement($document)->appendChild($element);
-        }
+        $mainElement = $this->standard->getMainElement($document);
+        $elements = $this->buildElements($rules, $document, $mainElement, $feed);
 
         return $this;
     }
@@ -65,11 +63,7 @@ class XmlFormatter implements FormatterInterface
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
-        $elements = $this->buildElements($rules, $document, $node);
-
-        foreach ($elements as $element) {
-            $domItem->appendChild($element);
-        }
+        $elements = $this->buildElements($rules, $document, $domItem, $node);
 
         $this->standard->getMainElement($document)->appendChild($domItem);
 
@@ -77,25 +71,18 @@ class XmlFormatter implements FormatterInterface
     }
 
     /**
-     * @param  RuleSet       $ruleSet
-     * @param  \DOMDocument  $document
-     * @param  NodeInterface $node
-     * @return array
+     * @param RuleSet $ruleSet
+     * @param \DOMDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
      */
-    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, NodeInterface $node)
+    public function buildElements(RuleSet $ruleSet, \DOMDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $rules = $this->getAllRules($ruleSet, $node);
-        $elements = array();
-        foreach ($rules as $rule) {
-            $element = $rule->createElement($document, $node);
-            if ($element instanceof \Traversable) {
-                $elements = array_merge($elements, iterator_to_array($element));
-            } else {
-                $elements[] = $element;
-            }
-        }
 
-        return array_filter($elements);
+        foreach ($rules as $rule) {
+            $rule->addElement($document, $rootElement, $node);
+        }
     }
 
     /**
