@@ -45,9 +45,20 @@ class LinkTest extends TestCase
         $item = new Item();
         $item->setLink(self::LINK);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::LINK, $element->getAttribute('href'));
-        $this->assertEquals('link', $element->nodeName);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+        $this->assertInstanceOf('\DomElement', $addedElement);
+        $this->assertEquals(self::LINK, $addedElement->getAttribute('href'));
+        $this->assertEquals('link', $addedElement->nodeName);
+
+        $document->appendChild($rootElement);
+        
+        $this->assertXmlStringEqualsXmlString(
+            '<feed><link href="http://localhost"/></feed>',
+            $document->saveXML()
+        );
     }
 }

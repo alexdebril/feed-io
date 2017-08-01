@@ -11,9 +11,9 @@
 namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\NodeInterface;
-use FeedIo\RuleAbstract;
+use FeedIo\Rule\Link as BaseLink;
 
-class Link extends RuleAbstract
+class Link extends BaseLink
 {
     const NODE_NAME = 'link';
 
@@ -32,17 +32,13 @@ class Link extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $element = $document->createElement(static::NODE_NAME);
         $element->setAttribute('href', $node->getLink());
 
-        return $element;
+        $rootElement->appendChild($element);
     }
 }
