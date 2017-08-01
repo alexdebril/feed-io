@@ -61,24 +61,6 @@ class Media extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
-     */
-    public function createElement(\DomDocument $document, NodeInterface $node)
-    {
-        if ($node instanceof ItemInterface) {
-            foreach ($node->getMedias() as $media) {
-                return $this->createMediaElement($document, $media);
-            }
-        }
-
-        return;
-    }
-
-    /**
      * @param  \DomDocument   $document
      * @param  MediaInterface $media
      * @return \DomElement
@@ -91,5 +73,23 @@ class Media extends RuleAbstract
         $element->setAttribute('length', $media->getLength());
 
         return $element;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return $node instanceof ItemInterface && !! $node->getMedias();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        foreach ($node->getMedias() as $media) {
+            $rootElement->appendChild($this->createMediaElement($document, $media));
+        }
     }
 }
