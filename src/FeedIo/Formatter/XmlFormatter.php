@@ -49,7 +49,7 @@ class XmlFormatter implements FormatterInterface
     {
         $rules = $this->standard->getFeedRuleSet();
         $mainElement = $this->standard->getMainElement($document);
-        $elements = $this->buildElements($rules, $document, $mainElement, $feed);
+        $this->buildElements($rules, $document, $mainElement, $feed);
 
         return $this;
     }
@@ -63,7 +63,7 @@ class XmlFormatter implements FormatterInterface
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
-        $elements = $this->buildElements($rules, $document, $domItem, $node);
+        $this->buildElements($rules, $document, $domItem, $node);
 
         $this->standard->getMainElement($document)->appendChild($domItem);
 
