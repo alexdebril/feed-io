@@ -14,7 +14,6 @@ use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;
-use FeedIo\Rule\Media;
 
 class LinkNode extends RuleAbstract
 {
