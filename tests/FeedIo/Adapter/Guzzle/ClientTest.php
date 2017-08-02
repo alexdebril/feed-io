@@ -81,7 +81,8 @@ XML;
      */
     protected function getGuzzleClient()
     {
-        $stream = $this->getMockForAbstractClass('\Psr\Http\Message\StreamInterface');;
+        $stream = $this->getMockForAbstractClass('\Psr\Http\Message\StreamInterface');
+
         $stream->expects($this->any())->method('getContents')->will($this->returnValue($this->body));
         $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
         $response->expects($this->any())->method('getBody')->will($this->returnValue($stream));
