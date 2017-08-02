@@ -63,9 +63,16 @@ class LinkNodeTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->setLink(self::LINK);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::LINK, $element->getAttribute('href'));
-        $this->assertEquals('link', $element->nodeName);
+        $elements = $this->object->createElement(new \DOMDocument(), $item);
+
+        $count = 0;
+        foreach ($elements as $element) {
+            $count++;
+            $this->assertInstanceOf('\DomElement', $element);
+            $this->assertEquals(self::LINK, $element->getAttribute('href'));
+            $this->assertEquals('link', $element->nodeName);
+        }
+
+        $this->assertEquals(1, $count);
     }
 }
