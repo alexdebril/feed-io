@@ -10,10 +10,10 @@
 
 namespace FeedIo\Rule\Atom;
 
+use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\RuleSet;
-use FeedIo\Rule\Media;
 
 class LinkNode extends RuleAbstract
 {
@@ -33,7 +33,7 @@ class LinkNode extends RuleAbstract
         $mediaRule = new Media();
         $mediaRule->setUrlAttributeName('href');
         $this->ruleSet = new RuleSet(new Link('related'));
-        $this->ruleSet->add($mediaRule);
+        $this->ruleSet->add($mediaRule, ['media', 'enclosure']);
     }
 
     /**
@@ -61,6 +61,14 @@ class LinkNode extends RuleAbstract
      */
     public function createElement(\DomDocument $document, NodeInterface $node)
     {
-        return $this->ruleSet->getDefault()->createElement($document, $node);
+        $output = new \ArrayIterator();
+        if ($node instanceof ItemInterface) {
+            foreach ($node->getMedias() as $media) {
+                $output->append($this->ruleSet->get('media')->createElement($document, $node));
+            }
+        }
+        $output->append($this->ruleSet->getDefault()->createElement($document, $node));
+
+        return $output;
     }
 }
