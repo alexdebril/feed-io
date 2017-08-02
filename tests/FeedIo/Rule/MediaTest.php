@@ -44,7 +44,7 @@ class MediaTest extends TestCase
         foreach ($item->getMedias() as $itemMedia) {
             $this->assertInternalType('string', $itemMedia->getType());
             $this->assertInternalType('string', $itemMedia->getUrl());
-            $this->assertInternalType('integer', $itemMedia->getLength());
+            $this->assertInternalType('string', $itemMedia->getLength());
 
             $this->assertEquals($media->getAttribute('url'), $itemMedia->getUrl());
             $count++;
@@ -60,7 +60,7 @@ class MediaTest extends TestCase
 
         $media1->setType('audio')
               ->setUrl('http://localhost/1')
-              ->setLength(123);
+              ->setLength('123');
 
         $item->addMedia($media1);
 
@@ -71,7 +71,7 @@ class MediaTest extends TestCase
         $media2 = new \FeedIo\Feed\Item\Media();
         $media2->setType('audio')
             ->setUrl('http://localhost/2')
-            ->setLength(123);
+            ->setLength('123');
 
         $item->addMedia($media2);
 

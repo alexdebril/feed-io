@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -80,7 +80,7 @@ class Media implements MediaInterface
      */
     public function setLength($length)
     {
-        $this->length = intval($length);
+        $this->length = $length;
 
         return $this;
     }

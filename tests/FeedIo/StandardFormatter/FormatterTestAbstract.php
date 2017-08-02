@@ -45,11 +45,11 @@ abstract class FormatterTestAbstract extends TestCase
         $feed->setTitle('sample title');
         $feed->setLastModified($date);
         $feed->setLink('http://localhost');
-        $feed->setPublicId(1);
+        $feed->setPublicId('1');
         $feed->addCategory($category);
         
         $item = new Item();
-        $item->setPublicId(42);
+        $item->setPublicId('42');
         $item->setLastModified($date);
         $item->setTitle('item title');
         $item->setDescription('A great description');

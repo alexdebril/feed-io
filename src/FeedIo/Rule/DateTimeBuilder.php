@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -66,7 +66,7 @@ class DateTimeBuilder
      * @param $dateFormat
      * @return $this
      */
-    public function addDateFormat($dateFormat)
+    public function addDateFormat(string $dateFormat)
     {
         $this->dateFormats[] = $dateFormat;
 
@@ -121,7 +121,7 @@ class DateTimeBuilder
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
-            $date = \DateTime::createFromFormat($format, $string);
+            $date = \DateTime::createFromFormat((string) $format, $string);
             if ($date instanceof \DateTime) {
                 $date->setTimezone($this->getTimezone());
 
