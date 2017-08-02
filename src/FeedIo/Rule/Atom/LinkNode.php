@@ -53,22 +53,25 @@ class LinkNode extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        $output = new \ArrayIterator();
+        return true;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
         if ($node instanceof ItemInterface) {
             foreach ($node->getMedias() as $media) {
-                $output->append($this->ruleSet->get('media')->createElement($document, $node));
+                $this->ruleSet->get('media')->apply($document, $rootElement, $node);
             }
         }
-        $output->append($this->ruleSet->getDefault()->createElement($document, $node));
 
-        return $output;
+        $this->ruleSet->getDefault()->apply($document, $rootElement, $node);
     }
 }

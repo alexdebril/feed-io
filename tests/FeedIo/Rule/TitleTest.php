@@ -45,10 +45,18 @@ class TitleTest extends TestCase
     {
         $item = new Item();
         $item->setTitle(self::TITLE);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::TITLE, $element->nodeValue);
-        $this->assertEquals('title', $element->nodeName);
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals(self::TITLE, $addedElement ->nodeValue);
+        $this->assertEquals('title', $addedElement ->nodeName);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><title>my great article</title></feed>', $document->saveXML());
     }
 }

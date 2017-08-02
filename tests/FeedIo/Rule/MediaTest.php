@@ -56,21 +56,39 @@ class MediaTest extends TestCase
     public function testCreateElement()
     {
         $item = new Item();
-        $this->assertNull($this->object->createElement(new \DomDocument(), $item));
-        $media = new \FeedIo\Feed\Item\Media();
+        $media1 = new \FeedIo\Feed\Item\Media();
 
-        $media->setType('audio')
-              ->setUrl('http://localhost')
+        $media1->setType('audio')
+              ->setUrl('http://localhost/1')
               ->setLength(123);
 
-        $item->addMedia($media);
+        $item->addMedia($media1);
 
-        $element = $this->object->createMediaElement(new \DomDocument(), $media);
+        $element = $this->object->createMediaElement(new \DomDocument(), $media1);
 
-        $this->assertMediaEqualsElement($media, $element);
+        $this->assertMediaEqualsElement($media1, $element);
 
-        $secondElement = $this->object->createElement(new \DomDocument(), $item);
-        $this->assertMediaEqualsElement($media, $element);
+        $media2 = new \FeedIo\Feed\Item\Media();
+        $media2->setType('audio')
+            ->setUrl('http://localhost/2')
+            ->setLength(123);
+
+        $item->addMedia($media2);
+
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $firstElement = $rootElement->firstChild;
+        $this->assertMediaEqualsElement($media1, $firstElement);
+
+        $nextElement = $rootElement->lastChild;
+        $this->assertMediaEqualsElement($media2, $nextElement);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><enclosure length="123" type="audio" url="http://localhost/1"/><enclosure length="123" type="audio" url="http://localhost/2"/></feed>', $document->saveXML());
     }
 
     protected function assertMediaEqualsElement(MediaInterface $media, \DomElement $element)
