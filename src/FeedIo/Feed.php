@@ -36,7 +36,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return string $url
      */
-    public function getUrl()
+    public function getUrl() : ? string
     {
         return $this->url;
     }
@@ -45,7 +45,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      * @param string $url
      * @return FeedInterface
      */
-    public function setUrl($url)
+    public function setUrl(string $url) : FeedInterface
     {
         $this->url = $url;
         
@@ -112,7 +112,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      * @param  ItemInterface $item
      * @return $this
      */
-    public function add(ItemInterface $item)
+    public function add(ItemInterface $item) : FeedInterface
     {
         $this->items->append($item);
 
@@ -122,7 +122,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return ItemInterface
      */
-    public function newItem()
+    public function newItem() : ItemInterface
     {
         return new Item();
     }
