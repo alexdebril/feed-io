@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -69,8 +69,8 @@ class Media extends RuleAbstract
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
-        $element->setAttribute('type', $media->getType());
-        $element->setAttribute('length', $media->getLength());
+        $element->setAttribute('type', $media->getType() ?? '');
+        $element->setAttribute('length', $media->getLength() ?? '');
 
         return $element;
     }

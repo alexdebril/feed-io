@@ -178,6 +178,7 @@ class ReaderTest extends TestCase
 
         $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
         $response->expects($this->once())->method('isModified')->will($this->returnValue(true));
+        $response->expects($this->any())->method('getBody')->will($this->returnValue(''));
 
         $this->object->handleResponse($response, $feed);
     }
@@ -188,6 +189,7 @@ class ReaderTest extends TestCase
 
         $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
         $response->expects($this->once())->method('isModified')->will($this->returnValue(false));
+        $response->expects($this->any())->method('getBody')->will($this->returnValue(''));
 
         $this->object->handleResponse($response, $feed);
     }

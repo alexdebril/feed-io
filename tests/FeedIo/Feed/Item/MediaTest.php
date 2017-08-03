@@ -33,7 +33,6 @@ class MediaTest extends TestCase
     public function testSetLength()
     {
         $this->object->setLength('87669');
-        $this->assertInternalType('integer', $this->object->getLength());
-        $this->assertEquals(87669, $this->object->getLength());
+        $this->assertEquals('87669', $this->object->getLength());
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -119,7 +119,7 @@ class Reader
             return new Result($document, $feed, $modifiedSince, $response, $url);
         } catch (\Exception $e) {
             $this->logger->warning("{$url} read error : {$e->getMessage()}");
-            throw new ReadErrorException($e);
+            throw new ReadErrorException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

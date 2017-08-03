@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -41,9 +41,9 @@ class Category extends \FeedIo\Rule\Category
     public function createCategoryElement(\DomDocument $document, CategoryInterface $category)
     {
         $element = $document->createElement($this->getNodeName());
-        $element->setAttribute('scheme', $category->getScheme());
-        $element->setAttribute('term', $category->getTerm());
-        $element->setAttribute('label', $category->getLabel());
+        $element->setAttribute('scheme', $category->getScheme() ?? '');
+        $element->setAttribute('term', $category->getTerm() ?? '');
+        $element->setAttribute('label', $category->getLabel() ?? '');
         
         return $element;
     }

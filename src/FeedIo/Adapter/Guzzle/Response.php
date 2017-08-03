@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -46,7 +46,7 @@ class Response implements ResponseInterface
      */
     public function getBody()
     {
-        return $this->psrResponse->getBody();
+        return $this->psrResponse->getBody()->getContents();
     }
 
     /**
