@@ -11,7 +11,6 @@
 namespace FeedIo;
 
 use FeedIo\Filter\ModifiedSince;
-use FeedIo\Reader;
 use FeedIo\Reader\Result;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
