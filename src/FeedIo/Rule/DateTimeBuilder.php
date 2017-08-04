@@ -126,7 +126,7 @@ class DateTimeBuilder
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
-            $date = \DateTime::createFromFormat($format, $string, $this->getFeedTimezone());
+            $date = $this->newDate($format, $string);
             if ($date instanceof \DateTime) {
                 $date->setTimezone($this->getTimezone());
 
@@ -212,5 +212,20 @@ class DateTimeBuilder
     public function setTimezone(\DateTimeZone $timezone)
     {
         $this->setServerTimezone($timezone);
+    }
+
+
+    /**
+     * @param $format
+     * @param $string
+     * @return \DateTime
+     */
+    protected function newDate($format, $string)
+    {
+        if (!! $this->getFeedTimezone()) {
+            return \DateTime::createFromFormat($format, $string, $this->getFeedTimezone());
+        }
+
+        return \DateTime::createFromFormat($format, $string);
     }
 }
