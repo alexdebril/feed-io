@@ -38,7 +38,12 @@ class DateTimeBuilder
     /**
      * @var \DateTimeZone
      */
-    protected $timezone;
+    protected $feedTimezone;
+
+    /**
+     * @var \DateTimeZone
+     */
+    protected $serverTimezone;
 
     /**
      * @var LoggerInterface
@@ -121,7 +126,7 @@ class DateTimeBuilder
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
-            $date = \DateTime::createFromFormat($format, $string);
+            $date = \DateTime::createFromFormat($format, $string, $this->getFeedTimezone());
             if ($date instanceof \DateTime) {
                 $date->setTimezone($this->getTimezone());
 
@@ -154,9 +159,51 @@ class DateTimeBuilder
     /**
      * @return \DateTimeZone
      */
+    public function getFeedTimezone()
+    {
+        return $this->feedTimezone;
+    }
+
+    /**
+     * Specifies the feed's timezone. Do this it the timezone is missing
+     *
+     * @param \DateTimeZone $timezone
+     */
+    public function setFeedTimezone(\DateTimeZone $timezone)
+    {
+        $this->feedTimezone = $timezone;
+    }
+
+    /**
+     * Resets feedTimezone to null.
+     */
+    public function resetFeedTimezone()
+    {
+        $this->feedTimezone = null;
+    }
+
+    /**
+     * @return \DateTimeZone
+     */
+    public function getServerTimezone()
+    {
+        return $this->serverTimezone;
+    }
+
+    /**
+     * @param \DateTimeZone $timezone
+     */
+    public function setServerTimezone(\DateTimeZone $timezone)
+    {
+        $this->serverTimezone = $timezone;
+    }
+
+    /**
+     * @return \DateTimeZone
+     */
     public function getTimezone()
     {
-        return $this->timezone;
+        return $this->getServerTimezone();
     }
 
     /**
@@ -164,6 +211,6 @@ class DateTimeBuilder
      */
     public function setTimezone(\DateTimeZone $timezone)
     {
-        $this->timezone = $timezone;
+        $this->setServerTimezone($timezone);
     }
 }
