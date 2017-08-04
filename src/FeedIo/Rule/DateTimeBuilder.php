@@ -150,7 +150,7 @@ class DateTimeBuilder
         if (false === strtotime($string)) {
             throw new \InvalidArgumentException('Impossible to convert date : '.$string);
         }
-        $date = new \DateTime($string);
+        $date = new \DateTime($string, $this->getFeedTimezone());
         $date->setTimezone($this->getTimezone());
 
         return $date;
