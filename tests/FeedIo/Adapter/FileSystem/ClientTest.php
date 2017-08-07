@@ -36,7 +36,7 @@ class ClientTest extends TestCase
         $this->assertEquals(file_get_contents(__DIR__.'/../../../samples/sample-atom.xml'), $response->getBody());
 
         $this->assertEquals(array(), $response->getHeaders());
-        $this->assertEquals('', $response->getHeader('name'));
+        $this->assertEquals([], $response->getHeader('name'));
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
     }
 

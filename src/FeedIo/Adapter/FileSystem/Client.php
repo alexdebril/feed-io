@@ -12,6 +12,7 @@ namespace FeedIo\Adapter\FileSystem;
 
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\NotFoundException;
+use FeedIo\Adapter\ResponseInterface;
 
 /**
  * Filesystem client
@@ -25,7 +26,7 @@ class Client implements ClientInterface
      * @throws \FeedIo\Adapter\NotFoundException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse($path, \DateTime $modifiedSince)
+    public function getResponse(string $path, \DateTime $modifiedSince) : ResponseInterface
     {
         if (file_exists($path)) {
             return new Response(
