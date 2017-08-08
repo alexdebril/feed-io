@@ -37,9 +37,9 @@ class Item extends Node implements ItemInterface
 
     /**
      * @param  MediaInterface $media
-     * @return $this
+     * @return ItemInterface
      */
-    public function addMedia(MediaInterface $media)
+    public function addMedia(MediaInterface $media) : ItemInterface
     {
         $this->medias->append($media);
 
@@ -47,9 +47,9 @@ class Item extends Node implements ItemInterface
     }
 
     /**
-     * @return \ArrayIterator
+     * @return iterable
      */
-    public function getMedias()
+    public function getMedias() : iterable
     {
         return $this->medias;
     }
@@ -57,7 +57,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return boolean
      */
-    public function hasMedia()
+    public function hasMedia() : bool
     {
         return $this->medias->count() > 0;
     }
@@ -65,7 +65,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return MediaInterface
      */
-    public function newMedia()
+    public function newMedia() : MediaInterface
     {
         return new Media();
     }
@@ -73,16 +73,16 @@ class Item extends Node implements ItemInterface
     /**
      * @return AuthorInterface
      */
-    public function getAuthor()
+    public function getAuthor() : ? AuthorInterface
     {
         return $this->author;
     }
 
     /**
      * @param  AuthorInterface $author
-     * @return $this
+     * @return ItemInterface
      */
-    public function setAuthor(AuthorInterface $author)
+    public function setAuthor(AuthorInterface $author) : ItemInterface
     {
         $this->author = $author;
 
@@ -92,7 +92,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return AuthorInterface
      */
-    public function newAuthor()
+    public function newAuthor() : AuthorInterface
     {
         return new Author();
     }
