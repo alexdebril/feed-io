@@ -34,7 +34,7 @@ class XmlParser extends ParserAbstract
      * @param $tagName
      * @return bool
      */
-    public function isItem($tagName)
+    public function isItem(string $tagName) : bool
     {
         return (strtolower($this->standard->getItemNodeName()) === strtolower($tagName));
     }
@@ -46,7 +46,7 @@ class XmlParser extends ParserAbstract
      * @throws Parser\MissingFieldsException
      * @throws Parser\UnsupportedFormatException
      */
-    public function parseContent(Document $document, FeedInterface $feed)
+    public function parseContent(Document $document, FeedInterface $feed) : FeedInterface
     {
         $element = $this->standard->getMainElement($document->getDOMDocument());
 
@@ -56,12 +56,12 @@ class XmlParser extends ParserAbstract
     }
 
     /**
-     * @param  Document            $document
-     * @param  array                  $mandatoryFields
-     * @return $this
+     * @param Document $document
+     * @param iterable $mandatoryFields
      * @throws MissingFieldsException
+     * @return bool
      */
-    public function checkBodyStructure(Document $document, array $mandatoryFields)
+    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool
     {
         $errors = array();
 
@@ -79,7 +79,7 @@ class XmlParser extends ParserAbstract
             throw new MissingFieldsException($message);
         }
 
-        return $this;
+        return true;
     }
 
     /**
@@ -88,7 +88,7 @@ class XmlParser extends ParserAbstract
      * @param  RuleSet       $ruleSet
      * @return NodeInterface
      */
-    public function parseNode(NodeInterface $item, \DOMElement $element, RuleSet $ruleSet)
+    public function parseNode(NodeInterface $item, \DOMElement $element, RuleSet $ruleSet) : NodeInterface
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof \DOMElement) {
@@ -103,9 +103,8 @@ class XmlParser extends ParserAbstract
      * @param NodeInterface $item
      * @param \DOMElement $node
      * @param RuleSet $ruleSet
-     * @return $this
      */
-    protected function handleNode(NodeInterface $item, \DOMElement $node, RuleSet $ruleSet)
+    protected function handleNode(NodeInterface $item, \DOMElement $node, RuleSet $ruleSet) : void
     {
         if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
             $newItem = $this->parseNode($item->newItem(), $node, $this->standard->getItemRuleSet());
@@ -114,7 +113,5 @@ class XmlParser extends ParserAbstract
             $rule = $ruleSet->get($node->tagName);
             $rule->setProperty($item, $node);
         }
-
-        return $this;
     }
 }

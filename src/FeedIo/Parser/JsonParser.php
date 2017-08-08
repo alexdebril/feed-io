@@ -42,9 +42,9 @@ class JsonParser extends ParserAbstract
      * @param Document $document
      * @param iterable $mandatoryFields
      * @throws MissingFieldsException
-     * @return JsonParser
+     * @return bool
      */
-    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : JsonParser
+    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool
     {
         $data = $document->getJsonAsArray();
 
@@ -54,7 +54,7 @@ class JsonParser extends ParserAbstract
             }
         }
 
-        return $this;
+        return true;
     }
 
     /**
