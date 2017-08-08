@@ -34,7 +34,7 @@ class ModifiedSince implements FilterInterface
      * @param  ItemInterface $item
      * @return bool
      */
-    public function isValid(ItemInterface $item)
+    public function isValid(ItemInterface $item) : bool
     {
         if ($item->getLastModified() instanceof \DateTime) {
             return $item->getLastModified() > $this->date;
