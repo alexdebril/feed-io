@@ -43,9 +43,9 @@ class XmlFormatter implements FormatterInterface
     /**
      * @param  \DOMDocument  $document
      * @param  FeedInterface $feed
-     * @return $this
+     * @return XmlFormatter
      */
-    public function setHeaders(\DOMDocument $document, FeedInterface $feed)
+    public function setHeaders(\DOMDocument $document, FeedInterface $feed) : XmlFormatter
     {
         $rules = $this->standard->getFeedRuleSet();
         $mainElement = $this->standard->getMainElement($document);
@@ -57,9 +57,9 @@ class XmlFormatter implements FormatterInterface
     /**
      * @param  \DOMDocument  $document
      * @param  NodeInterface $node
-     * @return $this
+     * @return XmlFormatter
      */
-    public function addItem(\DOMDocument $document, NodeInterface $node)
+    public function addItem(\DOMDocument $document, NodeInterface $node) : XmlFormatter
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
@@ -88,9 +88,9 @@ class XmlFormatter implements FormatterInterface
     /**
      * @param  RuleSet              $ruleSet
      * @param  NodeInterface        $node
-     * @return array|\ArrayIterator
+     * @return iterable
      */
-    public function getAllRules(RuleSet $ruleSet, NodeInterface $node)
+    public function getAllRules(RuleSet $ruleSet, NodeInterface $node) : iterable
     {
         $rules = $ruleSet->getRules();
         $optionalFields = $node->listElements();
@@ -104,7 +104,7 @@ class XmlFormatter implements FormatterInterface
     /**
      * @return \DOMDocument
      */
-    public function getEmptyDocument()
+    public function getEmptyDocument() : \DOMDocument
     {
         return new \DOMDocument('1.0', 'utf-8');
     }
@@ -112,7 +112,7 @@ class XmlFormatter implements FormatterInterface
     /**
      * @return \DOMDocument
      */
-    public function getDocument()
+    public function getDocument() : \DOMDocument
     {
         $document = $this->getEmptyDocument();
 
@@ -123,7 +123,7 @@ class XmlFormatter implements FormatterInterface
      * @param  FeedInterface $feed
      * @return string
      */
-    public function toString(FeedInterface $feed)
+    public function toString(FeedInterface $feed) : string
     {
         $document = $this->toDom($feed);
 
@@ -134,7 +134,7 @@ class XmlFormatter implements FormatterInterface
      * @param  FeedInterface $feed
      * @return \DomDocument
      */
-    public function toDom(FeedInterface $feed)
+    public function toDom(FeedInterface $feed) : \DOMDocument
     {
         $document = $this->getDocument();
 
@@ -147,9 +147,9 @@ class XmlFormatter implements FormatterInterface
     /**
      * @param  \DOMDocument  $document
      * @param  FeedInterface $feed
-     * @return $this
+     * @return XmlFormatter
      */
-    public function setItems(\DOMDocument $document, FeedInterface $feed)
+    public function setItems(\DOMDocument $document, FeedInterface $feed) : XmlFormatter
     {
         foreach ($feed as $item) {
             $this->addItem($document, $item);
