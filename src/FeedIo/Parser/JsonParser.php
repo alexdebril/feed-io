@@ -23,7 +23,7 @@ class JsonParser extends ParserAbstract
      * @param FeedInterface $feed
      * @return FeedInterface
      */
-    public function parseContent(Document $document, FeedInterface $feed)
+    public function parseContent(Document $document, FeedInterface $feed) : FeedInterface
     {
         $data = $document->getJsonAsArray();
         $feed->setTitle($this->readOffset($data, 'title'));
@@ -40,11 +40,11 @@ class JsonParser extends ParserAbstract
 
     /**
      * @param Document $document
-     * @param array $mandatoryFields
-     * @return $this
+     * @param iterable $mandatoryFields
      * @throws MissingFieldsException
+     * @return JsonParser
      */
-    public function checkBodyStructure(Document $document, array $mandatoryFields)
+    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : JsonParser
     {
         $data = $document->getJsonAsArray();
 
@@ -58,11 +58,11 @@ class JsonParser extends ParserAbstract
     }
 
     /**
-     * @param array $items
+     * @param iterable $items
      * @param FeedInterface $feed
-     * @return $this
+     * @return JsonParser
      */
-    public function parseItems(array $items, FeedInterface $feed)
+    public function parseItems(iterable $items, FeedInterface $feed) : JsonParser
     {
         foreach ($items as $dataItem) {
             $item = new Item();
@@ -80,10 +80,10 @@ class JsonParser extends ParserAbstract
     /**
      * @param array $data
      * @param string $offsetName
-     * @param mixed $default
-     * @return mixed
+     * @param string|null $default
+     * @return null|string
      */
-    public function readOffset(array $data, $offsetName, $default = null)
+    public function readOffset(array $data, string $offsetName, string $default = null) : ? string
     {
         if (array_key_exists($offsetName, $data)) {
             return $data[$offsetName];
