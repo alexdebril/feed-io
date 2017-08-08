@@ -24,7 +24,7 @@ trait ElementsAwareTrait
     /**
      * initialize the elements property before use
      */
-    protected function initElements()
+    protected function initElements() : void
     {
         $this->elements = new \ArrayIterator();
     }
@@ -32,7 +32,7 @@ trait ElementsAwareTrait
     /**
      * @return ElementInterface
      */
-    public function newElement()
+    public function newElement() : ElementInterface
     {
         return new Element();
     }
@@ -41,7 +41,7 @@ trait ElementsAwareTrait
      * @param  string $name element name
      * @return ElementIterator
      */
-    public function getElementIterator($name)
+    public function getElementIterator(string $name) : ElementIterator
     {
         return new ElementIterator($this->elements, $name);
     }
@@ -50,7 +50,7 @@ trait ElementsAwareTrait
      * @param  string $name element name
      * @return boolean true if the element exists
      */
-    public function hasElement($name)
+    public function hasElement(string $name) : bool
     {
         $filter = $this->getElementIterator($name);
 
@@ -70,18 +70,18 @@ trait ElementsAwareTrait
 
     /**
      * Returns all the item's optional elements
-     * @return \ArrayIterator
+     * @return iterable
      */
-    public function getAllElements()
+    public function getAllElements() : iterable
     {
         return $this->elements;
     }
 
     /**
      * Returns the item's optional elements tag names
-     * @return array
+     * @return iterable
      */
-    public function listElements()
+    public function listElements() : iterable
     {
         foreach ($this->elements as $element) {
             yield ($element->getName());
@@ -91,7 +91,7 @@ trait ElementsAwareTrait
     /**
      * @return \Generator
      */
-    public function getElementsGenerator()
+    public function getElementsGenerator() : \Generator
     {
         $elements = $this->getAllElements();
 
