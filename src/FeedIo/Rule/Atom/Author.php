@@ -27,9 +27,9 @@ class Author extends BaseAuthor
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
-            $author->setName($this->getChildValue($element, 'name'));
-            $author->setUri($this->getChildValue($element, 'uri'));
-            $author->setEmail($this->getChildValue($element, 'email'));
+            $author->setName($this->getChildValue($element, 'name') ?? '');
+            $author->setUri($this->getChildValue($element, 'uri') ?? '');
+            $author->setEmail($this->getChildValue($element, 'email') ?? '');
             $node->setAuthor($author);
         }
 

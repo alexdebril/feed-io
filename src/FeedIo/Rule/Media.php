@@ -50,9 +50,9 @@ class Media extends RuleAbstract
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
-            $media->setType($this->getAttributeValue($element, 'type'))
-                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-                ->setLength($this->getAttributeValue($element, 'length'));
+            $media->setType($this->getAttributeValue($element, 'type') ?? '')
+                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()) ?? '')
+                ->setLength($this->getAttributeValue($element, 'length') ?? '');
 
             $node->addMedia($media);
         }
