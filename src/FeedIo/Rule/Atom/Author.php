@@ -13,7 +13,6 @@ namespace FeedIo\Rule\Atom;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Rule\Author as BaseAuthor;
-use FeedIo\RuleAbstract;
 
 class Author extends BaseAuthor
 {
