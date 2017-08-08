@@ -26,9 +26,9 @@ class Category extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element)
     {
         $category = $node->newCategory();
-        $category->setScheme($this->getAttributeValue($element, 'domain'))
-        ->setLabel($element->nodeValue)
-        ->setTerm($element->nodeValue);
+        $category->setScheme($this->getAttributeValue($element, 'domain') ?? '')
+        ->setLabel($element->nodeValue ?? '')
+        ->setTerm($element->nodeValue ?? '');
         $node->addCategory($category);
 
         return $this;
