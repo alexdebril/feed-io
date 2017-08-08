@@ -17,6 +17,7 @@ use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Atom\Category;
+use FeedIo\RuleSet;
 
 class Atom extends XmlAbstract
 {
@@ -34,7 +35,7 @@ class Atom extends XmlAbstract
      * @param  \DOMDocument $document
      * @return \DOMDocument
      */
-    public function format(\DOMDocument $document)
+    public function format(\DOMDocument $document) : \DOMDocument
     {
         $element = $document->createElement('feed');
         $element->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
@@ -48,7 +49,7 @@ class Atom extends XmlAbstract
      * @param  Document $document
      * @return mixed
      */
-    public function canHandle(Document $document)
+    public function canHandle(Document $document) : bool
     {
         return self::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
@@ -57,7 +58,7 @@ class Atom extends XmlAbstract
      * @param  DOMDocument $document
      * @return \DomElement
      */
-    public function getMainElement(\DOMDocument $document)
+    public function getMainElement(\DOMDocument $document) : \DOMElement
     {
         return $document->documentElement;
     }
@@ -66,7 +67,7 @@ class Atom extends XmlAbstract
      * Builds and returns a rule set to parse the root node
      * @return \FeedIo\RuleSet
      */
-    public function buildFeedRuleSet()
+    public function buildFeedRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -82,7 +83,7 @@ class Atom extends XmlAbstract
      * Builds and returns a rule set to parse an item
      * @return \FeedIo\RuleSet
      */
-    public function buildItemRuleSet()
+    public function buildItemRuleSet() : RuleSet
     {
         $ruleSet = $this->buildFeedRuleSet();
         $ruleSet
@@ -95,7 +96,7 @@ class Atom extends XmlAbstract
     /**
      * @return RuleSet
      */
-    protected function buildBaseRuleSet()
+    protected function buildBaseRuleSet() : RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet->add(new Category());

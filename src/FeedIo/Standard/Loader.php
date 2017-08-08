@@ -20,13 +20,13 @@ class Loader
      * @param DateTimeBuilder $builder
      * @return array
      */
-    public function getCommonStandards(DateTimeBuilder $builder)
+    public function getCommonStandards(DateTimeBuilder $builder) : array
     {
-        return array(
+        return [
             'json' => new Json($builder),
             'atom' => new Atom($builder),
             'rss' => new Rss($builder),
             'rdf' => new Rdf($builder),
-        );
+        ];
     }
 }

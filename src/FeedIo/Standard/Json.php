@@ -24,7 +24,7 @@ class Json extends StandardAbstract
      * @param Document $document
      * @return bool
      */
-    public function canHandle(Document $document)
+    public function canHandle(Document $document) : bool
     {
         return $document->isJson();
     }
@@ -32,7 +32,7 @@ class Json extends StandardAbstract
     /**
      * @return JsonFormatter
      */
-    public function getFormatter()
+    public function getFormatter() : JsonFormatter
     {
         return new JsonFormatter();
     }
