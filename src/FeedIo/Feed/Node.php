@@ -224,7 +224,7 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         $properties = get_object_vars($this);
 

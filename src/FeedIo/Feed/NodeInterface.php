@@ -77,7 +77,7 @@ interface NodeInterface
      * @param  \DateTime $lastModified
      * @return NodeInterface
      */
-    public function setLastModified(\DateTime $lastModified);
+    public function setLastModified(\DateTime $lastModified) : NodeInterface;
 
     /**
      * Returns the node's link

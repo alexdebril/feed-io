@@ -130,7 +130,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return $this->toArray();
     }
@@ -138,7 +138,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         $items = [];
 
@@ -155,7 +155,7 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return int
      */
-    public function count()
+    public function count() : int
     {
         return count($this->items);
     }
