@@ -19,5 +19,5 @@ interface FilterInterface
      * @param  ItemInterface $item
      * @return bool
      */
-    public function isValid(ItemInterface $item);
+    public function isValid(ItemInterface $item) : bool;
 }

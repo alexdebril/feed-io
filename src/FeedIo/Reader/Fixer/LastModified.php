@@ -36,7 +36,7 @@ class LastModified extends FixerAbstract
      * @param  FeedInterface $feed
      * @return \DateTime
      */
-    public function searchLastModified(FeedInterface $feed)
+    public function searchLastModified(FeedInterface $feed) : \DateTime
     {
         $latest = new \DateTime('@0');
 
