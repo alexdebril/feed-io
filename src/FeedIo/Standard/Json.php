@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 use FeedIo\Formatter\JsonFormatter;
+use FeedIo\FormatterInterface;
 use FeedIo\Reader\Document;
 use FeedIo\StandardAbstract;
 
@@ -30,9 +31,9 @@ class Json extends StandardAbstract
     }
 
     /**
-     * @return JsonFormatter
+     * @return FormatterInterface
      */
-    public function getFormatter() : JsonFormatter
+    public function getFormatter() : FormatterInterface
     {
         return new JsonFormatter();
     }
