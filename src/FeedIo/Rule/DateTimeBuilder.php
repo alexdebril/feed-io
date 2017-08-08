@@ -64,9 +64,9 @@ class DateTimeBuilder
 
     /**
      * @param $dateFormat
-     * @return $this
+     * @return DateTimeBuilder
      */
-    public function addDateFormat(string $dateFormat)
+    public function addDateFormat(string $dateFormat) : DateTimeBuilder
     {
         $this->dateFormats[] = $dateFormat;
 
@@ -77,7 +77,7 @@ class DateTimeBuilder
      * @param  array $dateFormats
      * @return $this
      */
-    public function setDateFormats(array $dateFormats)
+    public function setDateFormats(array $dateFormats) : DateTimeBuilder
     {
         $this->dateFormats = $dateFormats;
 
@@ -87,7 +87,7 @@ class DateTimeBuilder
     /**
      * @return string
      */
-    public function getLastGuessedFormat()
+    public function getLastGuessedFormat() : string
     {
         return $this->lastGuessedFormat;
     }
@@ -95,10 +95,9 @@ class DateTimeBuilder
     /**
      * Tries to guess the date's format from the list
      * @param  string                   $date
-     * @return string|false             date Format
-     * @throws InvalidArgumentException
+     * @return string|null             date Format
      */
-    public function guessDateFormat($date)
+    public function guessDateFormat(string $date) : ? string
     {
         foreach ($this->dateFormats as $format) {
             $test = \DateTime::createFromFormat($format, $date);
@@ -109,7 +108,7 @@ class DateTimeBuilder
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -117,7 +116,7 @@ class DateTimeBuilder
      * @param  string                   $string
      * @return \DateTime
      */
-    public function convertToDateTime($string)
+    public function convertToDateTime(string $string) : \DateTime
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
@@ -138,7 +137,7 @@ class DateTimeBuilder
      * @return \DateTime
      * @throws InvalidArgumentException
      */
-    public function stringToDateTime($string)
+    public function stringToDateTime($string) : \DateTime
     {
         $this->logger->notice("unsupported date format, use strtotime() to build the DateTime instance : {$string}");
 
@@ -154,7 +153,7 @@ class DateTimeBuilder
     /**
      * @return \DateTimeZone
      */
-    public function getTimezone()
+    public function getTimezone() : \DateTimeZone
     {
         return $this->timezone;
     }
@@ -162,7 +161,7 @@ class DateTimeBuilder
     /**
      * @param \DateTimeZone $timezone
      */
-    public function setTimezone(\DateTimeZone $timezone)
+    public function setTimezone(\DateTimeZone $timezone) : void
     {
         $this->timezone = $timezone;
     }

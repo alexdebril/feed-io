@@ -25,28 +25,24 @@ class Media extends RuleAbstract
     /**
      * @return string
      */
-    public function getUrlAttributeName()
+    public function getUrlAttributeName() : string
     {
         return $this->urlAttributeName;
     }
 
     /**
      * @param  string $name
-     * @return $this
      */
-    public function setUrlAttributeName($name)
+    public function setUrlAttributeName(string $name) : void
     {
         $this->urlAttributeName = $name;
-
-        return $this;
     }
 
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
@@ -56,8 +52,6 @@ class Media extends RuleAbstract
 
             $node->addMedia($media);
         }
-
-        return $this;
     }
 
     /**
@@ -65,7 +59,7 @@ class Media extends RuleAbstract
      * @param  MediaInterface $media
      * @return \DomElement
      */
-    public function createMediaElement(\DomDocument $document, MediaInterface $media)
+    public function createMediaElement(\DomDocument $document, MediaInterface $media) : \DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());

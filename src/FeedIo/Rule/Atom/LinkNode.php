@@ -27,7 +27,7 @@ class LinkNode extends RuleAbstract
     /**
      * @param string $nodeName
      */
-    public function __construct($nodeName = null)
+    public function __construct(string $nodeName = null)
     {
         parent::__construct($nodeName);
         $mediaRule = new Media();
@@ -41,15 +41,13 @@ class LinkNode extends RuleAbstract
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($element->hasAttribute('rel')) {
             $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
         } else {
             $this->ruleSet->getDefault()->setProperty($node, $element);
         }
-
-        return $this;
     }
 
     /**
@@ -66,10 +64,8 @@ class LinkNode extends RuleAbstract
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        if ($node instanceof ItemInterface) {
-            foreach ($node->getMedias() as $media) {
-                $this->ruleSet->get('media')->apply($document, $rootElement, $node);
-            }
+        if ($node instanceof ItemInterface && $node->hasMedia()) {
+            $this->ruleSet->get('media')->apply($document, $rootElement, $node);
         }
 
         $this->ruleSet->getDefault()->apply($document, $rootElement, $node);

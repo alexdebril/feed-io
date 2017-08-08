@@ -22,13 +22,10 @@ class Title extends RuleAbstract
      *
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $node->setTitle($element->nodeValue);
-
-        return $this;
     }
 
     /**

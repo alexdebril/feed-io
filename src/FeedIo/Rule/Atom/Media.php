@@ -17,7 +17,10 @@ class Media extends BaseMedia
 {
     const NODE_NAME = 'link';
 
-    public function createMediaElement(\DomDocument $document, MediaInterface $media)
+    /**
+     * @inheritDoc
+     */
+    public function createMediaElement(\DomDocument $document, MediaInterface $media) : \DOMElement
     {
         $element = parent::createMediaElement($document, $media);
         $element->setAttribute('rel', 'enclosure');

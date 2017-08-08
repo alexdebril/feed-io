@@ -13,6 +13,7 @@ namespace FeedIo\Rule\Atom;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Rule\Author as BaseAuthor;
+use FeedIo\RuleAbstract;
 
 class Author extends BaseAuthor
 {
@@ -23,7 +24,7 @@ class Author extends BaseAuthor
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
@@ -32,8 +33,6 @@ class Author extends BaseAuthor
             $author->setEmail($this->getChildValue($element, 'email') ?? '');
             $node->setAuthor($author);
         }
-
-        return $this;
     }
 
     /**

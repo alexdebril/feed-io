@@ -23,15 +23,13 @@ class Category extends RuleAbstract
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $category = $node->newCategory();
         $category->setScheme($this->getAttributeValue($element, 'domain') ?? '')
         ->setLabel($element->nodeValue ?? '')
         ->setTerm($element->nodeValue ?? '');
         $node->addCategory($category);
-
-        return $this;
     }
 
     /**
@@ -57,7 +55,7 @@ class Category extends RuleAbstract
      * @param  CategoryInterface $category
      * @return \DomElement
      */
-    public function createCategoryElement(\DomDocument $document, CategoryInterface $category)
+    public function createCategoryElement(\DomDocument $document, CategoryInterface $category) : \DOMElement
     {
         $element = $document->createElement(
             $this->getNodeName(),
