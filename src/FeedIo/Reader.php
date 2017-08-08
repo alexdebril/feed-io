@@ -57,10 +57,10 @@ class Reader
     }
 
     /**
-     * @param  Parser $parser
-     * @return $this
+     * @param  ParserAbstract $parser
+     * @return Reader
      */
-    public function addParser(ParserAbstract $parser)
+    public function addParser(ParserAbstract $parser) : Reader
     {
         $this->logger->debug("new parser added : ".get_class($parser->getStandard()));
         $this->parsers[] = $parser;
@@ -72,9 +72,9 @@ class Reader
      * adds a filter to every parsers
      *
      * @param \FeedIo\FilterInterface $filter
-     * @return $this
+     * @return Reader
      */
-    public function addFilter(FilterInterface $filter)
+    public function addFilter(FilterInterface $filter) : Reader
     {
         foreach ($this->parsers as $parser) {
             $parser->addFilter($filter);
@@ -85,9 +85,9 @@ class Reader
 
     /**
      * Reset filters on every parsers
-     * @return $this
+     * @return Reader
      */
-    public function resetFilters()
+    public function resetFilters() : Reader
     {
         foreach ($this->parsers as $parser) {
             $parser->resetFilters();
@@ -97,13 +97,13 @@ class Reader
     }
 
     /**
-     * @param $url
+     * @param string                 $url
      * @param  FeedInterface         $feed
      * @param  \DateTime             $modifiedSince
      * @return \FeedIo\Reader\Result
      * @throws ReadErrorException
      */
-    public function read($url, FeedInterface $feed, \DateTime $modifiedSince = null)
+    public function read(string $url, FeedInterface $feed, \DateTime $modifiedSince = null) : Result
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
@@ -128,7 +128,7 @@ class Reader
      * @param  FeedInterface         $feed
      * @return Document
      */
-    public function handleResponse(ResponseInterface $response, FeedInterface $feed)
+    public function handleResponse(ResponseInterface $response, FeedInterface $feed) : Document
     {
         $this->logger->debug("response ok, now turning it into a document");
         $document = new Document($response->getBody());
@@ -148,7 +148,7 @@ class Reader
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(Document $document, FeedInterface $feed)
+    public function parseDocument(Document $document, FeedInterface $feed) : FeedInterface
     {
         $parser = $this->getAccurateParser($document);
         $this->logger->debug("accurate parser : ".get_class($parser));
@@ -161,7 +161,7 @@ class Reader
      * @return ParserAbstract
      * @throws Reader\NoAccurateParserException
      */
-    public function getAccurateParser(Document $document)
+    public function getAccurateParser(Document $document) : ParserAbstract
     {
         foreach ($this->parsers as $parser) {
             if ($parser->getStandard()->canHandle($document)) {

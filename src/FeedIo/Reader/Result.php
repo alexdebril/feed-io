@@ -70,7 +70,7 @@ class Result
         FeedInterface $feed,
         \DateTime $modifiedSince,
         ResponseInterface $response,
-        $url
+        string $url
     ) {
         $this->date = new \DateTime();
         $this->document = $document;
@@ -83,7 +83,7 @@ class Result
     /**
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate() : \DateTime
     {
         return $this->date;
     }
@@ -91,7 +91,7 @@ class Result
     /**
      * @return Document
      */
-    public function getDocument()
+    public function getDocument() : Document
     {
         return $this->document;
     }
@@ -99,15 +99,15 @@ class Result
     /**
      * @return FeedInterface
      */
-    public function getFeed()
+    public function getFeed() : FeedInterface
     {
         return $this->feed;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getModifiedSince()
+    public function getModifiedSince() : ? \DateTime
     {
         return $this->modifiedSince;
     }
@@ -115,7 +115,7 @@ class Result
     /**
      * @return ResponseInterface
      */
-    public function getResponse()
+    public function getResponse() : ResponseInterface
     {
         return $this->response;
     }
@@ -123,7 +123,7 @@ class Result
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl() : string
     {
         return $this->url;
     }
