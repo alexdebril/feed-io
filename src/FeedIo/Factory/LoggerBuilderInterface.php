@@ -10,6 +10,8 @@
 
 namespace FeedIo\Factory;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * @package FeedIo
  */
@@ -20,5 +22,5 @@ interface LoggerBuilderInterface extends BuilderInterface
      * This method MUST return a valid PSR3 logger
      * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger();
+    public function getLogger() : LoggerInterface;
 }

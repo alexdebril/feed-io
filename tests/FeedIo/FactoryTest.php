@@ -158,7 +158,7 @@ class ExternalBuilder implements BuilderInterface
     /**
      * @inheritDoc
      */
-    public function getMainClassName()
+    public function getMainClassName() : string
     {
         return 'main';
     }
@@ -166,7 +166,7 @@ class ExternalBuilder implements BuilderInterface
     /**
      * @inheritDoc
      */
-    public function getPackageName()
+    public function getPackageName() : string
     {
         return 'package';
     }
