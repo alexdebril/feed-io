@@ -41,9 +41,15 @@ class ReadCommand extends Command
 
         $limit = $this->getLimit($input);
 
+        /** @var \FeedIo\Feed\ItemInterface $item */
         foreach ($feed as $i => $item) {
             $output->writeln("<info>{$item->getLastModified()->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
             $output->writeln("{$item->getDescription()}");
+
+            /** @var \FeedIo\Feed\Item\MediaInterface $media */
+            foreach( $item->getMedias() as $media ) {
+                $output->writeln("media found : {$media->getUrl()}");
+            }
 
             if (! is_null($limit) && $limit === $i+1) {
                 break;
