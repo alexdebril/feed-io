@@ -24,7 +24,7 @@ class FixerMock extends FixerAbstract
      * @param  LoggerInterface $logger
      * @return $this
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger) : FixerAbstract
     {
         $this->logger = $logger;
 
@@ -35,7 +35,7 @@ class FixerMock extends FixerAbstract
      * @param  FeedInterface $feed
      * @return $this
      */
-    public function correct(FeedInterface $feed)
+    public function correct(FeedInterface $feed) : FixerAbstract
     {
         $feed->setTitle('corrected');
 

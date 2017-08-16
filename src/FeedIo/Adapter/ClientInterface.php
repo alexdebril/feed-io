@@ -10,6 +10,8 @@
 
 namespace FeedIo\Adapter;
 
+use FeedIo\Adapter\ResponseInterface;
+
 /**
  * Describes a HTTP Client used by \FeedIo\Reader
  *
@@ -26,5 +28,5 @@ interface ClientInterface
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse($url, \DateTime $modifiedSince);
+    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface;
 }

@@ -56,9 +56,9 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @param  string $name  element name
      * @param  string $value element value
-     * @return $this
+     * @return NodeInterface
      */
-    public function set($name, $value)
+    public function set(string $name, string $value) : NodeInterface
     {
         $element = $this->newElement();
 
@@ -73,9 +73,9 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * returns node's categories
      *
-     * @return \ArrayIterator
+     * @return iterable
      */
-    public function getCategories()
+    public function getCategories() : iterable
     {
         return $this->categories;
     }
@@ -83,7 +83,7 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return \Generator
      */
-    public function getCategoriesGenerator()
+    public function getCategoriesGenerator() : \Generator
     {
         foreach ($this->categories as $category) {
             yield $category->getlabel();
@@ -94,9 +94,9 @@ class Node implements NodeInterface, ElementsAwareInterface
      * adds a category to the node
      *
      * @param \FeedIo\Feed\Node\CategoryInterface $category
-     * @return $this
+     * @return NodeInterface
      */
-    public function addCategory(CategoryInterface $category)
+    public function addCategory(CategoryInterface $category) : NodeInterface
     {
         $this->categories->append($category);
         
@@ -108,7 +108,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      *
      * @return \FeedIo\Feed\Node\CategoryInterface
      */
-    public function newCategory()
+    public function newCategory() : CategoryInterface
     {
         return new Category();
     }
@@ -116,16 +116,16 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : ? string
     {
         return $this->title;
     }
 
     /**
      * @param  string $title
-     * @return $this
+     * @return NodeInterface
      */
-    public function setTitle($title)
+    public function setTitle(string $title) : NodeInterface
     {
         $this->title = $title;
 
@@ -135,16 +135,16 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return string
      */
-    public function getPublicId()
+    public function getPublicId() : ? string
     {
         return $this->publicId;
     }
 
     /**
      * @param  string $publicId
-     * @return $this
+     * @return NodeInterface
      */
-    public function setPublicId($publicId)
+    public function setPublicId(string $publicId) : NodeInterface
     {
         $this->publicId = $publicId;
 
@@ -154,16 +154,16 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : ? string
     {
         return $this->description;
     }
 
     /**
      * @param  string $description
-     * @return $this
+     * @return NodeInterface
      */
-    public function setDescription($description)
+    public function setDescription(string $description) : NodeInterface
     {
         $this->description = $description;
 
@@ -173,16 +173,16 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return \DateTime
      */
-    public function getLastModified()
+    public function getLastModified() : ? \DateTime
     {
         return $this->lastModified;
     }
 
     /**
      * @param  \DateTime $lastModified
-     * @return $this
+     * @return NodeInterface
      */
-    public function setLastModified(\DateTime $lastModified)
+    public function setLastModified(\DateTime $lastModified) : NodeInterface
     {
         $this->lastModified = $lastModified;
 
@@ -192,16 +192,16 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return string
      */
-    public function getLink()
+    public function getLink() : ? string
     {
         return $this->link;
     }
 
     /**
      * @param  string $link
-     * @return $this
+     * @return NodeInterface
      */
-    public function setLink($link)
+    public function setLink(string $link) : NodeInterface
     {
         $this->link = $link;
 
@@ -209,22 +209,22 @@ class Node implements NodeInterface, ElementsAwareInterface
     }
 
     /**
-     * @param  string $name element name
-     * @return mixed
+     * @param string $name element name
+     * @return null|string
      */
-    public function getValue($name)
+    public function getValue(string $name) : ? string
     {
         foreach ($this->getElementIterator($name) as $element) {
             return $element->getValue();
         }
 
-        return;
+        return null;
     }
 
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         $properties = get_object_vars($this);
 

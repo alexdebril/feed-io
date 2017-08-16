@@ -24,23 +24,23 @@ class Media implements MediaInterface
     protected $url;
 
     /**
-     * @var int
+     * @var string
      */
     protected $length;
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType() : ? string
     {
         return $this->type;
     }
 
     /**
      * @param  string $type
-     * @return $this
+     * @return MediaInterface
      */
-    public function setType($type)
+    public function setType(string $type) : MediaInterface
     {
         $this->type = $type;
 
@@ -50,16 +50,16 @@ class Media implements MediaInterface
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl() : ? string
     {
         return $this->url;
     }
 
     /**
      * @param  string $url
-     * @return $this
+     * @return MediaInterface
      */
-    public function setUrl($url)
+    public function setUrl(string $url) : MediaInterface
     {
         $this->url = $url;
 
@@ -69,16 +69,16 @@ class Media implements MediaInterface
     /**
      * @return string
      */
-    public function getLength()
+    public function getLength() : ? string
     {
         return $this->length;
     }
 
     /**
      * @param  string $length
-     * @return $this
+     * @return MediaInterface
      */
-    public function setLength($length)
+    public function setLength(string $length) : MediaInterface
     {
         $this->length = $length;
 

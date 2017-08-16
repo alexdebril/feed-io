@@ -19,15 +19,15 @@ class NullResponse implements ResponseInterface
     /**
      * @return string
      */
-    public function getBody()
+    public function getBody() : ? string
     {
-        return;
+        return null;
     }
 
     /**
     * @return boolean
     */
-    public function isModified()
+    public function isModified() : bool
     {
         return true;
     }
@@ -35,25 +35,25 @@ class NullResponse implements ResponseInterface
     /**
      * @return \DateTime
      */
-    public function getLastModified()
+    public function getLastModified() : ?\DateTime
     {
         return new \DateTime('@0');
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    public function getHeaders()
+    public function getHeaders() : iterable
     {
-        return array();
+        return [];
     }
 
     /**
      * @param  string       $name
-     * @return array|string
+     * @return iterable
      */
-    public function getHeader($name)
+    public function getHeader(string $name) : iterable
     {
-        return $name;
+        return [];
     }
 }

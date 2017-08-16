@@ -10,6 +10,7 @@
 
 namespace FeedIo\Factory\Builder;
 
+use FeedIo\Adapter\ClientInterface;
 use FeedIo\Factory\ClientBuilderInterface;
 use \FeedIo\Adapter\Guzzle\Client;
 use \GuzzleHttp\Client as GuzzleClient;
@@ -36,7 +37,7 @@ class GuzzleClientBuilder implements ClientBuilderInterface
      * This method MUST return a \FeedIo\Adapter\ClientInterface instance
      * @return \FeedIo\Adapter\ClientInterface
      */
-    public function getClient()
+    public function getClient() : ClientInterface
     {
         return new Client(new GuzzleClient($this->config));
     }
@@ -45,7 +46,7 @@ class GuzzleClientBuilder implements ClientBuilderInterface
      * This method MUST return the name of the main class
      * @return string
      */
-    public function getMainClassName()
+    public function getMainClassName() : string
     {
         return '\GuzzleHttp\Client';
     }
@@ -54,7 +55,7 @@ class GuzzleClientBuilder implements ClientBuilderInterface
      * This method MUST return the name of the package name
      * @return string
      */
-    public function getPackageName()
+    public function getPackageName() : string
     {
         return 'guzzlehttp/guzzle';
     }

@@ -19,9 +19,8 @@ class Category extends \FeedIo\Rule\Category
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $category = $node->newCategory();
         $category->setScheme($this->getAttributeValue($element, 'scheme'))
@@ -29,8 +28,6 @@ class Category extends \FeedIo\Rule\Category
         ->setTerm($this->getAttributeValue($element, 'term'));
         
         $node->addCategory($category);
-
-        return $this;
     }
     
     /**
@@ -38,7 +35,7 @@ class Category extends \FeedIo\Rule\Category
      * @param  CategoryInterface $category
      * @return \DomElement
      */
-    public function createCategoryElement(\DomDocument $document, CategoryInterface $category)
+    public function createCategoryElement(\DomDocument $document, CategoryInterface $category) : \DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute('scheme', $category->getScheme() ?? '');

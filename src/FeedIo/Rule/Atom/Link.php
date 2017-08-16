@@ -20,15 +20,12 @@ class Link extends BaseLink
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($element->hasAttribute('href')) {
             $node->setLink($element->getAttribute('href'));
         }
-
-        return $this;
     }
 
     /**

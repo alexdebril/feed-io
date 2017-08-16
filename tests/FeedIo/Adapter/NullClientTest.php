@@ -23,6 +23,6 @@ class NullClientTest extends TestCase
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
         $this->assertNull($response->getBody());
         $this->assertInternalType('array', $response->getHeaders());
-        $this->assertEquals('foo', $response->getHeader('foo'));
+        $this->assertEquals([], $response->getHeader('foo'));
     }
 }

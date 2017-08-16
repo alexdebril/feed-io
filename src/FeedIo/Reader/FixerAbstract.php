@@ -25,12 +25,16 @@ abstract class FixerAbstract
      * @param \Psr\Log\LoggerInterface
      * @return $this
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger) : FixerAbstract
     {
         $this->logger = $logger;
 
         return $this;
     }
 
-    abstract public function correct(FeedInterface $feed);
+    /**
+     * @param FeedInterface $feed
+     * @return FixerAbstract
+     */
+    abstract public function correct(FeedInterface $feed) : FixerAbstract;
 }

@@ -25,13 +25,13 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * This method MUST return the feed's full URL
      * @return string
      */
-    public function getUrl();
+    public function getUrl() : ? string;
     
     /**
      * @param string $url
      * @return FeedInterface
      */
-    public function setUrl($url);
+    public function setUrl(string $url) : FeedInterface;
     
     /**
      * Atom : feed.entry <feed><entry>
@@ -39,10 +39,10 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param  ItemInterface $item
      * @return FeedInterface
      */
-    public function add(ItemInterface $item);
+    public function add(ItemInterface $item) : FeedInterface;
 
     /**
      * @return ItemInterface
      */
-    public function newItem();
+    public function newItem() : ItemInterface;
 }

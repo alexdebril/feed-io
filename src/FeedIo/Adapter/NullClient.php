@@ -21,7 +21,7 @@ class NullClient implements ClientInterface
      * @param  \DateTime                         $modifiedSince
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse($url, \DateTime $modifiedSince)
+    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
     {
         return new NullResponse();
     }

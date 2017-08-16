@@ -32,33 +32,33 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getType();
+    public function getType() : ? string;
 
     /**
      * @param  string $type
-     * @return $this
+     * @return MediaInterface
      */
-    public function setType($type);
+    public function setType(string $type) : MediaInterface;
 
     /**
      * @return string
      */
-    public function getUrl();
+    public function getUrl() : ? string;
 
     /**
      * @param  string $url
-     * @return $this
+     * @return MediaInterface
      */
-    public function setUrl($url);
+    public function setUrl(string $url) : MediaInterface;
 
     /**
      * @return string
      */
-    public function getLength();
+    public function getLength() : ? string;
 
     /**
      * @param  string $length
-     * @return $this
+     * @return MediaInterface
      */
-    public function setLength($length);
+    public function setLength(string $length) : MediaInterface;
 }

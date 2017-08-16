@@ -11,6 +11,7 @@
 namespace FeedIo\Factory\Builder;
 
 use FeedIo\Factory\LoggerBuilderInterface;
+use Psr\Log\LoggerInterface;
 use \Psr\Log\NullLogger;
 
 /**
@@ -29,10 +30,9 @@ class NullLoggerBuilder implements LoggerBuilderInterface
     }
 
     /**
-     * This method MUST return a valid PSR3 logger
-     * @return \Psr\Log\NullLogger
+     * @inheritdoc
      */
-    public function getLogger()
+    public function getLogger() : LoggerInterface
     {
         return new \Psr\Log\NullLogger;
     }
@@ -41,7 +41,7 @@ class NullLoggerBuilder implements LoggerBuilderInterface
      * This method MUST return the name of the main class
      * @return string
      */
-    public function getMainClassName()
+    public function getMainClassName() : string
     {
         return '\Psr\Log\NullLogger';
     }
@@ -50,7 +50,7 @@ class NullLoggerBuilder implements LoggerBuilderInterface
      * This method MUST return the name of the package name
      * @return string
      */
-    public function getPackageName()
+    public function getPackageName() : string
     {
         return 'psr/log';
     }

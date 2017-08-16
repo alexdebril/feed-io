@@ -23,17 +23,14 @@ class Author extends RuleAbstract
      *
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
-            $author->setName($element->nodeValue);
+            $author->setName($element->nodeValue ?? '');
             $node->setAuthor($author);
         }
-
-        return $this;
     }
 
     /**

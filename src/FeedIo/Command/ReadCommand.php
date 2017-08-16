@@ -11,6 +11,7 @@
 namespace FeedIo\Command;
 
 use FeedIo\Factory;
+use FeedIo\Feed\ItemInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,13 +42,27 @@ class ReadCommand extends Command
 
         $limit = $this->getLimit($input);
 
+        /** @var \FeedIo\Feed\ItemInterface $item */
         foreach ($feed as $i => $item) {
             $output->writeln("<info>{$item->getLastModified()->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
             $output->writeln("{$item->getDescription()}");
 
+            $this->handleMedias($item, $output);
             if (! is_null($limit) && $limit === $i+1) {
                 break;
             }
+        }
+    }
+
+    /**
+     * @param ItemInterface $item
+     * @param OutputInterface $output
+     */
+    protected function handleMedias(ItemInterface $item, OutputInterface $output)
+    {
+        /** @var \FeedIo\Feed\Item\MediaInterface $media */
+        foreach ($item->getMedias() as $media) {
+            $output->writeln("media found : {$media->getUrl()}");
         }
     }
 

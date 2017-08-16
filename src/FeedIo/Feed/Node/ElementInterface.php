@@ -10,6 +10,8 @@
 
 namespace FeedIo\Feed\Node;
 
+use PharIo\Manifest\ElementCollection;
+
 /**
  * Describe an Element instance
  *
@@ -37,40 +39,40 @@ interface ElementInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getName() : string;
 
     /**
      * @param  string $name
-     * @return $this
+     * @return ElementInterface
      */
-    public function setName($name);
+    public function setName(string $name) : ElementInterface;
 
     /**
      * @return string
      */
-    public function getValue();
+    public function getValue() : ? string;
 
     /**
      * @param  string $value
-     * @return $this
+     * @return ElementInterface
      */
-    public function setValue($value);
+    public function setValue(string $value) : ElementInterface;
 
     /**
      * @param  string $name
      * @return string
      */
-    public function getAttribute($name);
+    public function getAttribute(string $name) : ? string;
 
     /**
-     * @return array
+     * @return iterable
      */
-    public function getAttributes();
+    public function getAttributes() : iterable;
 
     /**
      * @param  string $name
      * @param  string $value
-     * @return $this
+     * @return ElementInterface
      */
-    public function setAttribute($name, $value);
+    public function setAttribute(string $name, string $value) : ElementInterface;
 }

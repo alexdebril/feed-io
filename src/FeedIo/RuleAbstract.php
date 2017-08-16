@@ -24,7 +24,7 @@ abstract class RuleAbstract
     /**
      * @param string $nodeName
      */
-    public function __construct($nodeName = null)
+    public function __construct(string $nodeName = null)
     {
         $this->nodeName = is_null($nodeName) ? static::NODE_NAME : $nodeName;
     }
@@ -32,7 +32,7 @@ abstract class RuleAbstract
     /**
      * @return string
      */
-    public function getNodeName()
+    public function getNodeName() : string
     {
         return $this->nodeName;
     }
@@ -42,13 +42,13 @@ abstract class RuleAbstract
      * @param  string      $name
      * @return string|null
      */
-    public function getAttributeValue(\DOMElement $element, $name)
+    public function getAttributeValue(\DOMElement $element, $name) : ? string
     {
         if ($element->hasAttribute($name)) {
             return $element->getAttribute($name);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -56,14 +56,14 @@ abstract class RuleAbstract
      * @param  string      $name
      * @return string|null
      */
-    public function getChildValue(\DOMElement $element, $name)
+    public function getChildValue(\DOMElement $element, string $name) : ? string
     {
         $list = $element->getElementsByTagName($name);
         if ($list->length > 0) {
             return $list->item(0)->nodeValue;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -85,9 +85,8 @@ abstract class RuleAbstract
      *
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    abstract public function setProperty(NodeInterface $node, \DOMElement $element);
+    abstract public function setProperty(NodeInterface $node, \DOMElement $element) : void;
 
     /**
      * Tells if the node contains the expected value
@@ -98,7 +97,7 @@ abstract class RuleAbstract
     abstract protected function hasValue(NodeInterface $node) : bool;
 
     /**
-     * Creates and adds the element(s) to the docuement's rootElement
+     * Creates and adds the element(s) to the document's rootElement
      *
      * @param \DomDocument $document
      * @param \DOMElement $rootElement

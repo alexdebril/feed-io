@@ -197,6 +197,18 @@ $feedIo = new FeedIo($client, $logger);
 
 ```
 
+## Dealing with missing timezones
+
+Sometimes you have to consume feeds in which the timezone is missing from the dates. In some use-cases, you may need to specify the feed's timezone to get an accurate value, so feed-io offers a workaround for that : 
+
+```php
+$feedIo->getDateTimeBuilder()->setFeedTimezone(new \DateTimeZone($feedTimezone));
+$result = $feedIo->read($feedUrl);
+$feedIo->getDateTimeBuilder()->resetFeedTimezone();
+``` 
+
+Don't forget to reset `feedTimezone` after fetching the result, or you'll end up with all feeds located in the same timezone.
+
 ## Online documentation and API reference
 
 The whole documentation and API reference is available at https://feed-io.net/documentation.html

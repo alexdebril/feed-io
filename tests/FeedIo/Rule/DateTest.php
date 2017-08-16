@@ -56,7 +56,7 @@ class DateTest extends TestCase
     public function testDontGuessDateFormat()
     {
         $this->object->addDateFormat(\DateTime::ATOM);
-        $this->assertFalse($this->object->guessDateFormat('foo'));
+        $this->assertNull($this->object->guessDateFormat('foo'));
     }
 
     public function testConvertDateFormat()

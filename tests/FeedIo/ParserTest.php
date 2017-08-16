@@ -126,8 +126,7 @@ XML;
 RSS;
         $document = new \DOMDocument();
         $document->loadXML($rss);
-        $this->assertInstanceOf(
-            '\FeedIo\ParserAbstract',
+        $this->assertTrue(
             $this->object->checkBodyStructure(new Document($document->saveXML()), array('channel', 'title'))
         );
     }

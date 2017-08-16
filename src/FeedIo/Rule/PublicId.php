@@ -17,13 +17,10 @@ class PublicId extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $node->setPublicId($element->nodeValue);
-
-        return $node;
     }
 
     /**

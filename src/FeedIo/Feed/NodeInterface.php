@@ -24,112 +24,112 @@ interface NodeInterface
      *
      * @return string
      */
-    public function getTitle();
+    public function getTitle() : ? string;
 
     /**
      * Sets nodes's title
      *
      * @param  string $title
-     * @return $this
+     * @return NodeInterface
      */
-    public function setTitle($title);
+    public function setTitle(string $title) : NodeInterface;
 
     /**
      * Returns node's public id
      *
      * @return string
      */
-    public function getPublicId();
+    public function getPublicId() : ? string;
 
     /**
      * sets node's public id
      *
      * @param  string $id
-     * @return $this
+     * @return NodeInterface
      */
-    public function setPublicId($id);
+    public function setPublicId(string $id) : NodeInterface;
 
     /**
      * Returns node's description
      *
      * @return string
      */
-    public function getDescription();
+    public function getDescription() : ? string;
 
     /**
      * Sets node's description
      *
      * @param  string $description
-     * @return $this
+     * @return NodeInterface
      */
-    public function setDescription($description);
+    public function setDescription(string $description) : NodeInterface;
 
     /**
      * Returns the node's last modified date
      *
      * @return \DateTime
      */
-    public function getLastModified();
+    public function getLastModified() : ? \DateTime;
 
     /**
      * Sets the node's last modified date
      *
      * @param  \DateTime $lastModified
-     * @return $this
+     * @return NodeInterface
      */
-    public function setLastModified(\DateTime $lastModified);
+    public function setLastModified(\DateTime $lastModified) : NodeInterface;
 
     /**
      * Returns the node's link
      *
      * @return string
      */
-    public function getLink();
+    public function getLink() : ? string;
 
     /**
      * Sets the nodes's link
      *
      * @param  string $link
-     * @return $this
+     * @return NodeInterface
      */
-    public function setLink($link);
+    public function setLink(string $link) : NodeInterface;
 
     /**
      * returns node's categories
      *
-     * @return \ArrayIterator
+     * @return iterable
      */
-    public function getCategories();
+    public function getCategories() : iterable;
 
     /**
      * adds a category to the node
      *
      * @param \FeedIo\Feed\Node\CategoryInterface $category
-     * @return $this
+     * @return NodeInterface
      */
-    public function addCategory(CategoryInterface $category);
+    public function addCategory(CategoryInterface $category) : NodeInterface;
 
     /**
      * returns a new CategoryInterface
      *
      * @return \FeedIo\Feed\Node\CategoryInterface
      */
-    public function newCategory();
+    public function newCategory() : CategoryInterface;
 
     /**
      * returns an element's value
      *
      * @param  string $name element name
-     * @return mixed
+     * @return string
      */
-    public function getValue($name);
+    public function getValue(string $name) : ? string;
 
     /**
      * creates a new ElementInterface called $name and sets its value to $value
      *
      * @param  string $name  element name
      * @param  string $value element value
-     * @return $this
+     * @return NodeInterface
      */
-    public function set($name, $value);
+    public function set(string $name, string $value) : NodeInterface;
 }

@@ -17,9 +17,8 @@ class Description extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $string = '';
         if ($element->firstChild && $element->firstChild->nodeType == XML_CDATA_SECTION_NODE) {
@@ -31,8 +30,6 @@ class Description extends RuleAbstract
         }
 
         $node->setDescription(htmlspecialchars_decode($string));
-
-        return $this;
     }
 
     /**

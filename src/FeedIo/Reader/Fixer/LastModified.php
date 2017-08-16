@@ -18,9 +18,9 @@ class LastModified extends FixerAbstract
 
     /**
      * @param  FeedInterface $feed
-     * @return $this
+     * @return FixerAbstract
      */
-    public function correct(FeedInterface $feed)
+    public function correct(FeedInterface $feed) : FixerAbstract
     {
         if (is_null($feed->getLastModified())) {
             $this->logger->notice("correct last modified date for feed {$feed->getTitle()}");
@@ -36,7 +36,7 @@ class LastModified extends FixerAbstract
      * @param  FeedInterface $feed
      * @return \DateTime
      */
-    public function searchLastModified(FeedInterface $feed)
+    public function searchLastModified(FeedInterface $feed) : \DateTime
     {
         $latest = new \DateTime('@0');
 

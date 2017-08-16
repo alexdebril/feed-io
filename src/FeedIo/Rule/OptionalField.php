@@ -22,15 +22,12 @@ class OptionalField extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $domElement
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $domElement)
+    public function setProperty(NodeInterface $node, \DOMElement $domElement) : void
     {
         $element = $this->createElementFromDomNode($node, $domElement);
 
         $node->addElement($element);
-
-        return $this;
     }
 
     /**
@@ -38,7 +35,7 @@ class OptionalField extends RuleAbstract
      * @param ElementInterface $element
      * @param \DOMNode $domNode
      */
-    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode)
+    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode) : void
     {
         if (!$domNode->hasChildNodes() || !$this->hasSubElements($domNode)) {
             // no elements to add
@@ -53,7 +50,7 @@ class OptionalField extends RuleAbstract
      * @param ElementInterface $element
      * @param \DOMNodeList $childNodeList
      */
-    private function addElementsFromNodeList(NodeInterface $node, ElementInterface $element, \DOMNodeList $childNodeList)
+    private function addElementsFromNodeList(NodeInterface $node, ElementInterface $element, \DOMNodeList $childNodeList) : void
     {
         foreach ($childNodeList as $childNode) {
             if ($childNode instanceof \DOMText) {
@@ -68,7 +65,7 @@ class OptionalField extends RuleAbstract
      * @param \DOMNode $domNode
      * @return bool
      */
-    private function hasSubElements(\DOMNode $domNode)
+    private function hasSubElements(\DOMNode $domNode) : bool
     {
         foreach ($domNode->childNodes as $childDomNode) {
             if (!$childDomNode instanceof \DOMText) {
@@ -84,7 +81,7 @@ class OptionalField extends RuleAbstract
      * @param \DOMNode $domNode
      * @return ElementInterface
      */
-    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode)
+    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode) : ElementInterface
     {
         $element = $node->newElement();
         $element->setName($domNode->nodeName);
@@ -98,7 +95,12 @@ class OptionalField extends RuleAbstract
         return $element;
     }
 
-    public function buildDomElement(\DomElement $domElement, ElementInterface $element)
+    /**
+     * @param \DomElement $domElement
+     * @param ElementInterface $element
+     * @return \DomElement
+     */
+    public function buildDomElement(\DomElement $domElement, ElementInterface $element) : \DOMElement
     {
         $domElement->nodeValue = $element->getValue();
 

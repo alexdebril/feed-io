@@ -20,13 +20,10 @@ class ModifiedSince extends DateRuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
-
-        return $this;
     }
 
     /**

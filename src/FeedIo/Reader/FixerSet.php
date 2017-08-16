@@ -18,9 +18,9 @@ class FixerSet
 
     /**
      * @param \FeedIo\Reader\FixerAbstract
-     * @return $this
+     * @return FixerSet
      */
-    public function add(FixerAbstract $fixer)
+    public function add(FixerAbstract $fixer) : FixerSet
     {
         $this->fixers[] = $fixer;
 
@@ -29,9 +29,9 @@ class FixerSet
 
     /**
      * @param  FeedInterface $feed
-     * @return $this
+     * @return FixerSet
      */
-    public function correct(FeedInterface $feed)
+    public function correct(FeedInterface $feed) : FixerSet
     {
         foreach ($this->fixers as $fixer) {
             $fixer->correct($feed);

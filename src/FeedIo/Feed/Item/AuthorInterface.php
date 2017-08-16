@@ -20,33 +20,33 @@ interface AuthorInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getName() : ? string;
 
     /**
      * @param  string $name
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setName($name);
+    public function setName(string $name) : AuthorInterface;
 
     /**
      * @return string
      */
-    public function getUri();
+    public function getUri() : ? string;
 
     /**
      * @param  string $uri
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setUri($uri);
+    public function setUri(string $uri) : AuthorInterface;
 
     /**
      * @return string
      */
-    public function getEmail();
+    public function getEmail() : ? string;
 
     /**
      * @param  string $email
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setEmail($email);
+    public function setEmail(string $email) : AuthorInterface;
 }

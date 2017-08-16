@@ -23,17 +23,15 @@ class Author extends BaseAuthor
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
-            $author->setName($this->getChildValue($element, 'name'));
-            $author->setUri($this->getChildValue($element, 'uri'));
-            $author->setEmail($this->getChildValue($element, 'email'));
+            $author->setName($this->getChildValue($element, 'name') ?? '');
+            $author->setUri($this->getChildValue($element, 'uri') ?? '');
+            $author->setEmail($this->getChildValue($element, 'email') ?? '');
             $node->setAuthor($author);
         }
-
-        return $this;
     }
 
     /**
