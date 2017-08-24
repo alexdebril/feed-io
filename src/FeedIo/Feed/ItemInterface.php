@@ -73,7 +73,7 @@ interface ItemInterface extends NodeInterface
      * @param  AuthorInterface $author
      * @return ItemInterface
      */
-    public function setAuthor(AuthorInterface $author) : ItemInterface;
+    public function setAuthor(AuthorInterface $author = null) : ItemInterface;
 
     /**
      * returns a new AuthorInterface

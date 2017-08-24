@@ -45,10 +45,10 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      * @param string $url
      * @return FeedInterface
      */
-    public function setUrl(string $url) : FeedInterface
+    public function setUrl(string $url = null) : FeedInterface
     {
         $this->url = $url;
-        
+
         return $this;
     }
 

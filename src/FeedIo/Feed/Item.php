@@ -82,7 +82,7 @@ class Item extends Node implements ItemInterface
      * @param  AuthorInterface $author
      * @return ItemInterface
      */
-    public function setAuthor(AuthorInterface $author) : ItemInterface
+    public function setAuthor(AuthorInterface $author = null) : ItemInterface
     {
         $this->author = $author;
 

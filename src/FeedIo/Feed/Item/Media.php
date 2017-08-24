@@ -40,7 +40,7 @@ class Media implements MediaInterface
      * @param  string $type
      * @return MediaInterface
      */
-    public function setType(string $type) : MediaInterface
+    public function setType(string $type = null) : MediaInterface
     {
         $this->type = $type;
 
@@ -59,7 +59,7 @@ class Media implements MediaInterface
      * @param  string $url
      * @return MediaInterface
      */
-    public function setUrl(string $url) : MediaInterface
+    public function setUrl(string $url = null) : MediaInterface
     {
         $this->url = $url;
 
@@ -78,7 +78,7 @@ class Media implements MediaInterface
      * @param  string $length
      * @return MediaInterface
      */
-    public function setLength(string $length) : MediaInterface
+    public function setLength(string $length = null) : MediaInterface
     {
         $this->length = $length;
 
