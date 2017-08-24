@@ -266,7 +266,7 @@ class FeedIo
     }
 
     /**
-     * @param $url
+     * @param  string                $url
      * @param  FeedInterface         $feed
      * @param  \DateTime             $modifiedSince
      * @return \FeedIo\Reader\Result
@@ -290,7 +290,7 @@ class FeedIo
     }
 
     /**
-     * @param $url
+     * @param  string                $url
      * @param  \DateTime             $modifiedSince
      * @return \FeedIo\Reader\Result
      */
