@@ -15,7 +15,7 @@ use FeedIo\Feed\NodeInterface;
 
 class Category extends \FeedIo\Rule\Category
 {
-        
+
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
@@ -26,10 +26,10 @@ class Category extends \FeedIo\Rule\Category
         $category->setScheme($this->getAttributeValue($element, 'scheme'))
         ->setLabel($this->getAttributeValue($element, 'label'))
         ->setTerm($this->getAttributeValue($element, 'term'));
-        
+
         $node->addCategory($category);
     }
-    
+
     /**
      * @param  \DomDocument   $document
      * @param  CategoryInterface $category
@@ -41,7 +41,7 @@ class Category extends \FeedIo\Rule\Category
         $element->setAttribute('scheme', $category->getScheme() ?? '');
         $element->setAttribute('term', $category->getTerm() ?? '');
         $element->setAttribute('label', $category->getLabel() ?? '');
-        
+
         return $element;
     }
 }
