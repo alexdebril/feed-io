@@ -49,7 +49,7 @@ class ResponseBuilder
         $headers = [
             'Content-Type' => ($format === 'json') ? 'application/json':'application/xhtml+xml',
             'Cache-Control' => $this->public ? 'public':'private' . "max-age={$this->maxAge}",
-            'Last-Modified' => $feed->getLastModified()->format(\DateTime::RSS);
+            'Last-Modified' => $feed->getLastModified()->format(\DateTime::RSS),
         ];
 
         return new Response(200, $headers, $formatter->toString($feed));
