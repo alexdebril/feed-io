@@ -211,6 +211,25 @@ class FeedIoTest extends TestCase
         $this->assertInternalType('string', $document);
     }
 
+    public function testPsrResponse()
+    {
+        $feed = new Feed();
+        $feed->setUrl('http://localhost');
+        $feed->setLastModified(new \DateTime);
+        $feed->setTitle('test feed');
+
+        $item = new Feed\Item();
+        $item->setLink('http://localhost/item/1');
+        $item->setTitle('an item');
+        $item->setLastModified(new \DateTime());
+        $item->setDescription('lorem ipsum');
+
+        $feed->add($item);
+
+        $response = $this->object->getPsrResponse($feed, 'atom');
+        $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $response);
+    }
+
     /**
      * @covers FeedIo\FeedIo::getStandard
      */

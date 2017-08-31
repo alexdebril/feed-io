@@ -19,23 +19,23 @@ class ResponseBuilder
 {
 
     /**
-     * @var bool $public is the response public
-     */
-    protected $public;
-
-    /**
      * @var int $maxAge max-age in seconds
      */
     protected $maxAge;
 
     /**
-     * @param bool $public
-     * @param int $maxAge
+     * @var bool $public is the response public
      */
-    public function __construct(bool $public = true, int $maxAge = 600)
+    protected $public;
+
+    /**
+     * @param int $maxAge
+     * @param bool $public
+     */
+    public function __construct(int $maxAge = 600, bool $public = true)
     {
-        $this->public = $public;
         $this->maxAge = $maxAge;
+        $this->public = $public;
     }
 
     /**
@@ -48,11 +48,10 @@ class ResponseBuilder
     {
         $headers = [
             'Content-Type' => ($format === 'json') ? 'application/json':'application/xhtml+xml',
-            'Cache-Control' => $this->public ? 'public':'private' . "max-age={$this->maxAge}",
+            'Cache-Control' => ($this->public ? 'public':'private') . ", max-age={$this->maxAge}",
             'Last-Modified' => $feed->getLastModified()->format(\DateTime::RSS),
         ];
 
         return new Response(200, $headers, $formatter->toString($feed));
     }
-
 }
