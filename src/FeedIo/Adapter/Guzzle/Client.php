@@ -45,6 +45,7 @@ class Client implements ClientInterface
         try {
             $options = [
                 'headers' => [
+                    'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
                     'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
                 ]
             ];
