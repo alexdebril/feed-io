@@ -40,7 +40,7 @@ class Author implements AuthorInterface
      * @param  string $name
      * @return AuthorInterface
      */
-    public function setName(string $name) : AuthorInterface
+    public function setName(string $name = null) : AuthorInterface
     {
         $this->name = $name;
 
@@ -59,7 +59,7 @@ class Author implements AuthorInterface
      * @param  string $uri
      * @return AuthorInterface
      */
-    public function setUri(string $uri) : AuthorInterface
+    public function setUri(string $uri = null) : AuthorInterface
     {
         $this->uri = $uri;
 
@@ -78,7 +78,7 @@ class Author implements AuthorInterface
      * @param  string $email
      * @return AuthorInterface
      */
-    public function setEmail(string $email) : AuthorInterface
+    public function setEmail(string $email = null) : AuthorInterface
     {
         $this->email = $email;
 

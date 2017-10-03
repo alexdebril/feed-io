@@ -17,7 +17,7 @@ use FeedIo\RuleAbstract;
 class Category extends RuleAbstract
 {
     const NODE_NAME = 'category';
-        
+
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
@@ -26,9 +26,9 @@ class Category extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $category = $node->newCategory();
-        $category->setScheme($this->getAttributeValue($element, 'domain') ?? '')
-        ->setLabel($element->nodeValue ?? '')
-        ->setTerm($element->nodeValue ?? '');
+        $category->setScheme($this->getAttributeValue($element, 'domain'))
+        ->setLabel($element->nodeValue)
+        ->setTerm($element->nodeValue);
         $node->addCategory($category);
     }
 

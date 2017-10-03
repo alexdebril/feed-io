@@ -58,7 +58,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  string $value element value
      * @return NodeInterface
      */
-    public function set(string $name, string $value) : NodeInterface
+    public function set(string $name, string $value = null) : NodeInterface
     {
         $element = $this->newElement();
 
@@ -69,7 +69,7 @@ class Node implements NodeInterface, ElementsAwareInterface
 
         return $this;
     }
-    
+
     /**
      * returns node's categories
      *
@@ -99,7 +99,7 @@ class Node implements NodeInterface, ElementsAwareInterface
     public function addCategory(CategoryInterface $category) : NodeInterface
     {
         $this->categories->append($category);
-        
+
         return $this;
     }
 
@@ -125,7 +125,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  string $title
      * @return NodeInterface
      */
-    public function setTitle(string $title) : NodeInterface
+    public function setTitle(string $title = null) : NodeInterface
     {
         $this->title = $title;
 
@@ -144,7 +144,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  string $publicId
      * @return NodeInterface
      */
-    public function setPublicId(string $publicId) : NodeInterface
+    public function setPublicId(string $publicId = null) : NodeInterface
     {
         $this->publicId = $publicId;
 
@@ -163,7 +163,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  string $description
      * @return NodeInterface
      */
-    public function setDescription(string $description) : NodeInterface
+    public function setDescription(string $description = null) : NodeInterface
     {
         $this->description = $description;
 
@@ -182,7 +182,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  \DateTime $lastModified
      * @return NodeInterface
      */
-    public function setLastModified(\DateTime $lastModified) : NodeInterface
+    public function setLastModified(\DateTime $lastModified = null) : NodeInterface
     {
         $this->lastModified = $lastModified;
 
@@ -201,7 +201,7 @@ class Node implements NodeInterface, ElementsAwareInterface
      * @param  string $link
      * @return NodeInterface
      */
-    public function setLink(string $link) : NodeInterface
+    public function setLink(string $link = null) : NodeInterface
     {
         $this->link = $link;
 

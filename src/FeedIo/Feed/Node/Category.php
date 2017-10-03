@@ -17,12 +17,12 @@ class Category implements CategoryInterface
      * @var string
      */
     protected $term;
-    
+
     /**
      * @var string
      */
     protected $scheme;
-    
+
     /**
      * @var string
      */
@@ -35,15 +35,15 @@ class Category implements CategoryInterface
     {
         return $this->term;
     }
-    
+
     /**
      * @param  string $term
      * @return CategoryInterface
      */
-    public function setTerm(string $term) : CategoryInterface
+    public function setTerm(string $term = null) : CategoryInterface
     {
         $this->term = $term;
-        
+
         return $this;
     }
 
@@ -54,15 +54,15 @@ class Category implements CategoryInterface
     {
         return $this->scheme;
     }
-    
+
     /**
      * @param  string $scheme
      * @return CategoryInterface
      */
-    public function setScheme(string $scheme) : CategoryInterface
+    public function setScheme(string $scheme = null) : CategoryInterface
     {
         $this->scheme = $scheme;
-        
+
         return $this;
     }
 
@@ -73,15 +73,15 @@ class Category implements CategoryInterface
     {
         return $this->label;
     }
-    
+
     /**
      * @param  string $label
      * @return CategoryInterface
      */
-    public function setLabel(string $label) : CategoryInterface
+    public function setLabel(string $label = null) : CategoryInterface
     {
         $this->label = $label;
-        
+
         return $this;
     }
 }

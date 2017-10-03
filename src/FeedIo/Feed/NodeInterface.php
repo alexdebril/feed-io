@@ -32,7 +32,7 @@ interface NodeInterface
      * @param  string $title
      * @return NodeInterface
      */
-    public function setTitle(string $title) : NodeInterface;
+    public function setTitle(string $title = null) : NodeInterface;
 
     /**
      * Returns node's public id
@@ -47,7 +47,7 @@ interface NodeInterface
      * @param  string $id
      * @return NodeInterface
      */
-    public function setPublicId(string $id) : NodeInterface;
+    public function setPublicId(string $id = null) : NodeInterface;
 
     /**
      * Returns node's description
@@ -62,7 +62,7 @@ interface NodeInterface
      * @param  string $description
      * @return NodeInterface
      */
-    public function setDescription(string $description) : NodeInterface;
+    public function setDescription(string $description = null) : NodeInterface;
 
     /**
      * Returns the node's last modified date
@@ -77,7 +77,7 @@ interface NodeInterface
      * @param  \DateTime $lastModified
      * @return NodeInterface
      */
-    public function setLastModified(\DateTime $lastModified) : NodeInterface;
+    public function setLastModified(\DateTime $lastModified = null) : NodeInterface;
 
     /**
      * Returns the node's link
@@ -92,7 +92,7 @@ interface NodeInterface
      * @param  string $link
      * @return NodeInterface
      */
-    public function setLink(string $link) : NodeInterface;
+    public function setLink(string $link = null) : NodeInterface;
 
     /**
      * returns node's categories
@@ -131,5 +131,5 @@ interface NodeInterface
      * @param  string $value element value
      * @return NodeInterface
      */
-    public function set(string $name, string $value) : NodeInterface;
+    public function set(string $name, string $value = null) : NodeInterface;
 }
