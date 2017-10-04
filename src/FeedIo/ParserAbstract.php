@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -60,7 +60,7 @@ abstract class ParserAbstract
      * @return \FeedIo\FeedInterface
      * @throws \FeedIo\Parser\UnsupportedFormatException
      */
-    public function parse(Document $document, FeedInterface $feed)
+    public function parse(Document $document, FeedInterface $feed) : FeedInterface
     {
         if (!$this->standard->canHandle($document)) {
             throw new UnsupportedFormatException('this is not a supported format');
@@ -79,20 +79,20 @@ abstract class ParserAbstract
      * @param FeedInterface $feed
      * @return \FeedIo\FeedInterface
      */
-    abstract public function parseContent(Document $document, FeedInterface $feed);
+    abstract public function parseContent(Document $document, FeedInterface $feed) : FeedInterface;
 
     /**
-     * @param  Document            $document
-     * @param  array               $mandatoryFields
-     * @return $this
+     * @param Document $document
+     * @param iterable $mandatoryFields
      * @throws MissingFieldsException
+     * @return bool
      */
-    abstract public function checkBodyStructure(Document $document, array $mandatoryFields);
+    abstract public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool;
 
     /**
      * @return StandardAbstract
      */
-    public function getStandard()
+    public function getStandard() : StandardAbstract
     {
         return $this->standard;
     }
@@ -100,9 +100,9 @@ abstract class ParserAbstract
     /**
      * @param  FeedInterface $feed
      * @param  NodeInterface $item
-     * @return $this
+     * @return ParserAbstract
      */
-    public function addValidItem(FeedInterface $feed, NodeInterface $item)
+    public function addValidItem(FeedInterface $feed, NodeInterface $item) : ParserAbstract
     {
         if ($item instanceof ItemInterface && $this->isValid($item)) {
             $feed->add($item);
@@ -115,7 +115,7 @@ abstract class ParserAbstract
      * @param  ItemInterface $item
      * @return bool
      */
-    public function isValid(ItemInterface $item)
+    public function isValid(ItemInterface $item) : bool
     {
         foreach ($this->filters as $filter) {
             if (!$filter->isValid($item)) {
@@ -128,9 +128,9 @@ abstract class ParserAbstract
 
     /**
      * @param  FilterInterface $filter
-     * @return $this
+     * @return ParserAbstract
      */
-    public function addFilter(FilterInterface $filter)
+    public function addFilter(FilterInterface $filter) : ParserAbstract
     {
         $this->filters[] = $filter;
 
@@ -139,9 +139,9 @@ abstract class ParserAbstract
 
     /**
      * Reset filters
-     * @return $this
+     * @return ParserAbstract
      */
-    public function resetFilters()
+    public function resetFilters() : ParserAbstract
     {
         $this->filters = [];
 

@@ -10,7 +10,9 @@
 
 namespace FeedIo\Rule;
 
-class DateTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class DateTest extends TestCase
 {
     /**
      * Timezone used to test a timezone switch.
@@ -54,7 +56,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function testDontGuessDateFormat()
     {
         $this->object->addDateFormat(\DateTime::ATOM);
-        $this->assertFalse($this->object->guessDateFormat('foo'));
+        $this->assertNull($this->object->guessDateFormat('foo'));
     }
 
     public function testConvertDateFormat()

@@ -35,7 +35,7 @@ Use Composer to add feed-io into your project's requirements :
 
 feed-io requires :
 
-- php 5.6+
+- php 7.1+
 - psr/log 1.0
 - guzzlehttp/guzzle 6.2+
 
@@ -43,6 +43,14 @@ it suggests :
 - monolog/monolog 1.10+
 
 Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
+
+## Still on PHP 5 ?
+
+No problem, you can still install feed-io 3.0. This version will be supported until the end of PHP 5.6 security fixes (31 december 2018).
+
+## Why skipping PHP 7.0 ?
+
+feed-io 4 requires PHP 7.1+ because return types cannot be nullable in PHP 7.0.
 
 # Fetching the repository
 

@@ -1,7 +1,10 @@
 <?php
 namespace FeedIo;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase
+use FeedIo\Factory\BuilderInterface;
+use \PHPUnit\Framework\TestCase;
+
+class FactoryTest extends TestCase
 {
     public function testCheckDependency()
     {
@@ -146,9 +149,25 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class ExternalBuilder
+class ExternalBuilder implements BuilderInterface
 {
     public function __construct(array $config)
     {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMainClassName() : string
+    {
+        return 'main';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPackageName() : string
+    {
+        return 'package';
     }
 }

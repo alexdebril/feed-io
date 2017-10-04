@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -11,6 +11,7 @@
 namespace FeedIo\Standard;
 
 use FeedIo\Formatter\JsonFormatter;
+use FeedIo\FormatterInterface;
 use FeedIo\Reader\Document;
 use FeedIo\StandardAbstract;
 
@@ -24,15 +25,15 @@ class Json extends StandardAbstract
      * @param Document $document
      * @return bool
      */
-    public function canHandle(Document $document)
+    public function canHandle(Document $document) : bool
     {
         return $document->isJson();
     }
 
     /**
-     * @return JsonFormatter
+     * @return FormatterInterface
      */
-    public function getFormatter()
+    public function getFormatter() : FormatterInterface
     {
         return new JsonFormatter();
     }

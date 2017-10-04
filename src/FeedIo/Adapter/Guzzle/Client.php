@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -12,6 +12,7 @@ namespace FeedIo\Adapter\Guzzle;
 
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\NotFoundException;
+use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Adapter\ServerErrorException;
 use GuzzleHttp\Exception\BadResponseException;
 
@@ -40,7 +41,7 @@ class Client implements ClientInterface
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse($url, \DateTime $modifiedSince)
+    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
     {
         try {
             $options = [

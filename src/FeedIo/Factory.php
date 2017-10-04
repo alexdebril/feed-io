@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -38,6 +38,11 @@ class Factory
      */
     protected $loggerBuilder;
 
+    /**
+     * @param array $loggerConfig
+     * @param array $clientConfig
+     * @return Factory
+     */
     public static function create(
         array $loggerConfig = [
             'builder' => 'NullLogger',
@@ -48,7 +53,7 @@ class Factory
             'config' => [],
         ]
 
-    ) {
+    ) : Factory {
         $factory = new static();
 
         $factory->setClientBuilder(
@@ -62,7 +67,11 @@ class Factory
         return $factory;
     }
 
-    public function setClientBuilder(ClientBuilderInterface $clientBuilder)
+    /**
+     * @param ClientBuilderInterface $clientBuilder
+     * @return Factory
+     */
+    public function setClientBuilder(ClientBuilderInterface $clientBuilder) : Factory
     {
         $this->clientBuilder = $clientBuilder;
 
@@ -71,11 +80,10 @@ class Factory
 
     /**
      * @param string $builder
-     * @param array  $args
-     *
-     * @return object
+     * @param array $args
+     * @return BuilderInterface
      */
-    public function getBuilder($builder, array $args = [])
+    public function getBuilder(string $builder, array $args = []) : BuilderInterface
     {
         $class = "\\FeedIo\\Factory\\Builder\\{$builder}Builder";
 
@@ -94,7 +102,7 @@ class Factory
      *
      * @return array
      */
-    public function extractConfig(array $builderConfig)
+    public function extractConfig(array $builderConfig) : array
     {
         return isset($builderConfig['config']) ? $builderConfig['config'] : [];
     }
@@ -102,7 +110,7 @@ class Factory
     /**
      * @return \FeedIo\FeedIo
      */
-    public function getFeedIo()
+    public function getFeedIo() : FeedIo
     {
         return new FeedIo(
             $this->clientBuilder->getClient(),
@@ -113,9 +121,9 @@ class Factory
     /**
      * @param LoggerBuilderInterface $loggerBuilder
      *
-     * @return $this
+     * @return Factory
      */
-    public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder)
+    public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder) : Factory
     {
         $this->loggerBuilder = $loggerBuilder;
 
@@ -127,7 +135,7 @@ class Factory
      *
      * @return boolean true if the dependency is met
      */
-    public function checkDependency(BuilderInterface $builder)
+    public function checkDependency(BuilderInterface $builder) : bool
     {
         if (!class_exists($builder->getMainClassName())) {
             $message = "missing {$builder->getPackageName()}, please install it using composer : composer require {$builder->getPackageName()}";

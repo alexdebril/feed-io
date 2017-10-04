@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -31,16 +31,16 @@ class Author implements AuthorInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName() : ? string
     {
         return $this->name;
     }
 
     /**
      * @param  string $name
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setName($name)
+    public function setName(string $name = null) : AuthorInterface
     {
         $this->name = $name;
 
@@ -50,16 +50,16 @@ class Author implements AuthorInterface
     /**
      * @return string
      */
-    public function getUri()
+    public function getUri() : ? string
     {
         return $this->uri;
     }
 
     /**
      * @param  string $uri
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setUri($uri)
+    public function setUri(string $uri = null) : AuthorInterface
     {
         $this->uri = $uri;
 
@@ -69,16 +69,16 @@ class Author implements AuthorInterface
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail() : ? string
     {
         return $this->email;
     }
 
     /**
      * @param  string $email
-     * @return $this
+     * @return AuthorInterface
      */
-    public function setEmail($email)
+    public function setEmail(string $email = null) : AuthorInterface
     {
         $this->email = $email;
 

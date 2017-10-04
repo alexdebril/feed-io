@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -10,6 +10,8 @@
 
 namespace FeedIo\Factory;
 
+use FeedIo\Adapter\ClientInterface;
+
 /**
  * @package FeedIo
  */
@@ -20,5 +22,5 @@ interface ClientBuilderInterface extends BuilderInterface
      * This method MUST return a \FeedIo\Adapter\ClientInterface instance
      * @return \FeedIo\Adapter\ClientInterface
      */
-    public function getClient();
+    public function getClient() : ClientInterface;
 }

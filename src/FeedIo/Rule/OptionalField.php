@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -10,6 +10,7 @@
 
 namespace FeedIo\Rule;
 
+use FeedIo\Feed\ElementsAwareInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\RuleAbstract;
@@ -21,15 +22,12 @@ class OptionalField extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $domElement
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $domElement)
+    public function setProperty(NodeInterface $node, \DOMElement $domElement) : void
     {
         $element = $this->createElementFromDomNode($node, $domElement);
 
         $node->addElement($element);
-
-        return $this;
     }
 
     /**
@@ -37,7 +35,7 @@ class OptionalField extends RuleAbstract
      * @param ElementInterface $element
      * @param \DOMNode $domNode
      */
-    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode)
+    private function addSubElements(NodeInterface $node, ElementInterface $element, \DOMNode $domNode) : void
     {
         if (!$domNode->hasChildNodes() || !$this->hasSubElements($domNode)) {
             // no elements to add
@@ -52,7 +50,7 @@ class OptionalField extends RuleAbstract
      * @param ElementInterface $element
      * @param \DOMNodeList $childNodeList
      */
-    private function addElementsFromNodeList(NodeInterface $node, ElementInterface $element, \DOMNodeList $childNodeList)
+    private function addElementsFromNodeList(NodeInterface $node, ElementInterface $element, \DOMNodeList $childNodeList) : void
     {
         foreach ($childNodeList as $childNode) {
             if ($childNode instanceof \DOMText) {
@@ -67,7 +65,7 @@ class OptionalField extends RuleAbstract
      * @param \DOMNode $domNode
      * @return bool
      */
-    private function hasSubElements(\DOMNode $domNode)
+    private function hasSubElements(\DOMNode $domNode) : bool
     {
         foreach ($domNode->childNodes as $childDomNode) {
             if (!$childDomNode instanceof \DOMText) {
@@ -83,7 +81,7 @@ class OptionalField extends RuleAbstract
      * @param \DOMNode $domNode
      * @return ElementInterface
      */
-    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode)
+    private function createElementFromDomNode(NodeInterface $node, \DOMNode $domNode) : ElementInterface
     {
         $element = $node->newElement();
         $element->setName($domNode->nodeName);
@@ -98,23 +96,11 @@ class OptionalField extends RuleAbstract
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
+     * @param \DomElement $domElement
+     * @param ElementInterface $element
      * @return \DomElement
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
-    {
-        $domElement = $document->createElement($this->getNodeName());
-        foreach ($node->getElementIterator($this->getNodeName()) as $element) {
-            $this->buildDomElement($domElement, $element);
-        }
-
-        return $domElement;
-    }
-
-    public function buildDomElement(\DomElement $domElement, ElementInterface $element)
+    public function buildDomElement(\DomElement $domElement, ElementInterface $element) : \DOMElement
     {
         $domElement->nodeValue = $element->getValue();
 
@@ -130,5 +116,28 @@ class OptionalField extends RuleAbstract
         }
 
         return $domElement;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return $node instanceof ElementsAwareInterface;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $domElement = $document->createElement($this->getNodeName());
+        if ($node instanceof ElementsAwareInterface) {
+            foreach ($node->getElementIterator($this->getNodeName()) as $element) {
+                $this->buildDomElement($domElement, $element);
+            }
+        }
+
+        $rootElement->appendChild($domElement);
     }
 }

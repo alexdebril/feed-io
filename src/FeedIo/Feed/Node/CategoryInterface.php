@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -18,35 +18,35 @@ interface CategoryInterface
 {
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTerm();
-    
+    public function getTerm() : ? string;
+
     /**
      * @param  string $term
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setTerm($term);
-    
+    public function setTerm(string $term = null) : CategoryInterface;
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getScheme();
-    
+    public function getScheme() : ? string;
+
     /**
      * @param  string $scheme
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setScheme($scheme);
-    
+    public function setScheme(string $scheme = null) : CategoryInterface;
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLabel();
-    
+    public function getLabel() : ? string;
+
     /**
      * @param  string $label
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setLabel($label);
+    public function setLabel(string $label = null) : CategoryInterface;
 }

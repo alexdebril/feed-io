@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -25,7 +25,7 @@ class ElementIterator extends \FilterIterator
      * @param \Iterator $iterator Set of elements to filter
      * @param string    $name     Element name to accept
      */
-    public function __construct(\Iterator $iterator, $name)
+    public function __construct(\Iterator $iterator, string $name)
     {
         parent::__construct($iterator);
         $this->name = $name;
@@ -35,7 +35,7 @@ class ElementIterator extends \FilterIterator
      * override PHP's count implementation.
      * @return int
      */
-    public function count()
+    public function count() : int
     {
         $count = 0;
         foreach ($this as $node) {
@@ -48,7 +48,7 @@ class ElementIterator extends \FilterIterator
     /**
      * @return boolean True if the current element's name matches the expected one
      */
-    public function accept()
+    public function accept() : bool
     {
         $element = $this->getInnerIterator()->current();
 

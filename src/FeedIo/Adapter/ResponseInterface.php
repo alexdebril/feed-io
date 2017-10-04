@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -20,26 +20,26 @@ interface ResponseInterface
     /**
      * @return string
      */
-    public function getBody();
+    public function getBody() : ? string;
 
     /**
      * @return \DateTime
      */
-    public function getLastModified();
+    public function getLastModified() : ?\DateTime;
 
     /**
-     * @return array
+     * @return iterable
      */
-    public function getHeaders();
+    public function getHeaders() : iterable;
 
     /**
      * @param  string $name
-     * @return string
+     * @return iterable
      */
-    public function getHeader($name);
+    public function getHeader(string $name): iterable;
 
     /**
      * @return boolean
      */
-    public function isModified();
+    public function isModified() : bool;
 }

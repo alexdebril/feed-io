@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Node;
 
-class CategoryTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class CategoryTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Item\Category

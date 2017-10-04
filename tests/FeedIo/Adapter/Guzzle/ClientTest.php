@@ -9,7 +9,10 @@ namespace FeedIo\Adapter\Guzzle;
 
 use GuzzleHttp\Exception\BadResponseException;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+use GuzzleHttp\Psr7\Stream;
+use \PHPUnit\Framework\TestCase;
+
+class ClientTest extends TestCase
 {
     protected $body = <<<XML
 <xml><feed><title>a great stream</title></feed></xml>
@@ -32,7 +35,7 @@ XML;
 
         $this->assertEquals($this->body, $response->getBody());
         $this->assertEquals(array(), $response->getHeaders());
-        $this->assertEquals('Tue, 15 Nov 1994 12:45:26 GMT', $response->getHeader('name'));
+        $this->assertEquals(['Tue, 15 Nov 1994 12:45:26 GMT'], $response->getHeader('name'));
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
         $this->assertEquals(1994, $response->getLastModified()->format('Y'));
     }
@@ -78,9 +81,12 @@ XML;
      */
     protected function getGuzzleClient()
     {
+        $stream = $this->getMockForAbstractClass('\Psr\Http\Message\StreamInterface');
+
+        $stream->expects($this->any())->method('getContents')->will($this->returnValue($this->body));
         $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
-        $response->expects($this->any())->method('getBody')->will($this->returnValue($this->body));
-        $response->expects($this->any())->method('getHeader')->will($this->returnValue('Tue, 15 Nov 1994 12:45:26 GMT'));
+        $response->expects($this->any())->method('getBody')->will($this->returnValue($stream));
+        $response->expects($this->any())->method('getHeader')->will($this->returnValue(['Tue, 15 Nov 1994 12:45:26 GMT']));
         $response->expects($this->any())->method('getHeaders')->will($this->returnValue(array()));
         $response->expects($this->any())->method('hasHeader')->will($this->returnValue(true));
 

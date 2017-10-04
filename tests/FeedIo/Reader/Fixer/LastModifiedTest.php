@@ -14,7 +14,9 @@ use FeedIo\Feed;
 use FeedIo\Feed\Item;
 use Psr\Log\NullLogger;
 
-class LastModifiedTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class LastModifiedTest extends TestCase
 {
 
     /**

@@ -12,7 +12,9 @@ namespace FeedIo\Reader;
 
 use FeedIo\Feed;
 
-class FixerSetTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class FixerSetTest extends TestCase
 {
     public function testAdd()
     {

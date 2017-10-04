@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -12,6 +12,7 @@ namespace FeedIo;
 
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\FeedInterface;
 
 /**
  * Interface FeedInterface
@@ -25,24 +26,24 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * This method MUST return the feed's full URL
      * @return string
      */
-    public function getUrl();
-    
+    public function getUrl() : ? string;
+
     /**
      * @param string $url
      * @return FeedInterface
      */
-    public function setUrl($url);
-    
+    public function setUrl(string $url = null) : FeedInterface;
+
     /**
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
      * @param  ItemInterface $item
      * @return FeedInterface
      */
-    public function add(ItemInterface $item);
+    public function add(ItemInterface $item) : FeedInterface;
 
     /**
      * @return ItemInterface
      */
-    public function newItem();
+    public function newItem() : ItemInterface;
 }

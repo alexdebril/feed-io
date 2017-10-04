@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -20,24 +20,25 @@ class Link extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $node->setLink($element->nodeValue);
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        return $document->createElement($this->getNodeName(), $node->getLink());
+        return !! $node->getLink();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getLink()));
     }
 }

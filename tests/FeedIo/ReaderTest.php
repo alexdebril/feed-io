@@ -16,7 +16,9 @@ use Psr\Log\NullLogger;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Reader\Document;
 
-class ReaderTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ReaderTest extends TestCase
 {
 
     /**
@@ -176,6 +178,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
         $response->expects($this->once())->method('isModified')->will($this->returnValue(true));
+        $response->expects($this->any())->method('getBody')->will($this->returnValue(''));
 
         $this->object->handleResponse($response, $feed);
     }
@@ -186,6 +189,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->getMockForAbstractClass('\FeedIo\Adapter\ResponseInterface');
         $response->expects($this->once())->method('isModified')->will($this->returnValue(false));
+        $response->expects($this->any())->method('getBody')->will($this->returnValue(''));
 
         $this->object->handleResponse($response, $feed);
     }

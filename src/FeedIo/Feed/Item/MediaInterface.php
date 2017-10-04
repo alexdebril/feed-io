@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -32,33 +32,33 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getType();
+    public function getType() : ? string;
 
     /**
      * @param  string $type
-     * @return $this
+     * @return MediaInterface
      */
-    public function setType($type);
+    public function setType(string $type = null) : MediaInterface;
 
     /**
      * @return string
      */
-    public function getUrl();
+    public function getUrl() : ? string;
 
     /**
      * @param  string $url
-     * @return $this
+     * @return MediaInterface
      */
-    public function setUrl($url);
+    public function setUrl(string $url = null) : MediaInterface;
 
     /**
      * @return string
      */
-    public function getLength();
+    public function getLength() : ? string;
 
     /**
      * @param  string $length
-     * @return $this
+     * @return MediaInterface
      */
-    public function setLength($length);
+    public function setLength(string $length = null) : MediaInterface;
 }

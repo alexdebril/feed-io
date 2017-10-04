@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Item;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class MediaTest extends TestCase
 {
     /**
      * @var \FeedIo\Feed\Item\Media
@@ -31,7 +33,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     public function testSetLength()
     {
         $this->object->setLength('87669');
-        $this->assertInternalType('integer', $this->object->getLength());
-        $this->assertEquals(87669, $this->object->getLength());
+        $this->assertEquals('87669', $this->object->getLength());
     }
 }

@@ -12,7 +12,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ModifiedSinceTest extends TestCase
 {
     /**
      * @var \FeedIo\Rule\ModifiedSince
@@ -65,9 +67,32 @@ class ModifiedSinceTest extends \PHPUnit_Framework_TestCase
         $item->setLastModified($date);
         $this->object->setDefaultFormat(\DateTime::ATOM);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals($date->format(\DateTime::ATOM), $element->nodeValue);
-        $this->assertEquals('pubDate', $element->nodeName);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals($date->format(\DateTime::ATOM), $addedElement->nodeValue);
+        $this->assertEquals('pubDate', $addedElement->nodeName);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><pubDate>'. $date->format(\DateTime::ATOM) . '</pubDate></feed>', $document->saveXML());
+    }
+
+    public function testCreateElementWithoutDateSet()
+    {
+        $item = new Item();
+        $this->object->setDefaultFormat(\DateTime::ATOM);
+
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+        $this->assertEquals('pubDate', $addedElement->nodeName);
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -18,19 +18,19 @@ interface ElementsAwareInterface
     /**
      * @return ElementInterface
      */
-    public function newElement();
+    public function newElement() : ElementInterface;
 
     /**
      * @param  string $name element name
      * @return ElementIterator
      */
-    public function getElementIterator($name);
+    public function getElementIterator(string $name) : ElementIterator;
 
     /**
      * @param  string $name element name
      * @return boolean true if the element exists
      */
-    public function hasElement($name);
+    public function hasElement(string $name) : bool;
 
     /**
      * @param  ElementInterface $element
@@ -40,18 +40,18 @@ interface ElementsAwareInterface
 
     /**
      * Returns all the item's optional elements
-     * @return \ArrayIterator
+     * @return iterable
      */
-    public function getAllElements();
+    public function getAllElements() : iterable;
 
     /**
      * Returns the item's optional elements tag names
-     * @return array
+     * @return iterable
      */
-    public function listElements();
+    public function listElements() : iterable;
 
     /**
      * @return \Generator
      */
-    public function getElementsGenerator();
+    public function getElementsGenerator() : \Generator;
 }

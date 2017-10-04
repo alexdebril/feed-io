@@ -22,6 +22,7 @@ $media->setType('audio/mpeg');
 
 // add it to the item
 $item->addMedia($media);
+$item->setLink('http://yourdomain.tld/item/1');
 
 // add the item to the feed
 $feed->add($item);

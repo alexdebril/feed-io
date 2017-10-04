@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -36,46 +36,46 @@ class Response implements ResponseInterface
     /**
      * @return boolean
      */
-    public function isModified()
+    public function isModified() : bool
     {
         return $this->psrResponse->getStatusCode() != 304 && $this->psrResponse->getBody()->getSize() > 0;
     }
 
     /**
-     * @return \Psr\Http\Message\StreamInterface
+     * @return string
      */
-    public function getBody()
+    public function getBody() : ? string
     {
-        return $this->psrResponse->getBody();
+        return $this->psrResponse->getBody()->getContents();
     }
 
     /**
      * @return \DateTime|null
      */
-    public function getLastModified()
+    public function getLastModified() : ?\DateTime
     {
         if ($this->psrResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
-            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
+            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED)[0]);
 
             return false === $lastModified ? null : $lastModified;
         }
 
-        return;
+        return null;
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    public function getHeaders()
+    public function getHeaders()  : iterable
     {
         return $this->psrResponse->getHeaders();
     }
 
     /**
      * @param  string       $name
-     * @return string[]
+     * @return iterable
      */
-    public function getHeader($name)
+    public function getHeader(string $name) : iterable
     {
         return $this->psrResponse->getHeader($name);
     }

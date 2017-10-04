@@ -9,7 +9,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class PublicIdTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class PublicIdTest extends TestCase
 {
 
     /**
@@ -42,9 +44,18 @@ class PublicIdTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->setPublicId(self::PUBLIC_ID);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $element = $rootElement->firstChild;
+
         $this->assertInstanceOf('\DomElement', $element);
         $this->assertEquals(self::PUBLIC_ID, $element->nodeValue);
         $this->assertEquals('guid', $element->nodeName);
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><guid>a12</guid></feed>', $document->saveXML());
     }
 }

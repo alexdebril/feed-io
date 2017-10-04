@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -48,17 +48,17 @@ abstract class StandardAbstract
      * @param  Document $document
      * @return boolean
      */
-    abstract public function canHandle(Document $document);
+    abstract public function canHandle(Document $document) : bool;
 
     /**
      * @return \FeedIo\FormatterInterface
      */
-    abstract public function getFormatter();
+    abstract public function getFormatter() : FormatterInterface;
 
     /**
      * @return string
      */
-    public function getDefaultDateFormat()
+    public function getDefaultDateFormat() : string
     {
         return static::DATETIME_FORMAT;
     }
@@ -66,7 +66,7 @@ abstract class StandardAbstract
     /**
      * @return array
      */
-    public function getMandatoryFields()
+    public function getMandatoryFields() : array
     {
         return $this->mandatoryFields;
     }
@@ -75,7 +75,7 @@ abstract class StandardAbstract
      * Returns the Format supported by the standard (XML, JSON, Text...)
      * @return string
      */
-    public function getSyntaxFormat()
+    public function getSyntaxFormat() : string
     {
         return static::SYNTAX_FORMAT;
     }

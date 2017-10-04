@@ -7,7 +7,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class AuthorTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class AuthorTest extends TestCase
 {
 
     /**
@@ -42,9 +44,17 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
         $author->setName(self::AUTHOR);
         $item->setAuthor($author);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::AUTHOR, $element->nodeValue);
-        $this->assertEquals('author', $element->nodeName);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals(self::AUTHOR, $addedElement ->nodeValue);
+        $this->assertEquals('author', $addedElement ->nodeName);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><author>'.self::AUTHOR.'</author></feed>', $document->saveXML());
     }
 }

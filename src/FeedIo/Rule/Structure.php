@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -27,7 +27,7 @@ class Structure extends RuleAbstract
      * @param string  $nodeName
      * @param RuleSet $ruleSet
      */
-    public function __construct($nodeName = null, $ruleSet = null)
+    public function __construct(string $nodeName = null, RuleSet $ruleSet = null)
     {
         parent::__construct($nodeName);
 
@@ -39,7 +39,7 @@ class Structure extends RuleAbstract
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         foreach ($element->childNodes as $domNode) {
             if ($domNode instanceof \DomElement) {
@@ -47,24 +47,28 @@ class Structure extends RuleAbstract
                 $rule->setProperty($node, $domNode);
             }
         }
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $element = $document->createElement($this->getNodeName());
+
+        /** @var RuleAbstract $rule */
         foreach ($this->ruleSet->getRules() as $rule) {
-            $element->appendChild($rule->createElement($document, $node));
+            $rule->apply($document, $element, $node);
         }
 
-        return $element;
+        $rootElement->appendChild($element);
     }
 }

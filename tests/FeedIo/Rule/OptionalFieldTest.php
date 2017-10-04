@@ -11,7 +11,9 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
 
-class OptionalFieldTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class OptionalFieldTest extends TestCase
 {
 
     /**
@@ -100,9 +102,14 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->set('default', 'a test value');
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertEquals('default', $element->nodeName);
-        $this->assertEquals('a test value', $element->nodeValue);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals('default', $addedElement->nodeName);
+        $this->assertEquals('a test value', $addedElement->nodeValue);
     }
 
     public function testCreateElementWithSubElements()
@@ -118,12 +125,16 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->addElement($element);
 
-        $domElement = $this->object->createElement(new \DOMDocument(), $item);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
 
+        $this->object->apply($document, $rootElement, $item);
+
+        $firstElement = $rootElement->firstChild;
         $subElementCount = 0;
 
         /** @var \DOMNode $childNode */
-        foreach ($domElement->childNodes as $childNode) {
+        foreach ($firstElement->childNodes as $childNode) {
             if ($childNode instanceof \DOMText) {
                 continue;
             }
@@ -134,6 +145,9 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(1, $subElementCount);
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><default><subDefault>defaultValue</subDefault></default></feed>', $document->saveXML());
     }
 
     public function testCreateElementWithAttributes()
@@ -146,7 +160,12 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->addElement($element);
 
-        $domElement = $this->object->createElement(new \DOMDocument(), $item);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $domElement = $rootElement->firstChild;
         $this->assertEquals('default', $domElement->nodeName);
         $this->assertEquals('value', $domElement->nodeValue);
 
@@ -158,7 +177,13 @@ class OptionalFieldTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->set('another', 'a test value');
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $element = $rootElement->firstChild;
+
         $this->assertEquals('default', $element->nodeName);
         $this->assertEquals('', $element->nodeValue);
     }

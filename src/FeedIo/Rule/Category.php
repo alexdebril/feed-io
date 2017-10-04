@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -17,53 +17,53 @@ use FeedIo\RuleAbstract;
 class Category extends RuleAbstract
 {
     const NODE_NAME = 'category';
-        
+
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $category = $node->newCategory();
         $category->setScheme($this->getAttributeValue($element, 'domain'))
         ->setLabel($element->nodeValue)
         ->setTerm($element->nodeValue);
         $node->addCategory($category);
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement|null
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        if (! is_null($node->getCategories())) {
-            foreach ($node->getCategories() as $category) {
-                yield $this->createCategoryElement($document, $category);
-            }
-        }
-        
-        return;
+        return !! $node->getCategories();
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        foreach ($node->getCategories() as $category) {
+            $rootElement->appendChild($this->createCategoryElement($document, $category));
+        }
+    }
+
     /**
      * @param  \DomDocument   $document
      * @param  CategoryInterface $category
      * @return \DomElement
      */
-    public function createCategoryElement(\DomDocument $document, CategoryInterface $category)
+    public function createCategoryElement(\DomDocument $document, CategoryInterface $category) : \DOMElement
     {
         $element = $document->createElement(
             $this->getNodeName(),
             is_null($category->getTerm()) ? $category->getLabel():$category->getTerm()
             );
-        $element->setAttribute('domain', $category->getScheme());
+        if (!! $category->getScheme()) {
+            $element->setAttribute('domain', $category->getScheme());
+        }
 
         return $element;
     }

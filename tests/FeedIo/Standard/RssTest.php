@@ -9,7 +9,9 @@ namespace FeedIo\Standard;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-class RssTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class RssTest extends TestCase
 {
     const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel/></rss>';
 

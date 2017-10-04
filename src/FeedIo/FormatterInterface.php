@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -17,5 +17,5 @@ interface FormatterInterface
      * @param FeedInterface $feed
      * @return string
      */
-    public function toString(FeedInterface $feed);
+    public function toString(FeedInterface $feed) : string;
 }

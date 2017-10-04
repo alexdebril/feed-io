@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -24,7 +24,7 @@ abstract class RuleAbstract
     /**
      * @param string $nodeName
      */
-    public function __construct($nodeName = null)
+    public function __construct(string $nodeName = null)
     {
         $this->nodeName = is_null($nodeName) ? static::NODE_NAME : $nodeName;
     }
@@ -32,7 +32,7 @@ abstract class RuleAbstract
     /**
      * @return string
      */
-    public function getNodeName()
+    public function getNodeName() : string
     {
         return $this->nodeName;
     }
@@ -42,13 +42,13 @@ abstract class RuleAbstract
      * @param  string      $name
      * @return string|null
      */
-    public function getAttributeValue(\DOMElement $element, $name)
+    public function getAttributeValue(\DOMElement $element, $name) : ? string
     {
         if ($element->hasAttribute($name)) {
             return $element->getAttribute($name);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -56,14 +56,28 @@ abstract class RuleAbstract
      * @param  string      $name
      * @return string|null
      */
-    public function getChildValue(\DOMElement $element, $name)
+    public function getChildValue(\DOMElement $element, string $name) : ? string
     {
         $list = $element->getElementsByTagName($name);
         if ($list->length > 0) {
             return $list->item(0)->nodeValue;
         }
 
-        return;
+        return null;
+    }
+
+    /**
+     * adds the accurate DomElement content according to the node's property
+     *
+     * @param \DomDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
+     */
+    public function apply(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        if ($this->hasValue($node)) {
+            $this->addElement($document, $rootElement, $node);
+        }
     }
 
     /**
@@ -71,16 +85,23 @@ abstract class RuleAbstract
      *
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    abstract public function setProperty(NodeInterface $node, \DOMElement $element);
+    abstract public function setProperty(NodeInterface $node, \DOMElement $element) : void;
 
     /**
-     * creates the accurate DomElement content according to the $item's property
+     * Tells if the node contains the expected value
      *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @param NodeInterface $node
+     * @return bool
      */
-    abstract public function createElement(\DomDocument $document, NodeInterface $node);
+    abstract protected function hasValue(NodeInterface $node) : bool;
+
+    /**
+     * Creates and adds the element(s) to the document's rootElement
+     *
+     * @param \DomDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
+     */
+    abstract protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void;
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -18,6 +18,7 @@ use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
+use FeedIo\RuleSet;
 
 class Rss extends XmlAbstract
 {
@@ -47,9 +48,9 @@ class Rss extends XmlAbstract
     /**
      * Formats the document according to the standard's specification
      * @param  \DOMDocument $document
-     * @return mixed
+     * @return \DOMDocument
      */
-    public function format(\DOMDocument $document)
+    public function format(\DOMDocument $document) : \DOMDocument
     {
         $rss = $document->createElement(static::ROOT_NODE_TAGNAME);
         $rss->setAttribute('version', static::VERSION);
@@ -65,7 +66,7 @@ class Rss extends XmlAbstract
      * @param  Document $document
      * @return boolean
      */
-    public function canHandle(Document $document)
+    public function canHandle(Document $document) : bool
     {
         return static::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
@@ -74,7 +75,7 @@ class Rss extends XmlAbstract
      * @param  DOMDocument $document
      * @return \DomElement
      */
-    public function getMainElement(\DOMDocument $document)
+    public function getMainElement(\DOMDocument $document) : \DOMElement
     {
         return $document->documentElement->getElementsByTagName(static::CHANNEL_NODE_TAGNAME)->item(0);
     }
@@ -82,7 +83,7 @@ class Rss extends XmlAbstract
     /**
      * @return RuleSet
      */
-    public function buildFeedRuleSet()
+    public function buildFeedRuleSet() : RuleSet
     {
         $ruleSet = $this->buildItemRuleSet();
         $ruleSet->add(
@@ -96,7 +97,7 @@ class Rss extends XmlAbstract
     /**
      * @return RuleSet
      */
-    public function buildItemRuleSet()
+    public function buildItemRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -113,7 +114,7 @@ class Rss extends XmlAbstract
     /**
      * @return RuleSet
      */
-    protected function buildBaseRuleSet()
+    protected function buildBaseRuleSet() : RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet->add(new Category());

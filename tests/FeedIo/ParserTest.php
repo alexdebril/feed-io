@@ -17,7 +17,9 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 use Psr\Log\NullLogger;
 
-class ParserTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class ParserTest extends TestCase
 {
 
     /**
@@ -124,8 +126,7 @@ XML;
 RSS;
         $document = new \DOMDocument();
         $document->loadXML($rss);
-        $this->assertInstanceOf(
-            '\FeedIo\ParserAbstract',
+        $this->assertTrue(
             $this->object->checkBodyStructure(new Document($document->saveXML()), array('channel', 'title'))
         );
     }

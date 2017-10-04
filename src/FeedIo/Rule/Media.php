@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -25,28 +25,24 @@ class Media extends RuleAbstract
     /**
      * @return string
      */
-    public function getUrlAttributeName()
+    public function getUrlAttributeName() : string
     {
         return $this->urlAttributeName;
     }
 
     /**
      * @param  string $name
-     * @return $this
      */
-    public function setUrlAttributeName($name)
+    public function setUrlAttributeName(string $name) : void
     {
         $this->urlAttributeName = $name;
-
-        return $this;
     }
 
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
@@ -56,26 +52,6 @@ class Media extends RuleAbstract
 
             $node->addMedia($media);
         }
-
-        return $this;
-    }
-
-    /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
-     */
-    public function createElement(\DomDocument $document, NodeInterface $node)
-    {
-        if ($node instanceof ItemInterface) {
-            foreach ($node->getMedias() as $media) {
-                return $this->createMediaElement($document, $media);
-            }
-        }
-
-        return;
     }
 
     /**
@@ -83,13 +59,31 @@ class Media extends RuleAbstract
      * @param  MediaInterface $media
      * @return \DomElement
      */
-    public function createMediaElement(\DomDocument $document, MediaInterface $media)
+    public function createMediaElement(\DomDocument $document, MediaInterface $media) : \DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
-        $element->setAttribute('type', $media->getType());
-        $element->setAttribute('length', $media->getLength());
+        $element->setAttribute('type', $media->getType() ?? '');
+        $element->setAttribute('length', $media->getLength() ?? '');
 
         return $element;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return $node instanceof ItemInterface && !! $node->getMedias();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        foreach ($node->getMedias() as $media) {
+            $rootElement->appendChild($this->createMediaElement($document, $media));
+        }
     }
 }

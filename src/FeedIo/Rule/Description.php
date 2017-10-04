@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: alex
@@ -17,9 +17,8 @@ class Description extends RuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $string = '';
         if ($element->firstChild && $element->firstChild->nodeType == XML_CDATA_SECTION_NODE) {
@@ -31,21 +30,23 @@ class Description extends RuleAbstract
         }
 
         $node->setDescription(htmlspecialchars_decode($string));
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DOMDocument  $document
-     * @param  NodeInterface $node
-     * @return \DOMElement
+     * @inheritDoc
      */
-    public function createElement(\DOMDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return !! $node->getDescription();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $description = htmlspecialchars($node->getDescription());
 
-        return $document->createElement($this->getNodeName(), $description);
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $description));
     }
 }

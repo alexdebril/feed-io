@@ -9,7 +9,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class DescriptionTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class DescriptionTest extends TestCase
 {
     /**
      * @var Description
@@ -58,9 +60,18 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->setDescription(self::DESCRIPTION);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::DESCRIPTION, $element->nodeValue);
-        $this->assertEquals('description', $element->nodeName);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals(self::DESCRIPTION, $addedElement ->nodeValue);
+        $this->assertEquals('description', $addedElement ->nodeName);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><description>' . self::DESCRIPTION .'</description></feed>', $document->saveXML());
     }
 }

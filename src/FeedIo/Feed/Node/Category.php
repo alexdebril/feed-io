@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -17,71 +17,71 @@ class Category implements CategoryInterface
      * @var string
      */
     protected $term;
-    
+
     /**
      * @var string
      */
     protected $scheme;
-    
+
     /**
      * @var string
      */
     protected $label;
-    
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTerm()
+    public function getTerm() : ? string
     {
         return $this->term;
     }
-    
+
     /**
      * @param  string $term
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setTerm($term)
+    public function setTerm(string $term = null) : CategoryInterface
     {
         $this->term = $term;
-        
+
         return $this;
     }
-    
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getScheme()
+    public function getScheme() : ? string
     {
         return $this->scheme;
     }
-    
+
     /**
      * @param  string $scheme
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setScheme($scheme)
+    public function setScheme(string $scheme = null) : CategoryInterface
     {
         $this->scheme = $scheme;
-        
+
         return $this;
     }
-    
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLabel()
+    public function getLabel() : ? string
     {
         return $this->label;
     }
-    
+
     /**
      * @param  string $label
-     * @return $this
+     * @return CategoryInterface
      */
-    public function setLabel($label)
+    public function setLabel(string $label = null) : CategoryInterface
     {
         $this->label = $label;
-        
+
         return $this;
     }
 }

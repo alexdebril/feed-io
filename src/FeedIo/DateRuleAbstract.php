@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -26,9 +26,9 @@ abstract class DateRuleAbstract extends RuleAbstract
 
     /**
      * @param  \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
-     * @return $this
+     * @return DateRuleAbstract
      */
-    public function setDateTimeBuilder(DateTimeBuilder $dateTimeBuilder)
+    public function setDateTimeBuilder(DateTimeBuilder $dateTimeBuilder) : DateRuleAbstract
     {
         $this->dateTimeBuilder = $dateTimeBuilder;
 
@@ -38,7 +38,7 @@ abstract class DateRuleAbstract extends RuleAbstract
     /**
      * @return DateTimeBuilder
      */
-    public function getDateTimeBuilder()
+    public function getDateTimeBuilder() : DateTimeBuilder
     {
         if (is_null($this->dateTimeBuilder)) {
             throw new \UnexpectedValueException('date time builder should not be null');
@@ -50,7 +50,7 @@ abstract class DateRuleAbstract extends RuleAbstract
     /**
      * @return string
      */
-    public function getDefaultFormat()
+    public function getDefaultFormat() : string
     {
         return $this->defaultFormat;
     }
@@ -58,7 +58,7 @@ abstract class DateRuleAbstract extends RuleAbstract
     /**
      * @param string $defaultFormat
      */
-    public function setDefaultFormat($defaultFormat)
+    public function setDefaultFormat(string $defaultFormat) : void
     {
         $this->defaultFormat = $defaultFormat;
     }

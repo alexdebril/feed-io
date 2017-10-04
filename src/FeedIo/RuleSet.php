@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -41,7 +41,7 @@ class RuleSet
     /**
      * @return RuleAbstract
      */
-    public function getDefault()
+    public function getDefault() : RuleAbstract
     {
         return $this->default;
     }
@@ -49,16 +49,17 @@ class RuleSet
     /**
      * @return array
      */
-    public function getRules()
+    public function getRules() : array
     {
         return $this->rules->getArrayCopy();
     }
 
     /**
-     * @param  RuleAbstract $rule
-     * @return $this
+     * @param RuleAbstract $rule
+     * @param array $aliases
+     * @return RuleSet
      */
-    public function add(RuleAbstract $rule, array $aliases = array())
+    public function add(RuleAbstract $rule, array $aliases = array()) : RuleSet
     {
         $this->rules->offsetSet(strtolower($rule->getNodeName()), $rule);
         $this->addAliases($rule->getNodeName(), $aliases);
@@ -67,11 +68,11 @@ class RuleSet
     }
 
     /**
-     * @param  string $name
-     * @param  array  $aliases
-     * @return $this
+     * @param string $name
+     * @param array $aliases
+     * @return RuleSet
      */
-    public function addAliases($name, array $aliases)
+    public function addAliases(string $name, array $aliases) : RuleSet
     {
         foreach ($aliases as $alias) {
             $this->aliases[strtolower($alias)] = strtolower($name);
@@ -85,7 +86,7 @@ class RuleSet
      * @return RuleAbstract
      * @throws NotFoundException
      */
-    public function get($name)
+    public function get(string $name) : RuleAbstract
     {
         $name = $this->getNameForAlias(strtolower($name));
         if ($this->rules->offsetExists($name)) {
@@ -99,7 +100,7 @@ class RuleSet
      * @param $alias
      * @return string
      */
-    public function getNameForAlias($alias)
+    public function getNameForAlias(string $alias) : string
     {
         if (array_key_exists($alias, $this->aliases)) {
             return $this->aliases[$alias];

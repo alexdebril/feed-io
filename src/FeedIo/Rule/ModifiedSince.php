@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -20,29 +20,30 @@ class ModifiedSince extends DateRuleAbstract
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return $this
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $date = is_null($node->getLastModified()) ? new \DateTime():$node->getLastModified();
 
-        return $document->createElement(
+        $rootElement->appendChild($document->createElement(
             $this->getNodeName(),
             $date->format($this->getDefaultFormat())
-        );
+        ));
     }
 }

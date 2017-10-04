@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -12,9 +12,9 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
-use FeedIo\RuleAbstract;
+use FeedIo\Rule\Author as BaseAuthor;
 
-class Author extends RuleAbstract
+class Author extends BaseAuthor
 {
     const NODE_NAME = 'author';
 
@@ -23,7 +23,7 @@ class Author extends RuleAbstract
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
@@ -32,28 +32,18 @@ class Author extends RuleAbstract
             $author->setEmail($this->getChildValue($element, 'email'));
             $node->setAuthor($author);
         }
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        if ($node instanceof ItemInterface  && !is_null($node->getAuthor())) {
-            $element = $document->createElement(static::NODE_NAME);
-            $element->appendChild($document->createElement('name', $node->getAuthor()->getName()));
-            $element->appendChild($document->createElement('uri', $node->getAuthor()->getUri()));
-            $element->appendChild($document->createElement('email', $node->getAuthor()->getEmail()));
+        $element = $document->createElement(static::NODE_NAME);
+        $element->appendChild($document->createElement('name', $node->getAuthor()->getName()));
+        $element->appendChild($document->createElement('uri', $node->getAuthor()->getUri()));
+        $element->appendChild($document->createElement('email', $node->getAuthor()->getEmail()));
 
-            return $element;
-        }
-
-        return;
+        $rootElement->appendChild($element);
     }
 }

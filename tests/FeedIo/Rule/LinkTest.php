@@ -9,7 +9,9 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-class LinkTest extends \PHPUnit_Framework_TestCase
+use \PHPUnit\Framework\TestCase;
+
+class LinkTest extends TestCase
 {
 
     /**
@@ -42,9 +44,18 @@ class LinkTest extends \PHPUnit_Framework_TestCase
         $item = new Item();
         $item->setLink(self::LINK);
 
-        $element = $this->object->createElement(new \DOMDocument(), $item);
-        $this->assertInstanceOf('\DomElement', $element);
-        $this->assertEquals(self::LINK, $element->nodeValue);
-        $this->assertEquals('link', $element->nodeName);
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $addedElement = $rootElement->firstChild;
+
+        $this->assertEquals(self::LINK, $addedElement ->nodeValue);
+        $this->assertEquals('link', $addedElement ->nodeName);
+
+        $document->appendChild($rootElement);
+
+        $this->assertXmlStringEqualsXmlString('<feed><link>' . self::LINK .'</link></feed>', $document->saveXML());
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -27,7 +27,7 @@ class LinkNode extends RuleAbstract
     /**
      * @param string $nodeName
      */
-    public function __construct($nodeName = null)
+    public function __construct(string $nodeName = null)
     {
         parent::__construct($nodeName);
         $mediaRule = new Media();
@@ -41,34 +41,33 @@ class LinkNode extends RuleAbstract
      * @param  \DOMElement   $element
      * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($element->hasAttribute('rel')) {
             $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
         } else {
             $this->ruleSet->getDefault()->setProperty($node, $element);
         }
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
-     *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement
+     * @inheritDoc
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        $output = new \ArrayIterator();
-        if ($node instanceof ItemInterface) {
-            foreach ($node->getMedias() as $media) {
-                $output->append($this->ruleSet->get('media')->createElement($document, $node));
-            }
-        }
-        $output->append($this->ruleSet->getDefault()->createElement($document, $node));
+        return true;
+    }
 
-        return $output;
+
+    /**
+     * @inheritDoc
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        if ($node instanceof ItemInterface && $node->hasMedia()) {
+            $this->ruleSet->get('media')->apply($document, $rootElement, $node);
+        }
+
+        $this->ruleSet->getDefault()->apply($document, $rootElement, $node);
     }
 }

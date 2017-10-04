@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of the feed-io package.
  *
@@ -19,34 +19,40 @@ class Author extends RuleAbstract
     const NODE_NAME = 'author';
 
     /**
+     * Sets the accurate $item property according to the DomElement content
+     *
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
-     * @return mixed
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element)
+    public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $author = $node->newAuthor();
             $author->setName($element->nodeValue);
             $node->setAuthor($author);
         }
-
-        return $this;
     }
 
     /**
-     * creates the accurate DomElement content according to the $item's property
+     * Tells if the node contains the expected value
      *
-     * @param  \DomDocument  $document
-     * @param  NodeInterface $node
-     * @return \DomElement|null
+     * @param NodeInterface $node
+     * @return bool
      */
-    public function createElement(\DomDocument $document, NodeInterface $node)
+    protected function hasValue(NodeInterface $node) : bool
     {
-        if ($node instanceof ItemInterface && !is_null($node->getAuthor())) {
-            return $document->createElement($this->getNodeName(), $node->getAuthor()->getName());
-        }
+        return $node instanceof ItemInterface && !! $node->getAuthor();
+    }
 
-        return;
+    /**
+     * Creates and adds the element(s) to the docuement's rootElement
+     *
+     * @param \DomDocument $document
+     * @param \DOMElement $rootElement
+     * @param NodeInterface $node
+     */
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    {
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getAuthor()->getName()));
     }
 }
