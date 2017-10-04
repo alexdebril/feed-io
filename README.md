@@ -23,7 +23,7 @@
 
 Keep informed about new releases and incoming features : http://debril.org/category/feed-io
 
-# Installation
+# Installation
 
 Use Composer to add feed-io into your project's requirements :
 
