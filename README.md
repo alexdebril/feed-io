@@ -1,12 +1,10 @@
 # feed-io
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88/big.png)](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88/mini.png)](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88)
 [![Latest Stable Version](https://poser.pugx.org/debril/feed-io/v/stable.png)](https://packagist.org/packages/debril/feed-io)
 [![Build Status](https://secure.travis-ci.org/alexdebril/feed-io.png?branch=master)](http://travis-ci.org/alexdebril/feed-io)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexdebril/feed-io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/feed-io/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/alexdebril/feed-io/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/feed-io/?branch=master)
-[![PHP Tested versions](https://php-eye.com/badge/debril/feed-io/tested.svg)](https://php-eye.com/package/debril/feed-io)
 [![Dependency Status](https://www.versioneye.com/php/debril:feed-io/2.3.1/badge?style=flat-square)](https://www.versioneye.com/php/debril:feed-io/2.3.1)
 
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
@@ -25,7 +23,7 @@
 
 Keep informed about new releases and incoming features : http://debril.org/category/feed-io
 
-# Installation
+# Installation
 
 Use Composer to add feed-io into your project's requirements :
 

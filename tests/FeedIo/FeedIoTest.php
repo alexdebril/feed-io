@@ -90,16 +90,20 @@ class FeedIoTest extends TestCase
         $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');
 
         $this->object->addFilter($filter);
+        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
     }
 
     public function testResetFilters()
     {
         $this->object->resetFilters();
+        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
     }
 
     public function testWithModifiedSince()
     {
-        $this->object->read('http://localhost', new Feed(), new \DateTime());
+        $result = $this->object->read('http://localhost', new Feed(), new \DateTime());
+
+        $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
     }
 
     /**
