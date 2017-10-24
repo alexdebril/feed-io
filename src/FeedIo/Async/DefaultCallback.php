@@ -11,14 +11,26 @@
 namespace FeedIo\Async;
 
 use FeedIo\Reader\Result;
+use \Psr\Log\LoggerInterface;
 
 class DefaultCallback implements CallbackInterface
 {
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @inheritDoc
      */
     public function process(Result $result): void
     {
-        echo "I processed {$result->getUrl()} \n";
+        $this->logger->info("feed processed : {$result->getUrl()}");
     }
 }

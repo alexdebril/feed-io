@@ -64,8 +64,7 @@ class Reader
     public function handle(Request $request) : void
     {
         $feed = $this->newFeed();
-        #$document = $this->reader->handleResponse($request->getResponse(), $feed);
-        $document = new MainReader\Document('toto');
+        $document = $this->reader->handleResponse($request->getResponse(), $feed);
 
         $result = new Result($document, $feed, $request->getModifiedSince(), $request->getResponse(), $request->getUrl());
 

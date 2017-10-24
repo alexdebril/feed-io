@@ -17,6 +17,8 @@ use FeedIo\Reader\FixerAbstract;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Loader;
+use FeedIo\Async\Reader as AsyncReader;
+use FeedIo\Async\CallbackInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -263,6 +265,18 @@ class FeedIo
         $this->reader = $reader;
 
         return $this;
+    }
+
+    /**
+     * @param iterable $requests
+     * @param CallbackInterface $callback
+     * @param string $feedClass
+     */
+    public function readAsync(iterable $requests, CallbackInterface $callback, string $feedClass = '\FeedIo\Feed') : void
+    {
+        $reader = new AsyncReader($this->reader, $callback, $feedClass);
+
+        $reader->process($requests);
     }
 
     /**
