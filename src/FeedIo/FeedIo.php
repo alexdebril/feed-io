@@ -312,6 +312,15 @@ class FeedIo
         return $this;
     }
 
+    /**
+     * Get a PSR-7 compliant response for the given feed
+     *
+     * @param \FeedIo\FeedInterface $feed
+     * @param string $standard
+     * @param int $maxAge
+     * @param bool $public
+     * @return ResponseInterface
+     */
     public function getPsrResponse(FeedInterface $feed, string $standard, int $maxAge = 600, bool $public = true) : ResponseInterface
     {
         $this->logAction($feed, "creating a PSR 7 Response in $standard format");
