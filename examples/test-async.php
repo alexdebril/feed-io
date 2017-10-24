@@ -9,11 +9,8 @@ $requests = [
     new FeedIo\Async\Request('https://packagist.org/feeds/packages.rss'),
     new FeedIo\Async\Request('https://debril.org/feed/'),
 ];
+$logger = (new FeedIo\Factory\Builder\MonologBuilder())->getLogger();
 
-$reader = new \FeedIo\Async\Reader(
-    new \FeedIo\Reader(new \FeedIo\Adapter\NullClient(), new \Psr\Log\NullLogger()),
-    new \FeedIo\Async\DefaultCallback(),
-    '\FeedIo\Feed'
-);
+$feedIo = new \FeedIo\FeedIo(new \FeedIo\Adapter\NullClient(), $logger);
 
-$reader->process($requests);
+$feedIo->readAsync($requests, new \FeedIo\Async\DefaultCallback($logger));
