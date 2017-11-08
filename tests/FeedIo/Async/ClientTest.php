@@ -19,17 +19,26 @@ use Psr\Log\NullLogger;
 
 class ClientTest extends TestCase
 {
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetPromise()
     {
         $mainReader = new MainReader(new NullClient(), new NullLogger());
         $callback = $this->getMockForAbstractClass('\FeedIo\Async\CallbackInterface');
         $client = new Client(new GuzzleClient(), new Reader($mainReader, $callback, '\FeedIo\Feed'));
 
-        $requests = [new Request('https://google.com')];
+        $request = $this->createMock('\FeedIo\Async\Request');
+        $request->expects($this->once())->method('getUrl')->will($this->returnValue('https://packagist.org/feeds/releases.rss'));
+        $request->expects($this->once())->method('getResponse')->will($this->returnValue(
+            file_get_contents(dirname(__FILE__)."/../../samples/rss/expected-rss.xml")
+        ));
+        $requests = [$request];
         $promises = $client->getPromises($requests);
 
         $this->assertInstanceOf('\Generator', $promises, '$promises MUST be a generator');
-        foreach($promises as $promise) {
+        foreach ($promises as $promise) {
             $this->assertInstanceOf('\GuzzleHttp\Promise\PromiseInterface', $promise, '$promise MUST be a promise');
             $this->assertInstanceOf('\Psr\Http\Message\ResponseInterface', $promise->wait(), 'the promise MUST return a PSR-7 Response');
         }
