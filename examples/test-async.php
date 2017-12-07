@@ -8,6 +8,7 @@ $requests = [
     new FeedIo\Async\Request('https://packagist.org/feeds/releases.rss'),
     new FeedIo\Async\Request('https://packagist.org/feeds/packages.rss'),
     new FeedIo\Async\Request('https://debril.org/feed/'),
+    new FeedIo\Async\Request('https://localhost:8000'),
 ];
 $logger = (new FeedIo\Factory\Builder\MonologBuilder())->getLogger();
 
