@@ -260,7 +260,7 @@ class FeedIo
     }
 
     /**
-     * @param \FeedIo\Reader
+     * @param \FeedIo\Reader $reader
      * @return FeedIo
      */
     public function setReader(Reader $reader) : FeedIo
