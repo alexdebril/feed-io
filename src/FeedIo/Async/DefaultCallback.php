@@ -33,4 +33,12 @@ class DefaultCallback implements CallbackInterface
     {
         $this->logger->info("feed processed : {$result->getUrl()}");
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function handleError(Request $request, \Exception $exception) : void
+    {
+        $this->logger->warning("exception caught for {$request->getUrl()} : {$exception->getMessage()}");
+    }
 }

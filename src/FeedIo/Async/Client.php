@@ -66,8 +66,14 @@ class Client
 
         $reader= $this->reader;
         $promise->then(function ($psrResponse) use ($request, $reader) {
-            $request->setResponse(new Response($psrResponse));
-            $reader->handle($request);
+            try {
+                $request->setResponse(new Response($psrResponse));
+                $reader->handle($request);
+            } catch (\Exception $e) {
+                $reader->handleError($request, $e);
+            }
+        }, function ($error) use ($request, $reader) {
+            $reader->handleError($request, $error);
         });
 
         return $promise;

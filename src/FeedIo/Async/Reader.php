@@ -61,17 +61,21 @@ class Reader
     /**
      * @param Request $request
      */
-    public function handle(Request $request) : void
+    public function handle(Request $request)
     {
-        try {
-            $feed = $this->newFeed();
-            $document = $this->reader->handleResponse($request->getResponse(), $feed);
-            $result = new Result($document, $feed, $request->getModifiedSince(), $request->getResponse(), $request->getUrl());
-            $this->callback->process($result);
-        } catch (\Exception $e) {
-            error_log("an error occured during {$request->getUrl()} processing : {$e->getMessage()}");
-            error_log($e->getTraceAsString());
-        }
+        $feed = $this->newFeed();
+        $document = $this->reader->handleResponse($request->getResponse(), $feed);
+        $result = new Result($document, $feed, $request->getModifiedSince(), $request->getResponse(), $request->getUrl());
+        $this->callback->process($result);
+    }
+
+    /**
+     * @param Request $request
+     * @param \Exception $e
+     */
+    public function handleError(Request $request, \Exception $e) : void
+    {
+        $this->callback->handleError($request, $e);
     }
 
     /**
