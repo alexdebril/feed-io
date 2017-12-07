@@ -19,7 +19,10 @@ use FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Loader;
 use FeedIo\Async\Reader as AsyncReader;
 use FeedIo\Async\CallbackInterface;
+use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
+use FeedIo\Http\ResponseBuilder;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * This class acts as a facade. It provides methods to access feed-io main features
@@ -321,6 +324,25 @@ class FeedIo
         $this->getReader()->resetFilters();
 
         return $this;
+    }
+
+    /**
+     * Get a PSR-7 compliant response for the given feed
+     *
+     * @param \FeedIo\FeedInterface $feed
+     * @param string $standard
+     * @param int $maxAge
+     * @param bool $public
+     * @return ResponseInterface
+     */
+    public function getPsrResponse(FeedInterface $feed, string $standard, int $maxAge = 600, bool $public = true) : ResponseInterface
+    {
+        $this->logAction($feed, "creating a PSR 7 Response in $standard format");
+
+        $formatter = $this->getStandard($standard)->getFormatter();
+        $responseBuilder = new ResponseBuilder($maxAge, $public);
+
+        return $responseBuilder->createResponse($standard, $formatter, $feed);
     }
 
     /**
