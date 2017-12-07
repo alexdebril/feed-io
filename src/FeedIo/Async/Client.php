@@ -38,7 +38,6 @@ class Client
         $this->reader = $reader;
     }
 
-
     /**
      * @param iterable $requests
      * @return \Generator
@@ -56,15 +55,9 @@ class Client
      */
     protected function getPromise(Request $request) : PromiseInterface
     {
-        $options = [
-            'headers' => [
-                'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
-                'If-Modified-Since' => $request->getModifiedSince()->format(\DateTime::RFC2822)
-            ]
-        ];
-        $promise = $this->guzzleClient->requestAsync('GET', $request->getUrl(), $options);
-
+        $promise = $this->newPromise($request);
         $reader= $this->reader;
+
         $promise->then(function ($psrResponse) use ($request, $reader) {
             try {
                 $request->setResponse(new Response($psrResponse));
@@ -77,5 +70,21 @@ class Client
         });
 
         return $promise;
+    }
+
+    /**
+     * @param Request $request
+     * @return PromiseInterface
+     */
+    protected function newPromise(Request $request) : PromiseInterface
+    {
+        $options = [
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
+                'If-Modified-Since' => $request->getModifiedSince()->format(\DateTime::RFC2822)
+            ]
+        ];
+
+        return $this->guzzleClient->requestAsync('GET', $request->getUrl(), $options);
     }
 }
