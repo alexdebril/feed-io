@@ -12,6 +12,6 @@ $requests = [
 ];
 $logger = (new FeedIo\Factory\Builder\MonologBuilder())->getLogger();
 
-$feedIo = new \FeedIo\FeedIo(new \FeedIo\Adapter\NullClient(), $logger);
+$feedIo = new \FeedIo\FeedIo(new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client()), $logger);
 
 $feedIo->readAsync($requests, new \FeedIo\Async\DefaultCallback($logger));
