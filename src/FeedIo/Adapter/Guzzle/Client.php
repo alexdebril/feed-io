@@ -11,9 +11,12 @@
 namespace FeedIo\Adapter\Guzzle;
 
 use FeedIo\Adapter\ClientInterface;
+use FeedIo\Adapter\Guzzle\Async\ReaderInterface;
 use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Adapter\ServerErrorException;
+use FeedIo\Async\Request;
+use \GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\BadResponseException;
 
 /**
@@ -35,21 +38,15 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param  string                               $url
-     * @param  \DateTime                            $modifiedSince
-     * @throws \FeedIo\Adapter\NotFoundException
-     * @throws \FeedIo\Adapter\ServerErrorException
-     * @return \FeedIo\Adapter\ResponseInterface
+     * @param string $url
+     * @param \DateTime $modifiedSince
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
     {
         try {
-            $options = [
-                'headers' => [
-                    'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
-                    'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
-                ]
-            ];
+            $options = $this->getOptions($modifiedSince);
 
             return new Response($this->guzzleClient->request('get', $url, $options));
         } catch (BadResponseException $e) {
@@ -60,5 +57,65 @@ class Client implements ClientInterface
                     throw new ServerErrorException($e->getMessage());
             }
         }
+    }
+
+    /**
+     * @param iterable $requests
+     * @param ReaderInterface $reader
+     * @return \Generator
+     */
+    public function getPromises(iterable $requests, ReaderInterface $reader) : \Generator
+    {
+        foreach ($requests as $request) {
+            yield $this->getPromise($request, $reader);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ReaderInterface $reader
+     * @return PromiseInterface
+     */
+    protected function getPromise(Request $request, ReaderInterface $reader) : PromiseInterface
+    {
+        $promise = $this->newPromise($request);
+
+        $promise->then(function ($psrResponse) use ($request, $reader) {
+            try {
+                $request->setResponse(new Response($psrResponse));
+                $reader->handle($request);
+            } catch (\Exception $e) {
+                $reader->handleError($request, $e);
+            }
+        }, function ($error) use ($request, $reader) {
+            $reader->handleError($request, $error);
+        });
+
+        return $promise;
+    }
+
+    /**
+     * @param Request $request
+     * @return PromiseInterface
+     */
+    protected function newPromise(Request $request) : PromiseInterface
+    {
+        $options = $this->getOptions($request->getModifiedSince());
+
+        return $this->guzzleClient->requestAsync('GET', $request->getUrl(), $options);
+    }
+
+    /**
+     * @param \DateTime $modifiedSince
+     * @return array
+     */
+    protected function getOptions(\DateTime $modifiedSince) : array
+    {
+        return [
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
+                'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
+            ]
+        ];
     }
 }
