@@ -31,7 +31,7 @@ class DefaultCallback implements CallbackInterface
      */
     public function process(Result $result): void
     {
-        $this->logger->info("feed processed : {$result->getUrl()}");
+        $this->logger->info("feed processed : {$result->getUrl()} - title : {$result->getFeed()->getTitle()}");
     }
 
     /**
