@@ -9,7 +9,10 @@ namespace FeedIo\Adapter\Guzzle;
 
 use GuzzleHttp\Exception\BadResponseException;
 
-use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
 use \PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -102,7 +105,12 @@ XML;
      */
     public function testGetPromise()
     {
-        $client = new Client(new \GuzzleHttp\Client());
+        $mock = new MockHandler([
+            new Response(200, ['X-Foo' => 'Bar']),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new Client(new \GuzzleHttp\Client(['handler' => $handler]));
 
         $request = $this->createMock('\FeedIo\Async\Request');
         $request->expects($this->once())->method('getUrl')->will($this->returnValue('https://packagist.org/feeds/releases.rss'));

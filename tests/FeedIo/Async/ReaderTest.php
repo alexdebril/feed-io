@@ -9,6 +9,11 @@ use FeedIo\Standard\Rss;
 use \PHPUnit\Framework\TestCase;
 
 use \FeedIo\Reader as MainReader;
+
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+
 use Psr\Log\NullLogger;
 
 class ReaderTest extends TestCase
@@ -18,7 +23,16 @@ class ReaderTest extends TestCase
      */
     public function testProcess()
     {
-        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client());
+        $mock = new MockHandler([
+            new Response(
+                200,
+                ['X-Foo' => 'Bar'],
+                file_get_contents(dirname(__FILE__)."/../../samples/rss/expected-rss.xml")
+            ),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client(['handler' => $handler]));
         $mainReader = new MainReader(new NullClient(), new NullLogger());
         $parser = new XmlParser(new Rss(new DateTimeBuilder()), new NullLogger());
         $mainReader->addParser($parser);
@@ -32,8 +46,14 @@ class ReaderTest extends TestCase
 
     public function testHandleError()
     {
-        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client());
-        $mainReader = new MainReader(new NullClient(), new NullLogger());
+        $mock = new MockHandler([
+            new Response(500, ['X-Foo' => 'Bar'])
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client(['handler' => $handler]));
+
+        $mainReader = new MainReader($client, new NullLogger());
         $parser = new XmlParser(new Rss(new DateTimeBuilder()), new NullLogger());
         $mainReader->addParser($parser);
 
@@ -46,8 +66,18 @@ class ReaderTest extends TestCase
 
     public function testFaultyCallback()
     {
-        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client());
-        $mainReader = new MainReader(new NullClient(), new NullLogger());
+        $mock = new MockHandler([
+            new Response(
+                200,
+                ['X-Foo' => 'Bar'],
+                    file_get_contents(dirname(__FILE__)."/../../samples/rss/expected-rss.xml")
+                ),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+        $client = new \FeedIo\Adapter\Guzzle\Client(new \GuzzleHttp\Client(['handler' => $handler]));
+
+        $mainReader = new MainReader($client, new NullLogger());
         $parser = new XmlParser(new Rss(new DateTimeBuilder()), new NullLogger());
         $mainReader->addParser($parser);
 
