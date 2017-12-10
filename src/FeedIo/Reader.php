@@ -57,6 +57,14 @@ class Reader
     }
 
     /**
+     * @return ClientInterface
+     */
+    public function getClient(): ClientInterface
+    {
+        return $this->client;
+    }
+
+    /**
      * @param  ParserAbstract $parser
      * @return Reader
      */

@@ -277,7 +277,7 @@ class FeedIo
      */
     public function readAsync(iterable $requests, CallbackInterface $callback, string $feedClass = '\FeedIo\Feed') : void
     {
-        $reader = new AsyncReader($this->reader, $callback, $feedClass);
+        $reader = new AsyncReader($this->reader, $this->reader->getClient(), $callback, $feedClass);
 
         $reader->process($requests);
     }

@@ -10,18 +10,24 @@
 
 namespace FeedIo\Async;
 
-use \GuzzleHttp\Client as GuzzleClient;
+use \FeedIo\Adapter\Guzzle\Client;
+use FeedIo\Adapter\Guzzle\Async\ReaderInterface;
 use \GuzzleHttp\Promise\EachPromise;
 use \FeedIo\Reader as MainReader;
 use \FeedIo\Reader\Result;
 use \FeedIo\FeedInterface;
 
-class Reader
+class Reader implements ReaderInterface
 {
     /**
      * @var \FeedIo\Reader
      */
     protected $reader;
+
+    /**
+     * @var \FeedIo\Adapter\Guzzle\Client
+     */
+    protected $client;
 
     /**
      * @var CallbackInterface
@@ -33,16 +39,17 @@ class Reader
      */
     protected $feedClass;
 
-
     /**
      * Reader constructor.
      * @param MainReader $reader
+     * @param Client $client
      * @param CallbackInterface $callback
      * @param string $feedClass
      */
-    public function __construct(MainReader $reader, CallbackInterface $callback, string $feedClass)
+    public function __construct(MainReader $reader, Client $client, CallbackInterface $callback, string $feedClass)
     {
         $this->reader = $reader;
+        $this->client = $client;
         $this->callback = $callback;
         $this->feedClass = $feedClass;
     }
@@ -52,8 +59,7 @@ class Reader
      */
     public function process(iterable $requests) : void
     {
-        $client = new Client(new GuzzleClient(), $this);
-        $promises = $client->getPromises($requests);
+        $promises = $this->client->getPromises($requests, $this);
 
         (new EachPromise($promises))->promise()->wait();
     }
@@ -61,7 +67,7 @@ class Reader
     /**
      * @param Request $request
      */
-    public function handle(Request $request)
+    public function handle(Request $request) : void
     {
         $feed = $this->newFeed();
         $document = $this->reader->handleResponse($request->getResponse(), $feed);
