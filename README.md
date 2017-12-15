@@ -10,6 +10,8 @@
 
 - JSONFeed / Atom / RSS read and write support
 - a Command line interface to read feeds
+- Multiple feeds reading at once through asynchronous requests
+- PSR-7 Response generation with accurate cache headers
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
 - Enclosure support to handle external medias like audio content
@@ -204,13 +206,13 @@ $feedIo = new FeedIo($client, $logger);
 
 ## Dealing with missing timezones
 
-Sometimes you have to consume feeds in which the timezone is missing from the dates. In some use-cases, you may need to specify the feed's timezone to get an accurate value, so feed-io offers a workaround for that : 
+Sometimes you have to consume feeds in which the timezone is missing from the dates. In some use-cases, you may need to specify the feed's timezone to get an accurate value, so feed-io offers a workaround for that :
 
 ```php
 $feedIo->getDateTimeBuilder()->setFeedTimezone(new \DateTimeZone($feedTimezone));
 $result = $feedIo->read($feedUrl);
 $feedIo->getDateTimeBuilder()->resetFeedTimezone();
-``` 
+```
 
 Don't forget to reset `feedTimezone` after fetching the result, or you'll end up with all feeds located in the same timezone.
 
