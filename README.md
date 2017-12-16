@@ -117,6 +117,33 @@ foreach( $result->getFeed() as $item ) {
 
 ```
 
+### Asynchronous reading of several feeds at once
+
+Thanks to Guzzle, feed-io is able to fetch several feeds at once through asynchronous requests. If you're willing to get more information about the way it works, you can read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/quickstart.html#async-requests).
+
+To read feeds using asynchronous requests with feed-io, you need to send a pool of `\FeedIo\Async\Request` objects to `\FeedIo\FeedIo::readAsync` and handle the result with a `\FeedIo\Async\CallbackInterface` of your own. You can also use `\FeedIo\Async\DefaultCallback` in order to test the feature.
+
+Each `\FeedIo\Async\Request` is a request you want to perform, it embeds the feed's URL and optionnally a `\DateTime` to define the `modified-since` attribute of the request.
+
+The `CallbackInterface` instance needs two methods :
+
+```php
+
+  /**
+   * @param Result $result
+   */
+  public function process(Result $result) : void;
+
+  /**
+   * @param Request $request
+   * @param \Exception $exception
+   */
+  public function handleError(Request $request, \Exception $exception) : void;
+
+```
+
+`process()` is called on successful reading and parsing to let you process the result. Otherwise `handleError()` will be triggered on faulty calls. Here is an example : [PDOCallback](examples/PDOCallback.php)
+
 ## formatting an object into a XML stream
 
 ```php
@@ -153,6 +180,26 @@ $item->addMedia($media);
 $feed->add($item);
 
 ```
+
+## Creating a valid PSR-7 Response with a feed
+
+You can turn a `\FeedIo\FeedInstance` directly into a PSR-7 valid response using `\FeedIo\FeedIo::getPsrResponse()` :
+
+```php
+
+$feed = new \FeedIo\Feed;
+
+// feed the beast ...
+$item = new \FeedIo\Feed\Item;
+$item->set ...
+$feed->add($item);
+
+$atomResponse = $feedIo->getPsrResponse($feed, 'atom');
+
+$jsonResponse = $feedIo->getPsrResponse($feed, 'json');
+
+```
+
 ## activate logging
 
 feed-io natively supports PSR-3 logging, you can activate it by choosing a 'builder' in the factory :
