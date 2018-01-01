@@ -101,7 +101,7 @@ class Rss extends XmlAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
-            ->add(new Author())
+            ->add(new Author(), ['dc:creator'])
             ->add(new Link())
             ->add(new PublicId())
             ->add(new Description())
