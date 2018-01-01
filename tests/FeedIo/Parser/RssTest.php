@@ -20,6 +20,8 @@ class RssTest extends ParserTestAbstract
 
     const ENCLOSURE_FILE = 'rss/rss-enclosure.xml';
 
+    const DC_CREATOR_FILE = 'rss/rss-with-dc-creator.xml';
+
     /**
      * @return \FeedIo\StandardAbstract
      */
@@ -42,6 +44,23 @@ class RssTest extends ParserTestAbstract
             $this->assertInstanceOf('\FeedIo\Feed\Item\MediaInterface', $media);
             $this->assertEquals('audio/mpeg', $media->getType());
             $this->assertInternalType('string', $media->getUrl());
+        }
+
+        $this->assertEquals(1, $count);
+    }
+
+    public function testDcCreator()
+    {
+        $document = $this->buildDomDocument(static::DC_CREATOR_FILE);
+        $feed = $this->object->parse($document, new Feed());
+
+        $count = 0;
+        foreach ($feed as $item) {
+            $count++;
+            $author = $item->getAuthor();
+
+            $this->assertInstanceOf('\FeedIo\Feed\Item\AuthorInterface', $author);
+            $this->assertEquals('Author Name', $author->getName());
         }
 
         $this->assertEquals(1, $count);

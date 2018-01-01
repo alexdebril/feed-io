@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>sample title</title>
+        <category domain="http://localhost">sample</category>
+        <link>http://localhost</link>
+        <guid>1</guid>
+        <description/>
+        <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
+        <lastPubDate>Mon, 01 Dec 2014 00:00:00 +0000</lastPubDate>
+        <item>
+            <title>item title</title>
+            <category domain="http://localhost">sample</category>
+            <link>http://localhost/item/1</link>
+            <guid>42</guid>
+            <description>A great description</description>
+            <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
+            <dc:creator>Author Name</dc:creator>
+        </item>
+    </channel>
+</rss>
