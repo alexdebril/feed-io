@@ -46,7 +46,11 @@ class Description extends RuleAbstract
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $description = htmlspecialchars($node->getDescription());
+        $element = $document->createElement($this->getNodeName(), $description);
+        if ($description !== $node->getDescription() && $this->getNodeName() != 'description') {
+            $element->setAttribute('type', 'html');
+        }
 
-        $rootElement->appendChild($document->createElement($this->getNodeName(), $description));
+        $rootElement->appendChild($element);
     }
 }
