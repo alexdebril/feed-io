@@ -4,6 +4,7 @@
     <category  label="sample" scheme="http://localhost" term="sample" />
     <link href="http://localhost"/>
     <id>1</id>
+    <lang>en</lang>
     <updated>2014-12-01T00:00:00+00:00</updated>
     
     <entry>

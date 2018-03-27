@@ -12,7 +12,6 @@ namespace FeedIo;
 
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
-use FeedIo\FeedInterface;
 
 /**
  * Interface FeedInterface
@@ -33,6 +32,17 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @return FeedInterface
      */
     public function setUrl(string $url = null) : FeedInterface;
+
+    /**
+     * @return string $language
+     */
+    public function getLanguage(): ? string ;
+
+    /**
+     * @param string $language
+     * @return FeedInterface
+     */
+    public function setLanguage(string $language = null): FeedInterface;
 
     /**
      * Atom : feed.entry <feed><entry>
