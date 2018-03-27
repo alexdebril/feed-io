@@ -32,6 +32,17 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @return FeedInterface
      */
     public function setUrl($url);
+
+    /**
+     * @return string $language
+     */
+    public function getLanguage();
+
+    /**
+     * @param string $language
+     * @return FeedInterface
+     */
+    public function setLanguage($language);
     
     /**
      * Atom : feed.entry <feed><entry>
