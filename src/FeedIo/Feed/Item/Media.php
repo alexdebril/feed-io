@@ -15,7 +15,7 @@ class Media implements MediaInterface
     /**
      * @var string
      */
-    protected $name;
+    protected $nodeName;
 
     /**
      * @var string
@@ -35,20 +35,28 @@ class Media implements MediaInterface
     /**
      * @return string
      */
-    public function getName() : string
+    public function getNodeName() : string
     {
-        return $this->name;
+        return $this->nodeName;
     }
 
     /**
-     * @param string $name
+     * @param string $nodeName
      * @return MediaInterface
      */
-    public function setName(string $name): MediaInterface
+    public function setNodeName(string $nodeName) : MediaInterface
     {
-        $this->name = $name;
+        $this->nodeName = $nodeName;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isThumbnail() : bool
+    {
+        return $this->nodeName === 'media:thumbnail';
     }
 
     /**

@@ -31,13 +31,18 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getName() : string;
+    public function getNodeName() : string;
 
     /**
-     * @param  string $name
+     * @param  string $nodeName
      * @return MediaInterface
      */
-    public function setName(string $name) : MediaInterface;
+    public function setNodeName(string $nodeName) : MediaInterface;
+
+    /**
+     * @return bool
+     */
+    public function isThumbnail() : bool;
 
     /**
      * @return string
