@@ -28,6 +28,21 @@ namespace FeedIo\Feed\Item;
  */
 interface MediaInterface
 {
+    /**
+     * @return string
+     */
+    public function getNodeName() : string;
+
+    /**
+     * @param  string $nodeName
+     * @return MediaInterface
+     */
+    public function setNodeName(string $nodeName) : MediaInterface;
+
+    /**
+     * @return bool
+     */
+    public function isThumbnail() : bool;
 
     /**
      * @return string
@@ -38,7 +53,7 @@ interface MediaInterface
      * @param  string $type
      * @return MediaInterface
      */
-    public function setType(string $type = null) : MediaInterface;
+    public function setType(?string $type) : MediaInterface;
 
     /**
      * @return string
@@ -49,7 +64,7 @@ interface MediaInterface
      * @param  string $url
      * @return MediaInterface
      */
-    public function setUrl(string $url = null) : MediaInterface;
+    public function setUrl(?string $url) : MediaInterface;
 
     /**
      * @return string
@@ -60,5 +75,5 @@ interface MediaInterface
      * @param  string $length
      * @return MediaInterface
      */
-    public function setLength(string $length = null) : MediaInterface;
+    public function setLength(?string $length) : MediaInterface;
 }

@@ -12,6 +12,10 @@ namespace FeedIo\Feed\Item;
 
 class Media implements MediaInterface
 {
+    /**
+     * @var string
+     */
+    protected $nodeName;
 
     /**
      * @var string
@@ -31,6 +35,33 @@ class Media implements MediaInterface
     /**
      * @return string
      */
+    public function getNodeName() : string
+    {
+        return $this->nodeName;
+    }
+
+    /**
+     * @param string $nodeName
+     * @return MediaInterface
+     */
+    public function setNodeName(string $nodeName) : MediaInterface
+    {
+        $this->nodeName = $nodeName;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isThumbnail() : bool
+    {
+        return $this->nodeName === 'media:thumbnail';
+    }
+
+    /**
+     * @return string
+     */
     public function getType() : ? string
     {
         return $this->type;
@@ -40,7 +71,7 @@ class Media implements MediaInterface
      * @param  string $type
      * @return MediaInterface
      */
-    public function setType(string $type = null) : MediaInterface
+    public function setType(?string $type) : MediaInterface
     {
         $this->type = $type;
 
@@ -59,7 +90,7 @@ class Media implements MediaInterface
      * @param  string $url
      * @return MediaInterface
      */
-    public function setUrl(string $url = null) : MediaInterface
+    public function setUrl(?string $url) : MediaInterface
     {
         $this->url = $url;
 
@@ -78,7 +109,7 @@ class Media implements MediaInterface
      * @param  string $length
      * @return MediaInterface
      */
-    public function setLength(string $length = null) : MediaInterface
+    public function setLength(?string $length) : MediaInterface
     {
         $this->length = $length;
 
