@@ -19,7 +19,7 @@ interface : FeedInterface
 | icon / logo | image | not supported | not supported |
 | rights | copyright | not supported | not supported |
 | subtitle | N/A  | not supported | not supported |
-| lang | language | not supported | not supported |
+| lang | language | getLanguage | setLanguage |
 | base | N/A | not supported | not supported |
 | generator | generator | not supported | not supported |
 | N/A | managingEditor  | not supported | not supported |

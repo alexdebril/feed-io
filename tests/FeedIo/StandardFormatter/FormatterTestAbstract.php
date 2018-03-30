@@ -45,6 +45,7 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
         $feed->setLastModified($date);
         $feed->setLink('http://localhost');
         $feed->setPublicId(1);
+        $feed->setLanguage('en');
         $feed->addCategory($category);
         
         $item = new Item();
@@ -58,6 +59,7 @@ abstract class FormatterTestAbstract extends \PHPUnit_Framework_TestCase
         $feed->add($item);
 
         $formatter = new XmlFormatter($this->standard);
+
         $document = $formatter->toDom($feed);
         $this->assertXmlStringEqualsXmlFile($this->getSampleFile(), $document->saveXML());
     }

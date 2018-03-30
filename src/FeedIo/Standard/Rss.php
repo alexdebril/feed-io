@@ -14,6 +14,7 @@ use DOMDocument;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\Author;
 use FeedIo\Rule\Description;
+use FeedIo\Rule\Language;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
@@ -80,21 +81,19 @@ class Rss extends XmlAbstract
     }
 
     /**
-     * @return RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function buildFeedRuleSet()
     {
         $ruleSet = $this->buildItemRuleSet();
-        $ruleSet->add(
-                    $this->getModifiedSinceRule('lastPubDate'),
-                    array('lastBuildDate')
-                    );
+        $ruleSet->add($this->getModifiedSinceRule('lastPubDate'), ['lastBuildDate'])
+                ->add(new Language());
 
         return $ruleSet;
     }
 
     /**
-     * @return RuleSet
+     * @return \FeedIo\RuleSet
      */
     public function buildItemRuleSet()
     {
@@ -111,7 +110,7 @@ class Rss extends XmlAbstract
     }
 
     /**
-     * @return RuleSet
+     * @return \FeedIo\RuleSet
      */
     protected function buildBaseRuleSet()
     {
