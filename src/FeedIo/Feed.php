@@ -26,6 +26,11 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      */
     protected $url;
 
+    /**
+     * @var string $language
+     */
+    protected $language;
+
     public function __construct()
     {
         $this->items = new \ArrayIterator();
@@ -51,6 +56,28 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
 
         return $this;
     }
+
+    /**
+     * @return string $language
+     */
+    public function getLanguage(): ? string
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     * @return FeedInterface
+     */
+    public function setLanguage(string $language = null): FeedInterface
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+
+
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
