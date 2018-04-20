@@ -86,9 +86,8 @@ class Rss extends XmlAbstract
      */
     public function buildFeedRuleSet() : RuleSet
     {
-        $ruleSet = $this->buildItemRuleSet();
-        $ruleSet->add($this->getModifiedSinceRule('lastPubDate'), ['lastBuildDate'])
-                ->add(new Language());
+        $ruleSet = $this->buildBaseRuleSet();
+        $ruleSet->add(new Language());
 
         return $ruleSet;
     }
@@ -101,11 +100,9 @@ class Rss extends XmlAbstract
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
             ->add(new Author(), ['dc:creator'])
-            ->add(new Link())
             ->add(new PublicId())
-            ->add(new Description())
             ->add(new Media(), ['media:thumbnail'])
-            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
+            ;
 
         return $ruleSet;
     }
@@ -116,7 +113,11 @@ class Rss extends XmlAbstract
     protected function buildBaseRuleSet() : RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
-        $ruleSet->add(new Category());
+        $ruleSet
+            ->add(new Link())
+            ->add(new Description())
+            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME, ['lastBuildDate', 'lastPubDate']))
+            ->add(new Category());
 
         return $ruleSet;
     }

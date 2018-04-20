@@ -3,7 +3,7 @@
     <title>sample title</title>
     <category  label="sample" scheme="http://localhost" term="sample" />
     <link href="http://localhost"/>
-    <id>1</id>
+    <id>http://localhost/item/1</id>
     <lang>en</lang>
     <updated>2014-12-01T00:00:00+00:00</updated>
     
@@ -11,9 +11,9 @@
         <title>item title</title>
         <category  label="sample" scheme="http://localhost" term="sample" />
         <link href="http://localhost/item/1"/>
-        <id>42</id>
+        <id>http://localhost/item/1</id>
         <updated>2014-12-01T00:00:00+00:00</updated>
         <content>A great description</content>
-        <author>name</author>
+        <author>name@domain.tld</author>
     </entry>
 </feed>
