@@ -43,19 +43,20 @@ abstract class FormatterTestAbstract extends TestCase
         $date = new \DateTime('2014/12/01');
         $feed = new Feed();
         $feed->setTitle('sample title');
+        $feed->setPublicId('http://localhost/item/1');
         $feed->setLastModified($date);
         $feed->setLink('http://localhost');
-        $feed->setPublicId('1');
+        $feed->setDescription('a sample feed');
         $feed->setLanguage('en');
         $feed->addCategory($category);
         
         $item = new Item();
-        $item->setPublicId('42');
+        $item->setPublicId('http://localhost/item/1');
         $item->setLastModified($date);
         $item->setTitle('item title');
         $item->setDescription('A great description');
         $item->setLink('http://localhost/item/1');
-        $item->set('author', 'name');
+        $item->set('author', 'name@domain.tld');
         $item->addCategory($category);
         $feed->add($item);
 

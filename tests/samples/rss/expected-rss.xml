@@ -2,20 +2,19 @@
 <rss version="2.0">
     <channel>
         <title>sample title</title>
-        <category domain="http://localhost">sample</category>
         <link>http://localhost</link>
-        <guid>1</guid>
+        <description>a sample feed</description>
         <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
-        <lastPubDate>Mon, 01 Dec 2014 00:00:00 +0000</lastPubDate>
+        <category domain="http://localhost">sample</category>
         <language>en</language>
         <item>
             <title>item title</title>
-            <category domain="http://localhost">sample</category>
             <link>http://localhost/item/1</link>
-            <guid>42</guid>
             <description>A great description</description>
             <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
-            <author>name</author>
+            <category domain="http://localhost">sample</category>
+            <guid>http://localhost/item/1</guid>
+            <author>name@domain.tld</author>
         </item>
     </channel>
 </rss>
