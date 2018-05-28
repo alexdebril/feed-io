@@ -34,7 +34,7 @@ class Document
      */
     public function __construct(string $content)
     {
-        $this->content = trim(str_replace("\xEF\xBB\xBF",'', $content));
+        $this->content = trim(str_replace("\xEF\xBB\xBF", '', $content));
     }
 
     /**
