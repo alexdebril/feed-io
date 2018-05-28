@@ -24,17 +24,41 @@ use GuzzleHttp\Exception\BadResponseException;
  */
 class Client implements ClientInterface
 {
+
+    /**
+     * Default user agent provided with the package
+     */
+    const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
+
     /**
      * @var \GuzzleHttp\ClientInterface
      */
     protected $guzzleClient;
 
     /**
-     * @param \GuzzleHttp\ClientInterface $guzzleClient
+     * @var string
      */
-    public function __construct(\GuzzleHttp\ClientInterface $guzzleClient)
+    protected $userAgent;
+
+    /**
+     * @param \GuzzleHttp\ClientInterface $guzzleClient
+     * @param string $userAgent
+     */
+    public function __construct(\GuzzleHttp\ClientInterface $guzzleClient, string $userAgent = self::DEFAULT_USER_AGENT)
     {
         $this->guzzleClient = $guzzleClient;
+        $this->userAgent = $userAgent;
+    }
+
+    /**
+     * @param  string $userAgent The new user-agent
+     * @return Client
+     */
+    public function setUserAgent(string $userAgent) : Client
+    {
+        $this->userAgent = $userAgent;
+
+        return $this;
     }
 
     /**
@@ -113,7 +137,7 @@ class Client implements ClientInterface
     {
         return [
             'headers' => [
-                'User-Agent' => 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1',
+                'User-Agent' => $this->userAgent,
                 'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
             ]
         ];
