@@ -86,6 +86,11 @@ class FeedIo
     protected $dateTimeBuilder;
 
     /**
+     * @var \FeedIo\Adapter\ClientInterface;
+     */
+    protected $client;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
@@ -106,6 +111,7 @@ class FeedIo
      */
     public function __construct(ClientInterface $client, LoggerInterface $logger)
     {
+        $this->client = $client;
         $this->logger = $logger;
         $this->dateTimeBuilder = new DateTimeBuilder($logger);
         $this->setReader(new Reader($client, $logger));
@@ -268,6 +274,18 @@ class FeedIo
         $this->reader = $reader;
 
         return $this;
+    }
+
+    /**
+     * Discover feeds from the webpage's headers
+     * @param  string $url
+     * @return array
+     */
+    public function discover(string $url) : array
+    {
+        $explorer = new Explorer($this->client, $this->logger);
+
+        return $explorer->discover($url);
     }
 
     /**

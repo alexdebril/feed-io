@@ -9,7 +9,8 @@
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
-- a Command line interface to read feeds
+- Feeds auto-discovery through HTML headers
+- a Command line interface to discover and read feeds
 - Multiple feeds reading at once through asynchronous requests
 - PSR-7 Response generation with accurate cache headers
 - HTTP Headers support when reading feeds in order to save network traffic
@@ -143,6 +144,29 @@ The `CallbackInterface` instance needs two methods :
 ```
 
 `process()` is called on successful reading and parsing to let you process the result. Otherwise `handleError()` will be triggered on faulty calls. Here is an example : [PDOCallback](examples/PDOCallback.php)
+
+## Feeds discovery
+
+A web page can refer to one or more feeds in its headers, feed-io provides a way to discover them :
+
+```php
+
+$feedIo = \FeedIo\Factory::create()->getFeedIo();
+
+$feeds = $feedIo->discover($url);
+
+foreach( $feeds as $feed ) {
+    echo "discovered feed : {$feed}";
+}
+
+```
+Or you can use feed-io's command line :
+
+```shell
+./vendor/bin/feedio discover https://a-website.org
+```
+
+You'll get all discovered feeds in the output.
 
 ## formatting an object into a XML stream
 

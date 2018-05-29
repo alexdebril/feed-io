@@ -14,6 +14,7 @@ if ( class_exists('Symfony\Component\Console\Application') ) {
     $application->setName('feed-io : the CLI feed reader');
 
     $application->add(new \FeedIo\Command\ReadCommand());
+    $application->add(new \FeedIo\Command\DiscoverCommand());
     $application->run();
 } else {
     main($argc, $argv);
