@@ -52,6 +52,20 @@ class FeedIoTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Reader', $feedIo->getReader());
     }
 
+    public function testDiscovery()
+    {
+        $html = file_get_contents(dirname(__FILE__)."/../samples/discovery.html");
+        $client = $this->createMock('FeedIo\Adapter\ClientInterface');
+        $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
+        $response->expects($this->any())->method('getBody')->will($this->returnValue($html));
+        $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
+
+        $feedIo = new FeedIo($client, new \Psr\Log\NullLogger());
+        $urls = $feedIo->discover('https://example.org/feed');
+
+        $this->assertCount(2, $urls);
+    }
+
     /**
      * @covers FeedIo\FeedIo::getCommonStandards
      */
