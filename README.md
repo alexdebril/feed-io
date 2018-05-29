@@ -280,16 +280,50 @@ $feedIo = new FeedIo($client, $logger);
 You can configure Guzzle before injecting it to `FeedIo` :
 
 ```php
-// We want to timeout after 3 seconds
-$guzzle = new GuzzleHttp\Client(['timeout' => 3]);
-$client = new \FeedIo\Adapter\Guzzle\Client($guzzle);
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use \Psr\Log\NullLogger;
 
-$logger = new \Psr\Log\NullLogger();
+// We want to timeout after 3 seconds
+$guzzle = new GuzzleClient(['timeout' => 3]);
+$client = new Client($guzzle);
+
+$logger = new NullLogger();
 
 $feedIo = new \FeedIo\FeedIo($client, $logger);
 
 ```
 Please read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/index.html) to get more information about its configuration.
+
+#### Caching Middleware usage
+
+To prevent your application from hitting the same feeds multiple times, you can inject [Kevin Rob's cache middleware](https://github.com/Kevinrob/guzzle-cache-middleware) into Guzzle's instance :
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client As GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use Kevinrob\GuzzleCache\CacheMiddleware;
+use Psr\Log\NullLogger;
+
+// Create default HandlerStack
+$stack = HandlerStack::create();
+
+// Add this middleware to the top with `push`
+$stack->push(new CacheMiddleware(), 'cache');
+
+// Initialize the client with the handler option
+$guzzle = new GuzzleClient(['handler' => $stack]);
+$client = new Client($guzzle);
+$logger = new NullLogger();
+
+$feedIo = new \FeedIo\FeedIo($client, $logger);
+
+```
+
+As feeds' content may vary often, caching may result in unwanted behaviors.
 
 ### Inject a custom Logger
 
