@@ -43,6 +43,13 @@ XML;
         $this->assertEquals(1994, $response->getLastModified()->format('Y'));
     }
 
+    public function testSetUserAgent()
+    {
+        $this->object->setUserAgent('the new user-agent');
+
+        $this->assertAttributeEquals('the new user-agent', 'userAgent', $this->object);
+    }
+
     /**
      * @expectedException \FeedIo\Adapter\NotFoundException
      */

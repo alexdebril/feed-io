@@ -139,8 +139,7 @@ class FeedIoTest extends TestCase
         $logger = new \Psr\Log\NullLogger();
         $reader = new Reader(
             new Adapter\Guzzle\Client(
-                new \GuzzleHttp\Client(),
-                $logger
+                new \GuzzleHttp\Client()
             ),
             $logger
         );
