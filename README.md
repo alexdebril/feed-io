@@ -9,8 +9,7 @@
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
-- Feeds auto-discovery through HTML headers
-- a Command line interface to discover and read feeds
+- a Command line interface to read feeds
 - Multiple feeds reading at once through asynchronous requests
 - PSR-7 Response generation with accurate cache headers
 - HTTP Headers support when reading feeds in order to save network traffic
@@ -145,29 +144,6 @@ The `CallbackInterface` instance needs two methods :
 
 `process()` is called on successful reading and parsing to let you process the result. Otherwise `handleError()` will be triggered on faulty calls. Here is an example : [PDOCallback](examples/PDOCallback.php)
 
-## Feeds discovery
-
-A web page can refer to one or more feeds in its headers, feed-io provides a way to discover them :
-
-```php
-
-$feedIo = \FeedIo\Factory::create()->getFeedIo();
-
-$feeds = $feedIo->discover($url);
-
-foreach( $feeds as $feed ) {
-    echo "discovered feed : {$feed}";
-}
-
-```
-Or you can use feed-io's command line :
-
-```shell
-./vendor/bin/feedio discover https://a-website.org
-```
-
-You'll get all discovered feeds in the output.
-
 ## formatting an object into a XML stream
 
 ```php
@@ -274,6 +250,62 @@ $logger = new Logger('default', [new StreamHandler('php://stdout')]);
 $feedIo = new FeedIo($client, $logger);
 
 ```
+
+### Guzzle Configuration
+
+You can configure Guzzle before injecting it to `FeedIo` :
+
+```php
+// We want to timeout after 3 seconds
+$guzzle = new GuzzleHttp\Client(['timeout' => 3]);
+$client = new \FeedIo\Adapter\Guzzle\Client($guzzle);
+
+$logger = new \Psr\Log\NullLogger();
+
+$feedIo = new \FeedIo\FeedIo($client, $logger);
+
+```
+Please read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/index.html) to get more information about its configuration.
+
+### Inject a custom Logger
+
+You can inject any Logger you want as long as it implements `Psr\Log\LoggerInterface`. Monolog does, but it's the only library : https://packagist.org/providers/psr/log-implementation
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use Custom\Logger;
+
+$client = new Client(new GuzzleClient());
+$logger = new Logger();
+
+$feedIo = new FeedIo($client, $logger);
+
+```
+
+### Inject a custom HTTP Client
+
+Warning : it is highly recommended to use the default Guzzle Client integration.
+
+If you really want to use another library to read feeds, you need to create your own `FeedIo\Adapter\ClientInterface` class to embed interactions with the library :
+
+```php
+use FeedIo\FeedIo;
+use Custom\Adapter\Client;
+use Library\Client as LibraryClient;
+use Psr\Log\NullLogger;
+
+$client = new Client(new LibraryClient());
+$logger = new NullLogger();
+
+$feedIo = new FeedIo($client, $logger);
+
+```
+
+### Factory or Dependency Injection ?
+
+Choosing between using the Factory or build `FeedIo` without it is a question you must ask yourself at some point of your project. The Factory is mainly designed to let you use feed-io with the lesser efforts and get your first results in a small amount of time. However, it doesn't let you benefit of all Monolog's and Guzzle's features, which could be annoying. Dependency injection will also let you choose another library to handle logs if you need to.
 
 ## Dealing with missing timezones
 
