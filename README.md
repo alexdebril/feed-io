@@ -275,6 +275,96 @@ $feedIo = new FeedIo($client, $logger);
 
 ```
 
+### Guzzle Configuration
+
+You can configure Guzzle before injecting it to `FeedIo` :
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use \Psr\Log\NullLogger;
+
+// We want to timeout after 3 seconds
+$guzzle = new GuzzleClient(['timeout' => 3]);
+$client = new Client($guzzle);
+
+$logger = new NullLogger();
+
+$feedIo = new \FeedIo\FeedIo($client, $logger);
+
+```
+Please read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/index.html) to get more information about its configuration.
+
+#### Caching Middleware usage
+
+To prevent your application from hitting the same feeds multiple times, you can inject [Kevin Rob's cache middleware](https://github.com/Kevinrob/guzzle-cache-middleware) into Guzzle's instance :
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client As GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use Kevinrob\GuzzleCache\CacheMiddleware;
+use Psr\Log\NullLogger;
+
+// Create default HandlerStack
+$stack = HandlerStack::create();
+
+// Add this middleware to the top with `push`
+$stack->push(new CacheMiddleware(), 'cache');
+
+// Initialize the client with the handler option
+$guzzle = new GuzzleClient(['handler' => $stack]);
+$client = new Client($guzzle);
+$logger = new NullLogger();
+
+$feedIo = new \FeedIo\FeedIo($client, $logger);
+
+```
+
+As feeds' content may vary often, caching may result in unwanted behaviors.
+
+### Inject a custom Logger
+
+You can inject any Logger you want as long as it implements `Psr\Log\LoggerInterface`. Monolog does, but it's the only library : https://packagist.org/providers/psr/log-implementation
+
+```php
+use FeedIo\FeedIo;
+use FeedIo\Adapter\Guzzle\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use Custom\Logger;
+
+$client = new Client(new GuzzleClient());
+$logger = new Logger();
+
+$feedIo = new FeedIo($client, $logger);
+
+```
+
+### Inject a custom HTTP Client
+
+Warning : it is highly recommended to use the default Guzzle Client integration.
+
+If you really want to use another library to read feeds, you need to create your own `FeedIo\Adapter\ClientInterface` class to embed interactions with the library :
+
+```php
+use FeedIo\FeedIo;
+use Custom\Adapter\Client;
+use Library\Client as LibraryClient;
+use Psr\Log\NullLogger;
+
+$client = new Client(new LibraryClient());
+$logger = new NullLogger();
+
+$feedIo = new FeedIo($client, $logger);
+
+```
+
+### Factory or Dependency Injection ?
+
+Choosing between using the Factory or build `FeedIo` without it is a question you must ask yourself at some point of your project. The Factory is mainly designed to let you use feed-io with the lesser efforts and get your first results in a small amount of time. However, it doesn't let you benefit of all Monolog's and Guzzle's features, which could be annoying. Dependency injection will also let you choose another library to handle logs if you need to.
+
 ## Dealing with missing timezones
 
 Sometimes you have to consume feeds in which the timezone is missing from the dates. In some use-cases, you may need to specify the feed's timezone to get an accurate value, so feed-io offers a workaround for that :
