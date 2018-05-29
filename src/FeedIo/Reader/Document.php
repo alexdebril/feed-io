@@ -34,7 +34,7 @@ class Document
      */
     public function __construct(string $content)
     {
-        $this->content = trim($content);
+        $this->content = trim(str_replace("\xEF\xBB\xBF", '', $content));
     }
 
     /**
@@ -43,7 +43,7 @@ class Document
      */
     public function startWith(string $character) : bool
     {
-        return substr($this->content, 0, 1) === $character;
+        return mb_substr($this->content, 0, 1) === $character;
     }
 
     /**
