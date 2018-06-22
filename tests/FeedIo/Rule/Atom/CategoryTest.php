@@ -25,7 +25,7 @@ class CategoryTest extends TestCase
     {
         $this->object = new Category();
     }
-    
+
     public function testSetProperty()
     {
         $item = new Item();
@@ -36,7 +36,7 @@ class CategoryTest extends TestCase
         $element->setAttribute('label', 'FooBar');
         $element->setAttribute('term', 'foobar');
         $this->object->setProperty($item, $element);
-                
+
         $count = 0;
         foreach ($item->getCategories() as $category) {
             $count++;
@@ -44,19 +44,19 @@ class CategoryTest extends TestCase
             $this->assertEquals('FooBar', $category->getLabel());
             $this->assertEquals('http', $category->getScheme());
         }
-        
+
         $this->assertEquals(1, $count);
     }
-    
+
     public function testCreateCategoryElement()
     {
         $category = new \FeedIo\Feed\Node\Category();
         $category->setLabel('Foo');
         $category->setTerm('foo');
         $category->setScheme('bar');
-        
+
         $element = $this->object->createCategoryElement(new \DomDocument(), $category);
-        
+
         $this->assertEquals('Foo', $element->getAttribute('label'));
         $this->assertEquals('foo', $element->getAttribute('term'));
         $this->assertEquals('bar', $element->getAttribute('scheme'));
@@ -89,6 +89,6 @@ class CategoryTest extends TestCase
         $this->assertEquals('category', $nextElement->nodeName);
 
         $document->appendChild($rootElement);
-        $this->assertXmlStringEqualsXmlString('<feed><category scheme="" term="" label="foo"/><category scheme="" term="" label="bar"/></feed>', $document->saveXML());
+        $this->assertXmlStringEqualsXmlString('<feed><category label="foo"/><category label="bar"/></feed>', $document->saveXML());
     }
 }

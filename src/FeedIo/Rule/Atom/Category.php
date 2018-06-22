@@ -38,10 +38,23 @@ class Category extends \FeedIo\Rule\Category
     public function createCategoryElement(\DomDocument $document, CategoryInterface $category) : \DOMElement
     {
         $element = $document->createElement($this->getNodeName());
-        $element->setAttribute('scheme', $category->getScheme() ?? '');
-        $element->setAttribute('term', $category->getTerm() ?? '');
-        $element->setAttribute('label', $category->getLabel() ?? '');
+        $this->setNonEmptyAttribute($element, 'scheme', $category->getScheme());
+        $this->setNonEmptyAttribute($element, 'term', $category->getTerm());
+        $this->setNonEmptyAttribute($element, 'label', $category->getLabel());
 
         return $element;
+    }
+
+    /**
+     * Sets the attribute only if the value is not emtpy
+     * @param DomElement $element
+     * @param string     $name
+     * @param [type]     $value
+     */
+    protected function setNonEmptyAttribute(\DomElement $element, string $name, string $value = null) : void
+    {
+        if (! is_null($value) ) {
+            $element->setAttribute($name, $value);
+        }
     }
 }
