@@ -81,6 +81,33 @@ abstract class RuleAbstract
     }
 
     /**
+     * Sets the attribute only if the value is not empty
+     * @param DomElement $element
+     * @param string     $name
+     * @param string     $value
+     */
+    protected function setNonEmptyAttribute(\DomElement $element, string $name, string $value = null) : void
+    {
+        if (! is_null($value)) {
+            $element->setAttribute($name, $value);
+        }
+    }
+
+    /**
+     * Appends a child node only if the value is not null
+     * @param DomDocument $document
+     * @param DOMElement  $element
+     * @param string      $name
+     * @param string      $value
+     */
+    protected function appendNonEmptyChild(\DomDocument $document, \DOMElement $element, string $name, string $value = null) : void
+    {
+        if (! is_null($value)) {
+            $element->appendChild($document->createElement($name, $value));
+        }
+    }
+
+    /**
      * Sets the accurate $item property according to the DomElement content
      *
      * @param  NodeInterface $node

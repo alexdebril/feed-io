@@ -44,17 +44,4 @@ class Category extends \FeedIo\Rule\Category
 
         return $element;
     }
-
-    /**
-     * Sets the attribute only if the value is not emtpy
-     * @param DomElement $element
-     * @param string     $name
-     * @param string     $value
-     */
-    protected function setNonEmptyAttribute(\DomElement $element, string $name, string $value = null) : void
-    {
-        if (! is_null($value)) {
-            $element->setAttribute($name, $value);
-        }
-    }
 }
