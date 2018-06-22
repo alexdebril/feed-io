@@ -40,9 +40,9 @@ class Author extends BaseAuthor
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
         $element = $document->createElement(static::NODE_NAME);
-        $element->appendChild($document->createElement('name', $node->getAuthor()->getName()));
-        $element->appendChild($document->createElement('uri', $node->getAuthor()->getUri()));
-        $element->appendChild($document->createElement('email', $node->getAuthor()->getEmail()));
+        $this->appendNonEmptyChild($document, $element, 'name', $node->getAuthor()->getName());
+        $this->appendNonEmptyChild($document, $element, 'uri', $node->getAuthor()->getUri());
+        $this->appendNonEmptyChild($document, $element, 'email', $node->getAuthor()->getEmail());
 
         $rootElement->appendChild($element);
     }
