@@ -44,7 +44,8 @@ class ReadCommand extends Command
 
         /** @var \FeedIo\Feed\ItemInterface $item */
         foreach ($feed as $i => $item) {
-            $output->writeln("<info>{$item->getLastModified()->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
+            $lastModified = $item->getLastModified() ?: new \DateTime();
+            $output->writeln("<info>{$lastModified->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
             $output->writeln("{$item->getDescription()}");
 
             $this->handleMedias($item, $output);
