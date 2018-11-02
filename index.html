@@ -8,45 +8,66 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link async rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/atom-one-light.min.css">
   </head>
   <body>
     <section class="page-header">
       <h1 class="project-name">Feed-io</h1>
       <h2 class="project-tagline">A PHP library to read and write feeds in the RSS or Atom format</h2>
-      <a href="https://github.com/alexdebril/feed-io" class="btn">View on GitHub</a>
-      <a href="https://github.com/alexdebril/feed-io/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/alexdebril/feed-io/tarball/master" class="btn">Download .tar.gz</a>
+
     </section>
 
     <section class="main-content">
+        <pre>
+            <code class="php">
+&lt;?php
+require 'vendor/autoload.php';
+
+use \FeedIo\Factory;
+
+$feedIo = Factory::create()-&gt;getFeedIo();
+$result = $feedIo-&gt;read('http://php.net/feed.atom');
+
+echo "feed title : {$result-&gt;getFeed()-&gt;getTitle()} \n";
+foreach ($result-&gt;getFeed() as $item) {
+    echo "{$item-&gt;getLastModified()-&gt;format(\DateTime::ATOM)} : {$item-&gt;getTitle()} \n";
+    echo "{$item-&gt;getDescription()} \n";
+}
+
+              </code>
+          </pre>
       <h1>
 <a id="feed-io" class="anchor" href="#feed-io" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>feed-io</h1>
 
-<p><a href="https://github.com/alexdebril/feed-io">feed-io</a> is a PHP library built to consume and serve RSS / Atom feeds. It features:</p>
+<p><a href="https://github.com/alexdebril/feed-io">feed-io</a> is a PHP library built to consume and serve RSS / Atom feeds.</p>
 
-<ul>
-<li>Atom / RSS read and write support</li>
-<li>a Command line interface to read feeds</li>
-<li>HTTP Headers support when reading feeds in order to save network traffic</li>
-<li>Detection of the format (RSS / Atom) when reading feeds</li>
-<li>Enclosure support to handle external medias like audio content</li>
-<li>PSR compliant logging</li>
-<li>Content filtering to fetch only the newest items</li>
-<li>Malformed feeds auto correction</li>
-<li>DateTime detection and conversion</li>
-<li>A generic HTTP ClientInterface</li>
-<li>Guzzle Client integration</li>
-</ul>
+<h1>Want to give it a try ?</h1>
 
-<p>Keep informed about new releases and incoming features : <a href="http://debril.org/category/feed-io">http://debril.org/category/feed-io</a></p>
+You can use the above forms to try two major features: feeds discovery and feed reading.
+
+<h2>Feed discovery</h2>
+Scans a website and outputs the feeds it provides.
+<input type="url" name="website" id="website" />
+<button name="submit" onclick="discoverFeeds()">discover</button>
+
+<div id="discovery-result"></div>
+
+<h2>Feed reading</h2>
+<input type="url" name="feedToRead" id="feedToRead" />
+<button name="submit" onclick="readFeed()">read</button>
+
+<div id="read-result"></div>
 
 <h1>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Installation</h1>
 
 <p>Use Composer to add feed-io into your project's requirements :</p>
 
-<div class="highlight highlight-source-shell"><pre>    composer require debril/feed-io</pre></div>
-
+<pre>
+    <code class="shell">
+    composer require debril/feed-io
+    </code>
+</pre>
 <h1>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
 
@@ -65,26 +86,6 @@
 </ul>
 
 <p>Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.</p>
-
-<h1>
-<a id="fetching-the-repository" class="anchor" href="#fetching-the-repository" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fetching the repository</h1>
-
-<p>Do this if you want to contribute (and you're welcome to do so):</p>
-
-<div class="highlight highlight-source-shell"><pre>    git clone https://github.com/alexdebril/feed-io.git
-
-    <span class="pl-c1">cd</span> feed-io/
-
-    composer install</pre></div>
-
-<h1>
-<a id="unit-testing" class="anchor" href="#unit-testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Unit Testing</h1>
-
-<p>You can run the unit test suites using the following command in the library's source directory:</p>
-
-<div class="highlight highlight-source-shell"><pre>
-    make <span class="pl-c1">test</span>
-</pre></div>
 
 <h1>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
@@ -206,6 +207,10 @@
 
     </section>
 
-  
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="javascript/app.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
