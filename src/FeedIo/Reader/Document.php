@@ -34,6 +34,8 @@ class Document
      */
     public function __construct(string $content)
     {
+        $invalid_characters = '/[^\x9\xa\x20-\xD7FF\xE000-\xFFFD]/';
+        $content = preg_replace($invalid_characters, '', $content);
         $this->content = trim(str_replace("\xEF\xBB\xBF", '', $content));
     }
 
