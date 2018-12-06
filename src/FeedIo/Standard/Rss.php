@@ -116,7 +116,7 @@ class Rss extends XmlAbstract
         $ruleSet
             ->add(new Link())
             ->add(new Description(), ['content:encoded'])
-            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME, ['lastBuildDate', 'lastPubDate']))
+            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
             ->add(new Category());
 
         return $ruleSet;
