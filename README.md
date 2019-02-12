@@ -377,6 +377,6 @@ $feedIo->getDateTimeBuilder()->resetFeedTimezone();
 
 Don't forget to reset `feedTimezone` after fetching the result, or you'll end up with all feeds located in the same timezone.
 
-## Online documentation and API reference
+## Online documentation
 
-The whole documentation and API reference is available at https://feed-io.net/documentation.html
+The whole documentation is available at https://feed-io.net
