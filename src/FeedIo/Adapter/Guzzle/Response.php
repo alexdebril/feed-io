@@ -55,7 +55,7 @@ class Response implements ResponseInterface
     public function getLastModified()
     {
         if ($this->psrResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
-            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED));
+            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED)[0]);
 
             return false === $lastModified ? null : $lastModified;
         }
