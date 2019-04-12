@@ -33,6 +33,7 @@ class DateTimeBuilder
         'D, d M Y H:i:s O',
         'D M d Y H:i:s e',
         '*, m#d#Y - H:i',
+        'D, d M Y H:i:s \U\T',
     ];
 
     /**
