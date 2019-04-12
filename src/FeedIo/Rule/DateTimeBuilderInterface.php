@@ -60,5 +60,5 @@ interface DateTimeBuilderInterface
      * Resets feedTimezone to null.
      */
     public function resetFeedTimezone() : void;
-
 }
+
