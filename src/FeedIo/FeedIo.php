@@ -15,6 +15,7 @@ use FeedIo\Reader\Result;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
 use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilderInterface;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Loader;
 use FeedIo\Async\Reader as AsyncReader;
@@ -109,11 +110,11 @@ class FeedIo
      * @param \FeedIo\Adapter\ClientInterface $client
      * @param \Psr\Log\LoggerInterface        $logger
      */
-    public function __construct(ClientInterface $client, LoggerInterface $logger)
+    public function __construct(ClientInterface $client, LoggerInterface $logger, DateTimeBuilderInterface $dateTimeBuilder = null)
     {
         $this->client = $client;
         $this->logger = $logger;
-        $this->dateTimeBuilder = new DateTimeBuilder($logger);
+        $this->dateTimeBuilder = $dateTimeBuilder ?? new DateTimeBuilder($logger);
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
         $this->loadFixerSet();

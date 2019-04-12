@@ -13,7 +13,7 @@ namespace FeedIo\Rule;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class DateTimeBuilder
+class DateTimeBuilder implements DateTimeBuilderInterface
 {
     /**
      * Supported date formats
@@ -72,7 +72,7 @@ class DateTimeBuilder
      * @param $dateFormat
      * @return DateTimeBuilder
      */
-    public function addDateFormat(string $dateFormat) : DateTimeBuilder
+    public function addDateFormat(string $dateFormat) : DateTimeBuilderInterface
     {
         $this->dateFormats[] = $dateFormat;
 
@@ -83,7 +83,7 @@ class DateTimeBuilder
      * @param  array $dateFormats
      * @return $this
      */
-    public function setDateFormats(array $dateFormats) : DateTimeBuilder
+    public function setDateFormats(array $dateFormats) : DateTimeBuilderInterface
     {
         $this->dateFormats = $dateFormats;
 
@@ -213,7 +213,6 @@ class DateTimeBuilder
     {
         $this->setServerTimezone($timezone);
     }
-
 
     /**
      * @param $format
