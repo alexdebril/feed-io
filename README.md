@@ -193,6 +193,14 @@ $feed->setTitle('...');
 
 $item = $feed->newItem();
 
+// add namespaces
+$feed->setNS(
+    'itunes', //namespace
+    'http://www.itunes.com/dtds/podcast-1.0.dtd' //dtd for the namespace
+        );
+$feed->set('itunes,title', 'Sample Title'); //OR any other element defined in the namespace.
+$item->addElement('itunes:category', 'Education');
+
 // build the media
 $media = new \FeedIo\Feed\Item\Media
 $media->setUrl('http://yourdomain.tld/medias/some-podcast.mp3');
