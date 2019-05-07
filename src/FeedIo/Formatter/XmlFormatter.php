@@ -140,8 +140,21 @@ class XmlFormatter implements FormatterInterface
 
         $this->setHeaders($document, $feed);
         $this->setItems($document, $feed);
+        $this->setNS($document, $feed);
 
         return $document;
+    }
+
+    public function setNS(\DOMDocument $document, FeedInterface $feed)
+    {
+        $firstChild = $document->firstChild;
+        foreach ($feed->getNS() as $ns) {
+            $firstChild->setAttributeNS(
+                'http://www.w3.org/2000/xmlns/', // xmlns namespace URI
+                'xmlns:'.$ns[0],
+                $ns[1]
+            );
+        }
     }
 
     /**

@@ -56,4 +56,6 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @return ItemInterface
      */
     public function newItem() : ItemInterface;
+
+    public function addNS($ns, $dtd) : FeedInterface;
 }

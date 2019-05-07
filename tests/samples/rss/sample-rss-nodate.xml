@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
     <channel>
         <title>RSS Title</title>
         <description>This is an example of an RSS feed</description>
         <link>http://www.someexamplerssdomain.com/main.html</link>
         <ttl>1800</ttl>
+        <itunes:title>RSS Title</itunes:title>
 
         <item>
             <title>Example entry</title>

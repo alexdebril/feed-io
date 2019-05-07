@@ -39,7 +39,7 @@ class Author extends BaseAuthor
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        if ($node instanceof ItemInterface ) {
+        if ($node instanceof ItemInterface) {
             $element = $document->createElement(static::NODE_NAME);
             $this->appendNonEmptyChild($document, $element, 'name', $node->getAuthor()->getName());
             $this->appendNonEmptyChild($document, $element, 'uri', $node->getAuthor()->getUri());

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
 
     <title>Example Feed</title>
     <subtitle>A subtitle.</subtitle>
@@ -8,6 +8,7 @@
     <link href="http://example.org/" />
     <id>urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6</id>
     <updated>2003-12-13T18:30:02Z</updated>
+    <itunes:title>simple title</itunes:title>
 
 
     <entry>
