@@ -31,9 +31,12 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      */
     protected $language;
 
+    protected $ns;
+
     public function __construct()
     {
         $this->items = new \ArrayIterator();
+        $this->ns = new \ArrayIterator();
 
         parent::__construct();
     }
@@ -144,6 +147,18 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
         $this->items->append($item);
 
         return $this;
+    }
+
+    public function addNS(string $ns, string $dtd) : FeedInterface
+    {
+        $this->ns->offsetSet($ns, $dtd);
+
+        return $this;
+    }
+
+    public function getNS() : \ArrayIterator
+    {
+        return $this->ns;
     }
 
     /**

@@ -43,13 +43,15 @@ abstract class FormatterTestAbstract extends TestCase
         $date = new \DateTime('2014/12/01');
         $feed = new Feed();
         $feed->setTitle('sample title');
+        $feed->set('itunes:title', 'sample title');
         $feed->setPublicId('http://localhost/item/1');
         $feed->setLastModified($date);
         $feed->setLink('http://localhost');
         $feed->setDescription('a sample feed');
         $feed->setLanguage('en');
         $feed->addCategory($category);
-        
+        $feed->addNS('itunes', 'http://www.itunes.com/dtds/podcast-1.0.dtd');
+
         $item = new Item();
         $item->setPublicId('http://localhost/item/1');
         $item->setLastModified($date);
@@ -63,6 +65,7 @@ abstract class FormatterTestAbstract extends TestCase
         $formatter = new XmlFormatter($this->standard);
 
         $document = $formatter->toDom($feed);
+
         $this->assertXmlStringEqualsXmlFile($this->getSampleFile(), $document->saveXML());
     }
 

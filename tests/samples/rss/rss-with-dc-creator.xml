@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
     <channel>
         <title>sample title</title>
         <category domain="http://localhost">sample</category>
@@ -8,6 +8,7 @@
         <description/>
         <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
         <lastPubDate>Mon, 01 Dec 2014 00:00:00 +0000</lastPubDate>
+        <itunes:title>sample title</itunes:title>
         <item>
             <title>item title</title>
             <category domain="http://localhost">sample</category>

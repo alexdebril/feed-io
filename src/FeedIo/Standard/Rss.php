@@ -55,6 +55,7 @@ class Rss extends XmlAbstract
     {
         $rss = $document->createElement(static::ROOT_NODE_TAGNAME);
         $rss->setAttribute('version', static::VERSION);
+
         $channel = $document->createElement(static::CHANNEL_NODE_TAGNAME);
         $rss->appendChild($channel);
         $document->appendChild($rss);

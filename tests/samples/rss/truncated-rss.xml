@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
-<channel>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
         <title>RSS Title</title>
         <description>This is an example of an RSS feed</description>
         <link>http://www.someexamplerssdomain.com/main.html</link>
         <ttl>1800</ttl>
+        <itunes:title>RSS Title</itunes:title>
 
         <item>
-                <title>Example entry</title>
-                <description>Here is some text containing an interesting description.</description>
-                <link>http://www.wikipedia.org/</link>
-                <guid>unique string per item</guid>
-                <pubDate>Mon, 06 Sep 2009 16:45:00 +0000 </pubDate>
+            <title>Example entry</title>
+            <description>Here is some text containing an interesting description.</description>
+            <link>http://www.wikipedia.org/</link>
+            <guid>unique string per item</guid>
+            <pubDate>Mon, 06 Sep 2009 16:45:00 +0000 </pubDate>
         </item>
 
-</channel>
+    </channel>
 </rss>

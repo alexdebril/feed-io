@@ -61,4 +61,3 @@ interface DateTimeBuilderInterface
      */
     public function resetFeedTimezone() : void;
 }
-
