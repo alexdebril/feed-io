@@ -148,11 +148,11 @@ class XmlFormatter implements FormatterInterface
     public function setNS(\DOMDocument $document, FeedInterface $feed)
     {
         $firstChild = $document->firstChild;
-        foreach ($feed->getNS() as $ns) {
+        foreach ($feed->getNS() as $namespace => $dtd) {
             $firstChild->setAttributeNS(
                 'http://www.w3.org/2000/xmlns/', // xmlns namespace URI
-                'xmlns:'.$ns[0],
-                $ns[1]
+                'xmlns:'.$namespace,
+                $dtd
             );
         }
     }

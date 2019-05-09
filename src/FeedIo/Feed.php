@@ -149,9 +149,9 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
         return $this;
     }
 
-    public function addNS($ns, $dtd) : FeedInterface
+    public function addNS(string $ns, string $dtd) : FeedInterface
     {
-        $this->ns->append([$ns, $dtd]);
+        $this->ns->offsetSet($ns, $dtd);
 
         return $this;
     }

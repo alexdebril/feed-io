@@ -71,7 +71,6 @@ abstract class FormatterTestAbstract extends TestCase
 
     protected function getSampleFile()
     {
-        var_dump(static::SAMPLE_FILE);
         return dirname(__FILE__)."/../../samples/".static::SAMPLE_FILE;
     }
 }
