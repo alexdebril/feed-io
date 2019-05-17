@@ -20,7 +20,7 @@ use FeedIo\FeedInterface;
  *
  * - the Feed instance
  * - Date and time of the request
- * - value of the 'modifiedSince' header sent throught the request
+ * - value of the 'modifiedSince' header sent through the request
  * - the raw response
  * - the DOM document
  * - URL of the feed
