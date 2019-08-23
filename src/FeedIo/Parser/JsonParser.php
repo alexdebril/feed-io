@@ -71,6 +71,7 @@ class JsonParser extends ParserAbstract
             $item->setLastModified(new \DateTime($this->readOffset($dataItem, 'date_published')));
             $contentHtml = $this->readOffset($dataItem, 'content_html');
             $item->setDescription($this->readOffset($dataItem, 'content_text', $contentHtml));
+            $item->setLink($this->readOffset($dataItem, 'url'));
             $feed->add($item);
         }
 
