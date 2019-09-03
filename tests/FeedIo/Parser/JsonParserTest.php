@@ -32,5 +32,11 @@ class JsonParserTest extends TestCase
         $parser->parse($this->getDocument(), $feed);
 
         $this->assertEquals('JSON Feed', $feed->getTitle());
+        
+        $items = $feed->toArray()['items'];
+
+        $this->assertCount(2, $items);
+        $this->assertEquals('https://jsonfeed.org/2017/05/17/announcing_json_feed', $items[0]['link']);
+        $this->assertNull($items[1]['link']);
     }
 }
