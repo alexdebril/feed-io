@@ -21,10 +21,10 @@ class Description extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         $string = '';
-        if ($element->firstChild && $element->firstChild->nodeType == XML_CDATA_SECTION_NODE) {
-            $string = $element->firstChild->textContent;
-        } else {
-            foreach ($element->childNodes as $childNode) {
+        foreach ($element->childNodes as $childNode) {
+            if ($childNode->nodeType == XML_CDATA_SECTION_NODE) {
+                $string .= $childNode->textContent;
+            } else {
                 $string .= $element->ownerDocument->saveXML($childNode);
             }
         }
