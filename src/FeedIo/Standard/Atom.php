@@ -75,7 +75,7 @@ class Atom extends XmlAbstract
             ->add(new LinkNode())
             ->add(new PublicId('id'))
             ->add(new Language('lang'))
-            ->add($this->getModifiedSinceRule('updated'))
+            ->add($this->getModifiedSinceRule('updated'), ['published'])
         ;
 
         return $ruleSet;
