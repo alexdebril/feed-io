@@ -5,7 +5,7 @@
  */
 namespace FeedIo\Rule;
 
-use FeedIo\Feed\Item;
+use FeedIo\Feed;
 
 use \PHPUnit\Framework\TestCase;
 
@@ -31,10 +31,10 @@ class ImageTest extends TestCase
 
     public function testSet()
     {
-        $item = new Item();
+        $feed = new Feed();
 
-        $this->object->setProperty($item, new \DOMElement('image', self::IMAGE));
-        $this->assertEquals(self::IMAGE, $item->getImage());
+        $this->object->setProperty($feed, new \DOMElement('image', self::IMAGE));
+        $this->assertEquals(self::IMAGE, $feed->getImage());
 	}
 
 }

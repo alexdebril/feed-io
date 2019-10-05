@@ -10,7 +10,7 @@
 
 namespace FeedIo\Rule\Atom;
 
-use FeedIo\Feed\Item;
+use FeedIo\Feed;
 
 use \PHPUnit\Framework\TestCase;
 
@@ -31,22 +31,22 @@ class ImageTest extends TestCase
 
     public function testSet()
     {
-        $item = new Item();
+        $feed = new Feed();
         $document = new \DOMDocument();
 
         $image = $document->createElement('logo', self::IMAGE);
-        $this->object->setProperty($item, $image);
-        $this->assertEquals('http://localhost/image.jpeg', $item->getImage());
+        $this->object->setProperty($feed, $image);
+        $this->assertEquals('http://localhost/image.jpeg', $feed->getImage());
     }
 
     public function testCreateElement()
     {
-        $item = new Item();
-        $item->setImage(self::IMAGE);
+        $feed = new Feed();
+        $feed->setImage(self::IMAGE);
 
         $document = new \DOMDocument();
         $rootElement = $document->createElement('feed');
-        $this->object->apply($document, $rootElement, $item);
+        $this->object->apply($document, $rootElement, $feed);
 
         $addedElement = $rootElement->firstChild;
         $this->assertInstanceOf('\DomElement', $addedElement);
