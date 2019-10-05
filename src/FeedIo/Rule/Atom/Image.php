@@ -15,10 +15,11 @@ use FeedIo\Feed\Item\MediaInterface;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
+use FeedIo\FeedInterface;
 
 class Image extends RuleAbstract
 {
-	// https://tools.ietf.org/html/rfc4287#section-4.2.8
+    // https://tools.ietf.org/html/rfc4287#section-4.2.8
     const NODE_NAME = 'logo';
 
     /**
@@ -27,7 +28,7 @@ class Image extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
-		if ($node instanceof FeedInterface) {
+        if ($node instanceof FeedInterface) {
             $node->setImage($element->nodeValue);
         }
     }
@@ -37,7 +38,7 @@ class Image extends RuleAbstract
      */
     protected function hasValue(NodeInterface $node) : bool
     {
-		return $node instanceof FeedInterface && !! $node->getImage();
+        return $node instanceof FeedInterface && !! $node->getImage();
     }
 
     /**
@@ -45,7 +46,7 @@ class Image extends RuleAbstract
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-		if (!($node instanceof FeedInterface) || is_null($node->getImage())) {
+        if (!($node instanceof FeedInterface) || is_null($node->getImage())) {
             return;
         }
         $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getImage()));

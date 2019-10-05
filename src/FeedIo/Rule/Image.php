@@ -43,16 +43,14 @@ class Image extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
-
-		if ($node instanceof FeedInterface) {
-			for($i = $element->childNodes->length; --$i >= 0; ) {
-				$child = $element->childNodes->item($i);
-				if ($child instanceof \DOMElement && $child->tagName === $this->getUrlAttributeName()) {
-					$node->setImage($child->textContent);
-				}
-			}
-		}
-
+        if ($node instanceof FeedInterface) {
+            for ($i = $element->childNodes->length; --$i >= 0;) {
+                $child = $element->childNodes->item($i);
+                if ($child instanceof \DOMElement && $child->tagName === $this->getUrlAttributeName()) {
+                    $node->setImage($child->textContent);
+                }
+            }
+        }
     }
 
     /**
@@ -68,7 +66,7 @@ class Image extends RuleAbstract
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-		if ($node instanceof FeedInterface) {
+        if ($node instanceof FeedInterface) {
             $element = $document->createElement(static::NODE_NAME);
             $this->appendNonEmptyChild($document, $element, 'url', $node->getImage());
             $this->appendNonEmptyChild($document, $element, 'title', $node->getTitle());

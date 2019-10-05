@@ -49,14 +49,15 @@ class ImageTest extends TestCase
         $this->object->apply($document, $rootElement, $feed);
 
         $addedElement = $rootElement->firstChild;
+
         $this->assertInstanceOf('\DomElement', $addedElement);
-        $this->assertEquals(self::IMAGE, $addedElement->getAttribute('href'));
-        $this->assertEquals('image', $addedElement->nodeName);
+        $this->assertEquals(self::IMAGE, $addedElement->nodeValue);
+        $this->assertEquals('logo', $addedElement->nodeName);
 
         $document->appendChild($rootElement);
 
         $this->assertXmlStringEqualsXmlString(
-			'<feed><logo>http://localhost/image.jpeg</logo></feed>',
+            '<feed><logo>http://localhost/image.jpeg</logo></feed>',
             $document->saveXML()
         );
     }
