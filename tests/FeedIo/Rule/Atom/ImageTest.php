@@ -14,11 +14,11 @@ use FeedIo\Feed\Item;
 
 use \PHPUnit\Framework\TestCase;
 
-class LinkTest extends TestCase
+class ImageTest extends TestCase
 {
 
     /**
-     * @var Link
+     * @var Image
      */
     protected $object;
 
@@ -34,8 +34,8 @@ class LinkTest extends TestCase
         $item = new Item();
         $document = new \DOMDocument();
 
-        $link = $document->createElement('logo', self::IMAGE);
-        $this->object->setProperty($item, $link);
+        $image = $document->createElement('logo', self::IMAGE);
+        $this->object->setProperty($item, $image);
         $this->assertEquals('http://localhost/image.jpeg', $item->getImage());
     }
 
@@ -51,7 +51,7 @@ class LinkTest extends TestCase
         $addedElement = $rootElement->firstChild;
         $this->assertInstanceOf('\DomElement', $addedElement);
         $this->assertEquals(self::IMAGE, $addedElement->getAttribute('href'));
-        $this->assertEquals('link', $addedElement->nodeName);
+        $this->assertEquals('image', $addedElement->nodeName);
 
         $document->appendChild($rootElement);
 
