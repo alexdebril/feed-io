@@ -70,6 +70,7 @@ class Rss extends XmlAbstract
      */
     public function canHandle(Document $document) : bool
     {
+	if(!isset($document->getDOMDocument()->documentElement->tagName)) return false;
         return static::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
