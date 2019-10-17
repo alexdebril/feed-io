@@ -52,7 +52,9 @@ class Atom extends XmlAbstract
      */
     public function canHandle(Document $document) : bool
     {
-	if(!isset($document->getDOMDocument()->documentElement->tagName)) return false;
+        if (!isset($document->getDOMDocument()->documentElement->tagName)) {
+            return false;
+        }
         return self::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 

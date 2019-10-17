@@ -40,7 +40,9 @@ class Rdf extends Rss
      */
     public function canHandle(Document $document) : bool
     {
-        if(!isset($document->getDOMDocument()->documentElement->tagName)) return false;
+        if (!isset($document->getDOMDocument()->documentElement->tagName)) {
+            return false;
+        }
         return false !== strpos($document->getDOMDocument()->documentElement->tagName, static::ROOT_NODE_TAGNAME);
     }
 
