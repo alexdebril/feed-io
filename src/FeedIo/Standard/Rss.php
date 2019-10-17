@@ -70,7 +70,9 @@ class Rss extends XmlAbstract
      */
     public function canHandle(Document $document) : bool
     {
-	if(!isset($document->getDOMDocument()->documentElement->tagName)) return false;
+        if (!isset($document->getDOMDocument()->documentElement->tagName)) {
+            return false;
+        }
         return static::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
@@ -117,7 +119,7 @@ class Rss extends XmlAbstract
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet
             ->add(new Link())
-            ->add(new Description(), ['content:encoded'])
+            ->add(new Description())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
             ->add(new Category());
 
