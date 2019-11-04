@@ -14,19 +14,19 @@ use FeedIo\Feed;
 
 use \PHPUnit\Framework\TestCase;
 
-class ImageTest extends TestCase
+class LogoTest extends TestCase
 {
 
     /**
-     * @var Image
+     * @var Logo
      */
     protected $object;
 
-    const IMAGE = 'http://localhost/image.jpeg';
+    const LOGO = 'http://localhost/logo.jpeg';
 
     protected function setUp()
     {
-        $this->object = new Image();
+        $this->object = new Logo();
     }
 
     public function testSet()
@@ -34,15 +34,15 @@ class ImageTest extends TestCase
         $feed = new Feed();
         $document = new \DOMDocument();
 
-        $image = $document->createElement('logo', self::IMAGE);
-        $this->object->setProperty($feed, $image);
-        $this->assertEquals('http://localhost/image.jpeg', $feed->getImage());
+        $logo = $document->createElement('logo', self::LOGO);
+        $this->object->setProperty($feed, $logo);
+        $this->assertEquals('http://localhost/logo.jpeg', $feed->getLogo());
     }
 
     public function testCreateElement()
     {
         $feed = new Feed();
-        $feed->setImage(self::IMAGE);
+        $feed->setLogo(self::LOGO);
 
         $document = new \DOMDocument();
         $rootElement = $document->createElement('feed');
@@ -51,13 +51,13 @@ class ImageTest extends TestCase
         $addedElement = $rootElement->firstChild;
 
         $this->assertInstanceOf('\DomElement', $addedElement);
-        $this->assertEquals(self::IMAGE, $addedElement->nodeValue);
+        $this->assertEquals(self::LOGO, $addedElement->nodeValue);
         $this->assertEquals('logo', $addedElement->nodeName);
 
         $document->appendChild($rootElement);
 
         $this->assertXmlStringEqualsXmlString(
-            '<feed><logo>http://localhost/image.jpeg</logo></feed>',
+            '<feed><logo>http://localhost/logo.jpeg</logo></feed>',
             $document->saveXML()
         );
     }

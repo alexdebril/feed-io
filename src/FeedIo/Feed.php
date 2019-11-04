@@ -32,9 +32,9 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     protected $language;
 
     /**
-     * @var string $image
+     * @var string $logo
      */
-    protected $image;
+    protected $logo;
 
     protected $ns;
 
@@ -87,18 +87,18 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     /**
      * @return string
      */
-    public function getImage() : ? string
+    public function getLogo() : ? string
     {
-        return $this->image;
+        return $this->logo;
     }
 
     /**
-     * @param  string $description
+     * @param  string $logo
      * @return NodeInterface
      */
-    public function setImage(string $image = null) : FeedInterface
+    public function setLogo(string $logo = null) : FeedInterface
     {
-        $this->image = $image;
+        $this->logo = $logo;
 
         return $this;
     }

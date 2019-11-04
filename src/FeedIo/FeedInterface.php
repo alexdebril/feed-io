@@ -47,13 +47,13 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
     /**
      * @return string
      */
-    public function getImage() : ? string ;
+    public function getLogo() : ? string ;
 
     /**
-     * @param  string $description
+     * @param  string $logo
      * @return NodeInterface
      */
-    public function setImage(string $image = null) : FeedInterface;
+    public function setLogo(string $logo = null) : FeedInterface;
 
     /**
      * Atom : feed.entry <feed><entry>

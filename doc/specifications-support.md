@@ -16,7 +16,7 @@ interface : FeedInterface
 | category    | category                | getCategories   | addCategory     |
 | author      | author                  | getAuthor       | setAuthor       |
 | contributor | N/A                     | not supported   | not supported   |
-| logo        | image                   | getImage        | setImage        |
+| logo        | image                   | getLogo         | setLogo         |
 | rights      | copyright               | not supported   | not supported   |
 | subtitle    | N/A                     | not supported   | not supported   |
 | lang        | language                | getLanguage     | setLanguage     |

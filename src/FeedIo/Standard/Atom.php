@@ -14,7 +14,7 @@ use DOMDocument;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\Atom\Author;
 use FeedIo\Rule\Atom\LinkNode;
-use FeedIo\Rule\Atom\Image;
+use FeedIo\Rule\Atom\Logo;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Language;
 use FeedIo\Rule\PublicId;
@@ -103,7 +103,7 @@ class Atom extends XmlAbstract
     {
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet->add(new Category())
-            ->add(new Image());
+            ->add(new Logo());
 
         return $ruleSet;
     }

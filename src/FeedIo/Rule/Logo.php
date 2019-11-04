@@ -15,7 +15,7 @@ use FeedIo\FeedInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 
-class Image extends RuleAbstract
+class Logo extends RuleAbstract
 {
     const NODE_NAME = 'image';
 
@@ -47,7 +47,7 @@ class Image extends RuleAbstract
             for ($i = $element->childNodes->length; --$i >= 0;) {
                 $child = $element->childNodes->item($i);
                 if ($child instanceof \DOMElement && $child->tagName === $this->getUrlAttributeName()) {
-                    $node->setImage($child->textContent);
+                    $node->setLogo($child->textContent);
                 }
             }
         }
@@ -58,7 +58,7 @@ class Image extends RuleAbstract
      */
     protected function hasValue(NodeInterface $node) : bool
     {
-        return $node instanceof FeedInterface && !! $node->getImage();
+        return $node instanceof FeedInterface && !! $node->getLogo();
     }
 
     /**
@@ -68,7 +68,7 @@ class Image extends RuleAbstract
     {
         if ($node instanceof FeedInterface) {
             $element = $document->createElement(static::NODE_NAME);
-            $this->appendNonEmptyChild($document, $element, 'url', $node->getImage());
+            $this->appendNonEmptyChild($document, $element, 'url', $node->getLogo());
             $this->appendNonEmptyChild($document, $element, 'title', $node->getTitle());
             $this->appendNonEmptyChild($document, $element, 'link', $node->getLink());
 

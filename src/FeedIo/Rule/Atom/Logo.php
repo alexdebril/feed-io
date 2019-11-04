@@ -3,6 +3,7 @@
  * This file is part of the feed-io package.
  *
  * (c) Alexandre Debril <alex.debril@gmail.com>
+ * (c) Sylvain Le Gleau <syl@sylvainlg.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +18,7 @@ use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
 use FeedIo\FeedInterface;
 
-class Image extends RuleAbstract
+class Logo extends RuleAbstract
 {
     // https://tools.ietf.org/html/rfc4287#section-4.2.8
     const NODE_NAME = 'logo';
@@ -29,7 +30,7 @@ class Image extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof FeedInterface) {
-            $node->setImage($element->nodeValue);
+            $node->setLogo($element->nodeValue);
         }
     }
 
@@ -38,7 +39,7 @@ class Image extends RuleAbstract
      */
     protected function hasValue(NodeInterface $node) : bool
     {
-        return $node instanceof FeedInterface && !! $node->getImage();
+        return $node instanceof FeedInterface && !! $node->getLogo();
     }
 
     /**
@@ -46,9 +47,9 @@ class Image extends RuleAbstract
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        if (!($node instanceof FeedInterface) || is_null($node->getImage())) {
+        if (!($node instanceof FeedInterface) || is_null($node->getLogo())) {
             return;
         }
-        $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getImage()));
+        $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getLogo()));
     }
 }
