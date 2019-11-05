@@ -31,6 +31,11 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
      */
     protected $language;
 
+    /**
+     * @var string $logo
+     */
+    protected $logo;
+
     protected $ns;
 
     public function __construct()
@@ -75,6 +80,25 @@ class Feed extends Node implements FeedInterface, \JsonSerializable
     public function setLanguage(string $language = null): FeedInterface
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogo() : ? string
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param  string $logo
+     * @return NodeInterface
+     */
+    public function setLogo(string $logo = null) : FeedInterface
+    {
+        $this->logo = $logo;
 
         return $this;
     }

@@ -45,6 +45,17 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
     public function setLanguage(string $language = null): FeedInterface;
 
     /**
+     * @return string
+     */
+    public function getLogo() : ? string ;
+
+    /**
+     * @param  string $logo
+     * @return NodeInterface
+     */
+    public function setLogo(string $logo = null) : FeedInterface;
+
+    /**
      * Atom : feed.entry <feed><entry>
      * Rss  : rss.channel.item <rss><channel><item>
      * @param  ItemInterface $item

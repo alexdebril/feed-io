@@ -19,6 +19,7 @@ use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
+use FeedIo\Rule\Logo;
 use FeedIo\RuleSet;
 
 class Rss extends XmlAbstract
@@ -121,7 +122,8 @@ class Rss extends XmlAbstract
             ->add(new Link())
             ->add(new Description())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
-            ->add(new Category());
+            ->add(new Category())
+            ->add(new Logo());
 
         return $ruleSet;
     }
