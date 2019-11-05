@@ -15,7 +15,7 @@ env:
 
 matrix:
   include:
-    - php: '7.1'
+    - php: '7.3'
       env:
           - PHPUNIT_FLAGS="--stop-on-failure --verbose --coverage-text --coverage-clover=coverage.xml"
   allow_failures:
