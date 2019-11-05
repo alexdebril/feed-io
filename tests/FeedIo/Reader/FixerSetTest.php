@@ -16,16 +16,6 @@ use \PHPUnit\Framework\TestCase;
 
 class FixerSetTest extends TestCase
 {
-    public function testAdd()
-    {
-        $fixer = $this->getMockForAbstractClass('\FeedIo\Reader\FixerAbstract');
-
-        $fixerSet = new FixerSet();
-        $fixerSet->add($fixer);
-
-        $this->assertAttributeContainsOnly($fixer, 'fixers', $fixerSet);
-    }
-
     public function testCorrect()
     {
         $fixer = new FixerMock();
