@@ -60,7 +60,7 @@ class Category extends RuleAbstract
         $element = $document->createElement(
             $this->getNodeName(),
             is_null($category->getTerm()) ? $category->getLabel():$category->getTerm()
-            );
+        );
         if (!! $category->getScheme()) {
             $element->setAttribute('domain', $category->getScheme());
         }

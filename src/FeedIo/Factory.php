@@ -52,7 +52,6 @@ class Factory
             'builder' => 'GuzzleClient',
             'config' => [],
         ]
-
     ) : Factory {
         $factory = new static();
 

@@ -72,17 +72,6 @@ class ItemTest extends TestCase
         $this->assertEquals('value', $this->object->getValue('name'));
     }
 
-    public function testSetValue()
-    {
-        $this->object->set('foo', 'bar');
-
-        $element = new Element();
-        $element->setName('foo');
-        $element->setValue('bar');
-
-        $this->assertAttributeContainsOnly($element, 'elements', $this->object);
-    }
-
     public function testHasElement()
     {
         $this->assertFalse($this->object->hasElement('foo'));
