@@ -32,7 +32,7 @@ class Client implements ClientInterface
             return new Response(
                 file_get_contents($path),
                 new \DateTime('@'.filemtime($path))
-                );
+            );
         }
 
         throw new NotFoundException($path);

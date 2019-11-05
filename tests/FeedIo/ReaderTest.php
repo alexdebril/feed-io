@@ -77,7 +77,7 @@ class ReaderTest extends TestCase
         $domDocument->load($file, LIBXML_NOBLANKS | LIBXML_COMPACT);
         $standard->expects($this->any())->method('getMainElement')->will($this->returnValue(
             $domDocument->documentElement->getElementsByTagName('channel')->item(0)
-            ));
+        ));
 
         $parser = new XmlParser($standard, new NullLogger());
 

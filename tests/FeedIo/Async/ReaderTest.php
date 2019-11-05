@@ -71,7 +71,7 @@ class ReaderTest extends TestCase
                 200,
                 ['X-Foo' => 'Bar'],
                 file_get_contents(dirname(__FILE__)."/../../samples/rss/expected-rss.xml")
-                ),
+            ),
         ]);
 
         $handler = HandlerStack::create($mock);
