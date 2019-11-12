@@ -11,6 +11,7 @@
 namespace FeedIo\Parser;
 
 use FeedIo\Feed\Item;
+use FeedIo\Feed\Item\Author;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
 use FeedIo\Reader\Document;
@@ -72,6 +73,15 @@ class JsonParser extends ParserAbstract
             $contentHtml = $this->readOffset($dataItem, 'content_html');
             $item->setDescription($this->readOffset($dataItem, 'content_text', $contentHtml));
             $item->setLink($this->readOffset($dataItem, 'url'));
+
+            if (array_key_exists('author', $dataItem)) {
+                $authorItem = $dataItem['author'];
+                $author = new Author();
+                $author->setName($this->readOffset($authorItem, 'name'));
+                $author->setUri($this->readOffset($authorItem, 'url'));
+                $author->setEmail($this->readOffset($authorItem, 'email'));
+                $item->setAuthor($author);
+            }
             $feed->add($item);
         }
 

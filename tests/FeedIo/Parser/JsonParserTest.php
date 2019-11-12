@@ -35,8 +35,19 @@ class JsonParserTest extends TestCase
         
         $items = $feed->toArray()['items'];
 
-        $this->assertCount(2, $items);
+        $this->assertCount(4, $items);
         $this->assertEquals('https://jsonfeed.org/2017/05/17/announcing_json_feed', $items[0]['link']);
         $this->assertNull($items[1]['link']);
+
+        $this->assertNull($items[0]['author']);
+        $this->assertNull($items[1]['author']);
+
+        $this->assertEquals('Manton Reece', $items[2]['author']->getName());
+        $this->assertNull($items[2]['author']->getUri());
+        $this->assertNull($items[2]['author']->getEmail());
+
+        $this->assertEquals('Manton Reece', $items[3]['author']->getName());
+        $this->assertEquals('http://manton.org', $items[3]['author']->getUri());
+        $this->assertEquals('manton@micro.blog', $items[3]['author']->getEmail());
     }
 }
