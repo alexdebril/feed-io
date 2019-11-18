@@ -14,8 +14,10 @@
             <description>A great description</description>
             <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
             <category domain="http://localhost">sample</category>
-            <guid>http://localhost/item/1</guid>
             <author>name@domain.tld</author>
+            <guid>http://localhost/item/1</guid>
+            <custom>a sample value</custom>
+            <custom>another sample value</custom>
         </item>
     </channel>
 </rss>

@@ -37,9 +37,9 @@ class OptionalFieldTest extends TestCase
 
         $this->assertTrue($item->hasElement('test'));
         $this->assertEquals('a test value', $item->getValue('test'));
-        
+
         $itemElements = $item->getElementIterator('test');
-        
+
         $count = 0;
         /** @var Element $itemElement */
         foreach ($itemElements as $itemElement) {
@@ -170,6 +170,26 @@ class OptionalFieldTest extends TestCase
         $this->assertEquals('value', $domElement->nodeValue);
 
         $this->assertTrue($domElement->hasAttribute('foo'));
+    }
+
+    public function testCreateMultipleElements()
+    {
+        $item = new Item();
+        $item->set('default', 'first value');
+        $item->set('default', 'second value');
+
+        $document = new \DOMDocument();
+        $rootElement = $document->createElement('feed');
+
+        $this->object->apply($document, $rootElement, $item);
+
+        $this->assertEquals(2, $rootElement->childNodes->count());
+
+        $this->assertEquals('default', $rootElement->childNodes->item(0)->nodeName);
+        $this->assertEquals('first value', $rootElement->childNodes->item(0)->nodeValue);
+
+        $this->assertEquals('default', $rootElement->childNodes->item(1)->nodeName);
+        $this->assertEquals('second value', $rootElement->childNodes->item(1)->nodeValue);
     }
 
     public function testDontCreateElement()

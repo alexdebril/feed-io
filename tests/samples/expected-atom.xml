@@ -14,7 +14,9 @@
         <link href="http://localhost/item/1"/>
         <id>http://localhost/item/1</id>
         <updated>2014-12-01T00:00:00+00:00</updated>
-        <content>A great description</content>
         <author>name@domain.tld</author>
+        <content>A great description</content>
+        <custom>a sample value</custom>
+        <custom>another sample value</custom>
     </entry>
 </feed>

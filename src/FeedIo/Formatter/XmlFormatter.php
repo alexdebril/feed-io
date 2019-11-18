@@ -95,7 +95,7 @@ class XmlFormatter implements FormatterInterface
         $rules = $ruleSet->getRules();
         $optionalFields = $node->listElements();
         foreach ($optionalFields as $optionalField) {
-            $rules[] = new OptionalField($optionalField);
+            $rules[$optionalField] = new OptionalField($optionalField);
         }
 
         return $rules;

@@ -67,11 +67,13 @@ class FormatterTest extends TestCase
         $item = new Item();
         $item->set('title', 'the title');
         $item->set('description', 'the description');
+        $item->set('custom', 'a custom value');
+        $item->set('custom', 'another custom value');
 
         $rules = $this->object->getAllRules(new RuleSet(), $item);
-        $this->assertCount(2, $rules);
+        $this->assertCount(3, $rules);
 
-        $ruleNames = array('title', 'description');
+        $ruleNames = array('title', 'description', 'custom');
         foreach ($rules as $rule) {
             $this->assertEquals(current($ruleNames), $rule->getNodeName());
             next($ruleNames);

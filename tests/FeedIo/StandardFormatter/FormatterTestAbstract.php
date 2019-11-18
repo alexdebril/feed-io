@@ -60,6 +60,9 @@ abstract class FormatterTestAbstract extends TestCase
         $item->setLink('http://localhost/item/1');
         $item->set('author', 'name@domain.tld');
         $item->addCategory($category);
+        $item->set('custom', 'a sample value');
+        $item->set('custom', 'another sample value');
+
         $feed->add($item);
 
         $formatter = new XmlFormatter($this->standard);
