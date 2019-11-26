@@ -6,6 +6,7 @@
   "feed_url": "https://jsonfeed.org/feed.json",
   "user_comment": "This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, copy the following URL — https://jsonfeed.org/feed.json — and add it your reader.",
   "favicon": "https://jsonfeed.org/graphics/icon.png",
+  "icon" : "https://jsonfeed.org/graphics/icon.png",
   "author": {
     "name": "Brent Simmons and Manton Reece"
   },
