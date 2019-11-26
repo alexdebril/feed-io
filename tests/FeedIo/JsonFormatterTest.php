@@ -18,6 +18,9 @@ use \PHPUnit\Framework\TestCase;
 
 class JsonFormatterTest extends TestCase
 {
+
+    const LOGO = 'http://localhost/logo.jpeg';
+
     public function testToString()
     {
         $items = [
@@ -27,6 +30,7 @@ class JsonFormatterTest extends TestCase
 
         $feed = new Feed();
         $feed->setTitle('feed title');
+        $feed->setLogo(self::LOGO);
 
         foreach ($items as $item) {
             $feed->add($item);
@@ -39,6 +43,7 @@ class JsonFormatterTest extends TestCase
         $json = json_decode($string, true);
 
         $this->assertEquals('feed title', $json['title']);
+        $this->assertEquals('http://localhost/logo.jpeg', $json['icon']);
         $this->assertCount(2, $json['items']);
 
         foreach ($json['items'] as $item) {

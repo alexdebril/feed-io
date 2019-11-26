@@ -39,6 +39,7 @@ class JsonFormatter implements FormatterInterface
             'home_page_url' => $feed->getLink(),
             'feed_url' => $feed->getUrl(),
             'id' => $feed->getPublicId(),
+            'icon' => $feed->getLogo(),
             'items' => iterator_to_array($this->itemsToArray($feed)),
         ]);
     }
