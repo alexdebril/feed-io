@@ -57,3 +57,4 @@ Interface : ItemInterface
 | N/A                 | N/A         | banner_image                | not supported   | not supported   |
 | N/A                 | N/A         | attachments                 | not supported   | not supported   |
 | N/A                 | N/A         | date_modified               | not supported   | not supported   |
+
