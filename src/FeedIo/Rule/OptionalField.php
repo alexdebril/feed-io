@@ -131,13 +131,23 @@ class OptionalField extends RuleAbstract
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        $domElement = $document->createElement($this->getNodeName());
+        $addedElementsCount = 0;
+
         if ($node instanceof ElementsAwareInterface) {
             foreach ($node->getElementIterator($this->getNodeName()) as $element) {
+                $domElement = $document->createElement($this->getNodeName());
+
                 $this->buildDomElement($domElement, $element);
+
+                $rootElement->appendChild($domElement);
+
+                $addedElementsCount++;
             }
         }
 
-        $rootElement->appendChild($domElement);
+        if (! $addedElementsCount) {
+            // add an implicit empty element if the node had no elements matching this rule
+            $rootElement->appendChild($document->createElement($this->getNodeName()));
+        }
     }
 }
