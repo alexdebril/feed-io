@@ -31,6 +31,7 @@ class JsonParser extends ParserAbstract
         $feed->setDescription($this->readOffset($data, 'description'));
         $feed->setLink($this->readOffset($data, 'feed_url'));
         $feed->setUrl($this->readOffset($data, 'home_page_url'));
+        $feed->setLogo($this->readOffset($data, 'icon'));
 
         if (array_key_exists('items', $data)) {
             $this->parseItems($data['items'], $feed);
