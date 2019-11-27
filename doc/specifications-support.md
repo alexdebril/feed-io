@@ -6,33 +6,33 @@ This document explains which attributes are supported by feed-io and how to acce
 
 interface : FeedInterface
 
-| atom            | rss                     | json         | getter          | setter          |
-| --------------- | ----------------------- | ------------ | --------------- | --------------- |
-| title           | title                   | title        | getTitle        | setTitle        |
-| link            | link                    | homepage_url | getLink         | setLink         |
-| link (rel=self) | N/A                     | feed_url     | getLink         | setLink         |
-| updated         | pubDate / lastBuildDate | N/A          | getLastModified | setLastModified |
-| id              | N/A                     | N/A          | getPublicId     | setPublicId     |
-| N/A             | description             | description  | getDescription  | setDescription  |
-| category        | category                | N/A          | getCategories   | addCategory     |
-| author          | author                  | author (wip) | getAuthor       | setAuthor       |
-| contributor     | N/A                     | N/A          | not supported   | not supported   |
-| logo            | image                   | icon         | getLogo         | setLogo         |
-| rights          | copyright               | N/A          | not supported   | not supported   |
-| subtitle        | N/A                     | N/A          | not supported   | not supported   |
-| lang            | language                | N/A          | getLanguage     | setLanguage     |
-| base            | N/A                     | N/A          | not supported   | not supported   |
-| generator       | generator               | N/A          | not supported   | not supported   |
-| N/A             | managingEditor          | N/A          | not supported   | not supported   |
-| N/A             | webMaster               | N/A          | not supported   | not supported   |
-| N/A             | docs                    | N/A          | not supported   | not supported   |
-| N/A             | cloud                   | hubs         | not supported   | not supported   |
-| N/A             | ttl                     | N/A          | not supported   | not supported   |
-| N/A             | rating                  | N/A          | not supported   | not supported   |
-| N/A             | textInput               | N/A          | not supported   | not supported   |
-| N/A             | skipdays                | N/A          | not supported   | not supported   |
-| N/A             | skipHours               | N/A          | not supported   | not supported   |
-| N/A             | N/A                     | expired      | not supported   | not supported   |
+| atom            | rss                     | json          | getter          | setter          |
+| --------------- | ----------------------- | ------------- | --------------- | --------------- |
+| title           | title                   | title         | getTitle        | setTitle        |
+| link            | link                    | home_page_url | getLink         | setLink         |
+| link (rel=self) | N/A                     | feed_url      | getLink         | setLink         |
+| updated         | pubDate / lastBuildDate | N/A           | getLastModified | setLastModified |
+| id              | N/A                     | N/A           | getPublicId     | setPublicId     |
+| N/A             | description             | description   | getDescription  | setDescription  |
+| category        | category                | N/A           | getCategories   | addCategory     |
+| author          | author                  | author (wip)  | getAuthor       | setAuthor       |
+| contributor     | N/A                     | N/A           | not supported   | not supported   |
+| logo            | image                   | icon          | getLogo         | setLogo         |
+| rights          | copyright               | N/A           | not supported   | not supported   |
+| subtitle        | N/A                     | N/A           | not supported   | not supported   |
+| lang            | language                | N/A           | getLanguage     | setLanguage     |
+| base            | N/A                     | N/A           | not supported   | not supported   |
+| generator       | generator               | N/A           | not supported   | not supported   |
+| N/A             | managingEditor          | N/A           | not supported   | not supported   |
+| N/A             | webMaster               | N/A           | not supported   | not supported   |
+| N/A             | docs                    | N/A           | not supported   | not supported   |
+| N/A             | cloud                   | hubs          | not supported   | not supported   |
+| N/A             | ttl                     | N/A           | not supported   | not supported   |
+| N/A             | rating                  | N/A           | not supported   | not supported   |
+| N/A             | textInput               | N/A           | not supported   | not supported   |
+| N/A             | skipdays                | N/A           | not supported   | not supported   |
+| N/A             | skipHours               | N/A           | not supported   | not supported   |
+| N/A             | N/A                     | expired       | not supported   | not supported   |
 
 ## entry (atom) / item (rss) / item (json)
 
