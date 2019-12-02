@@ -17,6 +17,7 @@ use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Atom\Logo;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Language;
+use FeedIo\Rule\Media;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Atom\Category;
 use FeedIo\RuleSet;
@@ -94,7 +95,10 @@ class Atom extends XmlAbstract
         $ruleSet = $this->buildFeedRuleSet();
         $ruleSet
             ->add(new Author())
-            ->add(new Description('content'), ['summary']);
+            ->add(new Description('content'), ['summary'])
+            ->add(new Media(), ['media:group'])
+            ->add(new Media(), ['media:content'])
+        ;
 
         return $ruleSet;
     }

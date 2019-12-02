@@ -76,4 +76,37 @@ interface MediaInterface
      * @return MediaInterface
      */
     public function setLength(?string $length) : MediaInterface;
+
+    /**
+     * @return string
+     */
+    public function getTitle() : ? string;
+
+    /**
+     * @param  string $title
+     * @return MediaInterface
+     */
+    public function setTitle(?string $title) : MediaInterface;
+
+    /**
+     * @return string
+     */
+    public function getDescription() : ? string;
+
+    /**
+     * @param  string $description
+     * @return MediaInterface
+     */
+    public function setDescription(?string $description) : MediaInterface;
+
+    /**
+     * @return string
+     */
+    public function getThumbnail() : ? string;
+
+    /**
+     * @param  string $thumbnail
+     * @return MediaInterface
+     */
+    public function setThumbnail(?string $thumbnail) : MediaInterface;
 }

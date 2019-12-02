@@ -20,6 +20,8 @@ class Media extends RuleAbstract
 {
     const NODE_NAME = 'enclosure';
 
+    const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
+
     protected $urlAttributeName = 'url';
 
     /**
@@ -46,11 +48,36 @@ class Media extends RuleAbstract
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
-            $media->setNodeName($element->nodeName)
-                ->setType($this->getAttributeValue($element, 'type'))
-                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-                ->setLength($this->getAttributeValue($element, 'length'));
+            $media->setNodeName($element->nodeName);
 
+            if ($element->nodeName == "media:group" or $element->nodeName == "media:content")
+            {
+                $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
+                $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
+                $thumbnails = $element->getElementsByTagNameNS(static::MRSS_NAMESPACE, "thumbnail");
+                if ($thumbnails->length > 0) {
+                    $media->setThumbnail($this->getAttributeValue($thumbnails->item(0), "url"));
+                }
+
+                if ($element->nodeName == "media:content") {
+                    $media->setUrl($this->getAttributeValue($element, "url"));
+                }
+
+                if ($element->nodeName == "media:group") {
+                    $contents = $element->getElementsByTagNameNS(static::MRSS_NAMESPACE, "content");
+                    if ($contents->length > 0) {
+                        $media->setUrl($this->getAttributeValue($contents->item(0), "url"));
+                    }
+                }
+            }
+            else
+            {
+                $media
+                    ->setType($this->getAttributeValue($element, 'type'))
+                    ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
+                    ->setLength($this->getAttributeValue($element, 'length'));
+
+            }
             $node->addMedia($media);
         }
     }
