@@ -54,11 +54,12 @@ abstract class RuleAbstract
     /**
      * @param  \DOMElement $element
      * @param  string      $name
+     * @param  string      $ns
      * @return string|null
      */
-    public function getChildValue(\DOMElement $element, string $name) : ? string
+    public function getChildValue(\DOMElement $element, string $name, string $ns = "") : ? string
     {
-        $list = $element->getElementsByTagName($name);
+        $list = $element->getElementsByTagNameNS($ns, $name);
         if ($list->length > 0) {
             return $list->item(0)->nodeValue;
         }
