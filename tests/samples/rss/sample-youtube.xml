@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+    <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=YT_CHANNEL_ID"/>
+    <id>yt:channel:YT_CHANNEL_ID</id>
+    <yt:channelId>YT_CHANNEL_ID</yt:channelId>
+    <title>YT_CHANNEL_TITLE</title>
+    <link rel="alternate" href="https://www.youtube.com/channel/YT_CHANNEL_ID"/>
+    <author>
+        <name>PBS Space Time</name>
+        <uri>https://www.youtube.com/channel/YT_CHANNEL_ID</uri>
+    </author>
+    <published>2015-02-09T16:24:44+00:00</published>
+    <entry>
+        <id>yt:video:YT_VIDEO_ID</id>
+        <yt:videoId>YT_VIDEO_ID</yt:videoId>
+        <yt:channelId>YT_CHANNEL_ID</yt:channelId>
+        <title>YT_VIDEO_TITLE</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=YT_VIDEO_ID"/>
+        <author>
+            <name>YT_VIDEO_AUTHOR</name>
+            <uri>https://www.youtube.com/channel/YT_CHANNEL_ID</uri>
+        </author>
+        <published>2019-11-11T19:45:00+00:00</published>
+        <updated>2019-11-22T15:26:42+00:00</updated>
+        <media:group>
+            <media:title>YT_VIDEO_TITLE</media:title>
+            <media:content url="https://www.youtube.com/v/YT_VIDEO_ID?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/YT_VIDEO_ID/hqdefault.jpg" width="480" height="360"/>
+            <media:description>This is a
+multiline
+description</media:description>
+            <media:community>
+                <media:starRating count="17083" average="4.91" min="1" max="5"/>
+                <media:statistics views="463700"/>
+            </media:community>
+        </media:group>
+    </entry>
+</feed>
