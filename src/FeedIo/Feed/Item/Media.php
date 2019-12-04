@@ -189,5 +189,4 @@ class Media implements MediaInterface
 
         return $this;
     }
-
 }
