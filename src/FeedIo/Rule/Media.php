@@ -53,20 +53,14 @@ class Media extends RuleAbstract
             if ($element->nodeName == "media:group" or $element->nodeName == "media:content") {
                 $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
                 $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
-                $thumbnails = $element->getElementsByTagNameNS(static::MRSS_NAMESPACE, "thumbnail");
-                if ($thumbnails->length > 0) {
-                    $media->setThumbnail($this->getAttributeValue($thumbnails->item(0), "url"));
-                }
+                $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
 
                 if ($element->nodeName == "media:content") {
                     $media->setUrl($this->getAttributeValue($element, "url"));
                 }
 
                 if ($element->nodeName == "media:group") {
-                    $contents = $element->getElementsByTagNameNS(static::MRSS_NAMESPACE, "content");
-                    if ($contents->length > 0) {
-                        $media->setUrl($this->getAttributeValue($contents->item(0), "url"));
-                    }
+                    $media->setUrl($this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
                 }
             } else {
                 $media
