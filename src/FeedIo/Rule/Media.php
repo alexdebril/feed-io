@@ -50,23 +50,21 @@ class Media extends RuleAbstract
             $media = $node->newMedia();
             $media->setNodeName($element->nodeName);
 
-            if ($element->nodeName == "media:group" or $element->nodeName == "media:content") {
-                $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
-                $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
-                $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
-
-                if ($element->nodeName == "media:content") {
-                    $media->setUrl($this->getAttributeValue($element, "url"));
-                }
-
-                if ($element->nodeName == "media:group") {
+            switch ($element->nodeName) {
+                case 'media:group':
+                    $this->initMedia($media, $element);
                     $media->setUrl($this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
-                }
-            } else {
-                $media
-                    ->setType($this->getAttributeValue($element, 'type'))
-                    ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-                    ->setLength($this->getAttributeValue($element, 'length'));
+                    break;
+                case 'media:content':
+                    $this->initMedia($media, $element);
+                    $media->setUrl($this->getAttributeValue($element, "url"));
+                    break;
+                default:
+                    $media
+                        ->setType($this->getAttributeValue($element, 'type'))
+                        ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
+                        ->setLength($this->getAttributeValue($element, 'length'));
+                    break;
             }
             $node->addMedia($media);
         }
@@ -85,6 +83,17 @@ class Media extends RuleAbstract
         $element->setAttribute('length', $media->getLength() ?? '');
 
         return $element;
+    }
+
+    /**
+     * @param \MediaInterface $media
+     * @param \DomElement $element
+     */
+    protected function initMedia(MediaInterface $media, \DOMElement $element): void
+    {
+        $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
+        $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
+        $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
     }
 
     /**
