@@ -41,5 +41,7 @@ class DiscoverCommand extends Command
         foreach ($feeds as $feed) {
             $output->writeln("<info>found : {$feed}</info>");
         }
+
+        return 0;
     }
 }
