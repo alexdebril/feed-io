@@ -20,6 +20,8 @@ class Media extends RuleAbstract
 {
     const NODE_NAME = 'enclosure';
 
+    const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
+
     protected $urlAttributeName = 'url';
 
     /**
@@ -46,11 +48,24 @@ class Media extends RuleAbstract
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
-            $media->setNodeName($element->nodeName)
-                ->setType($this->getAttributeValue($element, 'type'))
-                ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
-                ->setLength($this->getAttributeValue($element, 'length'));
+            $media->setNodeName($element->nodeName);
 
+            switch ($element->nodeName) {
+                case 'media:group':
+                    $this->initMedia($media, $element);
+                    $media->setUrl($this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
+                    break;
+                case 'media:content':
+                    $this->initMedia($media, $element);
+                    $media->setUrl($this->getAttributeValue($element, "url"));
+                    break;
+                default:
+                    $media
+                        ->setType($this->getAttributeValue($element, 'type'))
+                        ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
+                        ->setLength($this->getAttributeValue($element, 'length'));
+                    break;
+            }
             $node->addMedia($media);
         }
     }
@@ -68,6 +83,17 @@ class Media extends RuleAbstract
         $element->setAttribute('length', $media->getLength() ?? '');
 
         return $element;
+    }
+
+    /**
+     * @param \MediaInterface $media
+     * @param \DomElement $element
+     */
+    protected function initMedia(MediaInterface $media, \DOMElement $element): void
+    {
+        $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
+        $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
+        $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
     }
 
     /**

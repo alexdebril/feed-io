@@ -33,6 +33,22 @@ class Media implements MediaInterface
     protected $length;
 
     /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $thumbnail;
+
+
+    /**
      * @return string
      */
     public function getNodeName() : string
@@ -112,6 +128,64 @@ class Media implements MediaInterface
     public function setLength(?string $length) : MediaInterface
     {
         $this->length = $length;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTitle() : ? string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param  string $title
+     * @return MediaInterface
+     */
+    public function setTitle(?string $title) : MediaInterface
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription() : ? string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param  string $description
+     * @return MediaInterface
+     */
+    public function setDescription(?string $description) : MediaInterface
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbnail() : ? string
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @param  string $thumbnail
+     * @return MediaInterface
+     */
+    public function setThumbnail(?string $thumbnail) : MediaInterface
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }

@@ -18,7 +18,6 @@ use \PHPUnit\Framework\TestCase;
 
 class JsonFormatterTest extends TestCase
 {
-
     const LOGO = 'http://localhost/logo.jpeg';
 
     public function testToString()

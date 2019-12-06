@@ -54,17 +54,36 @@ abstract class RuleAbstract
     /**
      * @param  \DOMElement $element
      * @param  string      $name
+     * @param  string      $ns
      * @return string|null
      */
-    public function getChildValue(\DOMElement $element, string $name) : ? string
+    public function getChildValue(\DOMElement $element, string $name, string $ns = "") : ? string
     {
-        $list = $element->getElementsByTagName($name);
+        $list = $element->getElementsByTagNameNS($ns, $name);
         if ($list->length > 0) {
             return $list->item(0)->nodeValue;
         }
 
         return null;
     }
+
+    /**
+     * @param  \DOMElement $element
+     * @param  string      $child_name
+     * @param  string      $attribute_name
+     * @param  string      $ns
+     * @return string|null
+     */
+    public function getChildAttributeValue(\DOMElement $element, string $child_name, string $attribute_name, string $ns = "") : ? string
+    {
+        $list = $element->getElementsByTagNameNS($ns, $child_name);
+        if ($list->length > 0) {
+            return $list->item(0)->getAttribute($attribute_name);
+        }
+
+        return null;
+    }
+
 
     /**
      * adds the accurate DomElement content according to the node's property
