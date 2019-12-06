@@ -53,6 +53,8 @@ class ReadCommand extends Command
                 break;
             }
         }
+
+        return 0;
     }
 
     /**
