@@ -68,10 +68,12 @@ class Media implements MediaInterface
     }
 
     /**
+     * @deprecated
      * @return bool
      */
     public function isThumbnail() : bool
     {
+        trigger_error('Method isThumbnail is deprecated and will be removed in feed-io 5.0', E_USER_DEPRECATED);
         return $this->nodeName === 'media:thumbnail';
     }
 
