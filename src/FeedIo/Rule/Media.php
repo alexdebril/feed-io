@@ -59,26 +59,25 @@ class Media extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
-            $media = $node->newMedia();
-            $media->setNodeName($element->nodeName);
-
             switch ($element->nodeName) {
-                case 'media:group':
-                    $this->initMedia($media, $element);
-                    $this->setUrl($media, $node, $this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
-                    break;
                 case 'media:content':
-                    $this->initMedia($media, $element);
-                    $this->setUrl($media, $node, $this->getAttributeValue($element, "url"));
+                    $this->handleMediaRoot($node, $element);
                     break;
+
+                case 'media:group':
+                    $this->handleMediaGroup($node, $element);
+                    break;
+
                 default:
+                    $media = $node->newMedia();
+                    $media->setNodeName($element->nodeName);
                     $media
                         ->setType($this->getAttributeValue($element, 'type'))
                         ->setLength($this->getAttributeValue($element, 'length'));
                     $this->setUrl($media, $node, $this->getAttributeValue($element, $this->getUrlAttributeName()));
+                    $node->addMedia($media);
                     break;
             }
-            $node->addMedia($media);
         }
     }
 
@@ -112,14 +111,72 @@ class Media extends RuleAbstract
     }
 
     /**
-     * @param MediaInterface $media
+     * @param \NodeInterface $node
      * @param \DomElement $element
+     * @return \MediaInterface
      */
-    protected function initMedia(MediaInterface $media, \DOMElement $element): void
+    protected function handleMediaGroup(NodeInterface $node, \DOMElement $element): void
     {
-        $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
-        $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
-        $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
+        foreach ($element->childNodes as $mediaContentNode) {
+            if (is_a($mediaContentNode, "DOMNode") && $mediaContentNode->nodeName == "media:content") {
+                $this->handleMediaRoot($node, $mediaContentNode);
+            }
+        }
+    }
+
+    /**
+     * @param \NodeInterface $node
+     * @param \DomElement $element
+     * @return \MediaInterface
+     */
+    protected function handleMediaRoot(NodeInterface $node, \DOMElement $element): void
+    {
+        $media = $node->newMedia();
+        $this->setUrl($media, $node, $this->getAttributeValue($element, "url"));
+        $media->setNodeName($element->nodeName);
+
+        $this->handleMediaContent($element, $media);
+
+        $tags = array(
+            'media:title' => 'handleMediaTitle',
+            'media:description' => 'handleMediaDescription',
+            'media:thumbnail' => 'handleMediaThumbnail',
+        );
+
+        foreach ($tags as $tag => $callback) {
+            $nodes = $this->findTags($element, $tag);
+            if ($nodes) {
+                $this->$callback($nodes, $media);
+            }
+        }
+
+        $node->addMedia($media);
+    }
+
+    protected function handleMediaContent(?\DOMElement $element, MediaInterface $media) : void
+    {
+        $media->setUrl($this->getAttributeValue($element, "url"));
+    }
+
+    protected function handleMediaTitle(?\DOMNodeList $elements, MediaInterface $media) : void
+    {
+        $element = $elements->item(0);
+
+        $media->setTitle($element->nodeValue);
+    }
+
+    protected function handleMediaDescription(?\DOMNodeList $elements, MediaInterface $media) : void
+    {
+        $element = $elements->item(0);
+
+        $media->setDescription($element->nodeValue);
+    }
+
+    protected function handleMediaThumbnail(?\DOMNodeList $elements, MediaInterface $media) : void
+    {
+        $element = $elements->item(0);
+
+        $media->setThumbnail($this->getAttributeValue($element, "url"));
     }
 
     /**
@@ -138,5 +195,33 @@ class Media extends RuleAbstract
         foreach ($node->getMedias() as $media) {
             $rootElement->appendChild($this->createMediaElement($document, $media));
         }
+    }
+
+    /**
+     * From http://www.rssboard.org/media-rss#optional-elements
+     *
+     * Duplicated elements appearing at deeper levels of the document tree
+     * have higher priority over other levels. For example, <media:content>
+     * level elements are favored over <item> level elements. The priority
+     * level is listed from strongest to weakest:
+     * <media:content>, <media:group>, <item>, <channel>.
+     */
+    public function findTags(\DOMElement $mediaContentNode, string $tag) : ? \DOMNodeList
+    {
+        $xpath = new \DOMXpath($mediaContentNode->ownerDocument);
+        $queries = [
+            $xpath->query("./descendant::$tag", $mediaContentNode),
+            $xpath->query("./ancestor::media:group/child::$tag", $mediaContentNode),
+            $xpath->query("./ancestor::item/child::$tag", $mediaContentNode),
+            $xpath->query("./ancestor::channel/child::$tag", $mediaContentNode),
+        ];
+
+        foreach ($queries as $query) {
+            if ($query->count()) {
+                return $query;
+            }
+        }
+
+        return null;
     }
 }

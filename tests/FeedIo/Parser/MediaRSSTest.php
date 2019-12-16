@@ -75,4 +75,156 @@ class MediaRssTest extends TestCase
         $this->assertEquals("This is a\nmultiline\ndescription", $media->getDescription());
         $this->assertEquals('https://www.youtube.com/v/YT_VIDEO_ID?version=3', $media->getUrl());
     }
+
+    /**
+     * From http://www.rssboard.org/media-rss#optional-elements
+     *
+     * Duplicated elements appearing at deeper levels of the document tree
+     * have higher priority over other levels. For example, <media:content>
+     * level elements are favored over <item> level elements. The priority
+     * level is listed from strongest to weakest:
+     * <media:content>, <media:group>, <item>, <channel>.
+     */
+    public function testTagsPriority()
+    {
+        $xml_media_content_description = '
+            <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+                <channel>
+                    <title>Title of page</title>
+                    <link>http://www.foo.com</link>
+                    <description>Description of page</description>
+                    <item>
+                        <title>Story about something</title>
+                        <link>http://www.foo.com/item1.htm</link>
+                        <media:group>
+                            <media:content url="http://www.foo.com/trailer.ogg">
+                                <media:description>Description from media:content</media:description>
+                            </media:content>
+                            <media:description>Description from media:group</media:description>
+                        </media:group>
+                        <media:description>Description from item</media:description>
+                    </item>
+                    <media:description>Description from channel</media:description>
+                </channel>
+            </rss>';
+
+        $media = $this->getMediaFromXML($xml_media_content_description);
+        $this->assertEquals('Description from media:content', $media->getDescription());
+
+        $xml_media_group_description = '
+            <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+                <channel>
+                    <title>Title of page</title>
+                    <link>http://www.foo.com</link>
+                    <description>Description of page</description>
+                    <item>
+                        <title>Story about something</title>
+                        <link>http://www.foo.com/item1.htm</link>
+                        <media:group>
+                            <media:content url="http://www.foo.com/trailer.ogg" />
+                            <media:description>Description from media:group</media:description>
+                        </media:group>
+                        <media:description>Description from item</media:description>
+                    </item>
+                    <media:description>Description from channel</media:description>
+                </channel>
+            </rss>';
+
+        $media = $this->getMediaFromXML($xml_media_group_description);
+        $this->assertEquals('Description from media:group', $media->getDescription());
+
+        $xml_item_description = '
+            <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+                <channel>
+                    <title>Title of page</title>
+                    <link>http://www.foo.com</link>
+                    <description>Description of page</description>
+                    <item>
+                        <title>Story about something</title>
+                        <link>http://www.foo.com/item1.htm</link>
+                        <media:group>
+                            <media:content url="http://www.foo.com/trailer.ogg" />
+                        </media:group>
+                        <media:description>Description from item</media:description>
+                    </item>
+                    <media:description>Description from channel</media:description>
+                </channel>
+            </rss>';
+
+        $media = $this->getMediaFromXML($xml_item_description);
+        $this->assertEquals('Description from item', $media->getDescription());
+
+        $xml_channel_description = '
+            <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+                <channel>
+                    <title>Title of page</title>
+                    <link>http://www.foo.com</link>
+                    <description>Description of page</description>
+                    <item>
+                        <title>Story about something</title>
+                        <link>http://www.foo.com/item1.htm</link>
+                        <media:group>
+                            <media:content url="http://www.foo.com/trailer.ogg" />
+                        </media:group>
+                    </item>
+                    <media:description>Description from channel</media:description>
+                </channel>
+            </rss>';
+
+        $media = $this->getMediaFromXML($xml_channel_description);
+        $this->assertEquals('Description from channel', $media->getDescription());
+    }
+
+    /**
+     * media:group
+     *
+     * <media:group> is a sub-element of <item>. It allows grouping of <media:content> elements that are effectively the same content, yet different representations. For instance: the same song recorded in both the WAV and MP3 format. It's an optional element that must only be used for this purpose.
+     *
+     * TODO: We do not follow exactly the specification here as contents
+     * in a <media:group> are considered as different medias, and not
+     * "the same content, yet different representations". @azmeuk 2019
+     */
+
+    public function testGroupTag()
+    {
+        $xml_multiple_media = '
+            <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+                <channel>
+                    <title>Title of page</title>
+                    <link>http://www.foo.com</link>
+                    <description>Description of page</description>
+                    <item>
+                        <title>Story about something</title>
+                        <link>http://www.foo.com/item1.htm</link>
+                        <media:group>
+                            <media:content url="http://www.foo.com/supersong.ogg">
+                                <media:description>Supersong in OGG</media:description>
+                            </media:content>
+                            <media:content url="http://www.foo.com/supersong.flac">
+                                <media:description>Supersong in FLAC</media:description>
+                            </media:content>
+                            <media:title>Supersong</media:title>
+                        </media:group>
+                        <media:content url="http://www.foo.com/hypersong.flac">
+                            <media:description>Hypersong in FLAC</media:description>
+                            <media:title>Hypersong</media:title>
+                        </media:content>
+                    </item>
+                </channel>
+            </rss>';
+
+        list($supersong_ogg, $supersong_flac, $hypersong) = $this->getMediaFromXML($xml_multiple_media, 3);
+
+        $this->assertEquals('http://www.foo.com/supersong.ogg', $supersong_ogg->getUrl());
+        $this->assertEquals('http://www.foo.com/supersong.flac', $supersong_flac->getUrl());
+        $this->assertEquals('http://www.foo.com/hypersong.flac', $hypersong->getUrl());
+
+        $this->assertEquals('Supersong', $supersong_ogg->getTitle());
+        $this->assertEquals('Supersong', $supersong_flac->getTitle());
+        $this->assertEquals('Hypersong', $hypersong->getTitle());
+
+        $this->assertEquals('Supersong in OGG', $supersong_ogg->getDescription());
+        $this->assertEquals('Supersong in FLAC', $supersong_flac->getDescription());
+        $this->assertEquals('Hypersong in FLAC', $hypersong->getDescription());
+    }
 }
