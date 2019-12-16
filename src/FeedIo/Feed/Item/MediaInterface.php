@@ -40,11 +40,6 @@ interface MediaInterface
     public function setNodeName(string $nodeName) : MediaInterface;
 
     /**
-     * @return bool
-     */
-    public function isThumbnail() : bool;
-
-    /**
      * @return string
      */
     public function getType() : ? string;

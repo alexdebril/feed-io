@@ -108,7 +108,6 @@ class Rss extends XmlAbstract
             ->add(new Author(), ['dc:creator'])
             ->add(new PublicId())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
-            ->add(new Media(), ['media:thumbnail'])
             ->add(new Media(), ['media:group'])
             ->add(new Media(), ['media:content'])
             ;
