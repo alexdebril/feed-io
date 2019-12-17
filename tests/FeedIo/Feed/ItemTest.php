@@ -195,6 +195,31 @@ class ItemTest extends TestCase
                               'description' => null,
                               'thumbnail'   => null,
                               'length'      => null,
-                              'nodeName'    => null]], $out['medias']);
+                              'nodeName'    => null,
+                              'rights' => null,
+                              'titleType' => null,
+                              'descriptionType' => null,
+                              'keywords' => Array (),
+                              'comments' => Array (),
+                              'responses' => Array (),
+                              'backlinks' => Array (),
+                              'credits' => Array (),
+                              'texts' => Array (),
+                              'prices' => Array (),
+                              'subTitles' => Array (),
+                              'scenes' => Array (),
+                              'content' => null,
+                              'category' => null,
+                              'hash' => null,
+                              'embed' => null,
+                              'license' => null,
+                              'community' => null,
+                              'restriction' => null,
+                              'rating' => null,
+                              'copyright' => null,
+                              'player' => null,
+                              'status' => null,
+                              'peerLink' => null]], $out['medias']
+                            );
     }
 }
