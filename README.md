@@ -16,6 +16,7 @@
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
 - Enclosure support to handle external medias like audio content
+- Media-RSS support
 - Feed logo support (RSS + Atom)
 - PSR compliant logging
 - Content filtering to fetch only the newest items
