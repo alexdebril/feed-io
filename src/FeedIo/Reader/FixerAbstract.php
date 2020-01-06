@@ -33,8 +33,8 @@ abstract class FixerAbstract
     }
 
     /**
-     * @param FeedInterface $feed
+     * @param Result $result
      * @return FixerAbstract
      */
-    abstract public function correct(FeedInterface $feed) : FixerAbstract;
+    abstract public function correct(Result $result) : FixerAbstract;
 }

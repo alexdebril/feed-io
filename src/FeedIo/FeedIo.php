@@ -232,6 +232,7 @@ class FeedIo
     public function getBaseFixers() : array
     {
         return array(
+            new Reader\Fixer\HttpLastModified(),
             new Reader\Fixer\LastModified(),
             new Reader\Fixer\PublicId(),
         );
@@ -320,7 +321,7 @@ class FeedIo
         $this->logAction($feed, "read access : $url into a feed instance");
         $result = $this->reader->read($url, $feed, $modifiedSince);
 
-        $this->fixerSet->correct($result->getFeed());
+        $this->fixerSet->correct($result);
 
         return $result;
     }

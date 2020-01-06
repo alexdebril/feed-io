@@ -13,42 +13,24 @@ namespace FeedIo\Reader\Fixer;
 use FeedIo\Adapter\NullResponse;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Feed;
-use FeedIo\Feed\Item;
 use FeedIo\Reader\Document;
 use FeedIo\Reader\Result;
 use Psr\Log\NullLogger;
 
 use \PHPUnit\Framework\TestCase;
 
-class LastModifiedTest extends TestCase
+class HttpLastModifiedTest extends TestCase
 {
 
     /**
-     * @var LastModified
+     * @var HttpLastModified
      */
     protected $object;
 
-    /**
-     * @var \DateTime
-     */
-    protected $newest;
-
     protected function setUp()
     {
-        $this->newest = new \DateTime('2014-01-01');
-
-        $this->object = new LastModified();
+        $this->object = new HttpLastModified();
         $this->object->setLogger(new NullLogger());
-    }
-
-    public function testSearchLastModified()
-    {
-        $feed = $this->getFeed();
-
-        $this->assertEquals(
-            $this->newest,
-            $this->object->searchLastModified($feed)
-        );
     }
 
     public function testCorrect()
@@ -59,21 +41,7 @@ class LastModifiedTest extends TestCase
         $this->assertNull($feed->getLastModified());
         $this->object->correct($result);
 
-        $this->assertEquals($this->newest, $feed->getLastModified());
-    }
-
-    protected function getFeed()
-    {
-        $item1 = new Item();
-        $item1->setLastModified($this->newest);
-
-        $item2 = new Item();
-        $item2->setLastModified(new \DateTime('2013-01-01'));
-
-        $feed = new Feed();
-        $feed->add($item1)->add($item2);
-
-        return $feed;
+        $this->assertEquals(new \DateTime('@0'), $feed->getLastModified());
     }
 
     protected function getResultMock(): Result
@@ -81,7 +49,7 @@ class LastModifiedTest extends TestCase
         /** @var Document $document */
         $document = $this->createMock(Document::class);
         /** @var Feed $feed */
-        $feed = $this->getFeed();
+        $feed = new Feed();
         /** @var ResponseInterface $response */
         $response = new NullResponse();
 

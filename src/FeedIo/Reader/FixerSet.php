@@ -28,13 +28,13 @@ class FixerSet
     }
 
     /**
-     * @param  FeedInterface $feed
+     * @param  Result $result
      * @return FixerSet
      */
-    public function correct(FeedInterface $feed) : FixerSet
+    public function correct(Result $result) : FixerSet
     {
         foreach ($this->fixers as $fixer) {
-            $fixer->correct($feed);
+            $fixer->correct($result);
         }
 
         return $this;
