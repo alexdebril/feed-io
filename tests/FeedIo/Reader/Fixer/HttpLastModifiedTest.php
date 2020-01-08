@@ -44,6 +44,18 @@ class HttpLastModifiedTest extends TestCase
         $this->assertEquals(new \DateTime('@0'), $feed->getLastModified());
     }
 
+    public function testSkipCorrectIfLastModifiedNotNull()
+    {
+        $result = $this->getResultMock();
+        $feed = $result->getFeed();
+        $feed->setLastModified(new \DateTime('@3'));
+
+        $this->assertNotNull($feed->getLastModified());
+        $this->object->correct($result);
+
+        $this->assertEquals(new \DateTime('@3'), $feed->getLastModified());
+    }
+
     protected function getResultMock(): Result
     {
         /** @var Document $document */

@@ -25,7 +25,7 @@ class HttpLastModified extends FixerAbstract
         $feed = $result->getFeed();
         $response = $result->getResponse();
 
-        if ($response->getLastModified() instanceof \DateTime) {
+        if ($feed->getLastModified() === null && $response->getLastModified() instanceof \DateTime) {
             $this->logger->debug("found last modified: " . $response->getLastModified()->format(\DateTime::RSS));
             $feed->setLastModified($response->getLastModified());
         }
