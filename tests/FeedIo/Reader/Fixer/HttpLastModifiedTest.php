@@ -10,11 +10,7 @@
 
 namespace FeedIo\Reader\Fixer;
 
-use FeedIo\Adapter\NullResponse;
-use FeedIo\Adapter\ResponseInterface;
-use FeedIo\Feed;
-use FeedIo\Reader\Document;
-use FeedIo\Reader\Result;
+use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
 
 use \PHPUnit\Framework\TestCase;
@@ -27,15 +23,21 @@ class HttpLastModifiedTest extends TestCase
      */
     protected $object;
 
+    /**
+     * @var ResultMockFactory
+     */
+    protected $resultMockFactory;
+
     protected function setUp()
     {
         $this->object = new HttpLastModified();
         $this->object->setLogger(new NullLogger());
+        $this->resultMockFactory = new ResultMockFactory();
     }
 
     public function testCorrect()
     {
-        $result = $this->getResultMock();
+        $result = $this->resultMockFactory->make();
         $feed = $result->getFeed();
 
         $this->assertNull($feed->getLastModified());
@@ -46,7 +48,7 @@ class HttpLastModifiedTest extends TestCase
 
     public function testSkipCorrectIfLastModifiedNotNull()
     {
-        $result = $this->getResultMock();
+        $result = $this->resultMockFactory->make();
         $feed = $result->getFeed();
         $feed->setLastModified(new \DateTime('@3'));
 
@@ -54,17 +56,5 @@ class HttpLastModifiedTest extends TestCase
         $this->object->correct($result);
 
         $this->assertEquals(new \DateTime('@3'), $feed->getLastModified());
-    }
-
-    protected function getResultMock(): Result
-    {
-        /** @var Document $document */
-        $document = $this->createMock(Document::class);
-        /** @var Feed $feed */
-        $feed = new Feed();
-        /** @var ResponseInterface $response */
-        $response = new NullResponse();
-
-        return new Result($document, $feed, new \DateTime('@0'), $response, 'http://localhost/test.rss');
     }
 }

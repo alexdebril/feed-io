@@ -10,12 +10,9 @@
 
 namespace FeedIo\Reader\Fixer;
 
-use FeedIo\Adapter\NullResponse;
-use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Feed;
 use FeedIo\Feed\Item;
-use FeedIo\Reader\Document;
-use FeedIo\Reader\Result;
+use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
 
 use \PHPUnit\Framework\TestCase;
@@ -28,15 +25,21 @@ class PublicIdTest extends TestCase
      */
     protected $object;
 
+    /**
+     * @var ResultMockFactory
+     */
+    protected $resultMockFactory;
+
     protected function setUp()
     {
         $this->object = new PublicId();
         $this->object->setLogger(new NullLogger());
+        $this->resultMockFactory = new ResultMockFactory();
     }
 
     public function testCorrect()
     {
-        $result = $this->getResultMock();
+        $result = $this->resultMockFactory->makeWithFeed($this->getFeed());
         $feed = $result->getFeed();
 
         $this->assertNull($feed->getPublicId());
@@ -67,17 +70,5 @@ class PublicIdTest extends TestCase
         $feed->add($item2);
 
         return $feed;
-    }
-
-    protected function getResultMock(): Result
-    {
-        /** @var Document $document */
-        $document = $this->createMock(Document::class);
-        /** @var Feed $feed */
-        $feed = $this->getFeed();
-        /** @var ResponseInterface $response */
-        $response = new NullResponse();
-
-        return new Result($document, $feed, new \DateTime('@0'), $response, 'http://localhost/test.rss');
     }
 }

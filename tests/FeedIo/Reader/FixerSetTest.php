@@ -10,37 +10,31 @@
 
 namespace FeedIo\Reader;
 
-use FeedIo\Adapter\NullResponse;
-use FeedIo\Adapter\ResponseInterface;
-use FeedIo\Feed;
-
 use \PHPUnit\Framework\TestCase;
 
 class FixerSetTest extends TestCase
 {
+    /**
+     * @var ResultMockFactory
+     */
+    protected $resultMockFactory;
+
+    protected function setUp()
+    {
+        $this->resultMockFactory = new ResultMockFactory();
+    }
+
     public function testCorrect()
     {
         $fixer = new FixerMock();
         $fixerSet = new FixerSet();
         $fixerSet->add($fixer);
 
-        $result = $this->getResultMock();
+        $result = $this->resultMockFactory->make();
         $feed = $result->getFeed();
 
         $fixerSet->correct($result);
 
         $this->assertEquals('corrected', $feed->getTitle());
-    }
-
-    protected function getResultMock(): Result
-    {
-        /** @var Document $document */
-        $document = $this->createMock(Document::class);
-        /** @var Feed $feed */
-        $feed =  new Feed();
-        /** @var ResponseInterface $response */
-        $response = new NullResponse();
-
-        return new Result($document, $feed, new \DateTime('@0'), $response, 'http://localhost/test.rss');
     }
 }
