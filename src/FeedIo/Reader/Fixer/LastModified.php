@@ -12,17 +12,20 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\FeedInterface;
 use FeedIo\Reader\FixerAbstract;
+use FeedIo\Reader\Result;
 
 class LastModified extends FixerAbstract
 {
 
     /**
-     * @param  FeedInterface $feed
+     * @param Result $result
      * @return FixerAbstract
      */
-    public function correct(FeedInterface $feed) : FixerAbstract
+    public function correct(Result $result) : FixerAbstract
     {
+        $feed = $result->getFeed();
         $date = new \DateTime('@0');
+
         if (is_null($feed->getLastModified()) || $feed->getLastModified() == $date) {
             $this->logger->notice("correct last modified date for feed {$feed->getTitle()}");
             $feed->setLastModified(

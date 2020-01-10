@@ -10,20 +10,30 @@
 
 namespace FeedIo\Reader;
 
-use FeedIo\Feed;
-
 use \PHPUnit\Framework\TestCase;
 
 class FixerSetTest extends TestCase
 {
+    /**
+     * @var ResultMockFactory
+     */
+    protected $resultMockFactory;
+
+    protected function setUp()
+    {
+        $this->resultMockFactory = new ResultMockFactory();
+    }
+
     public function testCorrect()
     {
         $fixer = new FixerMock();
         $fixerSet = new FixerSet();
         $fixerSet->add($fixer);
 
-        $feed = new Feed();
-        $fixerSet->correct($feed);
+        $result = $this->resultMockFactory->make();
+        $feed = $result->getFeed();
+
+        $fixerSet->correct($result);
 
         $this->assertEquals('corrected', $feed->getTitle());
     }

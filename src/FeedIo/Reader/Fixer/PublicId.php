@@ -13,18 +13,20 @@ namespace FeedIo\Reader\Fixer;
 use FeedIo\FeedInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Reader\FixerAbstract;
+use FeedIo\Reader\Result;
 
 class PublicId extends FixerAbstract
 {
 
     /**
-     * @param  FeedInterface $feed
+     * @param  Result $result
      * @return $this
      */
-    public function correct(FeedInterface $feed) : FixerAbstract
+    public function correct(Result $result) : FixerAbstract
     {
-        $this->fixNode($feed);
+        $feed = $result->getFeed();
 
+        $this->fixNode($feed);
         $this->fixItems($feed);
 
         return $this;

@@ -32,11 +32,12 @@ class FixerMock extends FixerAbstract
     }
 
     /**
-     * @param  FeedInterface $feed
+     * @param  Result $result
      * @return $this
      */
-    public function correct(FeedInterface $feed) : FixerAbstract
+    public function correct(Result $result) : FixerAbstract
     {
+        $feed = $result->getFeed();
         $feed->setTitle('corrected');
 
         return $this;

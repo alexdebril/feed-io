@@ -12,6 +12,7 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\Feed;
 use FeedIo\Feed\Item;
+use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
 
 use \PHPUnit\Framework\TestCase;
@@ -20,7 +21,7 @@ class LastModifiedTest extends TestCase
 {
 
     /**
-     * @var FeedIo\Reader\Fixer\LastModified
+     * @var LastModified
      */
     protected $object;
 
@@ -29,12 +30,17 @@ class LastModifiedTest extends TestCase
      */
     protected $newest;
 
+    /**
+     * @var ResultMockFactory
+     */
+    protected $resultMockFactory;
+
     protected function setUp()
     {
         $this->newest = new \DateTime('2014-01-01');
-
         $this->object = new LastModified();
         $this->object->setLogger(new NullLogger());
+        $this->resultMockFactory = new ResultMockFactory();
     }
 
     public function testSearchLastModified()
@@ -49,10 +55,11 @@ class LastModifiedTest extends TestCase
 
     public function testCorrect()
     {
-        $feed = $this->getFeed();
+        $result = $this->resultMockFactory->makeWithFeed($this->getFeed());
+        $feed = $result->getFeed();
 
         $this->assertNull($feed->getLastModified());
-        $this->object->correct($feed);
+        $this->object->correct($result);
 
         $this->assertEquals($this->newest, $feed->getLastModified());
     }
