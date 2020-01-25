@@ -45,6 +45,6 @@ class ModifiedSinceTest extends TestCase
     public function testIsNotValid()
     {
         $item = new Item();
-        $this->assertFalse($this->object->isValid($item));
+        $this->assertTrue($this->object->isValid($item));
     }
 }
