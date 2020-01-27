@@ -40,6 +40,6 @@ class ModifiedSince implements FilterInterface
             return $item->getLastModified() > $this->date;
         }
 
-        return false;
+        return true;
     }
 }
