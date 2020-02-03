@@ -232,7 +232,6 @@ class FeedIo
     public function getBaseFixers() : array
     {
         return array(
-            new Reader\Fixer\HttpLastModified(),
             new Reader\Fixer\LastModified(),
             new Reader\Fixer\PublicId(),
         );
