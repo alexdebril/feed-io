@@ -4,18 +4,18 @@
         <title>sample title</title>
         <link>http://localhost</link>
         <description>a sample feed</description>
-        <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
         <category domain="http://localhost">sample</category>
         <language>en</language>
+        <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
         <itunes:title>sample title</itunes:title>
         <item>
             <title>item title</title>
             <link>http://localhost/item/1</link>
             <description>A great description</description>
-            <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
             <category domain="http://localhost">sample</category>
             <author>name@domain.tld</author>
             <guid>http://localhost/item/1</guid>
+            <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
             <custom>a sample value</custom>
             <custom>another sample value</custom>
         </item>
