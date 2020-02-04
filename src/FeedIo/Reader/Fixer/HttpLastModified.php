@@ -29,9 +29,17 @@ class HttpLastModified extends FixerAbstract
         if ($this->isInvalid($feed) && $response->getLastModified() instanceof \DateTime) {
             $this->logger->debug("found last modified: " . $response->getLastModified()->format(\DateTime::RSS));
             $feed->setLastModified($response->getLastModified());
+            $this->correctItems($feed);
         }
 
         return $this;
+    }
+
+    protected function correctItems(FeedInterface $feed): void
+    {
+        foreach ($feed as $item) {
+            $item->setLastModified($feed->getLastModified());
+        }
     }
 
     /**

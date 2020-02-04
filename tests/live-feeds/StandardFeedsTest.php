@@ -32,9 +32,8 @@ class StandardFeedsTest extends TestCase
     {
         try {
             $result = $this->object->read($url);
-            $this->performAssertions($result);
             $lastModified = $result->getFeed()->getLastModified();
-            $this->assertInstanceOf('\DateTime', $lastModified);
+            $this->performAssertions($result);
             $newResult = $this->object->readSince($url, $lastModified);
             $this->assertCount(0, iterator_to_array($newResult->getFeed()));
         } catch (\FeedIo\Reader\ReadErrorException $e) {
@@ -64,13 +63,16 @@ class StandardFeedsTest extends TestCase
     protected function performItemAssertions(\FeedIo\Feed\ItemInterface $item)
     {
         $this->assertInstanceOf('\DateTime', $item->getLastModified());
-        $this->performStringAssertions(
-            array(
-                'title' => $item->getTitle(),
-                'link' => $item->getLink(),
-                'description' => $item->getDescription(),
-            )
-        );
+        $tests = [
+            'title' => $item->getTitle(),
+            'link' => $item->getLink(),
+        ];
+        if (is_null($item->getDescription())) {
+            $this->markAsRisky();
+        } else {
+            $tests['description'] = $item->getDescription();
+        }
+        $this->performStringAssertions($tests);
     }
 
     protected function performStringAssertions(array $strings)
