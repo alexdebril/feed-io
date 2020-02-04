@@ -33,6 +33,10 @@ class StandardFeedsTest extends TestCase
         try {
             $result = $this->object->read($url);
             $this->performAssertions($result);
+            $lastModified = $result->getFeed()->getLastModified();
+            $this->assertInstanceOf('\DateTime', $lastModified);
+            $newResult = $this->object->readSince($url, $lastModified);
+            $this->assertCount(0, iterator_to_array($newResult->getFeed()));
         } catch (\FeedIo\Reader\ReadErrorException $e) {
             throw $e;
             $this->markTestIncomplete("read error : {$e->getMessage()}");
@@ -112,20 +116,20 @@ class StandardFeedsTest extends TestCase
 
         $urls = array(
             'http://feeds.bbci.co.uk/news/rss.xml?edition=uk',
-            'http://feeds.feedburner.com/dailyjs',
             'http://feeds.feedburner.com/HighScalability',
             'http://feeds.feedburner.com/symfony/blog',
             'http://feeds.slate.com/slate',
             'http://feeds.wired.com/wired/index',
             'http://feeds2.feedburner.com/blogspot/Egta',
+            'http://blog.fefe.de/rss.xml',
+            'https://www.klimareporter.de/feed/rss/',
+            'https://node2.feed43.com/5058372758686815.xml',
             'http://feeds2.feedburner.com/LeJournalduGeek',
-            'http://feeds2.feedburner.com/Webappers',
             'http://linuxfr.org/journaux.atom',
             'http://php.net/feed.atom',
             'http://rss.lemonde.fr/c/205/f/3050/index.rss',
             'http://rss.slashdot.org/Slashdot/slashdot',
             'http://www.debian.org/News/news',
-            'http://www.lemonde.fr/sciences/rss_full.xml',
             'http://www.lemonde.fr/technologies/rss_full.xml',
             'http://www.metalorgie.com/feed/news',
             'http://www.sitepoint.com/feed/',
