@@ -26,6 +26,11 @@ class Response implements ResponseInterface
     protected $psrResponse;
 
     /**
+     * @var string
+     */
+    protected $body;
+
+    /**
      * @param \Psr\Http\Message\ResponseInterface
      */
     public function __construct(PsrResponseInterface $psrResponse)
@@ -38,7 +43,7 @@ class Response implements ResponseInterface
      */
     public function isModified() : bool
     {
-        return $this->psrResponse->getStatusCode() != 304 && $this->psrResponse->getBody()->getSize() > 0;
+        return $this->psrResponse->getStatusCode() != 304 && strlen($this->getBody()) > 0;
     }
 
     /**
@@ -46,7 +51,11 @@ class Response implements ResponseInterface
      */
     public function getBody() : ? string
     {
-        return $this->psrResponse->getBody()->getContents();
+        if (is_null($this->body)) {
+            $this->body = $this->psrResponse->getBody()->getContents();
+        }
+
+        return $this->body;
     }
 
     /**
