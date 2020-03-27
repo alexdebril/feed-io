@@ -10,24 +10,21 @@
 
 namespace FeedIo\Command;
 
-use FeedIo\Command\Check\CheckerAbstract;
-use FeedIo\Command\Check\CountChecker;
-use FeedIo\Command\Check\HistoryChecker;
 use FeedIo\Factory;
-use FeedIo\Feed;
-use FeedIo\Feed\ItemInterface;
 use FeedIo\FeedInterface;
 use FeedIo\FeedIo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class CheckCommand
+ * @codeCoverageIgnore
+ */
 class CheckCommand extends Command
 {
-
     const UPDATE_PROBLEM = "<warn>Issues found on readSince. Please consider filtering this feed using its public ids</warn>";
 
     protected function configure()
@@ -47,7 +44,7 @@ class CheckCommand extends Command
         $this->configureOutput($output);
         $url = $input->getArgument('url');
 
-        if( ! $this->runChecks($output, $url) ) {
+        if (! $this->runChecks($output, $url)) {
             $output->writeln("<error>This feed cannot be properly used by feed-io. Please read the above error message and if you think it's a mistake, feel free to submit an issue on Github</error>");
             return 1;
         }
@@ -147,7 +144,7 @@ class CheckCommand extends Command
         $output->writeln("<info>found {$count} items on second call</info>");
         /** @var \FeedIo\Feed\ItemInterface $item */
         foreach ($secondFeed as $item) {
-            if(! in_array($item->getPublicId(), $firstResult['publicIds'])) {
+            if (! in_array($item->getPublicId(), $firstResult['publicIds'])) {
                 $output->writeln("<warn>Unknown public ID detected, you should retry to see if it was just a new item published during the check process</warn>");
             }
         }
@@ -155,7 +152,7 @@ class CheckCommand extends Command
         return true;
     }
 
-    private function checkHitInTheFuture( FeedIo $feedIo, string $url): bool
+    private function checkHitInTheFuture(FeedIo $feedIo, string $url): bool
     {
         $feed = $feedIo->readSince($url, new \DateTime("+1 week"))->getFeed();
 
