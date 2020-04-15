@@ -141,7 +141,7 @@ class CheckCommand extends Command
 
         $emptyInTheFuture = $this->checkHitInTheFuture($url);
         if (!$emptyInTheFuture) {
-            $result->markAsFailed();
+            $result->markAsFailed(Result::TEST_EMPTY_FUTURE);
         }
         $this->printResult($io, "a call in the future is empty as expected", $emptyInTheFuture);
 
