@@ -133,6 +133,13 @@ class CheckCommand extends Command
             return $result;
         }
 
+        $this->runTimeChecks($io, $url, $result, $firstHitResult);
+        unset($feed);
+        return $result;
+    }
+
+    private function runTimeChecks(SymfonyStyle $io, string $url, Result $result, array $firstHitResult)
+    {
         $updateable = $this->checkSecondHit($io, $url, $firstHitResult);
         if (!$updateable) {
             $result->setNotUpdateable();
@@ -156,9 +163,6 @@ class CheckCommand extends Command
             $result->markAsFailed(Result::TEST_1YEAR_OLD);
         }
         $this->printResult($io, "a call with modifiedSince = 1yr old is filled", $OneYearOld);
-
-        unset($feed);
-        return $result;
     }
 
     private function checkFirstHit(SymfonyStyle $io, FeedInterface $feed, Result $result): array
