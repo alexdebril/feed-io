@@ -1,23 +1,18 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Command;
 
-use FeedIo\Factory;
+use FeedIo\Adapter\Guzzle\Client;
 use FeedIo\FeedInterface;
 use FeedIo\FeedIo;
+use Psr\Log\NullLogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Class CheckCommand
@@ -25,7 +20,24 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckCommand extends Command
 {
-    const UPDATE_PROBLEM = "<warn>Issues found on readSince. Please consider filtering this feed using its public ids</warn>";
+    private $ok;
+
+    private $notOk;
+
+    private $feedIo;
+
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+
+        $client = new Client(new \GuzzleHttp\Client());
+        $this->feedIo = new FeedIo($client, new NullLogger());
+    }
+
+    protected function getFeedIo(): FeedIo
+    {
+        return $this->feedIo;
+    }
 
     protected function configure()
     {
@@ -34,7 +46,7 @@ class CheckCommand extends Command
             ->addArgument(
                 'url',
                 InputArgument::REQUIRED,
-                'Please provide the feed\' URL'
+                'Please provide an URL or a file to read'
             )
         ;
     }
@@ -42,56 +54,118 @@ class CheckCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->configureOutput($output);
-        $url = $input->getArgument('url');
+        $io = new SymfonyStyle($input, $output);
+        $urls = $this->getUrls($input);
 
-        if (! $this->runChecks($output, $url)) {
-            $output->writeln("<error>This feed cannot be properly used by feed-io. Please read the above error message and if you think it's a mistake, feel free to submit an issue on Github</error>");
-            return 1;
+        $results = [];
+        $return = 0;
+
+        foreach ($urls as $url) {
+            if (empty($url)) {
+                continue;
+            }
+            $result = $this->runChecks($io, trim($url));
+            $results[] = iterator_to_array($this->renderValues($output, $result->toArray()));
+            if (! $result->isUpdateable()) {
+                $return++;
+            }
         }
 
-        $output->writeln("<success>This feed can be consumed by feed-io</success>");
-        return 0;
+        $table = new Table($output);
+        $table
+            ->setHeaders(['URL', 'Accessible', 'readSince', 'Last modified', '# items', 'unique IDs', 'Date Flow', 'Jan 1970', '1 year old', 'Future'])
+            ->setRows($results)
+            ->setColumnWidth(0, 48)
+        ;
+        $table->render();
+
+        if ($return > 0) {
+            $io->error("Some feeds were marked as not updateable. Two possible explanations: a feed you tried to consumed doesn't match the specification or FeedIo has a bug.");
+        }
+        return $return;
     }
 
-    protected function runChecks(OutputInterface $output, string $url): bool
+    protected function getUrls(InputInterface $input): array
     {
-        $feedIo = Factory::create()->getFeedIo();
-        $feed = $feedIo->read($url)->getFeed();
-
-        $output->writeln("<info>first access to {$feed->getTitle()}</info>");
-
-        $count = count($feed);
-        if ($count == 0) {
-            $output->writeln("<error>empty feed</error>");
-            return false;
+        $arg = $input->getArgument('url');
+        if (filter_var($arg, FILTER_VALIDATE_URL)) {
+            return [$arg];
         }
-
-        $output->writeln("<info>found {$count} items</info>");
-
-        $firstHitResult = $this->checkFirstHit($output, $feed);
-
-        $updateStatus = true;
-        if ($this->checkSecondHit($output, $feedIo, $url, $firstHitResult)) {
-            $output->writeln("<info>readSince works fine</info>");
-        } else {
-            $updateStatus = false;
-            $output->writeln(self::UPDATE_PROBLEM);
+        if (! file_exists($arg)) {
+            throw new \UnexpectedValueException("$arg must contain a valid URL or a file to read");
         }
-
-        if ($this->checkHitInTheFuture($feedIo, $url)) {
-            $output->writeln("<info>a call in the future is empty as expected</info>");
-        } else {
-            $updateStatus = false;
-            $output->writeln(self::UPDATE_PROBLEM);
-        }
-
-        return $updateStatus;
+        $content = file_get_contents($arg);
+        return explode("\n", $content);
     }
 
-    private function checkFirstHit(OutputInterface $output, FeedInterface $feed): array
+    protected function renderValues(OutputInterface $output, array $values): \Generator
+    {
+        foreach ($values as $value) {
+            if (is_bool($value)) {
+                yield $value ? $this->ok: $this->notOk;
+            } elseif ($value === 0 || $value === 'null') {
+                yield $output->getFormatter()->format("<ko>$value</ko>");
+            } else {
+                yield $output->getFormatter()->format("<ok>$value</ok>");
+            }
+        }
+    }
+
+    protected function runChecks(SymfonyStyle $io, string $url): Result
+    {
+        $result = new Result($url);
+        try {
+            $io->section("reading {$url}");
+            $feed = $this->getFeedIo()->read($url)->getFeed();
+
+            $count = count($feed);
+            $this->printResult($io, "the feed has items ($count)", $count > 0);
+            if ($count == 0) {
+                $result->setNotUpdateable();
+                return $result;
+            }
+
+            $result->setItemCount($count);
+            $firstHitResult = $this->checkFirstHit($io, $feed, $result);
+        } catch (\Throwable $e) {
+            $io->error($e->getMessage());
+            $result->setNotAccessible();
+            return $result;
+        }
+
+        $updateable = $this->checkSecondHit($io, $url, $firstHitResult);
+        if (!$updateable) {
+            $result->setNotUpdateable();
+        }
+        $this->printResult($io, "the feed is updateable", $updateable);
+
+        $emptyInTheFuture = $this->checkHitInTheFuture($url);
+        if (!$emptyInTheFuture) {
+            $result->markAsFailed();
+        }
+        $this->printResult($io, "a call in the future is empty as expected", $emptyInTheFuture);
+
+        $dateO = $this->checkHitAtDateO($url);
+        if (!$dateO) {
+            $result->markAsFailed(Result::TEST_JAN_1970);
+        }
+        $this->printResult($io, "a call at Jan 1970 is filled as expected", $dateO);
+
+        $OneYearOld = $this->checkHitOneYearOld($url);
+        if (!$OneYearOld) {
+            $result->markAsFailed(Result::TEST_1YEAR_OLD);
+        }
+        $this->printResult($io, "a call with modifiedSince = 1yr old is filled", $OneYearOld);
+
+        unset($feed);
+        return $result;
+    }
+
+    private function checkFirstHit(SymfonyStyle $io, FeedInterface $feed, Result $result): array
     {
         $lastModifiedDates = [];
         $publicIds = [];
+        $result->setModifiedSince($feed->getLastModified());
         /** @var \FeedIo\Feed\ItemInterface $item */
         foreach ($feed as $i => $item) {
             $lastModifiedDates[] = $item->getLastModified();
@@ -99,7 +173,7 @@ class CheckCommand extends Command
         }
 
         if (! $this->checkPublicIds($publicIds)) {
-            $output->writeln("<warn>duplicated publicIds found</warn>");
+            $result->markAsFailed(Result::TEST_UNIQUE_IDS);
         }
 
         sort($lastModifiedDates);
@@ -107,13 +181,11 @@ class CheckCommand extends Command
         $last = end($lastModifiedDates);
 
         $normalDateFlow = true;
-        if ($last > $first) {
-            $output->writeln("<info>first item was published on {$first->format(\DateTime::ATOM)}</info>");
-            $output->writeln("<info>last item was published on {$last->format(\DateTime::ATOM)}</info>");
-        } else {
-            $output->writeln("<warn>All items have the same date</warn>");
+        if (! ($last > $first)) {
+            $result->markAsFailed(Result::TEST_NORMAL_DATE_FLOW);
             $normalDateFlow = false;
         }
+        $this->printResult($io, "the date flow is normal", $normalDateFlow);
 
         return [
             'lastModifiedDates' => $lastModifiedDates,
@@ -122,7 +194,7 @@ class CheckCommand extends Command
         ];
     }
 
-    private function checkSecondHit(OutputInterface $output, FeedIo $feedIo, string $url, array $firstResult): bool
+    private function checkSecondHit(SymfonyStyle $io, string $url, array $firstResult): bool
     {
         $count = count($firstResult['lastModifiedDates']);
         $last = end($firstResult['lastModifiedDates']);
@@ -133,30 +205,36 @@ class CheckCommand extends Command
             $lastModified = $last->sub(new \DateInterval('P1D'));
         }
 
-        $secondFeed = $feedIo->readSince($url, $lastModified)->getFeed();
+        $secondFeed = $this->getFeedIo()->readSince($url, $lastModified)->getFeed();
 
         $count = count($secondFeed);
+        $this->printResult($io, "the feed has items on second call ($count)", $count > 0);
         if ($count == 0) {
-            $output->writeln("<error>The feed is empty on second call, it should have a partial result</error>");
             return false;
-        }
-
-        $output->writeln("<info>found {$count} items on second call</info>");
-        /** @var \FeedIo\Feed\ItemInterface $item */
-        foreach ($secondFeed as $item) {
-            if (! in_array($item->getPublicId(), $firstResult['publicIds'])) {
-                $output->writeln("<warn>Unknown public ID detected, you should retry to see if it was just a new item published during the check process</warn>");
-            }
         }
 
         return true;
     }
 
-    private function checkHitInTheFuture(FeedIo $feedIo, string $url): bool
+    private function checkHitInTheFuture(string $url): bool
     {
-        $feed = $feedIo->readSince($url, new \DateTime("+1 week"))->getFeed();
+        $feed = $this->getFeedIo()->readSince($url, new \DateTime("+1 week"))->getFeed();
 
         return count($feed) == 0;
+    }
+
+    private function checkHitAtDateO(string $url): bool
+    {
+        $feed = $this->getFeedIo()->readSince($url, new \DateTime("@0"))->getFeed();
+
+        return count($feed) > 0;
+    }
+
+    private function checkHitOneYearOld(string $url): bool
+    {
+        $feed = $this->getFeedIo()->readSince($url, new \DateTime("-1 year"))->getFeed();
+
+        return count($feed) > 0;
     }
 
     private function checkPublicIds(array $publicIds): bool
@@ -168,13 +246,23 @@ class CheckCommand extends Command
     private function configureOutput(OutputInterface $output): void
     {
         $output->getFormatter()->setStyle(
-            'warn',
-            new OutputFormatterStyle('black', 'magenta', ['bold'])
+            'ko',
+            new OutputFormatterStyle('red', null, ['bold'])
         );
 
         $output->getFormatter()->setStyle(
-            'success',
-            new OutputFormatterStyle('black', 'green', ['bold'])
+            'ok',
+            new OutputFormatterStyle('green', null, ['bold'])
         );
+
+        $this->ok = $output->getFormatter()->format('<ok>OK</ok>');
+        $this->notOk = $output->getFormatter()->format("<ko>NOT OK</ko>");
+    }
+
+    private function printResult(SymfonyStyle $io, string $message, bool $result): void
+    {
+        $o = $result ? $this->ok:$this->notOk;
+        $t = strlen($message) > 24 ? "\t":"\t\t\t\t";
+        $io->text("{$message}: {$t} [{$o}]");
     }
 }

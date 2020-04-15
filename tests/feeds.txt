@@ -1,0 +1,14 @@
+https://www.reddit.com/r/news/.rss
+http://blog.fefe.de/rss.xml?html
+http://php.net/feed.atom
+https://www.klimareporter.de/feed/rss/
+https://packagist.org/feeds/releases.atom
+https://www.lemonde.fr/rss/en_continu.xml
+https://packagist.org/feeds/packages.atom
+http://feeds.feedburner.com/blogspot/rkEL
+http://feeds2.feedburner.com/LeJournalduGeek
+http://www.lemonde.fr/technologies/rss_full.xml
+https://linuxfr.org/journaux.atom
+http://www.debian.org/News/news
+http://rss.slashdot.org/Slashdot/slashdot
+http://rss.kicker.de/news/2bundesliga
