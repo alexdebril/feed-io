@@ -323,6 +323,7 @@ class FeedIo
         $result = $this->reader->read($url, $feed, $modifiedSince);
 
         $this->fixerSet->correct($result);
+        $this->resetFilters();
 
         return $result;
     }
