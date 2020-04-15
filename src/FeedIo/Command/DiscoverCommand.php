@@ -17,6 +17,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class DiscoverCommand
+ * @codeCoverageIgnore
+ */
 class DiscoverCommand extends Command
 {
     protected function configure()

@@ -18,6 +18,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ReadCommand
+ * @codeCoverageIgnore
+ */
 class ReadCommand extends Command
 {
     protected function configure()
