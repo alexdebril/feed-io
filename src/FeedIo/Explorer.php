@@ -49,7 +49,7 @@ class Explorer
     public function discover(string $url) : array
     {
         $this->logger->info("discover feeds from {$url}");
-        $stream = $this->client->getResponse($url, new \DateTime);
+        $stream = $this->client->getResponse($url, new \DateTime('@0'));
 
         $internalErrors = libxml_use_internal_errors(true);
         $entityLoaderDisabled = libxml_disable_entity_loader(true);
