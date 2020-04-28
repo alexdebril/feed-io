@@ -14,6 +14,7 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
+use FeedIo\Parser\UrlGenerator;
 use FeedIo\RuleAbstract;
 
 class Media extends RuleAbstract
@@ -23,6 +24,17 @@ class Media extends RuleAbstract
     const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
 
     protected $urlAttributeName = 'url';
+
+    /**
+     * @var UrlGenerator
+     */
+    protected $urlGenerator;
+
+    public function __construct(string $nodeName = null)
+    {
+        $this->urlGenerator = new UrlGenerator();
+        parent::__construct($nodeName);
+    }
 
     /**
      * @return string
@@ -53,21 +65,31 @@ class Media extends RuleAbstract
             switch ($element->nodeName) {
                 case 'media:group':
                     $this->initMedia($media, $element);
-                    $media->setUrl($this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
+                    $this->setUrl($media, $this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE), $node);
                     break;
                 case 'media:content':
                     $this->initMedia($media, $element);
-                    $media->setUrl($this->getAttributeValue($element, "url"));
+                    $this->setUrl($media, $this->getAttributeValue($element, "url"), $node);
                     break;
                 default:
                     $media
                         ->setType($this->getAttributeValue($element, 'type'))
-                        ->setUrl($this->getAttributeValue($element, $this->getUrlAttributeName()))
                         ->setLength($this->getAttributeValue($element, 'length'));
+                    $this->setUrl($media, $this->getAttributeValue($element, $this->getUrlAttributeName()), $node);
                     break;
             }
             $node->addMedia($media);
         }
+    }
+
+    /**
+     * @param MediaInterface $media
+     * @param string $url
+     * @param NodeInterface $node
+     */
+    protected function setUrl(MediaInterface $media, string $url, NodeInterface $node): void
+    {
+        $media->setUrl($this->urlGenerator->getAbsolutePath($url, $node->getHost()));
     }
 
     /**
