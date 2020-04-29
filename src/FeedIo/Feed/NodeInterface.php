@@ -80,6 +80,13 @@ interface NodeInterface
     public function setLastModified(\DateTime $lastModified = null) : NodeInterface;
 
     /**
+     * Returns the node's host
+     *
+     * @return string
+     */
+    public function getHost() : ? string;
+
+    /**
      * Returns the node's link
      *
      * @return string

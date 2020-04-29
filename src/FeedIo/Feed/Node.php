@@ -47,6 +47,11 @@ class Node implements NodeInterface, ElementsAwareInterface
      */
     protected $link;
 
+    /**
+     * @var string
+     */
+    protected $host;
+
     public function __construct()
     {
         $this->initElements();
@@ -192,6 +197,14 @@ class Node implements NodeInterface, ElementsAwareInterface
     /**
      * @return string
      */
+    public function getHost(): ? string
+    {
+        return $this->host;
+    }
+
+    /**
+     * @return string
+     */
     public function getLink() : ? string
     {
         return $this->link;
@@ -204,8 +217,19 @@ class Node implements NodeInterface, ElementsAwareInterface
     public function setLink(string $link = null) : NodeInterface
     {
         $this->link = $link;
+        $this->setHost($link);
 
         return $this;
+    }
+
+    /**
+     * @param string|null $link
+     */
+    protected function setHost(string $link = null): void
+    {
+        if (!is_null($link)) {
+            $this->host = '//' . parse_url($link, PHP_URL_HOST);
+        }
     }
 
     /**
