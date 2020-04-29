@@ -29,7 +29,21 @@ class Description extends RuleAbstract
             }
         }
 
-        $node->setDescription(htmlspecialchars_decode($string));
+        $node->setDescription($this->processString($string, $node));
+    }
+
+    /**
+     * @param string $input
+     * @param NodeInterface $node
+     * @return string
+     */
+    protected function processString(string $input, NodeInterface $node): string
+    {
+        return str_replace(
+            ['href="/', 'src="/'],
+            ["href=\"{$node->getHost()}/", "src=\"{$node->getHost()}/"],
+            htmlspecialchars_decode($input)
+        );
     }
 
     /**

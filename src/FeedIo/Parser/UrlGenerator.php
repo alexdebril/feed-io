@@ -20,7 +20,7 @@ class UrlGenerator
      */
     public function getAbsolutePath(string $path, string $host = null): string
     {
-        if (! parse_url($path, PHP_URL_HOST) && !! $host) {
+        if (! parse_url($path, PHP_URL_HOST) && $host) {
             return $this->generateAbsolutePath($host, $path);
         }
         return $path;
@@ -33,6 +33,7 @@ class UrlGenerator
      */
     public function generateAbsolutePath(string $host, string $path): string
     {
-        return $host . substr($path, 0, 1) == '/' ? $path:"/{$path}";
+        $path = substr($path, 0, 1) == '/' ? $path:"/{$path}";
+        return $host . $path;
     }
 }
