@@ -14,7 +14,7 @@ namespace FeedIo\Result;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\FeedInterface;
 
-class NextUpdate
+class UpdateStats
 {
 
     private $intervals;
@@ -22,6 +22,20 @@ class NextUpdate
     public function __construct(FeedInterface $feed)
     {
         $this->intervals = $this->computeIntervals($this->extractDates($feed));
+    }
+
+    /**
+     * @return array
+     */
+    public function getIntervals(): array
+    {
+        return $this->intervals;
+    }
+
+    public function getMinInterval(): \DateInterval
+    {
+        $value = min($this->intervals);
+        return new \DateInterval("PT{$value}S");
     }
 
     private function computeIntervals(array $dates): array
