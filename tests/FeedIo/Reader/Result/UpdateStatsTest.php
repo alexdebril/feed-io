@@ -9,9 +9,8 @@
  */
 
 
-namespace FeedIo\Result;
+namespace FeedIo\Reader\Result;
 
-use Cassandra\Date;
 use FeedIo\Feed;
 use PHPUnit\Framework\TestCase;
 
