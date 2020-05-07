@@ -12,6 +12,7 @@ namespace FeedIo\Reader;
 
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\FeedInterface;
+use FeedIo\Reader\Result\UpdateStats;
 
 /**
  * Result of the read() operation
@@ -126,5 +127,18 @@ class Result
     public function getUrl() : string
     {
         return $this->url;
+    }
+
+    /**
+     * @param int $minDelay
+     * @param float $marginRatio
+     * @return \DateTime
+     */
+    public function getNextUpdate(
+        int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
+        float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
+    ): \DateTime {
+        $updateStats = new UpdateStats($this->getFeed());
+        return $updateStats->computeNextUpdate($minDelay, $marginRatio);
     }
 }

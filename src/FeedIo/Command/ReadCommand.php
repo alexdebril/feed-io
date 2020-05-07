@@ -12,6 +12,7 @@ namespace FeedIo\Command;
 
 use FeedIo\Factory;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Reader\Result\UpdateStats;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -58,6 +59,8 @@ class ReadCommand extends Command
             }
         }
 
+        $updateStats = new UpdateStats($feed);
+        $output->writeln("<info>next update: {$updateStats->computeNextUpdate()->format(\DATE_ATOM)}</info>");
         return 0;
     }
 
