@@ -10,18 +10,46 @@
 
 namespace FeedIo\Result;
 
-
 use FeedIo\Feed\ItemInterface;
 use FeedIo\FeedInterface;
 
 class UpdateStats
 {
+    const DEFAULT_MIN_DELAY = 3600;
 
-    private $intervals;
+    const DEFAULT_MARGIN_RATIO = 0.1;
+
+    protected $feed;
+
+    protected $intervals;
 
     public function __construct(FeedInterface $feed)
     {
+        $this->feed = $feed;
         $this->intervals = $this->computeIntervals($this->extractDates($feed));
+    }
+
+    public function computeNextUpdate(
+        int $minDelay = self::DEFAULT_MIN_DELAY,
+        float $marginRatio = self::DEFAULT_MARGIN_RATIO
+    ): \DateTime {
+        $feedTimeStamp = !! $this->feed->getLastModified() ? $this->feed->getLastModified()->getTimestamp():time();
+        $now = time();
+        $intervals = [
+            $this->getMinInterval(),
+            $this->getAverageInterval(),
+            $this->getMedianInterval(),
+        ];
+        sort($intervals);
+        $newTimestamp = $now + $minDelay;
+        foreach ($intervals as $interval) {
+            $computedTimestamp = $feedTimeStamp + intval($interval + $marginRatio * $interval);
+            if ($computedTimestamp > $now) {
+                $newTimestamp = $computedTimestamp;
+                break;
+            }
+        }
+        return (new \DateTime())->setTimestamp($newTimestamp);
     }
 
     /**
@@ -32,10 +60,23 @@ class UpdateStats
         return $this->intervals;
     }
 
-    public function getMinInterval(): \DateInterval
+    public function getMinInterval(): int
     {
-        $value = min($this->intervals);
-        return new \DateInterval("PT{$value}S");
+        return min($this->intervals);
+    }
+
+    public function getAverageInterval(): int
+    {
+        $total = array_sum($this->intervals);
+
+        return intval(floor($total / count($this->intervals)));
+    }
+
+    public function getMedianInterval(): int
+    {
+        $num = floor(count($this->intervals) / 2);
+
+        return $this->intervals[$num];
     }
 
     private function computeIntervals(array $dates): array
@@ -44,7 +85,7 @@ class UpdateStats
         $intervals = [];
         $current = 0;
         foreach ($dates as $date) {
-            if ( $current > 0) {
+            if ($current > 0) {
                 $intervals[] = $current - $date;
             }
             $current = $date;

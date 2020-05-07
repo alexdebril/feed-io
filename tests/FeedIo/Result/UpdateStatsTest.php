@@ -11,16 +11,16 @@
 
 namespace FeedIo\Result;
 
-
+use Cassandra\Date;
 use FeedIo\Feed;
 use PHPUnit\Framework\TestCase;
 
 class UpdateStatsTest extends TestCase
 {
-
     public function testIntervals()
     {
         $feed = new Feed();
+        $feed->setLastModified(new \DateTime('-1 day'));
         foreach ($this->getDates() as $date) {
             $item = new Feed\Item();
             $item->setLastModified(new \DateTime($date));
@@ -32,18 +32,20 @@ class UpdateStatsTest extends TestCase
 
         $this->assertCount(4, $intervals);
 
-        $this->assertEquals((new \DateInterval('P1D'))->days, $stats->getMinInterval()->days);
+        $this->assertEquals(86400, $stats->getMinInterval());
+        $nextUpdate = $stats->computeNextUpdate();
+
+        $this->assertEquals($feed->getLastModified()->getTimestamp() + intval(86400 + 0.1 * 86400), $nextUpdate->getTimestamp());
     }
 
     private function getDates(): array
     {
         return [
-            '2020-04-01 8:00',
-            '2020-04-03 8:00',
-            '2020-04-10 8:00',
-            '2020-04-20 8:00',
-            '2020-04-21 8:00',
+            '-1 day',
+            '-3 days',
+            '-10 days',
+            '-20 days',
+            '-21 days',
         ];
     }
-
 }
