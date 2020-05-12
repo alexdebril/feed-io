@@ -65,17 +65,17 @@ class Media extends RuleAbstract
             switch ($element->nodeName) {
                 case 'media:group':
                     $this->initMedia($media, $element);
-                    $this->setUrl($media, $this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE), $node);
+                    $this->setUrl($media, $node, $this->getChildAttributeValue($element, 'content', 'url', static::MRSS_NAMESPACE));
                     break;
                 case 'media:content':
                     $this->initMedia($media, $element);
-                    $this->setUrl($media, $this->getAttributeValue($element, "url"), $node);
+                    $this->setUrl($media, $node, $this->getAttributeValue($element, "url"));
                     break;
                 default:
                     $media
                         ->setType($this->getAttributeValue($element, 'type'))
                         ->setLength($this->getAttributeValue($element, 'length'));
-                    $this->setUrl($media, $this->getAttributeValue($element, $this->getUrlAttributeName()), $node);
+                    $this->setUrl($media, $node, $this->getAttributeValue($element, $this->getUrlAttributeName()));
                     break;
             }
             $node->addMedia($media);
@@ -84,12 +84,16 @@ class Media extends RuleAbstract
 
     /**
      * @param MediaInterface $media
-     * @param string $url
-     * @param NodeInterface $node
+     * @param NodeInterface|null $node
+     * @param string|null $url
      */
-    protected function setUrl(MediaInterface $media, string $url, NodeInterface $node): void
+    protected function setUrl(MediaInterface $media, NodeInterface $node, string $url = null): void
     {
-        $media->setUrl($this->urlGenerator->getAbsolutePath($url, $node->getHost()));
+        if (! is_null($url)) {
+            $media->setUrl(
+                $this->urlGenerator->getAbsolutePath($url, $node->getHost())
+            );
+        }
     }
 
     /**
