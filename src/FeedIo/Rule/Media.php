@@ -84,7 +84,7 @@ class Media extends RuleAbstract
 
     /**
      * @param MediaInterface $media
-     * @param NodeInterface|null $node
+     * @param NodeInterface $node
      * @param string|null $url
      */
     protected function setUrl(MediaInterface $media, NodeInterface $node, string $url = null): void
@@ -112,7 +112,7 @@ class Media extends RuleAbstract
     }
 
     /**
-     * @param \MediaInterface $media
+     * @param MediaInterface $media
      * @param \DomElement $element
      */
     protected function initMedia(MediaInterface $media, \DOMElement $element): void
