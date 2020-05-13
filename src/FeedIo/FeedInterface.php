@@ -13,7 +13,7 @@ namespace FeedIo;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
 
-/**
+/**updat
  * Interface FeedInterface
  * Represents the top node of a news feed
  * @package FeedIo

@@ -17,6 +17,8 @@ class UpdateStats
 {
     const DEFAULT_MIN_DELAY = 3600;
 
+    const DEFAULT_STALLED_DELAY = 86400;
+
     const DEFAULT_MARGIN_RATIO = 0.1;
 
     /**
@@ -41,14 +43,19 @@ class UpdateStats
 
     /**
      * @param int $minDelay
+     * @param int $stalledDelay
      * @param float $marginRatio
      * @return \DateTime
      */
     public function computeNextUpdate(
         int $minDelay = self::DEFAULT_MIN_DELAY,
+        int $stalledDelay = self::DEFAULT_STALLED_DELAY,
         float $marginRatio = self::DEFAULT_MARGIN_RATIO
     ): \DateTime {
-        $feedTimeStamp = !! $this->feed->getLastModified() ? $this->feed->getLastModified()->getTimestamp():time();
+        if ($this->isStalled($marginRatio)) {
+            return (new \DateTime())->setTimestamp(time() + $stalledDelay);
+        }
+        $feedTimeStamp = $this->getFeedTimestamp();
         $now = time();
         $intervals = [
             $this->getMinInterval(),
@@ -58,13 +65,23 @@ class UpdateStats
         sort($intervals);
         $newTimestamp = $now + $minDelay;
         foreach ($intervals as $interval) {
-            $computedTimestamp = $feedTimeStamp + intval($interval + $marginRatio * $interval);
+            $computedTimestamp = $this->addInterval($feedTimeStamp, $interval, $marginRatio);
             if ($computedTimestamp > $now) {
                 $newTimestamp = $computedTimestamp;
                 break;
             }
         }
         return (new \DateTime())->setTimestamp($newTimestamp);
+    }
+
+    public function isStalled(float $marginRatio): bool
+    {
+        return time() > $this->addInterval($this->getFeedTimestamp(), $this->getMaxInterval(), $marginRatio);
+    }
+
+    public function addInterval(int $ts, int $interval, float $marginRatio): int
+    {
+        return $ts + intval($interval + $marginRatio * $interval);
     }
 
     /**
@@ -81,6 +98,14 @@ class UpdateStats
     public function getMinInterval(): int
     {
         return min($this->intervals);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxInterval(): int
+    {
+        return max($this->intervals);
     }
 
     /**
@@ -130,5 +155,10 @@ class UpdateStats
     private function getTimestamp(ItemInterface $item): ? int
     {
         return $item->getLastModified()->getTimestamp();
+    }
+
+    private function getFeedTimestamp(): int
+    {
+        return !! $this->feed->getLastModified() ? $this->feed->getLastModified()->getTimestamp():time();
     }
 }

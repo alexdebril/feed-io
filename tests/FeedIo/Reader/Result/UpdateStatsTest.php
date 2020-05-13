@@ -37,6 +37,28 @@ class UpdateStatsTest extends TestCase
         $this->assertEquals($feed->getLastModified()->getTimestamp() + intval(86400 + 0.1 * 86400), $nextUpdate->getTimestamp());
     }
 
+    public function testStalledFeed()
+    {
+        $feed = new Feed();
+        $feed->setLastModified(new \DateTime('-10 days'));
+        foreach (['-10 days', '-12 days'] as $date) {
+            $item = new Feed\Item();
+            $item->setLastModified(new \DateTime($date));
+            $feed->add($item);
+        }
+
+        $stats = new UpdateStats($feed);
+        $intervals = $stats->getIntervals();
+
+        $this->assertCount(1, $intervals);
+
+        $this->assertTrue($stats->isStalled(UpdateStats::DEFAULT_MARGIN_RATIO));
+        $nextUpdate = $stats->computeNextUpdate();
+
+        $this->assertEquals(time() + 86400, $nextUpdate->getTimestamp());
+    }
+
+
     private function getDates(): array
     {
         return [
