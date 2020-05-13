@@ -19,16 +19,31 @@ class UpdateStats
 
     const DEFAULT_MARGIN_RATIO = 0.1;
 
+    /**
+     * @var FeedInterface
+     */
     protected $feed;
 
+    /**
+     * @var array
+     */
     protected $intervals;
 
+    /**
+     * UpdateStats constructor.
+     * @param FeedInterface $feed
+     */
     public function __construct(FeedInterface $feed)
     {
         $this->feed = $feed;
         $this->intervals = $this->computeIntervals($this->extractDates($feed));
     }
 
+    /**
+     * @param int $minDelay
+     * @param float $marginRatio
+     * @return \DateTime
+     */
     public function computeNextUpdate(
         int $minDelay = self::DEFAULT_MIN_DELAY,
         float $marginRatio = self::DEFAULT_MARGIN_RATIO
@@ -60,11 +75,17 @@ class UpdateStats
         return $this->intervals;
     }
 
+    /**
+     * @return int
+     */
     public function getMinInterval(): int
     {
         return min($this->intervals);
     }
 
+    /**
+     * @return int
+     */
     public function getAverageInterval(): int
     {
         $total = array_sum($this->intervals);
@@ -72,8 +93,12 @@ class UpdateStats
         return intval(floor($total / count($this->intervals)));
     }
 
+    /**
+     * @return int
+     */
     public function getMedianInterval(): int
     {
+        sort($this->intervals);
         $num = floor(count($this->intervals) / 2);
 
         return $this->intervals[$num];

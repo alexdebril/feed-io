@@ -50,6 +50,11 @@ class Result
     protected $response;
 
     /**
+     * @var FeedIo\Reader\Result\UpdateStats
+     */
+    protected $updateStats;
+
+    /**
      * @var Document
      */
     protected $document;
@@ -138,7 +143,19 @@ class Result
         int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
         float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
     ): \DateTime {
-        $updateStats = new UpdateStats($this->getFeed());
+        $updateStats = $this->getUpdateStats();
         return $updateStats->computeNextUpdate($minDelay, $marginRatio);
+    }
+
+    /**
+     * @return UpdateStats
+     */
+    public function getUpdateStats(): UpdateStats
+    {
+        if (is_null($this->updateStats)) {
+            $this->updateStats = new UpdateStats($this->getFeed());
+        }
+
+        return $this->updateStats;
     }
 }

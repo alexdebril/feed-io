@@ -41,7 +41,8 @@ class ReadCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $url = $input->getArgument('url');
-        $feed = $this->readFeed($url);
+        $result = $this->readFeed($url);
+        $feed = $result->getFeed();
 
         $output->writeln("<info>{$feed->getTitle()}</info>");
 
@@ -59,8 +60,16 @@ class ReadCommand extends Command
             }
         }
 
-        $updateStats = new UpdateStats($feed);
-        $output->writeln("<info>next update: {$updateStats->computeNextUpdate()->format(\DATE_ATOM)}</info>");
+        $output->writeln("<info>feed last modified: {$feed->getLastModified()->format(\DATE_ATOM)}</info>");
+        $nextUpdate = $result->getNextUpdate();
+        $output->writeln("<info>computed next update: {$nextUpdate->format(\DATE_ATOM)}</info>");
+
+        $updateStats = $result->getUpdateStats();
+
+        $output->writeln("minimum interval between items: {$this->formatDateInterval($updateStats->getMinInterval())}");
+        $output->writeln("median interval: {$this->formatDateInterval($updateStats->getMedianInterval())}");
+        $output->writeln("average interval: {$this->formatDateInterval($updateStats->getAverageInterval())}");
+
         return 0;
     }
 
@@ -77,14 +86,25 @@ class ReadCommand extends Command
     }
 
     /**
-     * @param string $url
-     * @return \FeedIo\FeedInterface
+     * @param int $interval
+     * @return \DateInterval
      */
-    public function readFeed($url)
+    protected function formatDateInterval(int $interval): string
+    {
+        $zero = new \DateTime('@0');
+        $diff = $zero->diff(new \DateTime("@{$interval}"));
+        return $diff->format('%a days, %h hours, %i minutes, %s seconds');
+    }
+
+    /**
+     * @param $url
+     * @return \FeedIo\Reader\Result
+     */
+    public function readFeed($url): \FeedIo\Reader\Result
     {
         $feedIo = Factory::create()->getFeedIo();
 
-        return $feedIo->read($url)->getFeed();
+        return $feedIo->read($url);
     }
 
     /**
