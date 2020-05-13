@@ -118,6 +118,16 @@ foreach( $result->getFeed() as $item ) {
 }
 
 ```
+In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
+
+```php
+$nextUpdate = $result->getNextUpdate();
+echo "computed next update: {$nextUpdate->format(\DATE_ATOM)}";
+
+// you may need to access the statistics
+$updateStats = $result->getUpdateStats();
+echo "average interval in seconds: {$updateStats->getAverageInterval()}";
+```
 
 ### Asynchronous reading of several feeds at once
 
