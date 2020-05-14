@@ -37,7 +37,7 @@ class UpdateStatsTest extends TestCase
         $this->assertEquals($feed->getLastModified()->getTimestamp() + intval(86400 + 0.1 * 86400), $nextUpdate->getTimestamp());
     }
 
-    public function testStalledFeed()
+    public function testSleepyFeed()
     {
         $feed = new Feed();
         $feed->setLastModified(new \DateTime('-10 days'));
@@ -52,7 +52,7 @@ class UpdateStatsTest extends TestCase
 
         $this->assertCount(1, $intervals);
 
-        $this->assertTrue($stats->isStalled(UpdateStats::DEFAULT_MARGIN_RATIO));
+        $this->assertTrue($stats->isSleepy(UpdateStats::DEFAULT_MARGIN_RATIO));
         $nextUpdate = $stats->computeNextUpdate();
 
         $this->assertEquals(time() + 86400, $nextUpdate->getTimestamp());

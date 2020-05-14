@@ -142,7 +142,7 @@ class Result
      */
     public function getNextUpdate(
         int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
-        int $stalledDelay = UpdateStats::DEFAULT_STALLED_DELAY,
+        int $stalledDelay = UpdateStats::DEFAULT_SLEEPY_DELAY,
         float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
     ): \DateTime {
         $updateStats = $this->getUpdateStats();

@@ -17,7 +17,7 @@ class UpdateStats
 {
     const DEFAULT_MIN_DELAY = 3600;
 
-    const DEFAULT_STALLED_DELAY = 86400;
+    const DEFAULT_SLEEPY_DELAY = 86400;
 
     const DEFAULT_MARGIN_RATIO = 0.1;
 
@@ -43,17 +43,17 @@ class UpdateStats
 
     /**
      * @param int $minDelay
-     * @param int $stalledDelay
+     * @param int $sleepyDelay
      * @param float $marginRatio
      * @return \DateTime
      */
     public function computeNextUpdate(
         int $minDelay = self::DEFAULT_MIN_DELAY,
-        int $stalledDelay = self::DEFAULT_STALLED_DELAY,
+        int $sleepyDelay = self::DEFAULT_SLEEPY_DELAY,
         float $marginRatio = self::DEFAULT_MARGIN_RATIO
     ): \DateTime {
-        if ($this->isStalled($marginRatio)) {
-            return (new \DateTime())->setTimestamp(time() + $stalledDelay);
+        if ($this->isSleepy($marginRatio)) {
+            return (new \DateTime())->setTimestamp(time() + $sleepyDelay);
         }
         $feedTimeStamp = $this->getFeedTimestamp();
         $now = time();
@@ -74,7 +74,7 @@ class UpdateStats
         return (new \DateTime())->setTimestamp($newTimestamp);
     }
 
-    public function isStalled(float $marginRatio): bool
+    public function isSleepy(float $marginRatio): bool
     {
         return time() > $this->addInterval($this->getFeedTimestamp(), $this->getMaxInterval(), $marginRatio);
     }
