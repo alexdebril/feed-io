@@ -58,7 +58,6 @@ class UpdateStats
         $feedTimeStamp = $this->getFeedTimestamp();
         $now = time();
         $intervals = [
-            $this->getMinInterval(),
             $this->getAverageInterval(),
             $this->getMedianInterval(),
         ];
