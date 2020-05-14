@@ -69,6 +69,7 @@ class ReadCommand extends Command
         $output->writeln("minimum interval between items: {$this->formatDateInterval($updateStats->getMinInterval())}");
         $output->writeln("median interval: {$this->formatDateInterval($updateStats->getMedianInterval())}");
         $output->writeln("average interval: {$this->formatDateInterval($updateStats->getAverageInterval())}");
+        $output->writeln("maximum interval: {$this->formatDateInterval($updateStats->getMaxInterval())}");
 
         return 0;
     }
