@@ -57,6 +57,19 @@ class DescriptionTest extends TestCase
         $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getDescription());
     }
 
+    public function testSetWithoutConversion()
+    {
+        $item = new Item();
+        $item->setLink('http://localhost/item.html');
+        $document = new \DOMDocument();
+        $element = $document->createElement('description', self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL);
+        $document->appendChild($element);
+
+        $this->object->setProperty($item, $element);
+        $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getDescription());
+    }
+
+
     public function testSetProperty()
     {
         $item = new Item();
