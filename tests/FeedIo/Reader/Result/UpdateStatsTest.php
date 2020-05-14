@@ -52,7 +52,10 @@ class UpdateStatsTest extends TestCase
 
         $this->assertCount(1, $intervals);
 
-        $this->assertTrue($stats->isSleepy(UpdateStats::DEFAULT_MARGIN_RATIO));
+        $this->assertTrue($stats->isSleepy(
+            UpdateStats::DEFAULT_DURATION_BEFORE_BEING_SLEEPY,
+            UpdateStats::DEFAULT_MARGIN_RATIO
+        ));
         $nextUpdate = $stats->computeNextUpdate();
 
         $this->assertEquals(time() + 86400, $nextUpdate->getTimestamp());

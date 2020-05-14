@@ -15,10 +15,24 @@ use FeedIo\FeedInterface;
 
 class UpdateStats
 {
+    /**
+     * default update delay applied when average or median intervals are outdated
+     */
     const DEFAULT_MIN_DELAY = 3600;
 
+    /**
+     * default update delay applied when the feed is considered sleepy
+     */
     const DEFAULT_SLEEPY_DELAY = 86400;
 
+    /**
+     * default duration after which the feed is considered sleepy
+     */
+    const DEFAULT_DURATION_BEFORE_BEING_SLEEPY = 7 * 86400;
+
+    /**
+     * default margin ratio applied to update time calculation
+     */
     const DEFAULT_MARGIN_RATIO = 0.1;
 
     /**
@@ -44,15 +58,17 @@ class UpdateStats
     /**
      * @param int $minDelay
      * @param int $sleepyDelay
+     * @param int $sleepyDuration
      * @param float $marginRatio
      * @return \DateTime
      */
     public function computeNextUpdate(
         int $minDelay = self::DEFAULT_MIN_DELAY,
         int $sleepyDelay = self::DEFAULT_SLEEPY_DELAY,
+        int $sleepyDuration = self::DEFAULT_DURATION_BEFORE_BEING_SLEEPY,
         float $marginRatio = self::DEFAULT_MARGIN_RATIO
     ): \DateTime {
-        if ($this->isSleepy($marginRatio)) {
+        if ($this->isSleepy($sleepyDuration, $marginRatio)) {
             return (new \DateTime())->setTimestamp(time() + $sleepyDelay);
         }
         $feedTimeStamp = $this->getFeedTimestamp();
@@ -73,11 +89,22 @@ class UpdateStats
         return (new \DateTime())->setTimestamp($newTimestamp);
     }
 
-    public function isSleepy(float $marginRatio): bool
+    /**
+     * @param int $sleepyDuration
+     * @param float $marginRatio
+     * @return bool
+     */
+    public function isSleepy(int $sleepyDuration, float $marginRatio): bool
     {
-        return time() > $this->addInterval($this->getFeedTimestamp(), $this->getMaxInterval(), $marginRatio);
+        return time() > $this->addInterval($this->getFeedTimestamp(), $sleepyDuration, $marginRatio);
     }
 
+    /**
+     * @param int $ts
+     * @param int $interval
+     * @param float $marginRatio
+     * @return int
+     */
     public function addInterval(int $ts, int $interval, float $marginRatio): int
     {
         return $ts + intval($interval + $marginRatio * $interval);

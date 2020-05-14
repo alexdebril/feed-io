@@ -136,17 +136,19 @@ class Result
 
     /**
      * @param int $minDelay
-     * @param int $stalledDelay
+     * @param int $sleepyDelay
+     * @param int $sleepyDuration
      * @param float $marginRatio
      * @return \DateTime
      */
     public function getNextUpdate(
         int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
-        int $stalledDelay = UpdateStats::DEFAULT_SLEEPY_DELAY,
+        int $sleepyDelay = UpdateStats::DEFAULT_SLEEPY_DELAY,
+        int $sleepyDuration = UpdateStats::DEFAULT_DURATION_BEFORE_BEING_SLEEPY,
         float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
     ): \DateTime {
         $updateStats = $this->getUpdateStats();
-        return $updateStats->computeNextUpdate($minDelay, $stalledDelay, $marginRatio);
+        return $updateStats->computeNextUpdate($minDelay, $sleepyDelay, $sleepyDuration, $marginRatio);
     }
 
     /**
