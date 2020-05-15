@@ -118,6 +118,21 @@ foreach( $result->getFeed() as $item ) {
 }
 
 ```
+In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
+
+```php
+$nextUpdate = $result->getNextUpdate();
+echo "computed next update: {$nextUpdate->format(\DATE_ATOM)}";
+
+// you may need to access the statistics
+$updateStats = $result->getUpdateStats();
+echo "average interval in seconds: {$updateStats->getAverageInterval()}";
+```
+
+feed-io calculates the next update time by first detecting if the feed was active in the last 7 days and if not we consider it as sleepy. The next update date for a sleepy feed is set to the next day at the same time. If the feed isn't sleepy we use the average interval and the median interval by adding those intervals to the feed's last modified date and compare the result to the current time. If the result is in the future, then it's returned as the next update time. If none of them are in the future, we considered the feed will be updated quite soon, so the next update time is one hour later from the moment of the calculation.
+
+Please note: the fixed delays for sleepy and closed to be updated feeds can be set through `Result::getNextUpdate()` arguments, see [Result](src/FeedIo/Reader/Result.php) for more details.
+
 
 ### Asynchronous reading of several feeds at once
 

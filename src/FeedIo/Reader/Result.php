@@ -12,6 +12,7 @@ namespace FeedIo\Reader;
 
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\FeedInterface;
+use FeedIo\Reader\Result\UpdateStats;
 
 /**
  * Result of the read() operation
@@ -47,6 +48,11 @@ class Result
      * @var \FeedIo\Adapter\ResponseInterface
      */
     protected $response;
+
+    /**
+     * @var \FeedIo\Reader\Result\UpdateStats
+     */
+    protected $updateStats;
 
     /**
      * @var Document
@@ -126,5 +132,34 @@ class Result
     public function getUrl() : string
     {
         return $this->url;
+    }
+
+    /**
+     * @param int $minDelay
+     * @param int $sleepyDelay
+     * @param int $sleepyDuration
+     * @param float $marginRatio
+     * @return \DateTime
+     */
+    public function getNextUpdate(
+        int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
+        int $sleepyDelay = UpdateStats::DEFAULT_SLEEPY_DELAY,
+        int $sleepyDuration = UpdateStats::DEFAULT_DURATION_BEFORE_BEING_SLEEPY,
+        float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
+    ): \DateTime {
+        $updateStats = $this->getUpdateStats();
+        return $updateStats->computeNextUpdate($minDelay, $sleepyDelay, $sleepyDuration, $marginRatio);
+    }
+
+    /**
+     * @return UpdateStats
+     */
+    public function getUpdateStats(): UpdateStats
+    {
+        if (is_null($this->updateStats)) {
+            $this->updateStats = new UpdateStats($this->getFeed());
+        }
+
+        return $this->updateStats;
     }
 }
