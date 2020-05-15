@@ -39,9 +39,9 @@ class Description extends RuleAbstract
      */
     protected function processString(string $input, NodeInterface $node): string
     {
-        return str_replace(
-            ['href="/', 'src="/'],
-            ["href=\"{$node->getHost()}/", "src=\"{$node->getHost()}/"],
+        return preg_replace(
+            ['/href="\/(\w+)/', '/src="\/(\w+)/'],
+            ['href="'. $node->getHost() . '/${1}', 'src="' . $node->getHost() . '/${1}'],
             htmlspecialchars_decode($input)
         );
     }
