@@ -64,7 +64,9 @@ class ResponseBuilderTest extends TestCase
         $response = $responseBuilder->createResponse('atom', $formatter, $feed);
 
         $headers = $response->getHeaders();
-        $this->assertEquals(['Content-Type', 'Cache-Control'], array_keys($headers));
+        $headerNames = array_keys($headers);
+        $this->assertEquals(['Content-Type', 'Cache-Control'], $headerNames);
+        $this->assertArrayNotHasKey('Last-Modified', $headerNames);
         $this->assertEquals('application/xhtml+xml', $headers['Content-Type'][0]);
 
         $body = $response->getBody()->getContents();
