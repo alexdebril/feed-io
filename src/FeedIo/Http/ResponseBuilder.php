@@ -47,10 +47,14 @@ class ResponseBuilder
     public function createResponse(string $format, FormatterInterface $formatter, FeedInterface $feed) : ResponseInterface
     {
         $headers = [
-            'Content-Type' => ($format === 'json') ? 'application/json':'application/xhtml+xml',
-            'Cache-Control' => ($this->public ? 'public':'private') . ", max-age={$this->maxAge}",
-            'Last-Modified' => $feed->getLastModified()->format(\DateTime::RSS),
+            'Content-Type'  => ($format === 'json') ? 'application/json' : 'application/xhtml+xml',
+            'Cache-Control' => ($this->public ? 'public' : 'private') . ", max-age={$this->maxAge}",
         ];
+
+        // Feed could have no items
+        if ($feed->getLastModified() instanceof \DateTime) {
+            $headers['Last-Modified'] = $feed->getLastModified()->format(\DateTime::RSS);
+        }
 
         return new Response(200, $headers, $formatter->toString($feed));
     }
