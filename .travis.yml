@@ -22,11 +22,11 @@ matrix:
 
 before_script:
   - composer config --global repo.packagist composer https://packagist.org
-  - composer remove --dev friendsofphp/php-cs-fixer
   - composer install
 
 script :
   - $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
+  - ./vendor/bin/php-cs-fixer fix --dry-run src/
   - ./bin/feedio check tests/feeds.txt
 
 after_script:
