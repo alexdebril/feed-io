@@ -123,7 +123,7 @@ class UpdateStats
      */
     public function getMinInterval(): int
     {
-        return min($this->intervals);
+        return count($this->intervals) ? min($this->intervals):0;
     }
 
     /**
@@ -131,7 +131,7 @@ class UpdateStats
      */
     public function getMaxInterval(): int
     {
-        return max($this->intervals);
+        return count($this->intervals) ? max($this->intervals):0;
     }
 
     /**
@@ -141,7 +141,7 @@ class UpdateStats
     {
         $total = array_sum($this->intervals);
 
-        return intval(floor($total / count($this->intervals)));
+        return count($this->intervals) ? intval(floor($total / count($this->intervals))):0;
     }
 
     /**
@@ -152,7 +152,7 @@ class UpdateStats
         sort($this->intervals);
         $num = floor(count($this->intervals) / 2);
 
-        return $this->intervals[$num];
+        return isset($this->intervals[$num]) ? $this->intervals[$num]:0;
     }
 
     private function computeIntervals(array $dates): array
