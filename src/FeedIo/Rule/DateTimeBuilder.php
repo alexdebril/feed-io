@@ -36,6 +36,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         'D M d Y H:i:s e',
         '*, m#d#Y - H:i',
         'D, d M Y H:i:s \U\T',
+        '*, d M* Y H:i:s e',
     ];
 
     /**

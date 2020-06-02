@@ -12,3 +12,4 @@ https://linuxfr.org/journaux.atom
 http://www.debian.org/News/news
 http://rss.slashdot.org/Slashdot/slashdot
 http://rss.kicker.de/news/2bundesliga
+https://walterfootball.com/rss.xml
