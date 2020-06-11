@@ -170,4 +170,33 @@ class ItemTest extends TestCase
     {
         $this->assertInstanceOf('\FeedIo\Feed\Item\AuthorInterface', $this->object->newAuthor());
     }
+
+    public function testToArray()
+    {
+        $author = new Author();
+        $author->setName('test');
+        $author->setEmail('test@example.org');
+        $author->setUri('http://example.org/');
+        $this->object->setAuthor($author);
+
+        $media = new Media();
+        $media->setType('audio/mp3');
+        $media->setTitle('Media');
+        $media->setUrl('http://example.org/media.mp3');
+        $this->object->addMedia($media);
+
+        $out = $this->object->toArray();
+
+        $this->assertEquals(['name'  => 'test',
+                             'email' => 'test@example.org',
+                             'uri'   => 'http://example.org/'], $out['author']);
+
+        $this->assertEquals([['type'  => 'audio/mp3',
+                              'url'   => 'http://example.org/media.mp3',
+                              'title'       => 'Media',
+                              'description' => null,
+                              'thumbnail'   => null,
+                              'length'      => null,
+                              'nodeName'    => null]], $out['medias']);
+    }
 }

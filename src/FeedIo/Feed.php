@@ -13,8 +13,9 @@ namespace FeedIo;
 use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\ArrayableInterface;
 
-class Feed extends Node implements FeedInterface, \JsonSerializable
+class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSerializable
 {
     /**
      * @var \ArrayIterator

@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Item;
 
-class Media implements MediaInterface
+use FeedIo\Feed\ArrayableInterface;
+
+class Media implements MediaInterface, ArrayableInterface
 {
     /**
      * @var string
@@ -190,5 +192,13 @@ class Media implements MediaInterface
         $this->thumbnail = $thumbnail;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray() : array
+    {
+        return get_object_vars($this);
     }
 }
