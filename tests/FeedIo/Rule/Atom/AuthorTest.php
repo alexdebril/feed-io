@@ -50,7 +50,8 @@ class AuthorTest extends TestCase
         $item = new Item();
 
         $ns = 'http://www.w3.org/2005/Atom';
-        $document = \DOMImplementation::createDocument($ns, 'feed');
+        $impl = new \DOMImplementation();
+        $document = $impl->createDocument($ns, 'feed');
 
         $author = $document->createElementNS($ns, 'author');
 
