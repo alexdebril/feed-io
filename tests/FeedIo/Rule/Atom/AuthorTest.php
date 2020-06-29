@@ -45,6 +45,26 @@ class AuthorTest extends TestCase
         $this->assertEquals('john@localhost', $item->getAuthor()->getEmail());
     }
 
+    public function testNamespacedSet()
+    {
+        $item = new Item();
+
+        $ns = 'http://www.w3.org/2005/Atom';
+        $impl = new \DOMImplementation();
+        $document = $impl->createDocument($ns, 'feed');
+
+        $author = $document->createElementNS($ns, 'author');
+
+        $author->appendChild($document->createElementNS($ns, 'name', 'John Doe'));
+        $author->appendChild($document->createElementNS($ns, 'uri', 'http://localhost'));
+        $author->appendChild($document->createElementNS($ns, 'email', 'john@localhost'));
+
+        $this->object->setProperty($item, $author);
+        $this->assertEquals('John Doe', $item->getAuthor()->getName());
+        $this->assertEquals('http://localhost', $item->getAuthor()->getUri());
+        $this->assertEquals('john@localhost', $item->getAuthor()->getEmail());
+    }
+
     public function testGetChildValue()
     {
         $document = new \DOMDocument();
