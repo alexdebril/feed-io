@@ -13,7 +13,7 @@ namespace FeedIo\Feed;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Feed\Node\CategoryInterface;
 
-class Node implements NodeInterface, ElementsAwareInterface
+class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 {
     use ElementsAwareTrait;
 
@@ -251,15 +251,24 @@ class Node implements NodeInterface, ElementsAwareInterface
     public function toArray() : array
     {
         $properties = get_object_vars($this);
+        $properties['elements'] = iterator_to_array($this->getElementsGenerator());
+        $properties['categories'] = iterator_to_array($this->getCategoriesGenerator());
 
         foreach ($properties as $name => $property) {
             if ($property instanceof \DateTime) {
                 $properties[$name] = $property->format(\DateTime::ATOM);
+            } elseif ($property instanceof \ArrayIterator) {
+                $properties[$name] = [];
+                foreach ($property as $entry) {
+                    if ($entry instanceof ArrayableInterface) {
+                        $entry = $entry->toArray();
+                    }
+                    $properties[$name] []= $entry;
+                }
+            } elseif ($property instanceof ArrayableInterface) {
+                $properties[$name] = $property->toArray();
             }
         }
-
-        $properties['elements'] = iterator_to_array($this->getElementsGenerator());
-        $properties['categories'] = iterator_to_array($this->getCategoriesGenerator());
 
         return $properties;
     }

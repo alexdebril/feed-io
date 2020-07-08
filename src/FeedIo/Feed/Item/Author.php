@@ -10,7 +10,9 @@
 
 namespace FeedIo\Feed\Item;
 
-class Author implements AuthorInterface
+use FeedIo\Feed\ArrayableInterface;
+
+class Author implements AuthorInterface, ArrayableInterface
 {
 
     /**
@@ -83,5 +85,13 @@ class Author implements AuthorInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray() : array
+    {
+        return get_object_vars($this);
     }
 }
