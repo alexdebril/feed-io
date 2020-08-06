@@ -51,6 +51,8 @@ class JsonFormatterTest extends TestCase
             $this->assertArrayHasKey('author', $item);
             $this->assertArrayHasKey('date_published', $item);
         }
+
+        $this->assertEquals(['name' => 'foo bar'], $json['items'][0]['author']);
     }
 
     public function testIsHtml()

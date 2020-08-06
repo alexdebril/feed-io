@@ -43,12 +43,12 @@ class JsonParserTest extends TestCase
         $this->assertNull($items[0]['author']);
         $this->assertNull($items[1]['author']);
 
-        $this->assertEquals('Manton Reece', $items[2]['author']->getName());
-        $this->assertNull($items[2]['author']->getUri());
-        $this->assertNull($items[2]['author']->getEmail());
+        $this->assertEquals('Manton Reece', $items[2]['author']['name']);
+        $this->assertNull($items[2]['author']['uri']);
+        $this->assertNull($items[2]['author']['email']);
 
-        $this->assertEquals('Manton Reece', $items[3]['author']->getName());
-        $this->assertEquals('http://manton.org', $items[3]['author']->getUri());
-        $this->assertEquals('manton@micro.blog', $items[3]['author']->getEmail());
+        $this->assertEquals('Manton Reece', $items[3]['author']['name']);
+        $this->assertEquals('http://manton.org', $items[3]['author']['uri']);
+        $this->assertEquals('manton@micro.blog', $items[3]['author']['email']);
     }
 }
