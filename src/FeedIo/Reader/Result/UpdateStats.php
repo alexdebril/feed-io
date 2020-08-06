@@ -173,14 +173,17 @@ class UpdateStats
     {
         $dates = [];
         foreach ($feed as $item) {
-            $dates[] = $this->getTimestamp($item);
+            $dates[] = $this->getTimestamp($item) ?? $this->getFeedTimestamp();
         }
         return $dates;
     }
 
     private function getTimestamp(ItemInterface $item): ? int
     {
-        return $item->getLastModified()->getTimestamp();
+        if (! is_null($item->getLastModified())) {
+            return $item->getLastModified()->getTimestamp();
+        }
+        return null;
     }
 
     private function getFeedTimestamp(): int
