@@ -142,5 +142,4 @@ class CheckCommand extends Command
         $this->ok = $output->getFormatter()->format('<ok>OK</ok>');
         $this->notOk = $output->getFormatter()->format("<ko>NOT OK</ko>");
     }
-
 }
