@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
 
-namespace FeedIo\Command;
+namespace FeedIo\Check;
+
+use DateTime;
 
 /**
  * Class Result
@@ -13,15 +15,11 @@ class Result
 
     const TEST_NORMAL_DATE_FLOW = 'normal_date_flow';
 
-    const TEST_JAN_1970 = 'jan_1970';
-
-    const TEST_1YEAR_OLD = '1year_old';
-
-    const TEST_EMPTY_FUTURE = 'empty_future';
-
     private $url;
 
     private $modifiedSince = 'null';
+
+    private $itemDates = [];
 
     private $itemCount = 0;
 
@@ -32,9 +30,6 @@ class Result
     private $tests = [
         self::TEST_UNIQUE_IDS => true,
         self::TEST_NORMAL_DATE_FLOW => true,
-        self::TEST_JAN_1970 => true,
-        self::TEST_1YEAR_OLD => true,
-        self::TEST_EMPTY_FUTURE => true,
     ];
 
     public function __construct(string $url)
@@ -69,10 +64,34 @@ class Result
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getItemCount(): int
+    {
+        return $this->itemCount;
+    }
+
     public function setItemCount(int $itemCount): self
     {
         $this->itemCount = $itemCount;
         return $this;
+    }
+
+    /**
+     * @return array<DateTime>
+     */
+    public function getItemDates(): array
+    {
+        return $this->itemDates;
+    }
+
+    /**
+     * @param array<DateTime> $itemDates
+     */
+    public function setItemDates(array $itemDates): void
+    {
+        $this->itemDates = $itemDates;
     }
 
     protected function markAllAsFailed(): void
@@ -98,9 +117,6 @@ class Result
             $this->itemCount,
             $this->tests[self::TEST_UNIQUE_IDS],
             $this->tests[self::TEST_NORMAL_DATE_FLOW],
-            $this->tests[self::TEST_JAN_1970],
-            $this->tests[self::TEST_1YEAR_OLD],
-            $this->tests[self::TEST_EMPTY_FUTURE],
         ];
     }
 }
