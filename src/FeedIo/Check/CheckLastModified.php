@@ -3,7 +3,6 @@
 
 namespace FeedIo\Check;
 
-
 use FeedIo\Feed;
 use FeedIo\FeedIo;
 
@@ -31,6 +30,4 @@ class CheckLastModified implements CheckInterface
         }
         return true;
     }
-
-
 }

@@ -3,7 +3,6 @@
 
 namespace FeedIo\Check;
 
-
 use FeedIo\Feed;
 use FeedIo\FeedIo;
 
@@ -69,5 +68,4 @@ class Processor
 
         return $result;
     }
-
 }

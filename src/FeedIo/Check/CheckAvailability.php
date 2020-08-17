@@ -3,7 +3,6 @@
 
 namespace FeedIo\Check;
 
-
 use FeedIo\Feed;
 use FeedIo\FeedIo;
 
@@ -30,5 +29,4 @@ class CheckAvailability implements CheckInterface
             return false;
         }
     }
-
 }

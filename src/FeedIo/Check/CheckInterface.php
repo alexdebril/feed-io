@@ -3,7 +3,6 @@
 
 namespace FeedIo\Check;
 
-
 use FeedIo\Feed;
 use FeedIo\FeedIo;
 
@@ -23,5 +22,4 @@ interface CheckInterface
      * @return bool
      */
     public function perform(FeedIo $feedIo, Feed $feed, Result $result): bool;
-
 }

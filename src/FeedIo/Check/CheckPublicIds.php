@@ -3,7 +3,6 @@
 
 namespace FeedIo\Check;
 
-
 use FeedIo\Feed;
 use FeedIo\FeedIo;
 
@@ -32,5 +31,4 @@ class CheckPublicIds implements CheckInterface
         $deduplicated = array_unique($publicIds);
         return count($deduplicated) == count($publicIds);
     }
-
 }
