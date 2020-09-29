@@ -23,7 +23,7 @@ class TitleTest extends TestCase
 
     const TITLE = 'my great article';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Title();
     }

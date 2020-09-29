@@ -31,7 +31,7 @@ class MediaRssTest extends TestCase
         return new Atom(new DateTimeBuilder());
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $standard = $this->getStandard();
         $this->object = new Parser($standard, new NullLogger());

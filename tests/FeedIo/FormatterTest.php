@@ -24,7 +24,7 @@ class FormatterTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->add(new Title());

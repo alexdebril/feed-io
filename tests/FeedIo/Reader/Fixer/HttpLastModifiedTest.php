@@ -28,7 +28,7 @@ class HttpLastModifiedTest extends TestCase
      */
     protected $resultMockFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new HttpLastModified();
         $this->object->setLogger(new NullLogger());

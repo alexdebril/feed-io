@@ -24,7 +24,7 @@ class LogoTest extends TestCase
 
     const LOGO = 'http://localhost/logo.jpeg';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Logo();
     }

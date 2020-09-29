@@ -30,7 +30,7 @@ class PublicIdTest extends TestCase
      */
     protected $resultMockFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new PublicId();
         $this->object->setLogger(new NullLogger());

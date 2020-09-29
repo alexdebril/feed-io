@@ -19,7 +19,7 @@ class FixerSetTest extends TestCase
      */
     protected $resultMockFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->resultMockFactory = new ResultMockFactory();
     }

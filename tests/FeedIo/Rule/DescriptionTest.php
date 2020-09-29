@@ -24,7 +24,7 @@ class DescriptionTest extends TestCase
 
     const HTML_DESCRIPTION_WITH_ABSOLUTE_URL = '<h1>a title</h1><div><p>A paragraph<a href="//localhost/link.html">a link</a></p><p>second paragraph</p></div>';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Description();
     }

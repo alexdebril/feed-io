@@ -20,7 +20,7 @@ class FeedIoTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $client = $this->getMockForAbstractClass('\FeedIo\Adapter\ClientInterface');
         $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
@@ -31,14 +31,6 @@ class FeedIoTest extends TestCase
         $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
         $this->object = new FeedIo($client, new \Psr\Log\NullLogger());
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     /**

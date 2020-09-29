@@ -27,7 +27,7 @@ class ParserTest extends TestCase
      */
     protected $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $date = new DateTimeBuilder();
         $date->addDateFormat(\DateTime::ATOM);

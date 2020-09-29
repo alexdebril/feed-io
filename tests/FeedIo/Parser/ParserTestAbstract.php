@@ -27,7 +27,7 @@ abstract class ParserTestAbstract extends TestCase
      */
     abstract public function getStandard();
 
-    public function setUp()
+    public function setUp(): void
     {
         $standard = $this->getStandard();
         $this->object = new Parser($standard, new NullLogger());

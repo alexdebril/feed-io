@@ -21,50 +21,50 @@ class CategoryTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Category();
     }
-    
+
     public function testSetProperty()
     {
         $item = new Item();
-        
+
         $element = new \DomElement('category', 'foo');
         $this->object->setProperty($item, $element);
-                
+
         $count = 0;
         foreach ($item->getCategories() as $category) {
             $count++;
             $this->assertEquals('foo', $category->getTerm());
             $this->assertEquals('foo', $category->getLabel());
         }
-        
+
         $this->assertEquals(1, $count);
     }
-    
+
     public function testCreateCategoryElement()
     {
         $category = new \FeedIo\Feed\Node\Category();
         $category->setLabel('foo');
         $category->setScheme('bar');
-        
+
         $element = $this->object->createCategoryElement(new \DomDocument(), $category);
-        
+
         $this->assertEquals('foo', $element->nodeValue);
         $this->assertEquals('bar', $element->getAttribute('domain'));
     }
-    
+
     public function testCreateCategoryElementUsingTerm()
     {
         $category = new \FeedIo\Feed\Node\Category();
         $category->setTerm('foo');
-        
+
         $element = $this->object->createCategoryElement(new \DomDocument(), $category);
-        
+
         $this->assertEquals('foo', $element->nodeValue);
     }
-    
+
     public function testCreateElement()
     {
         $item = new Item;
