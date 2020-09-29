@@ -19,7 +19,7 @@ class DateRuleAbstractTest extends TestCase
      */
     protected $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->object = $this->getDateRule();
     }
@@ -39,11 +39,9 @@ class DateRuleAbstractTest extends TestCase
         $this->assertEquals($dateTimeBuilder, $this->object->getDateTimeBuilder());
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testGetDateTimeBuilderFailure()
     {
+        $this->expectException('\UnexpectedValueException');
         $this->object->getDateTimeBuilder();
     }
 

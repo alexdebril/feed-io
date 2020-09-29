@@ -26,7 +26,7 @@ class ResultTest extends TestCase
 
     protected $resultDate;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->modifiedSince = new \DateTime('-10 days');
         $this->resultDate = new \DateTime();

@@ -26,7 +26,7 @@ class ReaderTest extends TestCase
      */
     protected $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->object = new Reader(
             $this->getClientMock(),
@@ -84,16 +84,6 @@ class ReaderTest extends TestCase
         return $parser;
     }
 
-    /**
-     * @covers \FeedIo\Reader::addParser
-     */
-    public function testAddParser()
-    {
-        $parser = $this->getParser();
-        $this->object->addParser($parser);
-        $this->assertAttributeEquals(array($parser), 'parsers', $this->object);
-    }
-
     public function testGetAccurateParser()
     {
         $this->object->addParser($this->getParser());
@@ -102,11 +92,9 @@ class ReaderTest extends TestCase
         $this->assertInstanceOf('\FeedIo\ParserAbstract', $parser);
     }
 
-    /**
-     * @expectedException \FeedIo\Reader\NoAccurateParserException
-     */
     public function testGetAccurateParserFailure()
     {
+        $this->expectException('\FeedIo\Reader\NoAccurateParserException');
         $this->object->getAccurateParser(new Document(''));
     }
 
@@ -146,13 +134,10 @@ class ReaderTest extends TestCase
         $this->assertEquals(new \DateTime('@0'), $result->getModifiedSince());
     }
 
-    /**
-     * @covers \FeedIo\Reader::read
-     * @expectedException \FeedIo\Reader\ReadErrorException
-     */
     public function testReadException()
     {
         $reader = new Reader($this->getFaultyClientMock(), new NullLogger());
+        $this->expectException('\FeedIo\Reader\ReadErrorException');
         $reader->read('fault', new Feed());
     }
 

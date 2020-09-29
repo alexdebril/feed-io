@@ -19,7 +19,7 @@ class ElementIteratorTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $array = new \ArrayIterator();
 

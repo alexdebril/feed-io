@@ -20,7 +20,7 @@ class FeedIoTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $client = $this->getMockForAbstractClass('\FeedIo\Adapter\ClientInterface');
         $response = $this->createMock('FeedIo\Adapter\ResponseInterface');
@@ -31,14 +31,6 @@ class FeedIoTest extends TestCase
         $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
         $this->object = new FeedIo($client, new \Psr\Log\NullLogger());
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     /**
@@ -72,17 +64,10 @@ class FeedIoTest extends TestCase
     public function testGetCommonStandards()
     {
         $standards = $this->object->getCommonStandards();
-        $this->assertInternalType('array', $standards);
+        $this->assertIsArray($standards);
         foreach ($standards as $standard) {
             $this->assertInstanceOf('\FeedIo\StandardAbstract', $standard);
         }
-    }
-
-    public function testAddDateFormats()
-    {
-        $this->object->addDateFormats(['YYYY/M/Y']);
-
-        $this->assertAttributeContains('YYYY/M/Y', 'dateFormats', $this->object->getDateTimeBuilder());
     }
 
     public function testFixerSet()
@@ -192,7 +177,7 @@ class FeedIoTest extends TestCase
         $feed->setLastModified(new \DateTime());
         $document = $this->object->format($feed, 'atom');
 
-        $this->assertInternalType('string', $document);
+        $this->assertIsString($document);
     }
 
     /**
@@ -203,7 +188,7 @@ class FeedIoTest extends TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toRss($feed);
-        $this->assertInternalType('string', $document);
+        $this->assertIsString($document);
     }
 
     /**
@@ -214,7 +199,7 @@ class FeedIoTest extends TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toAtom($feed);
-        $this->assertInternalType('string', $document);
+        $this->assertIsString($document);
     }
 
     /**
@@ -225,7 +210,7 @@ class FeedIoTest extends TestCase
         $feed = new Feed();
         $feed->setLastModified(new \DateTime());
         $document = $this->object->toJson($feed);
-        $this->assertInternalType('string', $document);
+        $this->assertIsString($document);
     }
 
     public function testPsrResponse()
@@ -255,11 +240,9 @@ class FeedIoTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom'));
     }
 
-    /**
-     * @expectedException \OutOfBoundsException
-     */
     public function testWrongStandard()
     {
+        $this->expectException('\OutOfBoundsException');
         $this->object->getStandard('fake');
     }
 }

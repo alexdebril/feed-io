@@ -21,7 +21,7 @@ class PublicIdTest extends TestCase
 
     const PUBLIC_ID = 'a12';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new PublicId();
     }

@@ -29,7 +29,7 @@ abstract class FormatterTestAbstract extends TestCase
      */
     abstract protected function newStandard();
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->standard = $this->newStandard();
     }

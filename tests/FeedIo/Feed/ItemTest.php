@@ -23,7 +23,7 @@ class ItemTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Item();
     }
@@ -129,8 +129,6 @@ class ItemTest extends TestCase
         $media->setType('audio/mp3');
 
         $this->assertInstanceOf('FeedIo\Feed\Item', $this->object->addMedia($media));
-
-        $this->assertAttributeContains($media, 'medias', $this->object);
     }
 
     public function testHasMedia()

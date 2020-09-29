@@ -21,7 +21,7 @@ class NodeTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Node();
     }
@@ -61,7 +61,7 @@ class NodeTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setLastModified($lastModified));
         $this->assertEquals($lastModified, $this->object->getLastModified());
     }
-    
+
     public function testNewCategory()
     {
         $this->assertInstanceOf('\FeedIo\Feed\Node\CategoryInterface', $this->object->newCategory());
@@ -95,24 +95,23 @@ class NodeTest extends TestCase
         $this->assertEquals('my title', $out['title']);
         $this->assertEquals('bar', $out['elements']['foo']);
         $this->assertEquals('test', $out['categories'][0]);
-        $this->assertInternalType('string', $out['lastModified']);
     }
 
     public function testAddCategory()
     {
         $category = new \FeedIo\Feed\Node\Category;
         $category->setTerm('term');
-        
+
         $this->object->addCategory($category);
         $categories = $this->object->getCategories();
-        
+
         $count = 0;
         foreach ($categories as $testedCategory) {
             $count++;
             $this->assertEquals('term', $testedCategory->getTerm());
             $this->assertEquals($category, $testedCategory);
         }
-        
+
         $this->assertEquals(1, $count);
     }
 }

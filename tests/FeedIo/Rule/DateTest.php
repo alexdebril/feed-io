@@ -26,7 +26,7 @@ class DateTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DateTimeBuilder();
     }
@@ -35,13 +35,6 @@ class DateTest extends TestCase
     {
         $timezone = $this->object->getTimezone();
         $this->assertEquals(date_default_timezone_get(), $timezone->getName());
-    }
-
-    public function testSetDateFormats()
-    {
-        $formats = array(\DateTime::ATOM);
-        $this->object->setDateFormats($formats);
-        $this->assertAttributeEquals($formats, 'dateFormats', $this->object);
     }
 
     public function testGuessDateFormat()
@@ -71,12 +64,10 @@ class DateTest extends TestCase
         $this->assertEquals(\DateTime::RFC1036, $this->object->getLastGuessedFormat());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testDontConvertDateFormat()
     {
         $this->object->addDateFormat(\DateTime::ATOM);
+        $this->expectException('\InvalidArgumentException');
         $this->object->convertToDateTime('foo');
     }
 

@@ -22,7 +22,7 @@ class StructureTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->add(new Title());
@@ -32,15 +32,6 @@ class StructureTest extends TestCase
     public function testGetNodeName()
     {
         $this->assertEquals('foo', $this->object->getNodeName());
-    }
-
-    public function testConstruct()
-    {
-        $ruleSet = new RuleSet();
-        $ruleSet->add(new Title());
-        $structure = new Structure('foo', $ruleSet);
-
-        $this->assertAttributeEquals($ruleSet, 'ruleSet', $structure);
     }
 
     public function testSet()

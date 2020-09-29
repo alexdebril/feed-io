@@ -24,7 +24,7 @@ class LinkTest extends TestCase
 
     const LINK = 'http://localhost';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Link();
     }

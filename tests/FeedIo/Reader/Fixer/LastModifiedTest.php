@@ -35,7 +35,7 @@ class LastModifiedTest extends TestCase
      */
     protected $resultMockFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->newest = new \DateTime('2014-01-01');
         $this->object = new LastModified();

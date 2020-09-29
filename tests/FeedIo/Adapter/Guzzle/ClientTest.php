@@ -26,7 +26,7 @@ XML;
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Client($this->getGuzzleClient());
     }
@@ -43,28 +43,17 @@ XML;
         $this->assertEquals(1994, $response->getLastModified()->format('Y'));
     }
 
-    public function testSetUserAgent()
-    {
-        $this->object->setUserAgent('the new user-agent');
-
-        $this->assertAttributeEquals('the new user-agent', 'userAgent', $this->object);
-    }
-
-    /**
-     * @expectedException \FeedIo\Adapter\NotFoundException
-     */
     public function testGetNotFound()
     {
         $client = new Client($this->getErroredClient(404));
+        $this->expectException('\FeedIo\Adapter\NotFoundException');
         $client->getResponse('http://test', new \DateTime());
     }
 
-    /**
-     * @expectedException \FeedIo\Adapter\ServerErrorException
-     */
     public function testGetServerError()
     {
         $client = new Client($this->getErroredClient(500));
+        $this->expectException('\FeedIo\Adapter\ServerErrorException');
         $client->getResponse('http://test', new \DateTime());
     }
 
