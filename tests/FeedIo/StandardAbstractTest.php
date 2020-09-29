@@ -38,12 +38,12 @@ class StandardAbstractTest extends TestCase
 
     public function testGetItemNodeName()
     {
-        $this->assertInternalType('string', $this->object->getItemNodeName());
+        $this->assertIsString($this->object->getItemNodeName());
     }
 
     public function testGetMandatoryFields()
     {
-        $this->assertInternalType('array', $this->object->getMandatoryFields());
+        $this->assertIsArray($this->object->getMandatoryFields());
     }
 
     public function testGetFeedRuleSet()

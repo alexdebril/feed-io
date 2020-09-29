@@ -45,7 +45,7 @@ class RssTest extends ParserTestAbstract
 
             $this->assertInstanceOf('\FeedIo\Feed\Item\MediaInterface', $media);
             $this->assertEquals('audio/mpeg', $media->getType());
-            $this->assertInternalType('string', $media->getUrl());
+            $this->assertIsString($media->getUrl());
         }
 
         $this->assertEquals(1, $count);

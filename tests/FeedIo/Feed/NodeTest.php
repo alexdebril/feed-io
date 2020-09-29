@@ -95,7 +95,6 @@ class NodeTest extends TestCase
         $this->assertEquals('my title', $out['title']);
         $this->assertEquals('bar', $out['elements']['foo']);
         $this->assertEquals('test', $out['categories'][0]);
-        $this->assertInternalType('string', $out['lastModified']);
     }
 
     public function testAddCategory()

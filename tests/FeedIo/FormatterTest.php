@@ -85,8 +85,8 @@ class FormatterTest extends TestCase
         $feed = new Feed();
         $feed->setTitle('foo-bar');
         $out = $this->object->toString($feed);
-        $this->assertInternalType('string', $out);
-        $this->assertContains('foo-bar', $out);
+        $this->assertIsString($out);
+        $this->assertStringContainsString('foo-bar', $out);
         $this->assertEquals('<?xml version="1.0"?>
 <channel><feed><title>foo-bar</title></feed></channel>
 ', $out);
@@ -102,6 +102,7 @@ class FormatterTest extends TestCase
     public function testSetItems()
     {
         $feed = new Feed();
+
         $feed->add(new Item());
         $feed->add(new Item());
 

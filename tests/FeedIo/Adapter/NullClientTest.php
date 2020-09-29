@@ -22,7 +22,6 @@ class NullClientTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Adapter\NullResponse', $response);
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
         $this->assertNull($response->getBody());
-        $this->assertInternalType('array', $response->getHeaders());
         $this->assertEquals([], $response->getHeader('foo'));
     }
 }

@@ -34,15 +34,6 @@ class StructureTest extends TestCase
         $this->assertEquals('foo', $this->object->getNodeName());
     }
 
-    public function testConstruct()
-    {
-        $ruleSet = new RuleSet();
-        $ruleSet->add(new Title());
-        $structure = new Structure('foo', $ruleSet);
-
-        $this->assertAttributeEquals($ruleSet, 'ruleSet', $structure);
-    }
-
     public function testSet()
     {
         $document = new \DomDocument();

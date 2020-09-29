@@ -25,14 +25,6 @@ class FeedTest extends TestCase
         $this->object = new Feed();
     }
 
-    /**
-     * @covers FeedIo\Feed::__construct
-     */
-    public function testConstruct()
-    {
-        $this->assertAttributeEquals(new \ArrayIterator(), 'items', $this->object);
-    }
-
     public function testNext()
     {
         $item1 = new Feed\Item();
@@ -83,7 +75,6 @@ class FeedTest extends TestCase
         $item = new Feed\Item();
         $this->object->add($item);
 
-        $this->assertAttributeEquals(new \ArrayIterator(array($item)), 'items', $this->object);
         $this->assertEquals($this->object->current(), $item);
     }
 
@@ -118,7 +109,7 @@ class FeedTest extends TestCase
 
         $json = json_encode($this->object);
 
-        $this->assertInternalType('string', $json);
+        $this->assertIsString($json);
         $this->assertInstanceOf('stdClass', json_decode($json));
     }
 

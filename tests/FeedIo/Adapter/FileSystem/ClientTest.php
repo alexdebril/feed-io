@@ -40,12 +40,10 @@ class ClientTest extends TestCase
         $this->assertInstanceOf('\DateTime', $response->getLastModified());
     }
 
-    /**
-     * @expectedException \FeedIo\Adapter\NotFoundException
-     */
     public function testGetNotFound()
     {
         $client = new Client();
+        $this->expectException('\FeedIo\Adapter\NotFoundException');
         $client->getResponse('/opt/nowhere.xml', new \DateTime());
     }
 }
