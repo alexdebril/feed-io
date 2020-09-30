@@ -52,12 +52,16 @@ class Explorer
         $stream = $this->client->getResponse($url, new \DateTime('@0'));
 
         $internalErrors = libxml_use_internal_errors(true);
-        $entityLoaderDisabled = libxml_disable_entity_loader(true);
+        if (LIBXML_VERSION < 20900) {
+            $entityLoaderDisabled = libxml_disable_entity_loader(true);
+        }
 
         $feeds = $this->extractFeeds($stream->getBody());
 
         libxml_use_internal_errors($internalErrors);
-        libxml_disable_entity_loader($entityLoaderDisabled);
+        if (LIBXML_VERSION < 20900) {
+            libxml_disable_entity_loader($entityLoaderDisabled);
+        }
 
         return $feeds;
     }
