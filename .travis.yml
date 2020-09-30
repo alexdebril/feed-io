@@ -18,7 +18,7 @@ matrix:
       env:
           - PHPUNIT_FLAGS="--stop-on-failure --verbose --coverage-text --coverage-clover=coverage.xml"
     - php: 'nightly'
-      env: 
+      env:
           - COMPOSER_FLAGS="--ignore-platform-reqs"
   allow_failures:
     - php: nightly
@@ -29,7 +29,7 @@ before_script:
 
 script :
   - $PHPUNIT_BIN -c $PHPUNIT_CONFIG $PHPUNIT_FLAGS
-  - ./vendor/bin/php-cs-fixer fix --dry-run src/
+  - if [ -f "coverage.xml" ]; then ./vendor/bin/php-cs-fixer fix --dry-run src/; fi
   - ./bin/feedio check tests/feeds.txt
 
 after_script:
