@@ -244,7 +244,26 @@ $jsonResponse = $feedIo->getPsrResponse($feed, 'json');
 
 ```
 
-## activate logging
+## Configure feed-io using the Factory
+
+We saw in the [reading section](#reading) that to get a simple `FeedIo` instance we can simply call the `Factory` statically and let it return a fresh `FeedIo` composed of the main dependencies it needs to work. The problem is that we may want to inject configuration to its underlying components, such as configuring Guzzle to ignore SSL errors.
+
+For that, we will inject the configuration through `Factory::create()` parameters, first one being for the logging system, and the second one for the HTTP Client (well, Guzzle).
+
+### Configure Guzzle through the Factory
+
+A few lines above, we talked about ignoring ssl errors, let's see how to configure Guzzle to do this:
+
+```php
+$feedIo = \FeedIo\Factory::create(
+        ['builder' => 'NullLogger'], // assuming you want feed-io to keep quiet
+        ['builder' => 'GuzzleClient', 'config' => ['verify' => false]]
+    )->getFeedIo();
+```
+
+It's important to specify the "builder", as it's the class that will be in charge of actually building the instance.
+
+### activate logging
 
 feed-io natively supports PSR-3 logging, you can activate it by choosing a 'builder' in the factory :
 
