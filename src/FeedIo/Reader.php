@@ -116,7 +116,7 @@ class Reader
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
             $this->logger->notice("no 'modifiedSince' parameter given, setting it to 01/01/1970");
-            $modifiedSince = new \DateTime('@0');
+            $modifiedSince = new \DateTime('1800-01-01');
         }
 
         try {
