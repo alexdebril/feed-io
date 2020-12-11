@@ -24,6 +24,16 @@ class Link extends BaseLink
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
         if ($element->hasAttribute('href')) {
+            $this->selectAlternateLink($node, $element);
+        }
+    }
+
+    protected function selectAlternateLink(NodeInterface $node, \DOMElement $element): void
+    {
+        if (
+        ($element->hasAttribute('rel') && $element->getAttribute('rel') == 'alternate')
+        || is_null($node->getLink())
+        ) {
             $node->setLink($element->getAttribute('href'));
         }
     }
