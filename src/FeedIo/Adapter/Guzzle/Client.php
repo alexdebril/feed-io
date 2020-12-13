@@ -139,7 +139,7 @@ class Client implements ClientInterface
             'headers' => [
                 'Accept-Encoding' => 'gzip, deflate',
                 'User-Agent' => $this->userAgent,
-                'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
+                //'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
             ]
         ];
     }
