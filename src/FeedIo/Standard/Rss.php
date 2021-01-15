@@ -14,6 +14,7 @@ use DOMDocument;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\Author;
 use FeedIo\Rule\Description;
+use FeedIo\Rule\Image;
 use FeedIo\Rule\Language;
 use FeedIo\Rule\Link;
 use FeedIo\Rule\PublicId;
@@ -108,6 +109,7 @@ class Rss extends XmlAbstract
             ->add(new Author(), ['dc:creator'])
             ->add(new PublicId())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
+            ->add(new Image())
             ->add(new Media(), ['media:thumbnail'])
             ->add(new Media(), ['media:group'])
             ->add(new Media(), ['media:content'])
