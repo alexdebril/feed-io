@@ -3,18 +3,14 @@
 
 namespace FeedIo\Rule;
 
-
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
+use FeedIo\RuleAbstract;
 
-class Image extends \FeedIo\RuleAbstract
+class Image extends RuleAbstract
 {
-
     const NODE_NAME = 'image';
 
-    /**
-     * @inheritDoc
-     */
     public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         if ($node instanceof ItemInterface) {
@@ -24,17 +20,11 @@ class Image extends \FeedIo\RuleAbstract
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function hasValue(NodeInterface $node): bool
     {
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node): void
     {
         throw new \RuntimeException("you should not try to write a <image> tag");
