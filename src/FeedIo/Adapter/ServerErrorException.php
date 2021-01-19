@@ -11,7 +11,24 @@
 namespace FeedIo\Adapter;
 
 use FeedIo\FeedIoException;
+use \Psr\Http\Message\ResponseInterface;
 
 class ServerErrorException extends FeedIoException
 {
+
+    /**
+     * @var ResponseInterface
+     */
+    protected $response;
+
+    public function getResponse(): ResponseInterface
+    {
+        return $this->response;
+    }
+
+    public function setResponse(ResponseInterface $response): void
+    {
+        $this->response = $response;
+    }
+
 }

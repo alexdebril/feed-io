@@ -39,6 +39,14 @@ class Response implements ResponseInterface
     }
 
     /**
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return (int) $this->psrResponse->getStatusCode();
+    }
+
+    /**
      * @return boolean
      */
     public function isModified() : bool

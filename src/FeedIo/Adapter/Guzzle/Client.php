@@ -78,7 +78,9 @@ class Client implements ClientInterface
                 case 404:
                     throw new NotFoundException($e->getMessage());
                 default:
-                    throw new ServerErrorException($e->getMessage());
+                    $serverErrorException = new ServerErrorException($e->getMessage());
+                    $serverErrorException->setResponse($e->getResponse());
+                    throw $serverErrorException;
             }
         }
     }
