@@ -71,14 +71,18 @@ class Client implements ClientInterface
     {
         try {
             $options = $this->getOptions($modifiedSince);
-
-            return new Response($this->guzzleClient->request('get', $url, $options));
+            $start = microtime(true);
+            $psrResponse = $this->guzzleClient->request('get', $url, $options);
+            $duration = intval(round(microtime(true) - $start, 3) * 1000);
+            return new Response($psrResponse, $duration);
         } catch (BadResponseException $e) {
             switch ((int) $e->getResponse()->getStatusCode()) {
                 case 404:
                     throw new NotFoundException($e->getMessage());
                 default:
-                    throw new ServerErrorException($e->getMessage());
+                    $serverErrorException = new ServerErrorException($e->getMessage());
+                    $serverErrorException->setResponse($e->getResponse());
+                    throw $serverErrorException;
             }
         }
     }
@@ -106,7 +110,7 @@ class Client implements ClientInterface
 
         $promise->then(function ($psrResponse) use ($request, $reader) {
             try {
-                $request->setResponse(new Response($psrResponse));
+                $request->setResponse(new Response($psrResponse, 0));
                 $reader->handle($request);
             } catch (\Exception $e) {
                 $reader->handleError($request, $e);

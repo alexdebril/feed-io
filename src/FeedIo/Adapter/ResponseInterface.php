@@ -23,6 +23,16 @@ interface ResponseInterface
     public function getBody() : ? string;
 
     /**
+     * @return int
+     */
+    public function getDuration(): int;
+
+    /**
+     * @return int
+     */
+    public function getStatusCode(): int;
+
+    /**
      * @return \DateTime
      */
     public function getLastModified() : ?\DateTime;

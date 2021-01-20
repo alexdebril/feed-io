@@ -31,11 +31,34 @@ class Response implements ResponseInterface
     protected $body;
 
     /**
-     * @param \Psr\Http\Message\ResponseInterface
+     * @var int
      */
-    public function __construct(PsrResponseInterface $psrResponse)
+    protected $duration;
+
+    /**
+     * @param PsrResponseInterface $psrResponse
+     * @param int $duration
+     */
+    public function __construct(PsrResponseInterface $psrResponse, int $duration)
     {
         $this->psrResponse = $psrResponse;
+        $this->duration = $duration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDuration(): int
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return (int) $this->psrResponse->getStatusCode();
     }
 
     /**
