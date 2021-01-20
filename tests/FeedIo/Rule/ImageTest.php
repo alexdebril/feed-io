@@ -3,13 +3,11 @@
 
 namespace FeedIo\Rule;
 
-
 use FeedIo\Feed\Item;
 use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
 {
-
     protected $object;
 
     protected function setUp(): void
@@ -37,5 +35,4 @@ class ImageTest extends TestCase
 
         $this->assertEquals(1, $count);
     }
-
 }

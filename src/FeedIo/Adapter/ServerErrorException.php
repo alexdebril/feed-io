@@ -30,5 +30,4 @@ class ServerErrorException extends FeedIoException
     {
         $this->response = $response;
     }
-
 }
