@@ -17,6 +17,22 @@ class NullResponse implements ResponseInterface
 {
 
     /**
+     * @return int
+     */
+    public function getDuration(): int
+    {
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return 0;
+    }
+
+    /**
      * @return string
      */
     public function getBody() : ? string

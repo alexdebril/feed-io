@@ -39,6 +39,22 @@ class Response implements ResponseInterface
     }
 
     /**
+     * @return int
+     */
+    public function getDuration(): int
+    {
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return 0;
+    }
+
+    /**
     * @return boolean
     */
     public function isModified() : bool
