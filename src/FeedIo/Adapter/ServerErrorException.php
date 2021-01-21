@@ -10,10 +10,9 @@
 
 namespace FeedIo\Adapter;
 
-use FeedIo\FeedIoException;
 use \Psr\Http\Message\ResponseInterface;
 
-class ServerErrorException extends FeedIoException
+class ServerErrorException extends HttpRequestException
 {
 
     /**
