@@ -69,24 +69,36 @@ class Client implements ClientInterface
      */
     public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
     {
+        $start = microtime(true);
         try {
             $options = $this->getOptions($modifiedSince);
-            $start = microtime(true);
             $psrResponse = $this->guzzleClient->request('get', $url, $options);
-            $duration = intval(round(microtime(true) - $start, 3) * 1000);
+            $duration = $this->getDuration($start);
             return new Response($psrResponse, $duration);
         } catch (BadResponseException $e) {
+            $duration = $this->getDuration($start);
             switch ((int) $e->getResponse()->getStatusCode()) {
                 case 404:
-                    throw new NotFoundException($e->getMessage());
+                    $notFoundException = new NotFoundException($e->getMessage());
+                    $notFoundException->setDuration($duration);
+                    throw $notFoundException;
                 default:
                     $serverErrorException = new ServerErrorException($e->getMessage());
                     $serverErrorException->setResponse($e->getResponse());
+                    $serverErrorException->setDuration($duration);
                     throw $serverErrorException;
             }
         }
     }
 
+    /**
+     * @param float $start
+     * @return int
+     */
+    protected function getDuration(float $start): int
+    {
+        return intval(round(microtime(true) - $start, 3) * 1000);
+    }
     /**
      * @param iterable $requests
      * @param ReaderInterface $reader
