@@ -1,0 +1,16 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: php-actions/composer@v5
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v2
+        with:
+          bootstrap: vendor/autoload.php
+          configuration: test/phpunit.xml
+          args: --coverage-text
