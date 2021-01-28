@@ -4,7 +4,6 @@ php:
   - 7.3
   - 7.4
   - 8.0
-  - nightly
 
 env:
   global:
@@ -18,11 +17,6 @@ matrix:
     - php: '7.4'
       env:
           - PHPUNIT_FLAGS="--stop-on-failure --verbose --coverage-text --coverage-clover=coverage.xml"
-    - php: 'nightly'
-      env:
-          - COMPOSER_FLAGS="--ignore-platform-reqs"
-  allow_failures:
-    - php: nightly
 
 before_script:
   - composer config --global repo.packagist composer https://packagist.org
