@@ -94,7 +94,7 @@ class Rss extends XmlAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet->add(new Language())
-            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME));
+            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate']);
 
         return $ruleSet;
     }
