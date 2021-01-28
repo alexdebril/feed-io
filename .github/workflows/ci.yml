@@ -14,5 +14,5 @@ jobs:
         with:
           php_extensions: xdebug
           bootstrap: vendor/autoload.php
-          configuration: test/phpunit.xml
+          configuration: phpunit.xml.dist
           args: --coverage-text
