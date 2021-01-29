@@ -169,6 +169,9 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
      */
     public function add(ItemInterface $item) : FeedInterface
     {
+        if ($item->getLastModified() > $this->getLastModified()) {
+            $this->setLastModified($item->getLastModified());
+        }
         $this->items->append($item);
 
         return $this;
