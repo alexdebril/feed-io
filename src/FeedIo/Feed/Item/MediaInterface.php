@@ -31,7 +31,7 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getNodeName() : string;
+    public function getNodeName() : ? string;
 
     /**
      * @param  string $nodeName

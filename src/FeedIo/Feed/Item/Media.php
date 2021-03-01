@@ -53,7 +53,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string
      */
-    public function getNodeName() : string
+    public function getNodeName() : ? string
     {
         return $this->nodeName;
     }
