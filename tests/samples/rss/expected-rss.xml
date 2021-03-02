@@ -5,17 +5,17 @@
         <link>http://localhost</link>
         <description>a sample feed</description>
         <category domain="http://localhost">sample</category>
-        <language>en</language>
         <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
+        <language>en</language>
         <itunes:title>sample title</itunes:title>
         <item>
             <title>item title</title>
             <link>http://localhost/item/1</link>
             <description>A great description</description>
             <category domain="http://localhost">sample</category>
+            <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
             <author>name@domain.tld</author>
             <guid>http://localhost/item/1</guid>
-            <pubDate>Mon, 01 Dec 2014 00:00:00 +0000</pubDate>
             <custom>a sample value</custom>
             <custom>another sample value</custom>
         </item>
