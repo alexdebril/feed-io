@@ -17,6 +17,7 @@ use FeedIo\Rule\Description;
 use FeedIo\Rule\Image;
 use FeedIo\Rule\Language;
 use FeedIo\Rule\Link;
+use FeedIo\Rule\ModifiedSince;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
@@ -93,8 +94,7 @@ class Rss extends XmlAbstract
     public function buildFeedRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
-        $ruleSet->add(new Language())
-            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate']);
+        $ruleSet->add(new Language());
 
         return $ruleSet;
     }
@@ -108,7 +108,6 @@ class Rss extends XmlAbstract
         $ruleSet
             ->add(new Author(), ['dc:creator'])
             ->add(new PublicId())
-            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['lastBuildDate', 'lastPubDate'])
             ->add(new Image())
             ->add(new Media(), ['media:thumbnail'])
             ->add(new Media(), ['media:group'])
@@ -128,7 +127,9 @@ class Rss extends XmlAbstract
             ->add(new Link())
             ->add(new Description())
             ->add(new Category())
-            ->add(new Logo());
+            ->add(new Logo())
+            ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['dc:date', 'lastBuildDate', 'lastPubDate'])
+        ;
 
         return $ruleSet;
     }
