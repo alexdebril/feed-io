@@ -15,4 +15,6 @@ jobs:
           php_extensions: xdebug
           bootstrap: tests/bootstrap.php
           configuration: phpunit.xml.dist
-          args: --coverage-text
+          args: --coverage-xml
+      - name: code coverage
+        uses: timkrase/phpunit-coverage-badge@v1
