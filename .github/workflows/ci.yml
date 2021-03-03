@@ -15,6 +15,6 @@ jobs:
           php_extensions: xdebug
           bootstrap: tests/bootstrap.php
           configuration: phpunit.xml.dist
-          args: --coverage-xml
+          args: --coverage-xml clover.xml
       - name: code coverage
         uses: timkrase/phpunit-coverage-badge@v1.2.0
