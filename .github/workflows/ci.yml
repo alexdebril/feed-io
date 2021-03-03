@@ -17,4 +17,4 @@ jobs:
           configuration: phpunit.xml.dist
           args: --coverage-xml
       - name: code coverage
-        uses: timkrase/phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.0
