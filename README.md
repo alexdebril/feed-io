@@ -196,6 +196,17 @@ $atomString = $feedIo->format($feed, 'atom');
 
 ```
 
+## Adding a StyleSheet
+
+```php
+
+$feed = new FeedIo\Feed;
+$feed->setTitle('...');
+$styleSheet = new StyleSheet('http://url-of-the-xsl-stylesheet.xsl');
+$feed->setStyleSheet($styleSheet);
+
+```
+
 ## building a feed including medias
 
 ```php
