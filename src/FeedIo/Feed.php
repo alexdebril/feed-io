@@ -14,6 +14,7 @@ use FeedIo\Feed\Node;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\ArrayableInterface;
+use FeedIo\Feed\StyleSheet;
 
 class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSerializable
 {
@@ -38,6 +39,11 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
     protected $logo;
 
     protected $ns;
+
+    /**
+     * @var StyleSheet
+     */
+    protected $styleSheet;
 
     public function __construct()
     {
@@ -104,8 +110,17 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this;
     }
 
+    public function setStyleSheet(StyleSheet $styleSheet): FeedInterface
+    {
+        $this->styleSheet = $styleSheet;
 
+        return $this;
+    }
 
+    public function getStyleSheet(): ?StyleSheet
+    {
+        return $this->styleSheet;
+    }
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
