@@ -11,6 +11,7 @@
 namespace FeedIo\Formatter;
 
 use FeedIo\Feed\NodeInterface;
+use FeedIo\Feed\StyleSheet;
 use FeedIo\FeedInterface;
 use FeedIo\Rule\OptionalField;
 use FeedIo\RuleSet;
@@ -141,6 +142,7 @@ class XmlFormatter implements FormatterInterface
         $this->setHeaders($document, $feed);
         $this->setItems($document, $feed);
         $this->setNS($document, $feed);
+        $this->setStyleSheet($document, $feed);
 
         return $document;
     }
@@ -166,6 +168,18 @@ class XmlFormatter implements FormatterInterface
     {
         foreach ($feed as $item) {
             $this->addItem($document, $item);
+        }
+
+        return $this;
+    }
+
+    public function setStyleSheet(\DOMDocument $document, FeedInterface $feed): XmlFormatter
+    {
+        $styleSheet = $feed->getStyleSheet();
+        if ($styleSheet instanceof StyleSheet) {
+            $attributes = sprintf('type="%s" href="%s"', $styleSheet->getType(), $styleSheet->getHref());
+            $xsl = $document->createProcessingInstruction('xml-stylesheet', $attributes);
+            $document->insertBefore($xsl, $document->firstChild);
         }
 
         return $this;

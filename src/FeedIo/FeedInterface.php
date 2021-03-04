@@ -12,8 +12,9 @@ namespace FeedIo;
 
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\StyleSheet;
 
-/**updat
+/**
  * Interface FeedInterface
  * Represents the top node of a news feed
  * @package FeedIo
@@ -69,4 +70,8 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
     public function newItem() : ItemInterface;
 
     public function addNS(string $ns, string $dtd) : FeedInterface;
+
+    public function setStyleSheet(StyleSheet $styleSheet): FeedInterface;
+
+    public function getStyleSheet(): ? StyleSheet;
 }

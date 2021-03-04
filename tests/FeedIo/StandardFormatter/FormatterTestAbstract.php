@@ -42,6 +42,7 @@ abstract class FormatterTestAbstract extends TestCase
         $category->setScheme('http://localhost');
         $date = new \DateTime('2014/12/01');
         $feed = new Feed();
+        $feed->setStyleSheet(new Feed\StyleSheet('http://localhost/style.xsl'));
         $feed->setTitle('sample title');
         $feed->set('itunes:title', 'sample title');
         $feed->setPublicId('http://localhost/item/1');
@@ -70,6 +71,17 @@ abstract class FormatterTestAbstract extends TestCase
         $document = $formatter->toDom($feed);
 
         $this->assertXmlStringEqualsXmlFile($this->getSampleFile(), $document->saveXML());
+    }
+
+    public function testStyleSheet()
+    {
+        $feed = new Feed();
+        $feed->setStyleSheet(new Feed\StyleSheet('http://localhost/style.xsl'));
+        $formatter = new XmlFormatter($this->standard);
+
+        $document = $formatter->toDom($feed);
+
+        $this->assertStringContainsString('type="text/xsl" href="http://localhost/style.xsl"', $document->saveXML());
     }
 
     protected function getSampleFile()
