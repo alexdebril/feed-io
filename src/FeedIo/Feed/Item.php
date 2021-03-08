@@ -28,6 +28,16 @@ class Item extends Node implements ItemInterface
      */
     protected $author;
 
+    /**
+     * @var string
+     */
+    protected $summary;
+
+    /**
+     * @var string
+     */
+    protected $content;
+
     public function __construct()
     {
         $this->medias = new \ArrayIterator();
@@ -68,6 +78,49 @@ class Item extends Node implements ItemInterface
     public function newMedia() : MediaInterface
     {
         return new Media();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param string|null $summary
+     * @return ItemInterface
+     */
+    public function setSummary(string $summary = null): ItemInterface
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Returns the 'content' for Atom and JSONFeed formats, 'description' for RSS
+     * @return string|null
+     */
+    public function getContent(): ?string
+    {
+        if (is_null($this->content)) {
+            return $this->getDescription();
+        }
+
+        return $this->content;
+    }
+
+    /**
+     * @param string|null $content
+     * @return ItemInterface
+     */
+    public function setContent(string $content = null): ItemInterface
+    {
+        $this->content = $content;
+
+        return $this;
     }
 
     /**

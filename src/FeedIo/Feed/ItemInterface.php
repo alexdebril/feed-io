@@ -61,6 +61,32 @@ interface ItemInterface extends NodeInterface
     public function newMedia() : MediaInterface;
 
     /**
+     * Returns the item's summary. Valid for JSONFeed and Atom formats only
+     *
+     * @return string|null
+     */
+    public function getSummary(): ?string;
+
+    /**
+     * @param string|null $summary
+     * @return ItemInterface
+     */
+    public function setSummary(string $summary = null): ItemInterface;
+
+    /**
+     * Returns the item's content. Valid for JSONFeed and Atom formats only
+     *
+     * @return string|null
+     */
+    public function getContent(): ?string;
+
+    /**
+     * @param string|null $content
+     * @return ItemInterface
+     */
+    public function setContent(string $content = null): ItemInterface;
+
+    /**
      * returns the author attribute
      *
      * @return AuthorInterface
@@ -74,6 +100,7 @@ interface ItemInterface extends NodeInterface
      * @return ItemInterface
      */
     public function setAuthor(AuthorInterface $author = null) : ItemInterface;
+
 
     /**
      * returns a new AuthorInterface
