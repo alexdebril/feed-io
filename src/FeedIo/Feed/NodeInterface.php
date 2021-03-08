@@ -10,6 +10,7 @@
 
 namespace FeedIo\Feed;
 
+use FeedIo\Feed\Item\AuthorInterface;
 use FeedIo\Feed\Node\CategoryInterface;
 
 /**
@@ -19,6 +20,29 @@ use FeedIo\Feed\Node\CategoryInterface;
  */
 interface NodeInterface
 {
+
+    /**
+     * returns the author attribute
+     *
+     * @return AuthorInterface
+     */
+    public function getAuthor() : ? AuthorInterface;
+
+    /**
+     * sets $author to the object's attributes
+     *
+     * @param  AuthorInterface $author
+     * @return NodeInterface
+     */
+    public function setAuthor(AuthorInterface $author = null) : NodeInterface;
+
+    /**
+     * returns a new AuthorInterface
+     *
+     * @return AuthorInterface
+     */
+    public function newAuthor() : AuthorInterface;
+
     /**
      * Returns node's title
      *

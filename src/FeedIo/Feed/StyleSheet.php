@@ -50,5 +50,4 @@ class StyleSheet
     {
         return $this->type;
     }
-
 }
