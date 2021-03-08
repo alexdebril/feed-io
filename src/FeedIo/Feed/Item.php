@@ -23,11 +23,6 @@ class Item extends Node implements ItemInterface
      */
     protected $medias;
 
-    /**
-     * @var AuthorInterface
-     */
-    protected $author;
-
     public function __construct()
     {
         $this->medias = new \ArrayIterator();
@@ -68,32 +63,5 @@ class Item extends Node implements ItemInterface
     public function newMedia() : MediaInterface
     {
         return new Media();
-    }
-
-    /**
-     * @return AuthorInterface
-     */
-    public function getAuthor() : ? AuthorInterface
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param  AuthorInterface $author
-     * @return ItemInterface
-     */
-    public function setAuthor(AuthorInterface $author = null) : ItemInterface
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * @return AuthorInterface
-     */
-    public function newAuthor() : AuthorInterface
-    {
-        return new Author();
     }
 }

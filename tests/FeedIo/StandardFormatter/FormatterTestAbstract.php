@@ -36,12 +36,16 @@ abstract class FormatterTestAbstract extends TestCase
 
     public function testFormat()
     {
+        $author = new Item\Author();
+        $author->setEmail('name@domain.tld');
+        $author->setName('author name');
         $category = new Category();
         $category->setTerm('sample');
         $category->setLabel('sample');
         $category->setScheme('http://localhost');
         $date = new \DateTime('2014/12/01');
         $feed = new Feed();
+        $feed->setAuthor($author);
         $feed->setStyleSheet(new Feed\StyleSheet('http://localhost/style.xsl'));
         $feed->setTitle('sample title');
         $feed->set('itunes:title', 'sample title');
@@ -53,13 +57,14 @@ abstract class FormatterTestAbstract extends TestCase
         $feed->addCategory($category);
         $feed->addNS('itunes', 'http://www.itunes.com/dtds/podcast-1.0.dtd');
 
+
         $item = new Item();
         $item->setPublicId('http://localhost/item/1');
         $item->setLastModified($date);
         $item->setTitle('item title');
         $item->setDescription('A great description');
         $item->setLink('http://localhost/item/1');
-        $item->set('author', 'name@domain.tld');
+        $item->setAuthor($author);
         $item->addCategory($category);
         $item->set('custom', 'a sample value');
         $item->set('custom', 'another sample value');

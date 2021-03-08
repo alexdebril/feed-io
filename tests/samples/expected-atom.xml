@@ -3,6 +3,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
     <title>sample title</title>
     <category  label="sample" scheme="http://localhost" term="sample" />
+    <author>
+        <name>author name</name>
+        <email>name@domain.tld</email>
+    </author>
     <link href="http://localhost"/>
     <id>http://localhost/item/1</id>
     <lang>en</lang>
@@ -12,10 +16,13 @@
     <entry>
         <title>item title</title>
         <category  label="sample" scheme="http://localhost" term="sample" />
+        <author>
+            <name>author name</name>
+            <email>name@domain.tld</email>
+        </author>
         <link href="http://localhost/item/1"/>
         <id>http://localhost/item/1</id>
         <updated>2014-12-01T00:00:00+00:00</updated>
-        <author>name@domain.tld</author>
         <content>A great description</content>
         <custom>a sample value</custom>
         <custom>another sample value</custom>

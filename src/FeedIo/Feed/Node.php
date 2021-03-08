@@ -10,12 +10,19 @@
 
 namespace FeedIo\Feed;
 
+use FeedIo\Feed\Item\Author;
+use FeedIo\Feed\Item\AuthorInterface;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Feed\Node\CategoryInterface;
 
 class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 {
     use ElementsAwareTrait;
+
+    /**
+     * @var AuthorInterface
+     */
+    protected $author;
 
     /**
      * @var \ArrayIterator
@@ -73,6 +80,33 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         $this->addElement($element);
 
         return $this;
+    }
+
+    /**
+     * @return AuthorInterface
+     */
+    public function getAuthor() : ? AuthorInterface
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param  AuthorInterface $author
+     * @return ItemInterface
+     */
+    public function setAuthor(AuthorInterface $author = null) : NodeInterface
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return AuthorInterface
+     */
+    public function newAuthor() : AuthorInterface
+    {
+        return new Author();
     }
 
     /**
