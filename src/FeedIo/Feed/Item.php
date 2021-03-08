@@ -105,11 +105,7 @@ class Item extends Node implements ItemInterface
      */
     public function getContent(): ?string
     {
-        if (is_null($this->content)) {
-            return $this->getDescription();
-        }
-
-        return $this->content;
+        return $this->content ?? $this->getDescription();
     }
 
     /**

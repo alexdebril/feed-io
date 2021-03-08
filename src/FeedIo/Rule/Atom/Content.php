@@ -16,7 +16,7 @@ class Content extends TextAbstract
     public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($node instanceof ItemInterface) {
-            $node->setContent(
+            $node->setDescription(
                 $this->getProcessedContent($element, $node)
             );
         }

@@ -7,6 +7,7 @@
     <id>http://localhost/item/1</id>
     <lang>en</lang>
     <updated>2014-12-01T00:00:00+00:00</updated>
+    <description>a sample feed</description>
     <itunes:title>sample title</itunes:title>
 
     <entry>

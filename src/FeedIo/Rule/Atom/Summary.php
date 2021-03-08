@@ -3,7 +3,6 @@
 
 namespace FeedIo\Rule\Atom;
 
-
 use DOMDocument;
 use DOMElement;
 use FeedIo\Feed\ItemInterface;

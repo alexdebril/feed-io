@@ -13,8 +13,10 @@ namespace FeedIo\Standard;
 use DOMDocument;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\Atom\Author;
+use FeedIo\Rule\Atom\Content;
 use FeedIo\Rule\Atom\LinkNode;
 use FeedIo\Rule\Atom\Logo;
+use FeedIo\Rule\Atom\Summary;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Language;
 use FeedIo\Rule\Media;
@@ -77,10 +79,8 @@ class Atom extends XmlAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
-            ->add(new LinkNode())
-            ->add(new PublicId('id'))
-            ->add(new Language('lang'))
-            ->add($this->getModifiedSinceRule('updated'), ['published'])
+            ->add(new Logo())
+            ->add(new Description())
         ;
 
         return $ruleSet;
@@ -92,10 +92,11 @@ class Atom extends XmlAbstract
      */
     public function buildItemRuleSet() : RuleSet
     {
-        $ruleSet = $this->buildFeedRuleSet();
+        $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
             ->add(new Author())
-            ->add(new Description('content'), ['summary'])
+            ->add(new Content())
+            ->add(new Summary())
             ->add(new Media(), ['media:group'])
             ->add(new Media(), ['media:content'])
         ;
@@ -109,8 +110,12 @@ class Atom extends XmlAbstract
     protected function buildBaseRuleSet() : RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
-        $ruleSet->add(new Category())
-            ->add(new Logo());
+        $ruleSet
+            ->add(new Category())
+            ->add(new LinkNode())
+            ->add(new PublicId('id'))
+            ->add(new Language('lang'))
+            ->add($this->getModifiedSinceRule('updated'), ['published']);
 
         return $ruleSet;
     }

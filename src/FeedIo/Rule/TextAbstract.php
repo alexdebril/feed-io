@@ -3,7 +3,6 @@
 
 namespace FeedIo\Rule;
 
-
 use DOMDocument;
 use DOMElement;
 use FeedIo\Feed\NodeInterface;
