@@ -78,7 +78,7 @@ class JsonFormatter implements FormatterInterface
      */
     public function itemToBaseArray(Feed\ItemInterface $item) : array
     {
-        $offset = $this->isHtml($item->getDescription()) ? 'content_html':'content_txt';
+        $offset = $this->isHtml($item->getDescription()) ? 'content_html':'content_text';
         return [
             'id' => $item->getPublicId(),
             'title' => $item->getTitle(),
@@ -91,9 +91,9 @@ class JsonFormatter implements FormatterInterface
      * @param $string
      * @return bool
      */
-    public function isHtml(string $string) : bool
+    public function isHtml(?string $string) : bool
     {
-        return $string !== strip_tags($string);
+        return !! $string && $string !== strip_tags($string);
     }
 
     public function handleAuthor(Feed\NodeInterface $node, array &$array) : array
