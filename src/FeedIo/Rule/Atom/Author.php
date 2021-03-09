@@ -10,11 +10,10 @@
 
 namespace FeedIo\Rule\Atom;
 
-use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
-use FeedIo\Rule\Author as BaseAuthor;
+use FeedIo\RuleAbstract;
 
-class Author extends BaseAuthor
+class Author extends RuleAbstract
 {
     const NODE_NAME = 'author';
 
@@ -25,13 +24,22 @@ class Author extends BaseAuthor
      */
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
-        if ($node instanceof ItemInterface) {
-            $author = $node->newAuthor();
-            $author->setName($this->getChildValue($element, 'name'));
-            $author->setUri($this->getChildValue($element, 'uri'));
-            $author->setEmail($this->getChildValue($element, 'email'));
-            $node->setAuthor($author);
-        }
+        $author = $node->newAuthor();
+        $author->setName($this->getChildValue($element, 'name'));
+        $author->setUri($this->getChildValue($element, 'uri'));
+        $author->setEmail($this->getChildValue($element, 'email'));
+        $node->setAuthor($author);
+    }
+
+    /**
+     * Tells if the node contains the expected value
+     *
+     * @param NodeInterface $node
+     * @return bool
+     */
+    protected function hasValue(NodeInterface $node) : bool
+    {
+        return !! $node->getAuthor();
     }
 
     /**
@@ -39,13 +47,11 @@ class Author extends BaseAuthor
      */
     protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
     {
-        if ($node instanceof ItemInterface) {
-            $element = $document->createElement(static::NODE_NAME);
-            $this->appendNonEmptyChild($document, $element, 'name', $node->getAuthor()->getName());
-            $this->appendNonEmptyChild($document, $element, 'uri', $node->getAuthor()->getUri());
-            $this->appendNonEmptyChild($document, $element, 'email', $node->getAuthor()->getEmail());
+        $element = $document->createElement(static::NODE_NAME);
+        $this->appendNonEmptyChild($document, $element, 'name', $node->getAuthor()->getName());
+        $this->appendNonEmptyChild($document, $element, 'uri', $node->getAuthor()->getUri());
+        $this->appendNonEmptyChild($document, $element, 'email', $node->getAuthor()->getEmail());
 
-            $rootElement->appendChild($element);
-        }
+        $rootElement->appendChild($element);
     }
 }

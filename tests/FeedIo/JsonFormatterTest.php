@@ -30,6 +30,9 @@ class JsonFormatterTest extends TestCase
         $feed = new Feed();
         $feed->setTitle('feed title');
         $feed->setLogo(self::LOGO);
+        $author = new Item\Author();
+        $author->setName('alex');
+        $feed->setAuthor($author);
 
         foreach ($items as $item) {
             $feed->add($item);
@@ -41,6 +44,7 @@ class JsonFormatterTest extends TestCase
         $this->assertJson($string);
         $json = json_decode($string, true);
 
+        $this->assertEquals('alex', $json['author']['name']);
         $this->assertEquals('feed title', $json['title']);
         $this->assertEquals('http://localhost/logo.jpeg', $json['icon']);
         $this->assertCount(2, $json['items']);

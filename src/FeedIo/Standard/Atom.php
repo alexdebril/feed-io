@@ -94,7 +94,6 @@ class Atom extends XmlAbstract
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
-            ->add(new Author())
             ->add(new Content())
             ->add(new Summary())
             ->add(new Media(), ['media:group'])
@@ -112,6 +111,7 @@ class Atom extends XmlAbstract
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet
             ->add(new Category())
+            ->add(new Author())
             ->add(new LinkNode())
             ->add(new PublicId('id'))
             ->add(new Language('lang'))
