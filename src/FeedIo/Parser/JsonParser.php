@@ -30,8 +30,8 @@ class JsonParser extends ParserAbstract
         $data = $document->getJsonAsArray();
         $feed->setTitle($this->readOffset($data, 'title'));
         $feed->setDescription($this->readOffset($data, 'description'));
-        $feed->setLink($this->readOffset($data, 'feed_url'));
-        $feed->setUrl($this->readOffset($data, 'home_page_url'));
+        $feed->setLink($this->readOffset($data, 'home_page_url'));
+        $feed->setUrl($this->readOffset($data, 'feed_url'));
         $feed->setLogo($this->readOffset($data, 'icon'));
         $this->readAuthor($feed, $data);
 
