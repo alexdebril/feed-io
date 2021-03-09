@@ -108,6 +108,8 @@ class Item extends Node implements ItemInterface
     public function setContent(string $content = null): ItemInterface
     {
         $this->content = $content;
+        // Will be removed in 5.0
+        $this->setDescription($content);
 
         return $this;
     }
