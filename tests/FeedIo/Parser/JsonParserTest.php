@@ -33,6 +33,7 @@ class JsonParserTest extends TestCase
 
         $this->assertEquals('JSON Feed', $feed->getTitle());
         $this->assertEquals('https://jsonfeed.org/graphics/icon.png', $feed->getLogo());
+        $this->assertEquals('Brent Simmons and Manton Reece', $feed->getAuthor()->getName());
 
         $items = $feed->toArray()['items'];
 

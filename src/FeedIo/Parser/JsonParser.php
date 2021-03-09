@@ -12,6 +12,7 @@ namespace FeedIo\Parser;
 
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\Author;
+use FeedIo\Feed\NodeInterface;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
 use FeedIo\Reader\Document;
@@ -32,6 +33,7 @@ class JsonParser extends ParserAbstract
         $feed->setLink($this->readOffset($data, 'feed_url'));
         $feed->setUrl($this->readOffset($data, 'home_page_url'));
         $feed->setLogo($this->readOffset($data, 'icon'));
+        $this->readAuthor($feed, $data);
 
         if (array_key_exists('items', $data)) {
             $this->parseItems($data['items'], $feed);
@@ -74,15 +76,7 @@ class JsonParser extends ParserAbstract
             $contentHtml = $this->readOffset($dataItem, 'content_html');
             $item->setDescription($this->readOffset($dataItem, 'content_text', $contentHtml));
             $item->setLink($this->readOffset($dataItem, 'url'));
-
-            if (array_key_exists('author', $dataItem)) {
-                $authorItem = $dataItem['author'];
-                $author = new Author();
-                $author->setName($this->readOffset($authorItem, 'name'));
-                $author->setUri($this->readOffset($authorItem, 'url'));
-                $author->setEmail($this->readOffset($authorItem, 'email'));
-                $item->setAuthor($author);
-            }
+            $this->readAuthor($item, $dataItem);
             $feed->add($item);
         }
 
@@ -102,5 +96,17 @@ class JsonParser extends ParserAbstract
         }
 
         return $default;
+    }
+
+    protected function readAuthor(NodeInterface $node, array $data): void
+    {
+        if (array_key_exists('author', $data)) {
+            $authorItem = $data['author'];
+            $author = new Author();
+            $author->setName($this->readOffset($authorItem, 'name'));
+            $author->setUri($this->readOffset($authorItem, 'url'));
+            $author->setEmail($this->readOffset($authorItem, 'email'));
+            $node->setAuthor($author);
+        }
     }
 }
