@@ -32,7 +32,7 @@ class JsonFormatter implements FormatterInterface
      */
     public function toArray(FeedInterface $feed) : array
     {
-        return array_filter([
+        $out =  array_filter([
             'version' => 'https://jsonfeed.org/version/1',
             'title' => $feed->getTitle(),
             'description' => $feed->getDescription(),
@@ -42,6 +42,9 @@ class JsonFormatter implements FormatterInterface
             'icon' => $feed->getLogo(),
             'items' => iterator_to_array($this->itemsToArray($feed)),
         ]);
+        $this->handleAuthor($feed, $out);
+
+        return $out;
     }
 
     /**
@@ -93,17 +96,12 @@ class JsonFormatter implements FormatterInterface
         return $string !== strip_tags($string);
     }
 
-    /**
-     * @param Feed\ItemInterface $item
-     * @param array $array
-     * @return array
-     */
-    public function handleAuthor(Feed\ItemInterface $item, array &$array) : array
+    public function handleAuthor(Feed\NodeInterface $node, array &$array) : array
     {
-        if (! is_null($item->getAuthor())) {
+        if (! is_null($node->getAuthor())) {
             $array['author'] = array_filter([
-                'name' => $item->getAuthor()->getName(),
-                'url' => $item->getAuthor()->getUri(),
+                'name' => $node->getAuthor()->getName(),
+                'url' => $node->getAuthor()->getUri(),
             ]);
         }
 
