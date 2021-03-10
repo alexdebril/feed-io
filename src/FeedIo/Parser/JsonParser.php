@@ -12,6 +12,7 @@ namespace FeedIo\Parser;
 
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\Author;
+use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
@@ -77,6 +78,7 @@ class JsonParser extends ParserAbstract
             $item->setDescription($this->readOffset($dataItem, 'content_text', $contentHtml));
             $item->setLink($this->readOffset($dataItem, 'url'));
             $this->readAuthor($item, $dataItem);
+            $this->readMedias($item, $dataItem);
             $feed->add($item);
         }
 
@@ -96,6 +98,21 @@ class JsonParser extends ParserAbstract
         }
 
         return $default;
+    }
+
+    protected function readMedias(ItemInterface $item, array $data): void
+    {
+        if (array_key_exists('attachments', $data)) {
+            foreach ($data['attachments'] as $attachment) {
+                $media = new Item\Media();
+                $media
+                    ->setType($attachment['mime_type'])
+                    ->setUrl($attachment['url'])
+                    ->setLength($attachment['size_in_bytes'] ?? null)
+                    ->setTitle($attachment['title'] ?? null);
+                $item->addMedia($media);
+            }
+        }
     }
 
     protected function readAuthor(NodeInterface $node, array $data): void

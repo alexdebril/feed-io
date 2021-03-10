@@ -35,6 +35,10 @@ function getItem($title, $description)
     $item = new \FeedIo\Feed\Item();
     $item->setTitle($title);
     $item->setDescription($description);
+    $media = new \FeedIo\Feed\Item\Media();
+    $media->setUrl('http://localhost/some-resource.jpg');
+    $media->setType('image/jpeg');
+    $item->addMedia($media);
 
     return $item;
 }
