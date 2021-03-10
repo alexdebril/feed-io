@@ -44,6 +44,10 @@ class JsonParserTest extends TestCase
         $this->assertNull($items[0]['author']);
         $this->assertNull($items[1]['author']);
 
+        $this->assertCount(1, $items[0]['medias']);
+        $this->assertEquals('http://localhost/some-resource.jpg', $items[0]['medias'][0]['url']);
+        $this->assertEquals('image/jpg', $items[0]['medias'][0]['type']);
+
         $this->assertEquals('Manton Reece', $items[2]['author']['name']);
         $this->assertNull($items[2]['author']['uri']);
         $this->assertNull($items[2]['author']['email']);

@@ -116,9 +116,18 @@ class JsonFormatter implements FormatterInterface
     public function handleMedia(Feed\ItemInterface $item, array &$array) : array
     {
         if ($item->hasMedia()) {
-            $array['image'] = $item->getMedias()->current()->getUrl();
+            $attachments = [];
+            /** @var Feed\Item\MediaInterface $media */
+            foreach ($item->getMedias() as $media) {
+                $attachments[] = array_filter([
+                    'url' => $media->getUrl(),
+                    'mime_type' => $media->getType(),
+                    'title' => $media->getTitle(),
+                    'size_in_bytes' => $media->getLength(),
+                ]);
+            }
+            $array['attachments'] = $attachments;
         }
-
         return $array;
     }
 
