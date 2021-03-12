@@ -99,10 +99,10 @@ class JsonFormatter implements FormatterInterface
     public function handleAuthor(Feed\NodeInterface $node, array &$array) : array
     {
         if (! is_null($node->getAuthor())) {
-            $array['author'] = array_filter([
+            $array['authors'] = [array_filter([
                 'name' => $node->getAuthor()->getName(),
                 'url' => $node->getAuthor()->getUri(),
-            ]);
+            ])];
         }
 
         return $array;

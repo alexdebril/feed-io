@@ -44,7 +44,7 @@ class JsonFormatterTest extends TestCase
         $this->assertJson($string);
         $json = json_decode($string, true);
 
-        $this->assertEquals('alex', $json['author']['name']);
+        $this->assertEquals('alex', $json['authors'][0]['name']);
         $this->assertEquals('feed title', $json['title']);
         $this->assertEquals('http://localhost/logo.jpeg', $json['icon']);
         $this->assertCount(2, $json['items']);
@@ -52,11 +52,11 @@ class JsonFormatterTest extends TestCase
         foreach ($json['items'] as $item) {
             $this->assertArrayHasKey('title', $item);
             $this->assertArrayHasKey('url', $item);
-            $this->assertArrayHasKey('author', $item);
+            $this->assertArrayHasKey('authors', $item);
             $this->assertArrayHasKey('date_published', $item);
         }
 
-        $this->assertEquals(['name' => 'foo bar'], $json['items'][0]['author']);
+        $this->assertEquals(['name' => 'foo bar'], $json['items'][0]['authors'][0]);
     }
 
     public function testIsHtml()
