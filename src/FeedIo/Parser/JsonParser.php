@@ -118,12 +118,22 @@ class JsonParser extends ParserAbstract
     protected function readAuthor(NodeInterface $node, array $data): void
     {
         if (array_key_exists('author', $data)) {
-            $authorItem = $data['author'];
-            $author = new Author();
-            $author->setName($this->readOffset($authorItem, 'name'));
-            $author->setUri($this->readOffset($authorItem, 'url'));
-            $author->setEmail($this->readOffset($authorItem, 'email'));
+            $author = $this->extractAuthor($data['author']);
             $node->setAuthor($author);
         }
+        if (array_key_exists('authors', $data) && is_array($data['authors'])) {
+            $author = $this->extractAuthor(reset($data['authors']));
+            $node->setAuthor($author);
+        }
+    }
+
+    protected function extractAuthor(array $data): Author
+    {
+        $author = new Author();
+        $author->setName($this->readOffset($data, 'name'));
+        $author->setUri($this->readOffset($data, 'url'));
+        $author->setEmail($this->readOffset($data, 'email'));
+
+        return $author;
     }
 }
