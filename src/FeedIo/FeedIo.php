@@ -296,17 +296,12 @@ class FeedIo
      */
     public function readAsync(iterable $requests, CallbackInterface $callback, string $feedClass = '\FeedIo\Feed') : void
     {
+        error_log("FeedIo::readAsync is deprecated and will be removed in v5.0.", E_DEPRECATED);
         $reader = new AsyncReader($this->reader, $this->reader->getClient(), $callback, $feedClass);
 
         $reader->process($requests);
     }
 
-    /**
-     * @param  string                $url
-     * @param  FeedInterface         $feed
-     * @param  \DateTime             $modifiedSince
-     * @return \FeedIo\Reader\Result
-     */
     public function read(string $url, FeedInterface $feed = null, \DateTime $modifiedSince = null) : Result
     {
         if (is_null($feed)) {

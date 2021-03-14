@@ -37,6 +37,7 @@ class Request
      */
     public function __construct(string $url, \DateTime $modifiedSince = null)
     {
+        error_log("Async reading is deprecated and will be removed in v5.0.", E_DEPRECATED);
         $this->url = $url;
         $this->modifiedSince = $modifiedSince ?? new \DateTime('@0');
     }
