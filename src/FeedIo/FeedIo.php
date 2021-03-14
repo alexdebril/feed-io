@@ -308,38 +308,12 @@ class FeedIo
             $feed = new Feed();
         }
 
-        if ($modifiedSince instanceof \DateTime) {
-            $this->addFilter(new ModifiedSince($modifiedSince));
-        }
-
         $this->logAction($feed, "read access : $url into a feed instance");
         $result = $this->reader->read($url, $feed, $modifiedSince);
 
         $this->fixerSet->correct($result);
-        $this->resetFilters();
 
         return $result;
-    }
-
-    /**
-     * @param  string                $url
-     * @param  \DateTime             $modifiedSince
-     * @return \FeedIo\Reader\Result
-     */
-    public function readSince(string $url, \DateTime $modifiedSince) : Result
-    {
-        error_log("readSince() is deprecated and will be removed in v5.0.", E_DEPRECATED);
-        return $this->read($url, new Feed(), $modifiedSince);
-    }
-
-    /**
-     * @return FeedIo
-     */
-    public function resetFilters() : FeedIo
-    {
-        $this->getReader()->resetFilters();
-
-        return $this;
     }
 
     /**
