@@ -328,6 +328,7 @@ class FeedIo
      */
     public function readSince(string $url, \DateTime $modifiedSince) : Result
     {
+        error_log("readSince() is deprecated and will be removed in v5.0.", E_DEPRECATED);
         return $this->read($url, new Feed(), $modifiedSince);
     }
 
