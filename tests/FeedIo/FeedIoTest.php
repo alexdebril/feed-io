@@ -84,20 +84,6 @@ class FeedIoTest extends TestCase
         }
     }
 
-    public function testAddFilter()
-    {
-        $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');
-
-        $this->object->addFilter($filter);
-        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
-    }
-
-    public function testResetFilters()
-    {
-        $this->object->resetFilters();
-        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
-    }
-
     public function testWithModifiedSince()
     {
         $result = $this->object->read('http://localhost', new Feed(), new \DateTime());
@@ -153,16 +139,6 @@ class FeedIoTest extends TestCase
     public function testRead()
     {
         $result = $this->object->read('http://whatever.com');
-        $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
-        $this->assertEquals('sample title', $result->getFeed()->getTitle());
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::readSince
-     */
-    public function testReadSince()
-    {
-        $result = $this->object->readSince('http://whatever.com', new \DateTime());
         $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
         $this->assertEquals('sample title', $result->getFeed()->getTitle());
     }

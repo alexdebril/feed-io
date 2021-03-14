@@ -96,23 +96,6 @@ XML;
         $parser->parse(new Document($document->saveXML()), new Feed());
     }
 
-    public function testIsValid()
-    {
-        $item = new Item();
-        $item->setLastModified(new \DateTime('-1day'));
-
-        $this->object->addFilter($this->getFilterMock(true));
-        $this->assertTrue($this->object->isValid($item));
-    }
-
-    public function testIsNotValid()
-    {
-        $item = new Item();
-
-        $this->object->addFilter($this->getFilterMock(false));
-        $this->assertFalse($this->object->isValid($item));
-    }
-
     public function testCheckStructure()
     {
         $rss = <<<RSS
@@ -152,19 +135,5 @@ RSS;
         ), new NullLogger());
         $this->expectException('\FeedIo\Parser\MissingFieldsException');
         $parser->parse(new Document($document->saveXML()), new Feed());
-    }
-
-    /**
-     * @param  boolean                 $returnValue
-     * @return \FeedIo\FilterInterface
-     */
-    protected function getFilterMock($returnValue)
-    {
-        $filter = $this->getMockForAbstractClass('\FeedIo\FilterInterface');
-        $filter->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue($returnValue));
-
-        return $filter;
     }
 }
