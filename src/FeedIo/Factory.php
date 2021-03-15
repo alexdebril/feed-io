@@ -53,7 +53,7 @@ class Factory
             'config' => [],
         ]
     ) : Factory {
-        $factory = new static();
+        $factory = new self();
 
         $factory->setClientBuilder(
             $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig))
