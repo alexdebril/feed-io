@@ -15,7 +15,7 @@
         "bin/feedio"
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=8.0",
         "ext-dom": "*",
         "ext-json": "*",
         "ext-libxml": "*",

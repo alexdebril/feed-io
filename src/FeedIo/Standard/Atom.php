@@ -26,20 +26,12 @@ use FeedIo\RuleSet;
 
 class Atom extends XmlAbstract
 {
-    /**
-     * Atom document must have a <feed> root node
-     */
     const ROOT_NODE_TAGNAME = 'feed';
 
     const ITEM_NODE = 'entry';
 
     const DATETIME_FORMAT = \DateTime::ATOM;
 
-    /**
-     * Formats the document according to the standard's specification
-     * @param  \DOMDocument $document
-     * @return \DOMDocument
-     */
     public function format(\DOMDocument $document) : \DOMDocument
     {
         $element = $document->createElement('feed');
@@ -49,11 +41,6 @@ class Atom extends XmlAbstract
         return $document;
     }
 
-    /**
-     * Tells if the parser can handle the feed or not
-     * @param  Document $document
-     * @return mixed
-     */
     public function canHandle(Document $document) : bool
     {
         if (!isset($document->getDOMDocument()->documentElement->tagName)) {
@@ -62,19 +49,11 @@ class Atom extends XmlAbstract
         return self::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
-    /**
-     * @param  DOMDocument $document
-     * @return \DomElement
-     */
     public function getMainElement(\DOMDocument $document) : \DOMElement
     {
         return $document->documentElement;
     }
 
-    /**
-     * Builds and returns a rule set to parse the root node
-     * @return \FeedIo\RuleSet
-     */
     public function buildFeedRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
@@ -86,10 +65,6 @@ class Atom extends XmlAbstract
         return $ruleSet;
     }
 
-    /**
-     * Builds and returns a rule set to parse an item
-     * @return \FeedIo\RuleSet
-     */
     public function buildItemRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
@@ -103,9 +78,6 @@ class Atom extends XmlAbstract
         return $ruleSet;
     }
 
-    /**
-     * @return \FeedIo\RuleSet
-     */
     protected function buildBaseRuleSet() : RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
