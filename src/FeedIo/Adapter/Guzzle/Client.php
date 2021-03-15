@@ -11,12 +11,9 @@
 namespace FeedIo\Adapter\Guzzle;
 
 use FeedIo\Adapter\ClientInterface;
-use FeedIo\Adapter\Guzzle\Async\ReaderInterface;
 use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Adapter\ServerErrorException;
-use FeedIo\Async\Request;
-use \GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Exception\BadResponseException;
 
 /**
@@ -98,51 +95,6 @@ class Client implements ClientInterface
     protected function getDuration(float $start): int
     {
         return intval(round(microtime(true) - $start, 3) * 1000);
-    }
-    /**
-     * @param iterable $requests
-     * @param ReaderInterface $reader
-     * @return \Generator
-     */
-    public function getPromises(iterable $requests, ReaderInterface $reader) : \Generator
-    {
-        foreach ($requests as $request) {
-            yield $this->getPromise($request, $reader);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @param ReaderInterface $reader
-     * @return PromiseInterface
-     */
-    protected function getPromise(Request $request, ReaderInterface $reader) : PromiseInterface
-    {
-        $promise = $this->newPromise($request);
-
-        $promise->then(function ($psrResponse) use ($request, $reader) {
-            try {
-                $request->setResponse(new Response($psrResponse, 0));
-                $reader->handle($request);
-            } catch (\Exception $e) {
-                $reader->handleError($request, $e);
-            }
-        }, function ($error) use ($request, $reader) {
-            $reader->handleError($request, $error);
-        });
-
-        return $promise;
-    }
-
-    /**
-     * @param Request $request
-     * @return PromiseInterface
-     */
-    protected function newPromise(Request $request) : PromiseInterface
-    {
-        $options = $this->getOptions($request->getModifiedSince());
-
-        return $this->guzzleClient->requestAsync('GET', $request->getUrl(), $options);
     }
 
     /**
