@@ -77,34 +77,6 @@ class Reader
     }
 
     /**
-     * adds a filter to every parsers
-     *
-     * @param \FeedIo\FilterInterface $filter
-     * @return Reader
-     */
-    public function addFilter(FilterInterface $filter) : Reader
-    {
-        foreach ($this->parsers as $parser) {
-            $parser->addFilter($filter);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Reset filters on every parsers
-     * @return Reader
-     */
-    public function resetFilters() : Reader
-    {
-        foreach ($this->parsers as $parser) {
-            $parser->resetFilters();
-        }
-
-        return $this;
-    }
-
-    /**
      * @param string                 $url
      * @param  FeedInterface         $feed
      * @param  \DateTime             $modifiedSince

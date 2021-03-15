@@ -136,19 +136,6 @@ class FeedIo
     }
 
     /**
-     * adds a filter to the reader
-     *
-     * @param \FeedIo\FilterInterface $filter
-     * @return FeedIo
-     */
-    public function addFilter(FilterInterface $filter) : FeedIo
-    {
-        $this->getReader()->addFilter($filter);
-
-        return $this;
-    }
-
-    /**
      * Returns main standards
      *
      * @return array
@@ -287,19 +274,6 @@ class FeedIo
         $explorer = new Explorer($this->client, $this->logger);
 
         return $explorer->discover($url);
-    }
-
-    /**
-     * @param iterable $requests
-     * @param CallbackInterface $callback
-     * @param string $feedClass
-     */
-    public function readAsync(iterable $requests, CallbackInterface $callback, string $feedClass = '\FeedIo\Feed') : void
-    {
-        error_log("FeedIo::readAsync is deprecated and will be removed in v5.0.", E_DEPRECATED);
-        $reader = new AsyncReader($this->reader, $this->reader->getClient(), $callback, $feedClass);
-
-        $reader->process($requests);
     }
 
     public function read(string $url, FeedInterface $feed = null, \DateTime $modifiedSince = null) : Result

@@ -33,11 +33,6 @@ abstract class ParserAbstract
     protected $logger;
 
     /**
-     * @var array[FilterInterface]
-     */
-    protected $filters = array();
-
-    /**
      * @var StandardAbstract
      */
     protected $standard;
@@ -104,46 +99,9 @@ abstract class ParserAbstract
      */
     public function addValidItem(FeedInterface $feed, NodeInterface $item) : ParserAbstract
     {
-        if ($item instanceof ItemInterface && $this->isValid($item)) {
+        if ($item instanceof ItemInterface) {
             $feed->add($item);
         }
-
-        return $this;
-    }
-
-    /**
-     * @param  ItemInterface $item
-     * @return bool
-     */
-    public function isValid(ItemInterface $item) : bool
-    {
-        foreach ($this->filters as $filter) {
-            if (!$filter->isValid($item)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param  FilterInterface $filter
-     * @return ParserAbstract
-     */
-    public function addFilter(FilterInterface $filter) : ParserAbstract
-    {
-        $this->filters[] = $filter;
-
-        return $this;
-    }
-
-    /**
-     * Reset filters
-     * @return ParserAbstract
-     */
-    public function resetFilters() : ParserAbstract
-    {
-        $this->filters = [];
 
         return $this;
     }

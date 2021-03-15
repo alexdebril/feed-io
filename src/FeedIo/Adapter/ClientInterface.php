@@ -10,8 +10,6 @@
 
 namespace FeedIo\Adapter;
 
-use FeedIo\Adapter\ResponseInterface;
-
 /**
  * Describes a HTTP Client used by \FeedIo\Reader
  *
