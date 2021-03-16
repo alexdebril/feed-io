@@ -10,7 +10,6 @@
 
 namespace FeedIo;
 
-use FeedIo\Filter\ModifiedSince;
 use FeedIo\Reader\Result;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
@@ -18,9 +17,6 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\DateTimeBuilderInterface;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Standard\Loader;
-use FeedIo\Async\Reader as AsyncReader;
-use FeedIo\Async\CallbackInterface;
-use FeedIo\FeedInterface;
 use Psr\Log\LoggerInterface;
 use FeedIo\Http\ResponseBuilder;
 use Psr\Http\Message\ResponseInterface;

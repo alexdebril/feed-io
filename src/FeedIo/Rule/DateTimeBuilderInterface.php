@@ -12,9 +12,9 @@ namespace FeedIo\Rule;
 
 interface DateTimeBuilderInterface
 {
- 
+
     /**
-     * @param $dateFormat
+     * @param string $dateFormat
      * @return DateTimeBuilderInterface
      */
     public function addDateFormat(string $dateFormat) : DateTimeBuilderInterface;
