@@ -22,7 +22,7 @@ abstract class RuleAbstract
 
     public function __construct(string $nodeName = null)
     {
-        $this->nodeName = is_null($nodeName) ? static::NODE_NAME : $nodeName;
+        $this->nodeName = $nodeName ?? static::NODE_NAME;
     }
 
     public function getNodeName() : string
