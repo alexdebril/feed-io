@@ -40,15 +40,15 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         '*, d M Y',
     ];
 
-    protected ?DateTimeZone $feedTimezone;
+    protected ?DateTimeZone $feedTimezone = null;
 
     protected DateTimeZone $serverTimezone;
 
     protected string $lastGuessedFormat = DateTime::RFC2822;
 
-    public function __construct(protected LoggerInterface $logger)
+    public function __construct(protected ?LoggerInterface $logger = null)
     {
-        $this->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $this->setTimezone(new DateTimeZone(date_default_timezone_get()));
     }
 
     public function addDateFormat(string $dateFormat) : DateTimeBuilderInterface
@@ -73,7 +73,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
     public function guessDateFormat(string $date) : ? string
     {
         foreach ($this->dateFormats as $format) {
-            $test = \DateTime::createFromFormat($format, $date);
+            $test = DateTime::createFromFormat($format, $date);
             if ($test instanceof \DateTime) {
                 $this->lastGuessedFormat = $format;
 
@@ -84,7 +84,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         return null;
     }
 
-    public function convertToDateTime(string $string) : \DateTime
+    public function convertToDateTime(string $string) : DateTime
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
@@ -99,9 +99,11 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         return $this->stringToDateTime($string);
     }
 
-    public function stringToDateTime(string $string) : \DateTime
+    public function stringToDateTime(string $string) : DateTime
     {
-        $this->logger->notice("unsupported date format, use strtotime() to build the DateTime instance : {$string}");
+        if ($this->logger) {
+            $this->logger->notice("unsupported date format, use strtotime() to build the DateTime instance : {$string}");
+        }
 
         if (false === strtotime($string)) {
             throw new \InvalidArgumentException('Impossible to convert date : '.$string);
@@ -111,8 +113,8 @@ class DateTimeBuilder implements DateTimeBuilderInterface
 
         return $date;
     }
-    
-    public function getFeedTimezone() : ? \DateTimeZone
+
+    public function getFeedTimezone() : ?DateTimeZone
     {
         return $this->feedTimezone;
     }
@@ -127,7 +129,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         $this->feedTimezone = null;
     }
 
-    public function getServerTimezone() : ? DateTimeZone
+    public function getServerTimezone() : ?DateTimeZone
     {
         return $this->serverTimezone;
     }
@@ -137,7 +139,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         $this->serverTimezone = $timezone;
     }
 
-    public function getTimezone() : ? DateTimeZone
+    public function getTimezone() : ?DateTimeZone
     {
         return $this->getServerTimezone();
     }
