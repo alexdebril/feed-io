@@ -47,7 +47,7 @@ class Rss extends XmlAbstract
      */
     const DATE_NODE_TAGNAME = 'pubDate';
 
-    protected $mandatoryFields = ['channel'];
+    protected array $mandatoryFields = ['channel'];
 
     /**
      * Formats the document according to the standard's specification

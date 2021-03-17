@@ -10,6 +10,7 @@
 
 namespace FeedIo;
 
+use InvalidArgumentException;
 use FeedIo\Reader\Result;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Reader\FixerAbstract;
@@ -71,45 +72,19 @@ use Psr\Http\Message\ResponseInterface;
  */
 class FeedIo
 {
+    protected Reader $reader;
 
-    /**
-     * @var \FeedIo\Reader
-     */
-    protected $reader;
+    protected DateTimeBuilderInterface $dateTimeBuilder;
 
-    /**
-     * @var \FeedIo\Rule\DateTimeBuilder
-     */
-    protected $dateTimeBuilder;
+    protected FixerSet $fixerSet;
 
-    /**
-     * @var \FeedIo\Adapter\ClientInterface;
-     */
-    protected $client;
+    protected array $standards;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var array
-     */
-    protected $standards;
-
-    /**
-     * @var \FeedIo\Reader\FixerSet
-     */
-    protected $fixerSet;
-
-    /**
-     * @param \FeedIo\Adapter\ClientInterface $client
-     * @param \Psr\Log\LoggerInterface        $logger
-     */
-    public function __construct(ClientInterface $client, LoggerInterface $logger, DateTimeBuilderInterface $dateTimeBuilder = null)
-    {
-        $this->client = $client;
-        $this->logger = $logger;
+    public function __construct(
+        protected ClientInterface $client,
+        protected LoggerInterface $logger,
+        DateTimeBuilderInterface $dateTimeBuilder = null
+    ) {
         $this->dateTimeBuilder = $dateTimeBuilder ?? new DateTimeBuilder($logger);
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
@@ -158,33 +133,26 @@ class FeedIo
         return $this;
     }
 
-    /**
-     * @param string $format
-     * @param StandardAbstract $standard
-     * @return ParserAbstract
-     */
     public function newParser(string $format, StandardAbstract $standard) : ParserAbstract
     {
         $reflection = new \ReflectionClass("FeedIo\\Parser\\{$format}Parser");
 
-        if (! $reflection->isSubclassOf('FeedIo\ParserAbstract')) {
-            throw new \InvalidArgumentException();
+        try {
+            $parser = $reflection->newInstanceArgs([$standard, $this->logger]);
+            if ($parser instanceof ParserAbstract) {
+                return  $parser;
+            }
+            throw new InvalidArgumentException();
+        } catch (\ReflectionException $e) {
+            throw new InvalidArgumentException("No parser found for $format");
         }
-
-        return $reflection->newInstanceArgs([$standard, $this->logger]);
     }
 
-    /**
-     * @return \FeedIo\Reader\FixerSet
-     */
     public function getFixerSet() : FixerSet
     {
         return $this->fixerSet;
     }
 
-    /**
-     * @return FeedIo
-     */
     protected function loadFixerSet() : FeedIo
     {
         $this->fixerSet = new FixerSet();
@@ -197,10 +165,6 @@ class FeedIo
         return $this;
     }
 
-    /**
-     * @param  FixerAbstract $fixer
-     * @return FeedIo
-     */
     public function addFixer(FixerAbstract $fixer) : FeedIo
     {
         $fixer->setLogger($this->logger);
@@ -209,9 +173,6 @@ class FeedIo
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getBaseFixers() : array
     {
         return array(
@@ -220,10 +181,6 @@ class FeedIo
         );
     }
 
-    /**
-     * @param array $formats
-     * @return FeedIo
-     */
     public function addDateFormats(array $formats) : FeedIo
     {
         foreach ($formats as $format) {
@@ -233,10 +190,7 @@ class FeedIo
         return $this;
     }
 
-    /**
-     * @return \FeedIo\Rule\DateTimeBuilder
-     */
-    public function getDateTimeBuilder() : DateTimeBuilder
+    public function getDateTimeBuilder() : DateTimeBuilderInterface
     {
         return $this->dateTimeBuilder;
     }

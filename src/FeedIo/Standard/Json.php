@@ -19,7 +19,7 @@ class Json extends StandardAbstract
 {
     const SYNTAX_FORMAT = 'Json';
 
-    protected $mandatoryFields = ['version', 'title', 'items'];
+    protected array $mandatoryFields = ['version', 'title', 'items'];
 
     /**
      * @param Document $document
