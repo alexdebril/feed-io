@@ -11,20 +11,13 @@
 namespace FeedIo\Reader;
 
 use FeedIo\FeedInterface;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 abstract class FixerAbstract
 {
+    protected LoggerInterface $logger;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @param \Psr\Log\LoggerInterface
-     * @return $this
-     */
     public function setLogger(LoggerInterface $logger) : FixerAbstract
     {
         $this->logger = $logger;
@@ -32,9 +25,5 @@ abstract class FixerAbstract
         return $this;
     }
 
-    /**
-     * @param Result $result
-     * @return FixerAbstract
-     */
     abstract public function correct(Result $result) : FixerAbstract;
 }

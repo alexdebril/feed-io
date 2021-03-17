@@ -26,35 +26,12 @@ use Psr\Log\LoggerInterface;
  */
 abstract class ParserAbstract
 {
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var StandardAbstract
-     */
-    protected $standard;
-
-    /**
-     * @param StandardAbstract $standard
-     * @param LoggerInterface  $logger
-     */
-    public function __construct(StandardAbstract $standard, LoggerInterface $logger)
-    {
-        $this->standard = $standard;
-        $this->logger = $logger;
+    public function __construct(
+        protected StandardAbstract $standard,
+        protected LoggerInterface $logger
+    ) {
     }
 
-    /**
-     * Tries to parse the document
-     *
-     * @param Document $document
-     * @param FeedInterface $feed
-     * @return \FeedIo\FeedInterface
-     * @throws \FeedIo\Parser\UnsupportedFormatException
-     */
     public function parse(Document $document, FeedInterface $feed) : FeedInterface
     {
         if (!$this->standard->canHandle($document)) {
@@ -67,36 +44,11 @@ abstract class ParserAbstract
         return $feed;
     }
 
-    /**
-     * This method is called by parse() if and only if the checkBodyStructure was successful
-     *
-     * @param Document $document
-     * @param FeedInterface $feed
-     * @return \FeedIo\FeedInterface
-     */
-    abstract public function parseContent(Document $document, FeedInterface $feed) : FeedInterface;
-
-    /**
-     * @param Document $document
-     * @param iterable $mandatoryFields
-     * @throws MissingFieldsException
-     * @return bool
-     */
-    abstract public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool;
-
-    /**
-     * @return StandardAbstract
-     */
     public function getStandard() : StandardAbstract
     {
         return $this->standard;
     }
 
-    /**
-     * @param  FeedInterface $feed
-     * @param  NodeInterface $item
-     * @return ParserAbstract
-     */
     public function addValidItem(FeedInterface $feed, NodeInterface $item) : ParserAbstract
     {
         if ($item instanceof ItemInterface) {
@@ -105,4 +57,8 @@ abstract class ParserAbstract
 
         return $this;
     }
+
+    abstract public function parseContent(Document $document, FeedInterface $feed) : FeedInterface;
+
+    abstract public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool;
 }

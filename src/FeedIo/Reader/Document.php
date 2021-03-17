@@ -10,28 +10,16 @@
 
 namespace FeedIo\Reader;
 
+use DOMDocument;
+
 class Document
 {
+    protected string $content;
 
-    /**
-     * @var string
-     */
-    protected $content;
+    protected ?DOMDocument $domDocument = null;
 
-    /**
-     * @var \DOMDocument
-     */
-    protected $domDocument;
+    protected ?array $jsonArray = null;
 
-    /**
-     * @var array
-     */
-    protected $jsonArray;
-
-    /**
-     * Document constructor.
-     * @param string $content
-     */
     public function __construct(string $content)
     {
         $invalid_characters = '/[^\x9\xa\x20-\xD7FF\xE000-\xFFFD]/';
@@ -39,35 +27,22 @@ class Document
         $this->content = trim(str_replace("\xEF\xBB\xBF", '', $content));
     }
 
-    /**
-     * @param $character
-     * @return bool
-     */
     public function startWith(string $character) : bool
     {
         return mb_substr($this->content, 0, 1) === $character;
     }
 
-    /**
-     * @return bool
-     */
     public function isJson() : bool
     {
         return $this->startWith('{');
     }
 
-    /**
-     * @return bool
-     */
     public function isXml() : bool
     {
         return $this->startWith('<');
     }
 
-    /**
-     * @return \DOMDocument
-     */
-    public function getDOMDocument() : \DOMDocument
+    public function getDOMDocument() : DOMDocument
     {
         if (is_null($this->domDocument)) {
             $this->domDocument = $this->loadDomDocument();
@@ -76,9 +51,6 @@ class Document
         return $this->domDocument;
     }
 
-    /**
-     * @return array
-     */
     public function getJsonAsArray() : array
     {
         if (is_null($this->jsonArray)) {
@@ -88,10 +60,7 @@ class Document
         return $this->jsonArray;
     }
 
-    /**
-     * @return \DOMDocument
-     */
-    protected function loadDomDocument() : \DOMDocument
+    protected function loadDomDocument() : DOMDocument
     {
         if (! $this->isXml()) {
             throw new \LogicException('this document is not a XML stream');
@@ -114,9 +83,6 @@ class Document
         return $domDocument;
     }
 
-    /**
-     * @return array
-     */
     protected function loadJsonAsArray() : array
     {
         if (! $this->isJson()) {
