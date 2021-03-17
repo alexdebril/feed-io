@@ -3,7 +3,8 @@
 
 namespace FeedIo\Check;
 
-use FeedIo\Feed;
+use FeedIo\Feed\ItemInterface;
+use FeedIo\FeedInterface;
 use FeedIo\FeedIo;
 
 /**
@@ -12,10 +13,10 @@ use FeedIo\FeedIo;
  */
 class CheckPublicIds implements CheckInterface
 {
-    public function perform(FeedIo $feedIo, Feed $feed, Result $result): bool
+    public function perform(FeedIo $feedIo, FeedInterface $feed, Result $result): bool
     {
         $publicIds = [];
-        /** @var Feed\ItemInterface $item */
+        /** @var ItemInterface $item */
         foreach ($feed as $i => $item) {
             $publicIds[] = $item->getPublicId();
         }

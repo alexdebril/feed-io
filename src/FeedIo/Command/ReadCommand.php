@@ -86,10 +86,6 @@ class ReadCommand extends Command
         }
     }
 
-    /**
-     * @param int $interval
-     * @return \DateInterval
-     */
     protected function formatDateInterval(int $interval): string
     {
         $zero = new \DateTime('@0');
@@ -97,10 +93,6 @@ class ReadCommand extends Command
         return $diff->format('%a days, %h hours, %i minutes, %s seconds');
     }
 
-    /**
-     * @param $url
-     * @return \FeedIo\Reader\Result
-     */
     public function readFeed($url): \FeedIo\Reader\Result
     {
         $feedIo = Factory::create()->getFeedIo();
