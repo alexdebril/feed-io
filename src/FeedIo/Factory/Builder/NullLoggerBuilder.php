@@ -19,37 +19,20 @@ use \Psr\Log\NullLogger;
  */
 class NullLoggerBuilder implements LoggerBuilderInterface
 {
-
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config = [])
+    public function __construct()
     {
-        // Ignore config as NullLogger does not accept any config
-        // Done for FeedIo\Factory compatibility
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getLogger() : LoggerInterface
     {
-        return new \Psr\Log\NullLogger;
+        return new NullLogger;
     }
  
-    /**
-     * This method MUST return the name of the main class
-     * @return string
-     */
     public function getMainClassName() : string
     {
         return '\Psr\Log\NullLogger';
     }
     
-    /**
-     * This method MUST return the name of the package name
-     * @return string
-     */
     public function getPackageName() : string
     {
         return 'psr/log';

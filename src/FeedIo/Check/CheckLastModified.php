@@ -3,7 +3,7 @@
 
 namespace FeedIo\Check;
 
-use FeedIo\Feed;
+use FeedIo\FeedInterface;
 use FeedIo\FeedIo;
 
 /**
@@ -12,7 +12,7 @@ use FeedIo\FeedIo;
  */
 class CheckLastModified implements CheckInterface
 {
-    public function perform(FeedIo $feedIo, Feed $feed, Result $result): bool
+    public function perform(FeedIo $feedIo, FeedInterface $feed, Result $result): bool
     {
         $lastModifiedDates = [];
         $result->setModifiedSince($feed->getLastModified());

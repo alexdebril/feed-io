@@ -10,33 +10,25 @@
 
 namespace FeedIo;
 
+use FeedIo\Adapter\ClientInterface;
+use FeedIo\Factory\Builder\GuzzleClientBuilder;
+use FeedIo\Factory\Builder\MonologBuilder;
+use FeedIo\Factory\Builder\NullLoggerBuilder;
 use FeedIo\Factory\MissingDependencyException;
 use FeedIo\Factory\LoggerBuilderInterface;
 use FeedIo\Factory\ClientBuilderInterface;
 use FeedIo\Factory\BuilderInterface;
+use Psr\Log\LoggerInterface;
 
 class Factory
 {
+    protected LoggerInterface $logger;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
+    protected ClientInterface $client;
 
-    /**
-     * @var \FeedIo\Adapter\ClientInterface
-     */
-    protected $client;
+    protected ClientBuilderInterface $clientBuilder;
 
-    /**
-     * @var \FeedIo\Factory\ClientBuilderInterface
-     */
-    protected $clientBuilder;
-
-    /**
-     * @var \FeedIo\Factory\LoggerBuilderInterface
-     */
-    protected $loggerBuilder;
+    protected LoggerBuilderInterface $loggerBuilder;
 
     /**
      * @param array $loggerConfig
@@ -55,21 +47,25 @@ class Factory
     ) : Factory {
         $factory = new self();
 
-        $factory->setClientBuilder(
-            $factory->getBuilder($clientConfig['builder'], $factory->extractConfig($clientConfig))
-        )
-            ->setLoggerBuilder(
-                $factory->getBuilder($loggerConfig['builder'], $factory->extractConfig($loggerConfig))
-            );
+        $clientBuilder = new GuzzleClientBuilder($factory->extractConfig($clientConfig));
+        $loggerConfig = $factory->getLoggerBuilder($loggerConfig['builder'], $factory->extractConfig($loggerConfig));
+
+        $factory
+            ->setClientBuilder($clientBuilder)
+            ->setLoggerBuilder($loggerConfig);
 
 
         return $factory;
     }
 
-    /**
-     * @param ClientBuilderInterface $clientBuilder
-     * @return Factory
-     */
+    public function getLoggerBuilder(string $name, array $config): LoggerBuilderInterface
+    {
+        if (str_contains(strtolower($name), 'monolog')) {
+            return new MonologBuilder($config);
+        }
+        return new NullLoggerBuilder();
+    }
+
     public function setClientBuilder(ClientBuilderInterface $clientBuilder) : Factory
     {
         $this->clientBuilder = $clientBuilder;
@@ -77,38 +73,11 @@ class Factory
         return $this;
     }
 
-    /**
-     * @param string $builder
-     * @param array $args
-     * @return BuilderInterface
-     */
-    public function getBuilder(string $builder, array $args = []) : BuilderInterface
-    {
-        $class = "\\FeedIo\\Factory\\Builder\\{$builder}Builder";
-
-        if (!class_exists($class)) {
-            $class = $builder;
-        }
-
-        $reflection = new \ReflectionClass($class);
-
-        // Pass args only if constructor has
-        return $reflection->newInstanceArgs([$args]);
-    }
-
-    /**
-     * @param $builderConfig
-     *
-     * @return array
-     */
     public function extractConfig(array $builderConfig) : array
     {
         return isset($builderConfig['config']) ? $builderConfig['config'] : [];
     }
 
-    /**
-     * @return \FeedIo\FeedIo
-     */
     public function getFeedIo() : FeedIo
     {
         return new FeedIo(
@@ -117,11 +86,6 @@ class Factory
         );
     }
 
-    /**
-     * @param LoggerBuilderInterface $loggerBuilder
-     *
-     * @return Factory
-     */
     public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder) : Factory
     {
         $this->loggerBuilder = $loggerBuilder;
@@ -129,11 +93,6 @@ class Factory
         return $this;
     }
 
-    /**
-     * @param  BuilderInterface $builder
-     *
-     * @return boolean true if the dependency is met
-     */
     public function checkDependency(BuilderInterface $builder) : bool
     {
         if (!class_exists($builder->getMainClassName())) {

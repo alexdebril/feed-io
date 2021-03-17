@@ -10,6 +10,7 @@
 
 namespace FeedIo\Adapter\Guzzle;
 
+use DateTime;
 use FeedIo\Adapter\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
@@ -20,58 +21,29 @@ class Response implements ResponseInterface
 {
     const HTTP_LAST_MODIFIED = 'Last-Modified';
 
-    /**
-     * @var \Psr\Http\Message\ResponseInterface
-     */
-    protected $psrResponse;
+    protected ?string $body = null;
 
-    /**
-     * @var string
-     */
-    protected $body;
-
-    /**
-     * @var int
-     */
-    protected $duration;
-
-    /**
-     * @param PsrResponseInterface $psrResponse
-     * @param int $duration
-     */
-    public function __construct(PsrResponseInterface $psrResponse, int $duration)
-    {
-        $this->psrResponse = $psrResponse;
-        $this->duration = $duration;
+    public function __construct(
+        protected PsrResponseInterface $psrResponse,
+        protected int $duration
+    ) {
     }
 
-    /**
-     * @return int
-     */
     public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return (int) $this->psrResponse->getStatusCode();
     }
 
-    /**
-     * @return boolean
-     */
     public function isModified() : bool
     {
         return $this->psrResponse->getStatusCode() != 304 && strlen($this->getBody()) > 0;
     }
 
-    /**
-     * @return string
-     */
     public function getBody() : ? string
     {
         if (is_null($this->body)) {
@@ -81,13 +53,10 @@ class Response implements ResponseInterface
         return $this->body;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastModified() : ?\DateTime
+    public function getLastModified() : ?DateTime
     {
         if ($this->psrResponse->hasHeader(static::HTTP_LAST_MODIFIED)) {
-            $lastModified = \DateTime::createFromFormat(\DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED)[0]);
+            $lastModified = DateTime::createFromFormat(DateTime::RFC2822, $this->getHeader(static::HTTP_LAST_MODIFIED)[0]);
 
             return false === $lastModified ? null : $lastModified;
         }
@@ -95,18 +64,11 @@ class Response implements ResponseInterface
         return null;
     }
 
-    /**
-     * @return iterable
-     */
     public function getHeaders()  : iterable
     {
         return $this->psrResponse->getHeaders();
     }
 
-    /**
-     * @param  string       $name
-     * @return iterable
-     */
     public function getHeader(string $name) : iterable
     {
         return $this->psrResponse->getHeader($name);
