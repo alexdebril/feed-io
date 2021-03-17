@@ -11,16 +11,11 @@
 
 namespace FeedIo\Standard;
 
-use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilderInterface;
 
 class Loader
 {
-
-    /**
-     * @param DateTimeBuilder $builder
-     * @return array
-     */
-    public function getCommonStandards(DateTimeBuilder $builder) : array
+    public function getCommonStandards(DateTimeBuilderInterface $builder) : array
     {
         return [
             'json' => new Json($builder),

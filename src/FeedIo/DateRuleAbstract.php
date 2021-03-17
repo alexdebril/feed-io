@@ -10,35 +10,22 @@
 
 namespace FeedIo;
 
-use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilderInterface;
 
 abstract class DateRuleAbstract extends RuleAbstract
 {
-    /**
-     * @var \FeedIo\Rule\DateTimeBuilder
-     */
-    protected $dateTimeBuilder = null;
+    protected ?DateTimeBuilderInterface $dateTimeBuilder = null;
 
-    /**
-     * @var string
-     */
-    protected $defaultFormat = \DateTime::RSS;
+    protected string $defaultFormat = \DateTime::RSS;
 
-    /**
-     * @param  \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
-     * @return DateRuleAbstract
-     */
-    public function setDateTimeBuilder(DateTimeBuilder $dateTimeBuilder) : DateRuleAbstract
+    public function setDateTimeBuilder(DateTimeBuilderInterface $dateTimeBuilder) : DateRuleAbstract
     {
         $this->dateTimeBuilder = $dateTimeBuilder;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeBuilder
-     */
-    public function getDateTimeBuilder() : DateTimeBuilder
+    public function getDateTimeBuilder() : DateTimeBuilderInterface
     {
         if (is_null($this->dateTimeBuilder)) {
             throw new \UnexpectedValueException('date time builder should not be null');
