@@ -11,6 +11,7 @@
 namespace FeedIo\Parser;
 
 use DOMElement;
+use FeedIo\FeedIoException;
 use FeedIo\RuleSet;
 use FeedIo\FeedInterface;
 use FeedIo\Feed\NodeInterface;
@@ -81,11 +82,19 @@ class XmlParser extends ParserAbstract
     protected function handleNode(NodeInterface $item, DOMElement $node, RuleSet $ruleSet) : void
     {
         if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
-            $newItem = $this->parseNode($item->newItem(), $node, $this->standard->getItemRuleSet());
+            $newItem = $this->parseNode($item->newItem(), $node, $this->getItemRuleSet());
             $this->addValidItem($item, $newItem);
         } else {
             $rule = $ruleSet->get($node->tagName);
             $rule->setProperty($item, $node);
         }
+    }
+
+    protected function getItemRuleSet(): RuleSet
+    {
+        if ($this->standard instanceof XmlAbstract) {
+            return $this->standard->getItemRuleSet();
+        }
+        throw new FeedIoException('Not an XML Standard');
     }
 }
