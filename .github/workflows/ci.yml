@@ -19,4 +19,5 @@ jobs:
       - name: PHP Stan
         uses: php-actions/phpstan@v2
         with:
+          path: src
           level: 5
