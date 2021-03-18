@@ -9,6 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
+      - name: Coding Style
+        uses: php-actions/composer@v5
+        with:
+          command: "src:lint"
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:

@@ -36,8 +36,10 @@
         "psr-4": {"FeedIo\\": "src/FeedIo"}
     },
     "scripts": {
-        "install-hook": "chmod +x pre-commit.sh && cp pre-commit.sh .git/hooks/pre-commit",
-        "pre-autoload-dump": "composer install-hook"
+        "src:php-stan": "./vendor/bin/phpstan analyse src/ --level 5",
+        "src:fix": "./vendor/bin/php-cs-fixer fix src",
+        "src:lint": "./vendor/bin/php-cs-fixer fix --dry-run --diff src",
+        "src:install-hook": "chmod +x pre-commit.sh && cp pre-commit.sh .git/hooks/pre-commit"
     },
     "config": {
         "preferred-install": {
