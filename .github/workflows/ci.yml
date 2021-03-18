@@ -16,3 +16,7 @@ jobs:
           bootstrap: tests/bootstrap.php
           configuration: phpunit.xml.dist
           args: --coverage-text
+      - name: PHP Stan
+        uses: php-actions/phpstan@v2
+        with:
+          level: 5
