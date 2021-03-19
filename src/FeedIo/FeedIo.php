@@ -74,8 +74,6 @@ class FeedIo
 {
     protected Reader $reader;
 
-    protected DateTimeBuilderInterface $dateTimeBuilder;
-
     protected FixerSet $fixerSet;
 
     protected array $standards;
@@ -83,9 +81,11 @@ class FeedIo
     public function __construct(
         protected ClientInterface $client,
         protected LoggerInterface $logger,
-        DateTimeBuilderInterface $dateTimeBuilder = null
+        protected ?SpecificationInterface $specification = null
     ) {
-        $this->dateTimeBuilder = $dateTimeBuilder ?? new DateTimeBuilder($logger);
+        if (is_null($this->specification)) {
+            $this->specification = new Specification($this->logger);
+        }
         $this->setReader(new Reader($client, $logger));
         $this->loadCommonStandards();
         $this->loadFixerSet();
@@ -192,7 +192,7 @@ class FeedIo
 
     public function getDateTimeBuilder() : DateTimeBuilderInterface
     {
-        return $this->dateTimeBuilder;
+        return $this->specification->getDateTimeBuilder();
     }
 
     /**

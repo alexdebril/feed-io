@@ -30,7 +30,10 @@ class FeedIoTest extends TestCase
         ));
         $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
-        $this->object = new FeedIo($client, new \Psr\Log\NullLogger());
+
+        $logger = new \Psr\Log\NullLogger();
+
+        $this->object = new FeedIo($client, $logger, new Specification($logger));
     }
 
     /**
