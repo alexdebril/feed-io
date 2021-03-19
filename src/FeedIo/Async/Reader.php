@@ -48,7 +48,7 @@ class Reader implements ReaderInterface
      */
     public function __construct(MainReader $reader, Client $client, CallbackInterface $callback, string $feedClass)
     {
-        error_log("Async reading is deprecated and will be removed in v5.0.", E_DEPRECATED);
+        error_log("Async reading is deprecated and will be removed in v5.0.", E_USER_DEPRECATED);
         $this->reader = $reader;
         $this->client = $client;
         $this->callback = $callback;

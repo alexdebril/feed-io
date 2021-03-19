@@ -92,6 +92,12 @@ class Item extends Node implements ItemInterface
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        error_log('Method getDescription is deprecated and will be removed in feed-io 5.0. Please use getContent() instead', E_USER_DEPRECATED);
+        return parent::getDescription();
+    }
+
     /**
      * Returns the 'content' for Atom and JSONFeed formats, 'description' for RSS
      * @return string|null

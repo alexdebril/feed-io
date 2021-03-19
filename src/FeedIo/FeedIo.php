@@ -296,7 +296,7 @@ class FeedIo
      */
     public function readAsync(iterable $requests, CallbackInterface $callback, string $feedClass = '\FeedIo\Feed') : void
     {
-        error_log("FeedIo::readAsync is deprecated and will be removed in v5.0.", E_DEPRECATED);
+        error_log("FeedIo::readAsync is deprecated and will be removed in v5.0.", E_USER_DEPRECATED);
         $reader = new AsyncReader($this->reader, $this->reader->getClient(), $callback, $feedClass);
 
         $reader->process($requests);
@@ -328,7 +328,7 @@ class FeedIo
      */
     public function readSince(string $url, \DateTime $modifiedSince) : Result
     {
-        error_log("readSince() is deprecated and will be removed in v5.0.", E_DEPRECATED);
+        error_log("readSince() is deprecated and will be removed in v5.0.", E_USER_DEPRECATED);
         return $this->read($url, new Feed(), $modifiedSince);
     }
 
