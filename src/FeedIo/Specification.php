@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-
 namespace FeedIo;
-
 
 use FeedIo\Parser\JsonParser;
 use FeedIo\Parser\XmlParser;
@@ -21,7 +19,6 @@ use OutOfRangeException;
 
 class Specification implements SpecificationInterface
 {
-
     protected array $standards;
 
     protected FixerSet $fixerSet;
@@ -29,7 +26,7 @@ class Specification implements SpecificationInterface
     public function __construct(
         protected LoggerInterface $logger,
         protected ?DateTimeBuilderInterface $dateTimeBuilder = null,
-    ){
+    ) {
         if (is_null($this->dateTimeBuilder)) {
             $this->dateTimeBuilder = new DateTimeBuilder($this->logger);
         }
@@ -43,7 +40,7 @@ class Specification implements SpecificationInterface
 
         $this->fixerSet = new FixerSet();
         /** @var FixerAbstract $fixer */
-        foreach([new HttpLastModified(), new PublicId()] as $fixer) {
+        foreach ([new HttpLastModified(), new PublicId()] as $fixer) {
             $fixer->setLogger($this->logger);
             $this->fixerSet->add($fixer);
         }
@@ -79,5 +76,4 @@ class Specification implements SpecificationInterface
     {
         return $this->standards;
     }
-
 }

@@ -3,7 +3,6 @@
 
 namespace FeedIo;
 
-
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 use FeedIo\Standard\Json;
@@ -12,7 +11,6 @@ use Psr\Log\NullLogger;
 
 class SpecificationTest extends TestCase
 {
-
     protected Specification $specification;
 
     protected function setUp(): void
@@ -38,5 +36,4 @@ class SpecificationTest extends TestCase
         $parser = $this->specification->newParser('atom', new Atom($this->specification->getDateTimeBuilder()));
         $this->assertInstanceOf('FeedIo\Parser\XmlParser', $parser);
     }
-
 }
