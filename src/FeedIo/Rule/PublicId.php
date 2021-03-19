@@ -1,10 +1,5 @@
 <?php declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 22/11/14
- * Time: 11:24
- */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\NodeInterface;
