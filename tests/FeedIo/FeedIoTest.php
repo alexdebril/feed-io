@@ -61,46 +61,11 @@ class FeedIoTest extends TestCase
         $this->assertCount(2, $urls);
     }
 
-    /**
-     * @covers FeedIo\FeedIo::getCommonStandards
-     */
-    public function testGetCommonStandards()
-    {
-        $standards = $this->object->getCommonStandards();
-        $this->assertIsArray($standards);
-        foreach ($standards as $standard) {
-            $this->assertInstanceOf('\FeedIo\StandardAbstract', $standard);
-        }
-    }
-
-    public function testFixerSet()
-    {
-        $this->assertInstanceOf('\FeedIo\Reader\FixerSet', $this->object->getFixerSet());
-    }
-
-    public function testGetBaseFixers()
-    {
-        $fixers = $this->object->getBaseFixers();
-
-        foreach ($fixers as $fixer) {
-            $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
-        }
-    }
-
     public function testWithModifiedSince()
     {
         $result = $this->object->read('http://localhost', new Feed(), new \DateTime());
 
         $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::addStandard
-     */
-    public function testAddStandard()
-    {
-        $this->object->addStandard('atom2', new Atom(new DateTimeBuilder()));
-        $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom2'));
     }
 
     /**
@@ -119,22 +84,6 @@ class FeedIoTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Reader', $this->object->getReader());
     }
 
-    /**
-     * @covers FeedIo\FeedIo::setReader
-     */
-    public function testSetReader()
-    {
-        $logger = new \Psr\Log\NullLogger();
-        $reader = new Reader(
-            new Adapter\Guzzle\Client(
-                new \GuzzleHttp\Client()
-            ),
-            $logger
-        );
-
-        $this->object->setReader($reader);
-        $this->assertEquals($reader, $this->object->getReader());
-    }
 
     /**
      * @covers FeedIo\FeedIo::read
@@ -209,19 +158,5 @@ class FeedIoTest extends TestCase
 
         $response = $this->object->getPsrResponse($feed, 'atom');
         $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $response);
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::getStandard
-     */
-    public function testGetStandard()
-    {
-        $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom'));
-    }
-
-    public function testWrongStandard()
-    {
-        $this->expectException('\OutOfBoundsException');
-        $this->object->getStandard('fake');
     }
 }
