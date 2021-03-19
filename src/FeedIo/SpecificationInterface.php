@@ -2,8 +2,6 @@
 
 namespace FeedIo;
 
-use Psr\Log\LoggerInterface;
-use Traversable;
 use FeedIo\Reader\FixerSet;
 use FeedIo\Rule\DateTimeBuilderInterface;
 
