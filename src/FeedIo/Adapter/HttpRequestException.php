@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FeedIo\Adapter;
 
 use FeedIo\FeedIoException;
