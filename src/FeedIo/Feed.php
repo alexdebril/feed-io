@@ -19,6 +19,8 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
 
     protected ?string $url = null;
 
+    protected ?string $description = null;
+
     protected ?string $language = null;
 
     protected ?string $logo = null;
@@ -31,14 +33,38 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         parent::__construct();
     }
 
+    /**
+     * Returns the feed's full URL
+     *
+     * @return string|null
+     */
     public function getUrl() : ? string
     {
         return $this->url;
     }
 
+    /**
+     * @param string|null $url
+     * @return FeedInterface
+     */
     public function setUrl(string $url = null) : FeedInterface
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription() : ? string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description = null) : FeedInterface
+    {
+        $this->description = $description;
 
         return $this;
     }

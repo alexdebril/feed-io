@@ -24,7 +24,7 @@ class Atom extends XmlAbstract
 
     const DATETIME_FORMAT = \DateTime::ATOM;
 
-    public function format(\DOMDocument $document) : \DOMDocument
+    public function format(DOMDocument $document) : DOMDocument
     {
         $element = $document->createElement('feed');
         $element->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
@@ -63,8 +63,7 @@ class Atom extends XmlAbstract
         $ruleSet
             ->add(new Content())
             ->add(new Summary())
-            ->add(new Media(), ['media:group'])
-            ->add(new Media(), ['media:content'])
+            ->add(new Media(), ['media:group', 'media:content'])
         ;
 
         return $ruleSet;

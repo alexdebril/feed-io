@@ -83,7 +83,6 @@ class JsonFormatterTest extends TestCase
         $item->addCategory(new Category());
         $item->setLastModified(new \DateTime());
         $item->setTitle($title);
-        $item->setDescription($description);
 
         return $item;
     }
