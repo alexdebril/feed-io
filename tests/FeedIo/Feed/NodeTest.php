@@ -41,13 +41,6 @@ class NodeTest extends TestCase
         $this->assertEquals($publicId, $this->object->getPublicId());
     }
 
-    public function testDescription()
-    {
-        $description = 'lorem ipsum';
-        $this->assertInstanceOf('\FeedIo\Feed\Node', $this->object->setDescription($description));
-        $this->assertEquals($description, $this->object->getDescription());
-    }
-
     public function testLink()
     {
         $link = 'http://localhost';
@@ -86,12 +79,10 @@ class NodeTest extends TestCase
         $this->object->set('foo', 'bar')
             ->setLastModified(new \DateTime())
             ->setTitle('my title')
-            ->addCategory($category)
-            ->setDescription('lorem ipsum');
+            ->addCategory($category);
 
         $out = $this->object->toArray();
 
-        $this->assertEquals('lorem ipsum', $out['description']);
         $this->assertEquals('my title', $out['title']);
         $this->assertEquals('bar', $out['elements']['foo']);
         $this->assertEquals('test', $out['categories'][0]);

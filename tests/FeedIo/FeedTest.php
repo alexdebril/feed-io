@@ -88,6 +88,14 @@ class FeedTest extends TestCase
         $this->assertEquals($url, $feed->getUrl());
     }
 
+
+    public function testDescription()
+    {
+        $description = 'lorem ipsum';
+        $this->assertInstanceOf('\FeedIo\Feed', $this->object->setDescription($description));
+        $this->assertEquals($description, $this->object->getDescription());
+    }
+
     public function testToArray()
     {
         $item = new Feed\Item();

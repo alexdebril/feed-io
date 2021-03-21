@@ -24,8 +24,6 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 
     protected ?string $publicId = null;
 
-    protected ?string $description = null;
-
     protected ?string $link = null;
 
     protected ?string $host = null;
@@ -109,21 +107,6 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
     public function setPublicId(string $publicId = null) : NodeInterface
     {
         $this->publicId = $publicId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription() : ? string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description = null) : NodeInterface
-    {
-        $this->description = $description;
 
         return $this;
     }

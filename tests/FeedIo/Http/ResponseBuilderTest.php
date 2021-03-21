@@ -88,7 +88,6 @@ class ResponseBuilderTest extends TestCase
         $item->setLink('http://localhost/item/1');
         $item->setTitle('an item');
         $item->setLastModified(new \DateTime());
-        $item->setDescription('lorem ipsum');
 
         $feed->add($item);
 

@@ -15,7 +15,7 @@ class Content extends TextAbstract
     public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($node instanceof ItemInterface) {
-            $node->setDescription(
+            $node->setContent(
                 $this->getProcessedContent($element, $node)
             );
         }
@@ -32,6 +32,9 @@ class Content extends TextAbstract
 
     protected function hasValue(NodeInterface $node): bool
     {
-        return !! $node->getDescription();
+        if ($node instanceof ItemInterface) {
+            return !! $node->getContent();
+        }
+        return false;
     }
 }

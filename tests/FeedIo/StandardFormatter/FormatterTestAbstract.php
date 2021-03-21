@@ -62,7 +62,7 @@ abstract class FormatterTestAbstract extends TestCase
         $item->setPublicId('http://localhost/item/1');
         $item->setLastModified($date);
         $item->setTitle('item title');
-        $item->setDescription('A great description');
+        $item->setContent('A great description');
         $item->setLink('http://localhost/item/1');
         $item->setAuthor($author);
         $item->addCategory($category);
