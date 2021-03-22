@@ -98,7 +98,11 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         }
 
         if (false === strtotime($string)) {
-            throw new \InvalidArgumentException('Impossible to convert date : '.$string);
+            $message = 'Impossible to convert date : '.$string;
+            if ($this->logger) {
+                $this->logger->warning($message);
+            }
+            throw new \InvalidArgumentException($message);
         }
         $date = new DateTime($string, $this->getFeedTimezone());
         $date->setTimezone($this->getTimezone());

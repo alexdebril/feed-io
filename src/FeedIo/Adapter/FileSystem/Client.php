@@ -2,6 +2,7 @@
 
 namespace FeedIo\Adapter\FileSystem;
 
+use DateTime;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ResponseInterface;
@@ -18,12 +19,12 @@ class Client implements ClientInterface
      * @throws \FeedIo\Adapter\NotFoundException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $path, \DateTime $modifiedSince) : ResponseInterface
+    public function getResponse(string $path, DateTime $modifiedSince = null) : ResponseInterface
     {
         if (file_exists($path)) {
             return new Response(
                 file_get_contents($path),
-                new \DateTime('@'.filemtime($path))
+                new DateTime('@'.filemtime($path))
             );
         }
 

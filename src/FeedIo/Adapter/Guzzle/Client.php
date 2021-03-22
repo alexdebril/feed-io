@@ -40,15 +40,17 @@ class Client implements ClientInterface
 
     /**
      * @param string $url
-     * @param \DateTime $modifiedSince
+     * @param DateTime|null $modifiedSince
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getResponse(string $url, DateTime $modifiedSince) : ResponseInterface
+    public function getResponse(string $url, DateTime $modifiedSince = null) : ResponseInterface
     {
-        $headResponse = $this->request('head', $url, $modifiedSince);
-        if (304 === $headResponse->getStatusCode()) {
-            return $headResponse;
+        if ($modifiedSince) {
+            $headResponse = $this->request('head', $url, $modifiedSince);
+            if (304 === $headResponse->getStatusCode()) {
+                return $headResponse;
+            }
         }
 
         return $this->request('get', $url, $modifiedSince);
@@ -57,11 +59,11 @@ class Client implements ClientInterface
     /**
      * @param string $method
      * @param string $url
-     * @param DateTime $modifiedSince
+     * @param DateTime|null $modifiedSince
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function request(string $method, string $url, DateTime $modifiedSince): ResponseInterface
+    protected function request(string $method, string $url, DateTime $modifiedSince = null): ResponseInterface
     {
         $options = $this->getOptions($modifiedSince);
         $duration = 0;
@@ -81,18 +83,21 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param \DateTime $modifiedSince
+     * @param DateTime|null $modifiedSince
      * @return array
      */
-    protected function getOptions(\DateTime $modifiedSince) : array
+    protected function getOptions(DateTime $modifiedSince = null) : array
     {
+        $headers = [
+            'Accept-Encoding' => 'gzip, deflate',
+            'User-Agent' => $this->userAgent,
+        ];
+        if ($modifiedSince) {
+            $headers['If-Modified-Since'] = $modifiedSince->format(\DateTime::RFC2822);
+        }
         return [
             'http_errors' => false,
-            'headers' => [
-                'Accept-Encoding' => 'gzip, deflate',
-                'User-Agent' => $this->userAgent,
-                'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
-            ]
+            'headers' => $headers
         ];
     }
 }

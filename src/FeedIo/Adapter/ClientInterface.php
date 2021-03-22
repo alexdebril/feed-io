@@ -2,6 +2,8 @@
 
 namespace FeedIo\Adapter;
 
+use DateTime;
+
 /**
  * Describes a HTTP Client used by \FeedIo\Reader
  *
@@ -13,10 +15,10 @@ interface ClientInterface
 
     /**
      * @param  string                               $url
-     * @param  \DateTime                            $modifiedSince
+     * @param  DateTime|null                        $modifiedSince
      * @throws \FeedIo\Adapter\NotFoundException
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface;
+    public function getResponse(string $url, DateTime $modifiedSince = null) : ResponseInterface;
 }

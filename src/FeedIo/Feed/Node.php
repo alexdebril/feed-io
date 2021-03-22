@@ -31,7 +31,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
     public function __construct()
     {
         $this->initElements();
-        $this->categories = new \ArrayIterator();
+        $this->categories = new ArrayIterator();
     }
 
     public function set(string $name, string $value = null) : NodeInterface
