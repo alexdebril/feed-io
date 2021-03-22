@@ -2,25 +2,22 @@
 
 namespace FeedIo\Feed\Node;
 
+use Iterator;
+
 /**
  * Iterator to filter elements by name
  * @see \FilterIterator
  */
 class ElementIterator extends \FilterIterator
 {
-    /**
-     * @var string $name Element name to accept
-     */
-    protected $name;
 
     /**
      * @param \Iterator $iterator Set of elements to filter
      * @param string    $name     Element name to accept
      */
-    public function __construct(\Iterator $iterator, string $name)
+    public function __construct(Iterator $iterator, protected string $name)
     {
         parent::__construct($iterator);
-        $this->name = $name;
     }
 
     /**

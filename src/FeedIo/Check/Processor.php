@@ -12,25 +12,11 @@ use FeedIo\FeedIo;
  */
 class Processor
 {
+    protected ?array $checks = [];
 
-    /**
-     * Checks to perform
-     *
-     * @var array<CheckInterface>
-     */
-    protected $checks = [];
-
-    /**
-     * @var FeedIo
-     */
-    protected $feedIo;
-
-    /**
-     * @param FeedIo $feedIo
-     */
-    public function __construct(FeedIo $feedIo)
-    {
-        $this->feedIo = $feedIo;
+    public function __construct(
+        protected FeedIo $feedIo
+    ) {
     }
 
     /**

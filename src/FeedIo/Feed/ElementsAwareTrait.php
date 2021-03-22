@@ -2,16 +2,14 @@
 
 namespace FeedIo\Feed;
 
+use ArrayIterator;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\Feed\Node\ElementIterator;
 
 trait ElementsAwareTrait
 {
-    /**
-     * @var \ArrayIterator
-     */
-    protected $elements;
+    protected ArrayIterator $elements;
 
     /**
      * initialize the elements property before use

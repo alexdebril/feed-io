@@ -6,24 +6,14 @@ use FeedIo\Feed\ArrayableInterface;
 
 class Author implements AuthorInterface, ArrayableInterface
 {
+    protected ?string $name = null;
+
+    protected ?string $uri = null;
+
+    protected ?string $email = null;
 
     /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $uri;
-
-    /**
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getName() : ? string
     {
@@ -31,7 +21,7 @@ class Author implements AuthorInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $name
+     * @param string|null $name
      * @return AuthorInterface
      */
     public function setName(string $name = null) : AuthorInterface
@@ -42,7 +32,7 @@ class Author implements AuthorInterface, ArrayableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUri() : ? string
     {
@@ -50,7 +40,7 @@ class Author implements AuthorInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $uri
+     * @param string|null $uri
      * @return AuthorInterface
      */
     public function setUri(string $uri = null) : AuthorInterface
@@ -61,7 +51,7 @@ class Author implements AuthorInterface, ArrayableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEmail() : ? string
     {
@@ -69,7 +59,7 @@ class Author implements AuthorInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $email
+     * @param string|null $email
      * @return AuthorInterface
      */
     public function setEmail(string $email = null) : AuthorInterface
