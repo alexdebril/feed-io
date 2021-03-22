@@ -30,9 +30,6 @@ class Response implements ResponseInterface
         $this->lastModified = $lastModified;
     }
 
-    /**
-     * @return int
-     */
     public function getDuration(): float
     {
         return 0;

@@ -7,10 +7,6 @@ namespace FeedIo\Adapter;
  */
 class NullResponse implements ResponseInterface
 {
-
-    /**
-     * @return int
-     */
     public function getDuration(): float
     {
         return 0;
