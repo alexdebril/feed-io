@@ -2,30 +2,21 @@
 
 namespace FeedIo\Feed;
 
+use ArrayIterator;
 use FeedIo\Feed\Item\Media;
 use FeedIo\Feed\Item\MediaInterface;
 
 class Item extends Node implements ItemInterface
 {
+    protected ArrayIterator $medias;
 
-    /**
-     * @var \ArrayIterator
-     */
-    protected $medias;
+    protected ?string $summary = null;
 
-    /**
-     * @var string
-     */
-    protected $summary;
-
-    /**
-     * @var string
-     */
-    protected $content;
+    protected ?string $content = null;
 
     public function __construct()
     {
-        $this->medias = new \ArrayIterator();
+        $this->medias = new ArrayIterator();
 
         parent::__construct();
     }

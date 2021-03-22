@@ -6,44 +6,22 @@ use FeedIo\Feed\ArrayableInterface;
 
 class Media implements MediaInterface, ArrayableInterface
 {
-    /**
-     * @var string
-     */
-    protected $nodeName;
+    protected ?string $nodeName = null;
+
+    protected ?string $type = null;
+
+    protected ?string $url = null;
+
+    protected ?string $length = null;
+
+    protected ?string $title = null;
+
+    protected ?string $description = null;
+
+    protected ?string $thumbnail = null;
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @var string
-     */
-    protected $length;
-
-    /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * @var string
-     */
-    protected $thumbnail;
-
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getNodeName() : ? string
     {
@@ -62,17 +40,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @deprecated
-     * @return bool
-     */
-    public function isThumbnail() : bool
-    {
-        trigger_error('Method isThumbnail is deprecated and will be removed in feed-io 5.0', E_USER_DEPRECATED);
-        return $this->nodeName === 'media:thumbnail';
-    }
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getType() : ? string
     {
@@ -80,7 +48,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $type
+     * @param string|null $type
      * @return MediaInterface
      */
     public function setType(?string $type) : MediaInterface
@@ -91,7 +59,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrl() : ? string
     {
@@ -99,7 +67,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $url
+     * @param string|null $url
      * @return MediaInterface
      */
     public function setUrl(?string $url) : MediaInterface
@@ -110,7 +78,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLength() : ? string
     {
@@ -118,7 +86,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $length
+     * @param string|null $length
      * @return MediaInterface
      */
     public function setLength(?string $length) : MediaInterface
@@ -128,9 +96,8 @@ class Media implements MediaInterface, ArrayableInterface
         return $this;
     }
 
-
     /**
-     * @return string
+     * @return string|null
      */
     public function getTitle() : ? string
     {
@@ -138,7 +105,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $title
+     * @param string|null $title
      * @return MediaInterface
      */
     public function setTitle(?string $title) : MediaInterface
