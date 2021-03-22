@@ -15,9 +15,11 @@ interface ResponseInterface
     public function getBody() : ? string;
 
     /**
-     * @return int
+     * request's duration in seconds
+     *
+     * @return float
      */
-    public function getDuration(): int;
+    public function getDuration(): float;
 
     /**
      * @return int

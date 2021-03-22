@@ -6,15 +6,14 @@ use FeedIo\FeedIoException;
 
 class HttpRequestException extends FeedIoException
 {
-    protected int $duration = 0;
+    public function __construct(
+        protected float $duration = 0
+    ) {
+        parent::__construct();
+    }
 
     public function getDuration(): int
     {
         return $this->duration;
-    }
-
-    public function setDuration(int $duration): void
-    {
-        $this->duration = $duration;
     }
 }

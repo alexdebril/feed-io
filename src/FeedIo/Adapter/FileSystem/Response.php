@@ -33,7 +33,7 @@ class Response implements ResponseInterface
     /**
      * @return int
      */
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return 0;
     }

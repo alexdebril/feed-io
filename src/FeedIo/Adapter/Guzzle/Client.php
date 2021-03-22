@@ -2,11 +2,13 @@
 
 namespace FeedIo\Adapter\Guzzle;
 
+use DateTime;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\NotFoundException;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Adapter\ServerErrorException;
-use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\ClientInterface as GuzzleClientInterface;
+use GuzzleHttp\TransferStats;
 
 /**
  * Guzzle dependent HTTP client
@@ -19,24 +21,10 @@ class Client implements ClientInterface
      */
     const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
 
-    /**
-     * @var \GuzzleHttp\ClientInterface
-     */
-    protected $guzzleClient;
-
-    /**
-     * @var string
-     */
-    protected $userAgent;
-
-    /**
-     * @param \GuzzleHttp\ClientInterface $guzzleClient
-     * @param string $userAgent
-     */
-    public function __construct(\GuzzleHttp\ClientInterface $guzzleClient, string $userAgent = self::DEFAULT_USER_AGENT)
-    {
-        $this->guzzleClient = $guzzleClient;
-        $this->userAgent = $userAgent;
+    public function __construct(
+        protected GuzzleClientInterface $guzzleClient,
+        protected string $userAgent = self::DEFAULT_USER_AGENT
+    ) {
     }
 
     /**
@@ -56,37 +44,40 @@ class Client implements ClientInterface
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
+    public function getResponse(string $url, DateTime $modifiedSince) : ResponseInterface
     {
-        $start = microtime(true);
-        try {
-            $options = $this->getOptions($modifiedSince);
-            $psrResponse = $this->guzzleClient->request('get', $url, $options);
-            $duration = $this->getDuration($start);
-            return new Response($psrResponse, $duration);
-        } catch (BadResponseException $e) {
-            $duration = $this->getDuration($start);
-            switch ((int) $e->getResponse()->getStatusCode()) {
-                case 404:
-                    $notFoundException = new NotFoundException($e->getMessage());
-                    $notFoundException->setDuration($duration);
-                    throw $notFoundException;
-                default:
-                    $serverErrorException = new ServerErrorException($e->getMessage());
-                    $serverErrorException->setResponse($e->getResponse());
-                    $serverErrorException->setDuration($duration);
-                    throw $serverErrorException;
-            }
+        $headResponse = $this->request('head', $url, $modifiedSince);
+        if (304 === $headResponse->getStatusCode()) {
+            return $headResponse;
         }
+
+        return $this->request('get', $url, $modifiedSince);
     }
 
     /**
-     * @param float $start
-     * @return int
+     * @param string $method
+     * @param string $url
+     * @param DateTime $modifiedSince
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function getDuration(float $start): int
+    protected function request(string $method, string $url, DateTime $modifiedSince): ResponseInterface
     {
-        return intval(round(microtime(true) - $start, 3) * 1000);
+        $options = $this->getOptions($modifiedSince);
+        $duration = 0;
+        $options['on_stats'] = function (TransferStats $stats) use (&$duration) {
+            $duration = $stats->getTransferTime();
+        };
+        $psrResponse = $this->guzzleClient->request($method, $url, $options);
+        switch ((int) $psrResponse->getStatusCode()) {
+            case 200:
+            case 304:
+                return new Response($psrResponse, $duration);
+            case 404:
+                throw new NotFoundException($duration);
+            default:
+                throw new ServerErrorException($psrResponse, $duration);
+        }
     }
 
     /**
@@ -96,6 +87,7 @@ class Client implements ClientInterface
     protected function getOptions(\DateTime $modifiedSince) : array
     {
         return [
+            'http_errors' => false,
             'headers' => [
                 'Accept-Encoding' => 'gzip, deflate',
                 'User-Agent' => $this->userAgent,
