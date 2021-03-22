@@ -12,7 +12,7 @@ class HttpRequestException extends FeedIoException
         parent::__construct();
     }
 
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return $this->duration;
     }
