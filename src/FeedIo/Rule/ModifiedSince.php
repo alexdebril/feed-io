@@ -2,6 +2,7 @@
 
 namespace FeedIo\Rule;
 
+use InvalidArgumentException;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\DateRuleAbstract;
 
@@ -15,7 +16,10 @@ class ModifiedSince extends DateRuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
-        $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
+        try {
+            $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
+        } catch (InvalidArgumentException $e) {
+        }
     }
 
     /**

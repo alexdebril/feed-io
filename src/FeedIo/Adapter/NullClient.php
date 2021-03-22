@@ -2,6 +2,8 @@
 
 namespace FeedIo\Adapter;
 
+use DateTime;
+
 /**
  * Fake HTTP client
  */
@@ -10,10 +12,10 @@ class NullClient implements ClientInterface
 
     /**
      * @param  string                            $url
-     * @param  \DateTime                         $modifiedSince
+     * @param  DateTime|null                         $modifiedSince
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $url, \DateTime $modifiedSince) : ResponseInterface
+    public function getResponse(string $url, DateTime $modifiedSince = null) : ResponseInterface
     {
         return new NullResponse();
     }
