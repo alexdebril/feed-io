@@ -2,7 +2,7 @@
 
 namespace FeedIo;
 
-use FeedIo\ParserAbstract;
+use DateTime;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Reader\Document;
@@ -23,29 +23,16 @@ use Psr\Log\LoggerInterface;
  */
 class Reader
 {
-    /**
-     * @var \FeedIo\Adapter\ClientInterface;
-     */
-    protected $client;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var array
-     */
-    protected $parsers = array();
+    protected array $parsers = [];
 
     /**
      * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
-    public function __construct(ClientInterface $client, LoggerInterface $logger)
-    {
-        $this->client = $client;
-        $this->logger = $logger;
+    public function __construct(
+        protected ClientInterface $client,
+        protected LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -69,18 +56,17 @@ class Reader
     }
 
     /**
-     * @param string                 $url
-     * @param  FeedInterface         $feed
-     * @param  \DateTime             $modifiedSince
-     * @return \FeedIo\Reader\Result
-     * @throws ReadErrorException
+     * @param string $url
+     * @param FeedInterface $feed
+     * @param DateTime|null $modifiedSince
+     * @return Result
      */
-    public function read(string $url, FeedInterface $feed, \DateTime $modifiedSince = null) : Result
+    public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null) : Result
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
             $this->logger->notice("no 'modifiedSince' parameter given, setting it to 01/01/1970");
-            $modifiedSince = new \DateTime('1800-01-01');
+            $modifiedSince = new DateTime('1800-01-01');
         }
 
         try {

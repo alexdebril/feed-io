@@ -4,21 +4,11 @@ namespace FeedIo\Feed\Node;
 
 class Category implements CategoryInterface
 {
+    protected ?string $term = null;
 
-    /**
-     * @var string
-     */
-    protected $term;
+    protected ?string $scheme = null;
 
-    /**
-     * @var string
-     */
-    protected $scheme;
-
-    /**
-     * @var string
-     */
-    protected $label;
+    protected ?string $label = null;
 
     /**
      * @return null|string
@@ -29,7 +19,7 @@ class Category implements CategoryInterface
     }
 
     /**
-     * @param  string $term
+     * @param string|null $term
      * @return CategoryInterface
      */
     public function setTerm(string $term = null) : CategoryInterface
@@ -48,7 +38,7 @@ class Category implements CategoryInterface
     }
 
     /**
-     * @param  string $scheme
+     * @param string|null $scheme
      * @return CategoryInterface
      */
     public function setScheme(string $scheme = null) : CategoryInterface
@@ -67,7 +57,7 @@ class Category implements CategoryInterface
     }
 
     /**
-     * @param  string $label
+     * @param string|null $label
      * @return CategoryInterface
      */
     public function setLabel(string $label = null) : CategoryInterface
