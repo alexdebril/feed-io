@@ -17,11 +17,11 @@ class Response implements ResponseInterface
 
     public function __construct(
         protected PsrResponseInterface $psrResponse,
-        protected int $duration
+        protected float $duration
     ) {
     }
 
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return $this->duration;
     }

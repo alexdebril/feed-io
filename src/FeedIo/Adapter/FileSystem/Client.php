@@ -27,6 +27,6 @@ class Client implements ClientInterface
             );
         }
 
-        throw new NotFoundException($path);
+        throw new NotFoundException();
     }
 }
