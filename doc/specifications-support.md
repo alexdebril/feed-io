@@ -13,9 +13,9 @@ interface : FeedInterface
 | link (rel=self) | N/A                     | feed_url      | getLink         | setLink         |
 | updated         | pubDate / lastBuildDate | N/A           | getLastModified | setLastModified |
 | id              | N/A                     | N/A           | getPublicId     | setPublicId     |
-| N/A             | description             | description   | getDescription  | setDescription  |
+| description     | description             | description   | getDescription  | setDescription  |
 | category        | category                | N/A           | getCategories   | addCategory     |
-| author          | author                  | author (wip)  | getAuthor       | setAuthor       |
+| author          | author                  | author(s)     | getAuthor       | setAuthor       |
 | contributor     | N/A                     | N/A           | not supported   | not supported   |
 | logo            | image                   | icon          | getLogo         | setLogo         |
 | rights          | copyright               | N/A           | not supported   | not supported   |
@@ -45,8 +45,8 @@ Interface : ItemInterface
 | link                | enclosure   | image (get only)            | getMedias       | addMedia        |
 | updated / published | pubDate     | date_published              | getLastModified | setLastModified |
 | id                  | guid        | id                          | getPublicId     | setPublicId     |
-| content             | description | content_html / content_text | getDescription  | setDescription  |
-| summary             | N/A         | summary                     | not supported   | not supported   |
+| content             | description | content_html / content_text | getContent      | setContent      |
+| summary             | N/A         | summary                     | getSummary      | setSummary      |
 | source              | source      | N/A                         | not supported   | not supported   |
 | category            | category    | tags (wip)                  | getCategories   | addCategory     |
 | author              | N/A         | author                      | getAuthor       | setAuthor       |
