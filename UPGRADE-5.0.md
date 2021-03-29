@@ -19,3 +19,7 @@ It's a complicated piece of code, complex to use and that could be easily replac
 ## `description` / `content` naming change
 
 get/setDescription is now at the Feed's level, items expose get/setSummary and get/setContent.
+
+## No more complaining about malformed date
+
+When a feed-io is malformed, feed-io won't throw an exception anymore. It will return current date instead
