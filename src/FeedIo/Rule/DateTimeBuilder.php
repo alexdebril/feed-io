@@ -88,7 +88,14 @@ class DateTimeBuilder implements DateTimeBuilderInterface
             }
         }
 
-        return $this->stringToDateTime($string);
+        if ($this->logger) {
+            $this->logger->notice("unsupported date format : {$string}, returning current datetime");
+        }
+
+        $date = new DateTime(timezone: $this->getFeedTimezone());
+        $date->setTimezone($this->getTimezone());
+
+        return $date;
     }
 
     public function stringToDateTime(string $string) : DateTime
