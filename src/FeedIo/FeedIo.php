@@ -78,6 +78,21 @@ class FeedIo
     }
 
     /**
+     * Adds a standard to the Specification.
+     *
+     * @see Specification
+     * @param string $name
+     * @param StandardAbstract $standard
+     * @return $this
+     */
+    public function addStandard(string $name, StandardAbstract $standard): self
+    {
+        $this->specification->addStandard($name, $standard);
+
+        return $this;
+    }
+
+    /**
      * Discover feeds from the webpage's headers
      *
      * @param  string $url

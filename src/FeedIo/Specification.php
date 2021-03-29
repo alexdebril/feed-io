@@ -31,12 +31,7 @@ class Specification implements SpecificationInterface
             $this->dateTimeBuilder = new DateTimeBuilder($this->logger);
         }
 
-        $this->standards = [
-            'json' => new Json($this->dateTimeBuilder),
-            'atom' => new Atom($this->dateTimeBuilder),
-            'rss' => new Rss($this->dateTimeBuilder),
-            'rdf' => new Rdf($this->dateTimeBuilder),
-        ];
+        $this->standards = $this->getDefaultStandards();
 
         $this->fixerSet = new FixerSet();
         /** @var FixerAbstract $fixer */
@@ -44,6 +39,50 @@ class Specification implements SpecificationInterface
             $fixer->setLogger($this->logger);
             $this->fixerSet->add($fixer);
         }
+    }
+
+    /**
+     * If you need to replace an existing standard with one of yours, you can extend the class and override this method
+     * to redefine the list of default standards.
+     *
+     * @return array
+     */
+    protected function getDefaultStandards(): array
+    {
+        return [
+            'json' => new Json($this->dateTimeBuilder),
+            'atom' => new Atom($this->dateTimeBuilder),
+            'rss' => new Rss($this->dateTimeBuilder),
+            'rdf' => new Rdf($this->dateTimeBuilder),
+        ];
+    }
+
+    /**
+     * Adds a new standard to the set, unless you specify a name already taken like 'rss' so you'll overwrite it.
+     *
+     * @param string $name
+     * @param StandardAbstract $standard
+     * @return $this
+     */
+    public function addStandard(string $name, StandardAbstract $standard): self
+    {
+        $name = strtolower($name);
+        $this->standards[$name] = $standard;
+
+        return $this;
+    }
+
+    public function getStandard(string $name): StandardAbstract
+    {
+        if (array_key_exists($name, $this->standards)) {
+            return $this->standards[$name];
+        }
+        throw new OutOfRangeException("No standard found for $name");
+    }
+
+    public function getAllStandards(): array
+    {
+        return $this->standards;
     }
 
     public function getFixerSet(): FixerSet
@@ -62,18 +101,5 @@ class Specification implements SpecificationInterface
             return new JsonParser($standard, $this->logger);
         }
         return new XmlParser($standard, $this->logger);
-    }
-
-    public function getStandard(string $name): StandardAbstract
-    {
-        if (array_key_exists($name, $this->standards)) {
-            return $this->standards[$name];
-        }
-        throw new OutOfRangeException("No standard found for $name");
-    }
-
-    public function getAllStandards(): array
-    {
-        return $this->standards;
     }
 }
