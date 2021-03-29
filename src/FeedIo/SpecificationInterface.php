@@ -13,6 +13,8 @@ interface SpecificationInterface
 
     public function newParser(string $format, StandardAbstract $standard): ParserAbstract;
 
+    public function addStandard(string $name, StandardAbstract $standardAbstract): self;
+
     public function getStandard(string $name): StandardAbstract;
 
     public function getAllStandards(): array;
