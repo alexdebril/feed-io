@@ -72,11 +72,6 @@ class DateTest extends TestCase
         $this->assertInstanceOf('\DateTime', $date);
     }
 
-    public function teststringToDateTime()
-    {
-        $this->assertInstanceOf('\DateTime', $this->object->stringToDateTime('10 september 2017'));
-    }
-
     public function testSetTimezone()
     {
         $this->object->setTimezone(new \DateTimeZone(self::ALTERNATE_TIMEZONE));
