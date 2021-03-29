@@ -64,11 +64,12 @@ class DateTest extends TestCase
         $this->assertEquals(\DateTime::RFC1036, $this->object->getLastGuessedFormat());
     }
 
-    public function testDontConvertDateFormat()
+    public function testReturnDateWhenFormatIsWrong()
     {
         $this->object->addDateFormat(\DateTime::ATOM);
-        $this->expectException('\InvalidArgumentException');
-        $this->object->convertToDateTime('foo');
+        $date = $this->object->convertToDateTime('foo');
+
+        $this->assertInstanceOf('\DateTime', $date);
     }
 
     public function teststringToDateTime()
