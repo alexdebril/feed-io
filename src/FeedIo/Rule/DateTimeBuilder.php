@@ -21,6 +21,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         'Y-m-d\TH:i:s.uP',
         'Y-m-d\TH:i:s.uvP',
         'Y-m-d\TH:i:s',
+        'Y-m-d\TH:iP',
         'Y-m-d',
         'd/m/Y',
         'D, d M Y H:i O',
