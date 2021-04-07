@@ -84,11 +84,24 @@ Scans a website and outputs the feeds it provides.
 
 <p>feed-io requires :</p>
 
-<ul>
-<li>php 5.6+</li>
-<li>psr/log 1.0</li>
-<li>guzzlehttp/guzzle 6.2+</li>
-</ul>
+<table>
+    <thead>
+    <tr>
+        <td>feed-io</td>
+        <td>PHP</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>4.x</td>
+        <td>7.1+</td>
+    </tr>
+    <tr>
+        <td>5.0</td>
+        <td>8.0+</td>
+    </tr>
+    </tbody>
+</table>
 
 <p>it suggests :</p>
 
@@ -136,6 +149,24 @@ Scans a website and outputs the feeds it provides.
 <span class="pl-s1">}</span>
 <span class="pl-s1"></span></pre></div>
 
+<h2>Next Update estimation</h2>
+<div>
+    In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
+    <pre>
+            <code class="php">
+&lt;?php
+$nextUpdate = $result->getNextUpdate();
+echo "computed next update: {$nextUpdate->format(\DATE_ATOM)}";
+
+// you may need to access the statistics
+$updateStats = $result->getUpdateStats();
+echo "average interval in seconds: {$updateStats->getAverageInterval()}";
+              </code>
+          </pre>
+    feed-io calculates the next update time by first detecting if the feed was active in the last 7 days and if not we consider it as sleepy. The next update date for a sleepy feed is set to the next day at the same time. If the feed isn't sleepy we use the average interval and the median interval by adding those intervals to the feed's last modified date and compare the result to the current time. If the result is in the future, then it's returned as the next update time. If none of them are in the future, we considered the feed will be updated quite soon, so the next update time is one hour later from the moment of the calculation.
+
+    Please note: the fixed delays for sleepy and closed to be updated feeds can be set through Result::getNextUpdate() arguments, see Result for more details.
+</div>
 <h2>
 <a id="formatting-an-object-into-a-xml-stream" class="anchor" href="#formatting-an-object-into-a-xml-stream" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>formatting an object into a XML stream</h2>
 
@@ -188,12 +219,8 @@ Scans a website and outputs the feeds it provides.
 <p>To create a new FeedIo instance you only need to inject two dependencies :</p>
 
 <ul>
-<li>an HTTP Client implementing FeedIo\Adapter\ClientInterface. It can be wrapper for an external library like FeedIo\Adapter\Guzzle\Client
-
-<ul>
-<li>a PSR-3 logger implementing Psr\Log\LoggerInterface</li>
-</ul>
-</li>
+    <li>an HTTP Client implementing FeedIo\Adapter\ClientInterface. It can be wrapper for an external library like FeedIo\Adapter\Guzzle\Client</li>
+    <li>a PSR-3 logger implementing Psr\Log\LoggerInterface</li>
 </ul>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
