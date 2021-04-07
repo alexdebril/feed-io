@@ -65,7 +65,6 @@ class Reader
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
-            $this->logger->notice("no 'modifiedSince' parameter given, setting it to 01/01/1970");
             $modifiedSince = new DateTime('1800-01-01');
         }
 
@@ -92,7 +91,7 @@ class Reader
         $document = new Document($response->getBody());
 
         if ($response->isModified()) {
-            $this->logger->info("the stream is modified, parsing it");
+            $this->logger->debug("the stream is modified, parsing it");
             $this->parseDocument($document, $feed);
         }
 
