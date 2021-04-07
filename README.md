@@ -7,9 +7,9 @@
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
+- Highly extensible 
 - Feeds auto-discovery through HTML headers
 - a Command line interface to discover and read feeds
-- Multiple feeds reading at once through asynchronous requests
 - PSR-7 Response generation with accurate cache headers
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
@@ -32,6 +32,11 @@ Use Composer to add feed-io into your project's requirements :
  ```
 
 # Requirements
+
+| feed-io | PHP  |
+| --------| ---- |
+|   4.x   | 7.1+ |
+|   5.0   | 8.0+ |
 
 feed-io 4 requires PHP 7.1+, feed-io 5 requires PHP 8.0+. All versions relies on `psr/log` and `guzzle`. it suggests `monolog` for logging. Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
 
