@@ -130,30 +130,32 @@ Scans a website and outputs the feeds it provides.
 
 <p>feed-io is designed to read feeds across the internet and to publish your own. Its main class is <a href="https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php">FeedIo</a> :</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// create a simple FeedIo instance</span></span>
-<span class="pl-s1"><span class="pl-smi">$feedIo</span> <span class="pl-k">=</span> <span class="pl-c1">\FeedIo\</span><span class="pl-c1">Factory</span><span class="pl-k">::</span>create()<span class="pl-k">-&gt;</span>getFeedIo();</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// read a feed</span></span>
-<span class="pl-s1"><span class="pl-smi">$result</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>read(<span class="pl-smi">$url</span>);</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// or read a feed since a certain date</span></span>
-<span class="pl-s1"><span class="pl-smi">$result</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>readSince(<span class="pl-smi">$url</span>, <span class="pl-k">new</span> <span class="pl-c1">\DateTime</span>(<span class="pl-s"><span class="pl-pds">'</span>-7 days<span class="pl-pds">'</span></span>));</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// get title</span></span>
-<span class="pl-s1"><span class="pl-smi">$feedTitle</span> <span class="pl-k">=</span> <span class="pl-smi">$result</span><span class="pl-k">-&gt;</span>getFeed()<span class="pl-k">-&gt;</span>getTitle();</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// iterate through items</span></span>
-<span class="pl-s1"><span class="pl-k">foreach</span>( <span class="pl-smi">$result</span><span class="pl-k">-&gt;</span>getFeed() <span class="pl-k">as</span> <span class="pl-smi">$item</span> ) {</span>
-<span class="pl-s1">    <span class="pl-smi">$item</span><span class="pl-k">-&gt;</span>getTitle();</span>
-<span class="pl-s1">}</span>
-<span class="pl-s1"></span></pre></div>
+<div>
+    <pre>
+            <code class="php">
+&lt;?php
+// create a simple FeedIo instance
+$feedIo = \FeedIo\Factory::create()->getFeedIo();
+
+// read a feed
+$result = $feedIo->read($url);
+
+// get title
+$feedTitle = $result->getFeed()->getTitle();
+
+// iterate through items
+foreach( $result->getFeed() as $item ) {
+    echo $item->getTitle();
+}
+              </code>
+          </pre>
+</div>
 
 <h2>Next Update estimation</h2>
 <div>
     In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
     <pre>
-            <code class="php">
+        <code class="php">
 &lt;?php
 $nextUpdate = $result->getNextUpdate();
 echo "computed next update: {$nextUpdate->format(\DATE_ATOM)}";
@@ -161,26 +163,28 @@ echo "computed next update: {$nextUpdate->format(\DATE_ATOM)}";
 // you may need to access the statistics
 $updateStats = $result->getUpdateStats();
 echo "average interval in seconds: {$updateStats->getAverageInterval()}";
-              </code>
-          </pre>
+      </code>
+    </pre>
     feed-io calculates the next update time by first detecting if the feed was active in the last 7 days and if not we consider it as sleepy. The next update date for a sleepy feed is set to the next day at the same time. If the feed isn't sleepy we use the average interval and the median interval by adding those intervals to the feed's last modified date and compare the result to the current time. If the result is in the future, then it's returned as the next update time. If none of them are in the future, we considered the feed will be updated quite soon, so the next update time is one hour later from the moment of the calculation.
 
     Please note: the fixed delays for sleepy and closed to be updated feeds can be set through Result::getNextUpdate() arguments, see Result for more details.
 </div>
-<h2>
-<a id="formatting-an-object-into-a-xml-stream" class="anchor" href="#formatting-an-object-into-a-xml-stream" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>formatting an object into a XML stream</h2>
+        <h2>formatting an object into a XML stream</h2>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// build the feed</span></span>
-<span class="pl-s1"><span class="pl-smi">$feed</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">FeedIo\</span><span class="pl-c1">Feed</span>;</span>
-<span class="pl-s1"><span class="pl-smi">$feed</span><span class="pl-k">-&gt;</span>setTitle(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>);</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// convert it into Atom</span></span>
-<span class="pl-s1"><span class="pl-smi">$dom</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>toAtom(<span class="pl-smi">$feed</span>);</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">// or ...</span></span>
-<span class="pl-s1"><span class="pl-smi">$dom</span> <span class="pl-k">=</span> <span class="pl-smi">$feedIo</span><span class="pl-k">-&gt;</span>format(<span class="pl-smi">$feed</span>, <span class="pl-s"><span class="pl-pds">'</span>atom<span class="pl-pds">'</span></span>);</span>
-<span class="pl-s1"></span></pre></div>
+        <pre>
+            <code class="php">
+&lt;?php
+// build the feed
+$feed = new FeedIo\Feed;
+$feed->setTitle('...');
+
+// convert it into Atom
+$atomString = $feedIo->toAtom($feed);
+
+// or ...
+$atomString = $feedIo->format($feed, 'atom');
+              </code>
+          </pre>
 
 <h2>
 <a id="building-a-feed-including-medias" class="anchor" href="#building-a-feed-including-medias" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>building a feed including medias</h2>
