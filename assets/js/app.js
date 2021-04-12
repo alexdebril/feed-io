@@ -1,4 +1,4 @@
-const host = 'https://api.feed-io.net';
+const host = 'https://feed-io-api.herokuapp.com';
 const e = React.createElement;
 
 const pleaseWait = e('p', null, "please wait, while feed-io is processing your request");
