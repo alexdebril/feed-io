@@ -6,6 +6,7 @@ layout: default
 
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve RSS / Atom feeds.
 
+Here's an [online demo](/demo/) of discovering and consuming feeds.
 ```php
 <?php
 require 'vendor/autoload.php';

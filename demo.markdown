@@ -18,6 +18,8 @@ Scans a website and outputs the feeds it provides.
 <input type="url" name="feedToRead" id="feedToRead" />
 <button name="submit" onclick="readFeed()">read</button>
 
+<div id="read-result"></div>
+
 <img src="https://feed-io-api.herokuapp.com" width="0" height="0"/>
 
 <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
