@@ -22,7 +22,6 @@ title: feed-io
 email: alex.debril@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   feed-io is a PHP library to build and consume syndication feeds in all the main formats: RSS, Atom and JSONFeed
-baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://feed-io.net" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  alexdebril
 google_analytics: G-TYMFPFBRSL
