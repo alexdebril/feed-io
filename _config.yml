@@ -18,6 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+lsi: false
+safe: true
+
 title: feed-io
 email: alex.debril@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
