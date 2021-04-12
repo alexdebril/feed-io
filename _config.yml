@@ -28,7 +28,7 @@ github_username:  alexdebril
 google_analytics: G-TYMFPFBRSL
 
 # Build settings
-theme: minima
+theme: jekyll-theme-cayman
 
 # Exclude from processing.
 # The following items will not be processed, by default.
