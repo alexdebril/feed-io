@@ -24,8 +24,8 @@ safe: true
 title: feed-io
 email: alex.debril@gmail.com
 description: "feed-io is a PHP library to build and consume syndication feeds in all the main formats: RSS, Atom and JSONFeed"
-baseurl: ""
-url: "https://alexdebril.github.io/feed-io/"
+baseurl: "/feed-io/"
+url: "https://alexdebril.github.io"
 github_username:  alexdebril
 
 # Build settings
