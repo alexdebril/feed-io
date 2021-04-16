@@ -7,7 +7,6 @@
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
-- Highly extensible 
 - Feeds auto-discovery through HTML headers
 - a Command line interface to discover and read feeds
 - PSR-7 Response generation with accurate cache headers
@@ -16,12 +15,11 @@
 - Enclosure support to handle external medias like audio content
 - Feed logo support (RSS + Atom)
 - PSR compliant logging
-- Malformed feeds auto correction
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
 - Guzzle Client integration
 
-Keep informed about new releases and incoming features : https://debril.org/categories/feed-io
+This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/alexdebril/feed-io/discussions).
 
 # Installation
 
@@ -91,8 +89,6 @@ echo "average interval in seconds: {$updateStats->getAverageInterval()}";
 feed-io calculates the next update time by first detecting if the feed was active in the last 7 days and if not we consider it as sleepy. The next update date for a sleepy feed is set to the next day at the same time. If the feed isn't sleepy we use the average interval and the median interval by adding those intervals to the feed's last modified date and compare the result to the current time. If the result is in the future, then it's returned as the next update time. If none of them are in the future, we considered the feed will be updated quite soon, so the next update time is one hour later from the moment of the calculation.
 
 Please note: the fixed delays for sleepy and closed to be updated feeds can be set through `Result::getNextUpdate()` arguments, see [Result](src/FeedIo/Reader/Result.php) for more details.
-
-
 
 ## Feeds discovery
 
@@ -364,6 +360,6 @@ $feedIo->getDateTimeBuilder()->resetFeedTimezone();
 
 Don't forget to reset `feedTimezone` after fetching the result, or you'll end up with all feeds located in the same timezone.
 
-## Online documentation
+## Built with PHP Storm
 
-The whole documentation is available at https://feed-io.net
+Most of feed-io's code was written using [PHP Storm](https://www.jetbrains.com/phpstorm/) courtesy of Jetbrains.
