@@ -97,6 +97,7 @@ class Client implements ClientInterface
         }
         return [
             'http_errors' => false,
+            'timeout' => 30,
             'headers' => $headers
         ];
     }
