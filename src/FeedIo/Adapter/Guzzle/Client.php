@@ -156,7 +156,8 @@ class Client implements ClientInterface
                 'Accept-Encoding' => 'gzip, deflate',
                 'User-Agent' => $this->userAgent,
                 'If-Modified-Since' => $modifiedSince->format(\DateTime::RFC2822)
-            ]
+            ],
+            'timeout' => 30,
         ];
     }
 }
