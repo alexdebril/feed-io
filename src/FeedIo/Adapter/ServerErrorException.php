@@ -10,7 +10,10 @@ class ServerErrorException extends HttpRequestException
         protected ResponseInterface $response,
         float $duration = 0
     ) {
-        parent::__construct($duration);
+        parent::__construct(
+            'internal server error',
+            $duration
+        );
     }
 
     public function getResponse(): ResponseInterface

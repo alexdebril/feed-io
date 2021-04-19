@@ -76,7 +76,7 @@ class Client implements ClientInterface
             case 304:
                 return new Response($psrResponse, $duration);
             case 404:
-                throw new NotFoundException($duration);
+                throw new NotFoundException('not found', $duration);
             default:
                 throw new ServerErrorException($psrResponse, $duration);
         }
