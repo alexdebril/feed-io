@@ -107,9 +107,12 @@ class Document
             }
         );
 
-        $domDocument = new \DOMDocument();
-        $domDocument->loadXML($this->content);
-        restore_error_handler();
+        try {
+            $domDocument = new \DOMDocument();
+            $domDocument->loadXML($this->content);
+        } finally {
+            restore_error_handler();
+        }
 
         return $domDocument;
     }
