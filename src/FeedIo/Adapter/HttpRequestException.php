@@ -1,30 +1,20 @@
 <?php
 
-
 namespace FeedIo\Adapter;
 
 use FeedIo\FeedIoException;
 
 class HttpRequestException extends FeedIoException
 {
-    /**
-     * @var int
-     */
-    protected $duration;
-
-    /**
-     * @return mixed
-     */
-    public function getDuration(): int
-    {
-        return $this->duration;
+    public function __construct(
+        string $message = '',
+        protected float $duration = 0
+    ) {
+        parent::__construct($message);
     }
 
-    /**
-     * @param mixed $duration
-     */
-    public function setDuration(int $duration): void
+    public function getDuration(): float
     {
-        $this->duration = $duration;
+        return $this->duration;
     }
 }

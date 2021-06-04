@@ -4,10 +4,10 @@ namespace FeedIo\Rule;
 
 use DomDocument;
 use DOMElement;
+use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
-use FeedIo\FeedInterface;
 
-class Description extends TextAbstract
+class Content extends TextAbstract
 {
     const NODE_NAME = 'description';
 
@@ -17,8 +17,8 @@ class Description extends TextAbstract
      */
     public function setProperty(NodeInterface $node, DOMElement $element) : void
     {
-        if ($node instanceof FeedInterface) {
-            $node->setDescription($this->getProcessedContent($element, $node));
+        if ($node instanceof ItemInterface) {
+            $node->setContent($this->getProcessedContent($element, $node));
         }
     }
 
@@ -27,16 +27,16 @@ class Description extends TextAbstract
      */
     protected function hasValue(NodeInterface $node) : bool
     {
-        if ($node instanceof FeedInterface) {
-            return !! $node->getDescription();
+        if ($node instanceof ItemInterface) {
+            return !! $node->getContent();
         }
         return false;
     }
 
     protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
     {
-        if ($node instanceof FeedInterface) {
-            $element = $this->generateElement($document, $node->getDescription());
+        if ($node instanceof ItemInterface) {
+            $element = $this->generateElement($document, $node->getContent());
             $rootElement->appendChild($element);
         }
     }

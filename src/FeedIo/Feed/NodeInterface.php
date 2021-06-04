@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Feed;
 
@@ -24,14 +16,14 @@ interface NodeInterface
     /**
      * returns the author attribute
      *
-     * @return AuthorInterface
+     * @return AuthorInterface|null
      */
     public function getAuthor() : ? AuthorInterface;
 
     /**
      * sets $author to the object's attributes
      *
-     * @param  AuthorInterface $author
+     * @param AuthorInterface|null $author
      * @return NodeInterface
      */
     public function setAuthor(AuthorInterface $author = null) : NodeInterface;
@@ -72,21 +64,6 @@ interface NodeInterface
      * @return NodeInterface
      */
     public function setPublicId(string $id = null) : NodeInterface;
-
-    /**
-     * Returns node's description
-     *
-     * @return string
-     */
-    public function getDescription() : ? string;
-
-    /**
-     * Sets node's description
-     *
-     * @param  string $description
-     * @return NodeInterface
-     */
-    public function setDescription(string $description = null) : NodeInterface;
 
     /**
      * Returns the node's last modified date

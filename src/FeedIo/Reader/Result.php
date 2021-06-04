@@ -1,15 +1,8 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Reader;
 
+use DateTime;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\FeedInterface;
 use FeedIo\Reader\Result\UpdateStats;
@@ -28,132 +21,60 @@ use FeedIo\Reader\Result\UpdateStats;
  */
 class Result
 {
+    protected DateTime $date;
 
-    /**
-     * @var \DateTime
-     */
-    protected $modifiedSince;
+    protected ?UpdateStats $updateStats = null;
 
-    /**
-     * @var \DateTime
-     */
-    protected $date;
-
-    /**
-     * @var \FeedIo\FeedInterface
-     */
-    protected $feed;
-
-    /**
-     * @var \FeedIo\Adapter\ResponseInterface
-     */
-    protected $response;
-
-    /**
-     * @var \FeedIo\Reader\Result\UpdateStats
-     */
-    protected $updateStats;
-
-    /**
-     * @var Document
-     */
-    protected $document;
-
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @param Document      $document
-     * @param FeedInterface     $feed
-     * @param \DateTime         $modifiedSince
-     * @param ResponseInterface $response
-     * @param $url
-     */
     public function __construct(
-        Document $document,
-        FeedInterface $feed,
-        \DateTime $modifiedSince,
-        ResponseInterface $response,
-        string $url
+        protected Document $document,
+        protected FeedInterface $feed,
+        protected DateTime $modifiedSince,
+        protected ResponseInterface $response,
+        protected string $url
     ) {
-        $this->date = new \DateTime();
-        $this->document = $document;
-        $this->feed = $feed;
-        $this->modifiedSince = $modifiedSince;
-        $this->response = $response;
-        $this->url = $url;
+        $this->date = new DateTime();
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate() : \DateTime
+    public function getDate() : DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @return Document
-     */
     public function getDocument() : Document
     {
         return $this->document;
     }
 
-    /**
-     * @return FeedInterface
-     */
     public function getFeed() : FeedInterface
     {
         return $this->feed;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getModifiedSince() : ? \DateTime
+    public function getModifiedSince() : ?DateTime
     {
         return $this->modifiedSince;
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function getResponse() : ResponseInterface
     {
         return $this->response;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl() : string
     {
         return $this->url;
     }
 
-    /**
-     * @param int $minDelay
-     * @param int $sleepyDelay
-     * @param int $sleepyDuration
-     * @param float $marginRatio
-     * @return \DateTime
-     */
     public function getNextUpdate(
         int $minDelay = UpdateStats::DEFAULT_MIN_DELAY,
         int $sleepyDelay = UpdateStats::DEFAULT_SLEEPY_DELAY,
         int $sleepyDuration = UpdateStats::DEFAULT_DURATION_BEFORE_BEING_SLEEPY,
         float $marginRatio = UpdateStats::DEFAULT_MARGIN_RATIO
-    ): \DateTime {
+    ): DateTime {
         $updateStats = $this->getUpdateStats();
         return $updateStats->computeNextUpdate($minDelay, $sleepyDelay, $sleepyDuration, $marginRatio);
     }
 
-    /**
-     * @return UpdateStats
-     */
     public function getUpdateStats(): UpdateStats
     {
         if (is_null($this->updateStats)) {

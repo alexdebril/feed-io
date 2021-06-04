@@ -1,15 +1,9 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Rule\Atom;
 
+use DomDocument;
+use DOMElement;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\RuleAbstract;
@@ -19,14 +13,8 @@ class LinkNode extends RuleAbstract
 {
     const NODE_NAME = 'link';
 
-    /**
-     * @var \FeedIo\RuleSet
-     */
-    protected $ruleSet;
+    protected RuleSet $ruleSet;
 
-    /**
-     * @param string $nodeName
-     */
     public function __construct(string $nodeName = null)
     {
         parent::__construct($nodeName);
@@ -36,12 +24,7 @@ class LinkNode extends RuleAbstract
         $this->ruleSet->add($mediaRule, ['media', 'enclosure']);
     }
 
-    /**
-     * @param  NodeInterface $node
-     * @param  \DOMElement   $element
-     * @return mixed
-     */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element) : void
     {
         if ($element->hasAttribute('rel')) {
             $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
@@ -50,19 +33,12 @@ class LinkNode extends RuleAbstract
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function hasValue(NodeInterface $node) : bool
     {
         return true;
     }
 
-
-    /**
-     * @inheritDoc
-     */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
     {
         if ($node instanceof ItemInterface && $node->hasMedia()) {
             $this->ruleSet->get('media')->apply($document, $rootElement, $node);

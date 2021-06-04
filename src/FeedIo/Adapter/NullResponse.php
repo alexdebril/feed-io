@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Adapter;
 
@@ -15,11 +7,7 @@ namespace FeedIo\Adapter;
  */
 class NullResponse implements ResponseInterface
 {
-
-    /**
-     * @return int
-     */
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return 0;
     }

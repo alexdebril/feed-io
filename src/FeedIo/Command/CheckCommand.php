@@ -121,8 +121,7 @@ class CheckCommand extends Command
         $processor
             ->add(new CheckAvailability())
             ->add(new CheckPublicIds())
-            ->add(new CheckLastModified())
-            ->add(new CheckReadSince());
+            ->add(new CheckLastModified());
 
         return $processor->run($url);
     }

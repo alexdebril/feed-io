@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Command;
 
@@ -52,7 +44,7 @@ class ReadCommand extends Command
         foreach ($feed as $i => $item) {
             $lastModified = $item->getLastModified() ?: new \DateTime();
             $output->writeln("<info>{$lastModified->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
-            $output->writeln("{$item->getDescription()}");
+            $output->writeln("{$item->getContent()}");
 
             $this->handleMedias($item, $output);
             if (! is_null($limit) && $limit === $i+1) {
@@ -86,10 +78,6 @@ class ReadCommand extends Command
         }
     }
 
-    /**
-     * @param int $interval
-     * @return \DateInterval
-     */
     protected function formatDateInterval(int $interval): string
     {
         $zero = new \DateTime('@0');
@@ -97,10 +85,6 @@ class ReadCommand extends Command
         return $diff->format('%a days, %h hours, %i minutes, %s seconds');
     }
 
-    /**
-     * @param $url
-     * @return \FeedIo\Reader\Result
-     */
     public function readFeed($url): \FeedIo\Reader\Result
     {
         $feedIo = Factory::create()->getFeedIo();

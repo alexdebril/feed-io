@@ -3,7 +3,7 @@
 
 namespace FeedIo\Check;
 
-use FeedIo\Feed;
+use FeedIo\FeedInterface;
 use FeedIo\FeedIo;
 
 /**
@@ -12,14 +12,5 @@ use FeedIo\FeedIo;
  */
 interface CheckInterface
 {
-
-    /**
-     * Performs the check and return false if the full process must stop
-     *
-     * @param FeedIo $feedIo
-     * @param Feed $feed
-     * @param Result $result
-     * @return bool
-     */
-    public function perform(FeedIo $feedIo, Feed $feed, Result $result): bool;
+    public function perform(FeedIo $feedIo, FeedInterface $feed, Result $result): bool;
 }

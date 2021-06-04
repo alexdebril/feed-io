@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Feed\Node;
 
@@ -17,20 +9,11 @@ class Element implements ElementInterface, ElementsAwareInterface
 {
     use ElementsAwareTrait;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var string
-     */
-    protected $value;
+    protected ?string $value = null;
 
-    /**
-     * @var array
-     */
-    protected $attributes = array();
+    protected array $attributes = [];
 
     public function __construct()
     {
@@ -57,7 +40,7 @@ class Element implements ElementInterface, ElementsAwareInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getValue() : ? string
     {
@@ -65,7 +48,7 @@ class Element implements ElementInterface, ElementsAwareInterface
     }
 
     /**
-     * @param  string $value
+     * @param string|null $value
      * @return ElementInterface
      */
     public function setValue(string $value = null) : ElementInterface
@@ -97,8 +80,8 @@ class Element implements ElementInterface, ElementsAwareInterface
     }
 
     /**
-     * @param  string $name
-     * @param  string $value
+     * @param string $name
+     * @param string|null $value
      * @return ElementInterface
      */
     public function setAttribute(string $name, string $value = null) : ElementInterface

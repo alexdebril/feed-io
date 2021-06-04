@@ -9,6 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
+      - name: Coding Style
+        uses: php-actions/composer@v5
+        with:
+          command: "src:lint"
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:
@@ -16,3 +20,8 @@ jobs:
           bootstrap: tests/bootstrap.php
           configuration: phpunit.xml.dist
           args: --coverage-text
+      - name: PHP Stan
+        uses: php-actions/phpstan@v2
+        with:
+          path: src
+          level: 5

@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Parser;
 
@@ -75,7 +67,8 @@ class JsonParser extends ParserAbstract
             $item->setTitle($this->readOffset($dataItem, 'title'));
             $item->setLastModified(new \DateTime($this->readOffset($dataItem, 'date_published')));
             $contentHtml = $this->readOffset($dataItem, 'content_html');
-            $item->setDescription($this->readOffset($dataItem, 'content_text', $contentHtml));
+            $item->setContent($this->readOffset($dataItem, 'content_text', $contentHtml));
+            $item->setSummary($this->readOffset($dataItem, 'summary'));
             $item->setLink($this->readOffset($dataItem, 'url'));
             $this->readAuthor($item, $dataItem);
             $this->readMedias($item, $dataItem);
@@ -118,12 +111,22 @@ class JsonParser extends ParserAbstract
     protected function readAuthor(NodeInterface $node, array $data): void
     {
         if (array_key_exists('author', $data)) {
-            $authorItem = $data['author'];
-            $author = new Author();
-            $author->setName($this->readOffset($authorItem, 'name'));
-            $author->setUri($this->readOffset($authorItem, 'url'));
-            $author->setEmail($this->readOffset($authorItem, 'email'));
+            $author = $this->extractAuthor($data['author']);
             $node->setAuthor($author);
         }
+        if (array_key_exists('authors', $data) && is_array($data['authors'])) {
+            $author = $this->extractAuthor(reset($data['authors']));
+            $node->setAuthor($author);
+        }
+    }
+
+    protected function extractAuthor(array $data): Author
+    {
+        $author = new Author();
+        $author->setName($this->readOffset($data, 'name'));
+        $author->setUri($this->readOffset($data, 'url'));
+        $author->setEmail($this->readOffset($data, 'email'));
+
+        return $author;
     }
 }

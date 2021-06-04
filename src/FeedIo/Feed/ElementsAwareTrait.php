@@ -1,25 +1,15 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Feed;
 
+use ArrayIterator;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
 use FeedIo\Feed\Node\ElementIterator;
 
 trait ElementsAwareTrait
 {
-    /**
-     * @var \ArrayIterator
-     */
-    protected $elements;
+    protected ArrayIterator $elements;
 
     /**
      * initialize the elements property before use

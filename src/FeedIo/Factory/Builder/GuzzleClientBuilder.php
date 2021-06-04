@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Factory\Builder;
 
@@ -20,17 +12,9 @@ use \GuzzleHttp\Client as GuzzleClient;
  */
 class GuzzleClientBuilder implements ClientBuilderInterface
 {
-    /**
-     * @var array
-     */
-    private $config = [];
-
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config = [])
-    {
-        $this->config = $config;
+    public function __construct(
+        private array $config = []
+    ) {
     }
 
     /**

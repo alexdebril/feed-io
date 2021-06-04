@@ -1,47 +1,22 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Adapter\FileSystem;
 
+use DateTime;
 use FeedIo\Adapter\ResponseInterface;
 
-/**
- *
- */
 class Response implements ResponseInterface
 {
-
-    /**
-     * @var string
-     */
-    protected $fileContent;
-
-    /**
-     * @var \DateTime
-     */
-    protected $lastModified;
-
-    /**
-     * @param string    $fileContent
-     * @param \DateTime $lastModified
-     */
-    public function __construct(string $fileContent, \DateTime $lastModified)
-    {
-        $this->fileContent  = $fileContent;
-        $this->lastModified = $lastModified;
+    public function __construct(
+        protected string $fileContent,
+        protected DateTime $lastModified
+    ) {
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getDuration(): int
+    public function getDuration(): float
     {
         return 0;
     }
@@ -63,7 +38,7 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getBody() : ? string
     {
@@ -88,9 +63,9 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime|null
      */
-    public function getLastModified() : ?\DateTime
+    public function getLastModified() : ?DateTime
     {
         return $this->lastModified;
     }

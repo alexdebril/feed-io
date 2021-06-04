@@ -1,23 +1,15 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Standard;
 
 use DOMDocument;
 use FeedIo\Reader\Document;
 use FeedIo\Rule\Author;
+use FeedIo\Rule\Content;
 use FeedIo\Rule\Description;
 use FeedIo\Rule\Image;
 use FeedIo\Rule\Language;
 use FeedIo\Rule\Link;
-use FeedIo\Rule\ModifiedSince;
 use FeedIo\Rule\PublicId;
 use FeedIo\Rule\Media;
 use FeedIo\Rule\Category;
@@ -47,7 +39,7 @@ class Rss extends XmlAbstract
      */
     const DATE_NODE_TAGNAME = 'pubDate';
 
-    protected $mandatoryFields = ['channel'];
+    protected array $mandatoryFields = ['channel'];
 
     /**
      * Formats the document according to the standard's specification
@@ -94,7 +86,9 @@ class Rss extends XmlAbstract
     public function buildFeedRuleSet() : RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
-        $ruleSet->add(new Language());
+        $ruleSet
+            ->add(new Description())
+            ->add(new Language());
 
         return $ruleSet;
     }
@@ -109,9 +103,8 @@ class Rss extends XmlAbstract
             ->add(new Author(), ['dc:creator'])
             ->add(new PublicId())
             ->add(new Image())
-            ->add(new Media(), ['media:thumbnail'])
-            ->add(new Media(), ['media:group'])
-            ->add(new Media(), ['media:content'])
+            ->add(new Content())
+            ->add(new Media(), ['media:thumbnail', 'media:group', 'media:content'])
             ;
 
         return $ruleSet;
@@ -125,7 +118,6 @@ class Rss extends XmlAbstract
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet
             ->add(new Link())
-            ->add(new Description())
             ->add(new Category())
             ->add(new Logo())
             ->add($this->getModifiedSinceRule(static::DATE_NODE_TAGNAME), ['dc:date', 'lastBuildDate', 'lastPubDate'])

@@ -30,7 +30,10 @@ class FeedIoTest extends TestCase
         ));
         $response->expects($this->any())->method('getLastModified')->will($this->returnValue(new \DateTime()));
         $client->expects($this->any())->method('getResponse')->will($this->returnValue($response));
-        $this->object = new FeedIo($client, new \Psr\Log\NullLogger());
+
+        $logger = new \Psr\Log\NullLogger();
+
+        $this->object = new FeedIo($client, $logger, new Specification($logger));
     }
 
     /**
@@ -58,60 +61,11 @@ class FeedIoTest extends TestCase
         $this->assertCount(2, $urls);
     }
 
-    /**
-     * @covers FeedIo\FeedIo::getCommonStandards
-     */
-    public function testGetCommonStandards()
-    {
-        $standards = $this->object->getCommonStandards();
-        $this->assertIsArray($standards);
-        foreach ($standards as $standard) {
-            $this->assertInstanceOf('\FeedIo\StandardAbstract', $standard);
-        }
-    }
-
-    public function testFixerSet()
-    {
-        $this->assertInstanceOf('\FeedIo\Reader\FixerSet', $this->object->getFixerSet());
-    }
-
-    public function testGetBaseFixers()
-    {
-        $fixers = $this->object->getBaseFixers();
-
-        foreach ($fixers as $fixer) {
-            $this->assertInstanceOf('\FeedIo\Reader\FixerAbstract', $fixer);
-        }
-    }
-
-    public function testAddFilter()
-    {
-        $filter = $this->getMockForAbstractClass('FeedIo\FilterInterface');
-
-        $this->object->addFilter($filter);
-        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
-    }
-
-    public function testResetFilters()
-    {
-        $this->object->resetFilters();
-        $this->assertInstanceOf('\FeedIo\FeedIo', $this->object);
-    }
-
     public function testWithModifiedSince()
     {
         $result = $this->object->read('http://localhost', new Feed(), new \DateTime());
 
         $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::addStandard
-     */
-    public function testAddStandard()
-    {
-        $this->object->addStandard('atom2', new Atom(new DateTimeBuilder()));
-        $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom2'));
     }
 
     /**
@@ -130,22 +84,6 @@ class FeedIoTest extends TestCase
         $this->assertInstanceOf('\FeedIo\Reader', $this->object->getReader());
     }
 
-    /**
-     * @covers FeedIo\FeedIo::setReader
-     */
-    public function testSetReader()
-    {
-        $logger = new \Psr\Log\NullLogger();
-        $reader = new Reader(
-            new Adapter\Guzzle\Client(
-                new \GuzzleHttp\Client()
-            ),
-            $logger
-        );
-
-        $this->object->setReader($reader);
-        $this->assertEquals($reader, $this->object->getReader());
-    }
 
     /**
      * @covers FeedIo\FeedIo::read
@@ -153,16 +91,6 @@ class FeedIoTest extends TestCase
     public function testRead()
     {
         $result = $this->object->read('http://whatever.com');
-        $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
-        $this->assertEquals('sample title', $result->getFeed()->getTitle());
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::readSince
-     */
-    public function testReadSince()
-    {
-        $result = $this->object->readSince('http://whatever.com', new \DateTime());
         $this->assertInstanceOf('\FeedIo\Reader\Result', $result);
         $this->assertEquals('sample title', $result->getFeed()->getTitle());
     }
@@ -224,25 +152,10 @@ class FeedIoTest extends TestCase
         $item->setLink('http://localhost/item/1');
         $item->setTitle('an item');
         $item->setLastModified(new \DateTime());
-        $item->setDescription('lorem ipsum');
 
         $feed->add($item);
 
         $response = $this->object->getPsrResponse($feed, 'atom');
         $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $response);
-    }
-
-    /**
-     * @covers FeedIo\FeedIo::getStandard
-     */
-    public function testGetStandard()
-    {
-        $this->assertInstanceOf('\FeedIo\Standard\Atom', $this->object->getStandard('atom'));
-    }
-
-    public function testWrongStandard()
-    {
-        $this->expectException('\OutOfBoundsException');
-        $this->object->getStandard('fake');
     }
 }

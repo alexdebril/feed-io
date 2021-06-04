@@ -1,16 +1,8 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo;
 
-use FeedIo\ParserAbstract;
+use DateTime;
 use FeedIo\Adapter\ClientInterface;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\Reader\Document;
@@ -31,29 +23,16 @@ use Psr\Log\LoggerInterface;
  */
 class Reader
 {
-    /**
-     * @var \FeedIo\Adapter\ClientInterface;
-     */
-    protected $client;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var array
-     */
-    protected $parsers = array();
+    protected array $parsers = [];
 
     /**
      * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
-    public function __construct(ClientInterface $client, LoggerInterface $logger)
-    {
-        $this->client = $client;
-        $this->logger = $logger;
+    public function __construct(
+        protected ClientInterface $client,
+        protected LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -77,46 +56,16 @@ class Reader
     }
 
     /**
-     * adds a filter to every parsers
-     *
-     * @param \FeedIo\FilterInterface $filter
-     * @return Reader
+     * @param string $url
+     * @param FeedInterface $feed
+     * @param DateTime|null $modifiedSince
+     * @return Result
      */
-    public function addFilter(FilterInterface $filter) : Reader
-    {
-        foreach ($this->parsers as $parser) {
-            $parser->addFilter($filter);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Reset filters on every parsers
-     * @return Reader
-     */
-    public function resetFilters() : Reader
-    {
-        foreach ($this->parsers as $parser) {
-            $parser->resetFilters();
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string                 $url
-     * @param  FeedInterface         $feed
-     * @param  \DateTime             $modifiedSince
-     * @return \FeedIo\Reader\Result
-     * @throws ReadErrorException
-     */
-    public function read(string $url, FeedInterface $feed, \DateTime $modifiedSince = null) : Result
+    public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null) : Result
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
-            $this->logger->notice("no 'modifiedSince' parameter given, setting it to 01/01/1970");
-            $modifiedSince = new \DateTime('1800-01-01');
+            $modifiedSince = new DateTime('1800-01-01');
         }
 
         try {
@@ -142,7 +91,7 @@ class Reader
         $document = new Document($response->getBody());
 
         if ($response->isModified()) {
-            $this->logger->info("the stream is modified, parsing it");
+            $this->logger->debug("the stream is modified, parsing it");
             $this->parseDocument($document, $feed);
         }
 

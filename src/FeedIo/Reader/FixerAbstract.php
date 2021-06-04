@@ -1,30 +1,15 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Reader;
 
 use FeedIo\FeedInterface;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 abstract class FixerAbstract
 {
+    protected LoggerInterface $logger;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @param \Psr\Log\LoggerInterface
-     * @return $this
-     */
     public function setLogger(LoggerInterface $logger) : FixerAbstract
     {
         $this->logger = $logger;
@@ -32,9 +17,5 @@ abstract class FixerAbstract
         return $this;
     }
 
-    /**
-     * @param Result $result
-     * @return FixerAbstract
-     */
     abstract public function correct(Result $result) : FixerAbstract;
 }

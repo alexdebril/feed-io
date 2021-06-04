@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Feed\Node;
 
@@ -23,7 +15,7 @@ interface CategoryInterface
     public function getTerm() : ? string;
 
     /**
-     * @param  string $term
+     * @param string|null $term
      * @return CategoryInterface
      */
     public function setTerm(string $term = null) : CategoryInterface;
@@ -34,7 +26,7 @@ interface CategoryInterface
     public function getScheme() : ? string;
 
     /**
-     * @param  string $scheme
+     * @param string|null $scheme
      * @return CategoryInterface
      */
     public function setScheme(string $scheme = null) : CategoryInterface;
@@ -45,7 +37,7 @@ interface CategoryInterface
     public function getLabel() : ? string;
 
     /**
-     * @param  string $label
+     * @param string|null $label
      * @return CategoryInterface
      */
     public function setLabel(string $label = null) : CategoryInterface;

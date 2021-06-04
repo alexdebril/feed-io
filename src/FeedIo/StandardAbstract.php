@@ -1,16 +1,9 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace FeedIo;
 
 use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilderInterface;
 
 abstract class StandardAbstract
 {
@@ -25,22 +18,11 @@ abstract class StandardAbstract
      */
     const SYNTAX_FORMAT = '';
 
-    /**
-     * @var array
-     */
-    protected $mandatoryFields = array();
+    protected array $mandatoryFields = [];
 
-    /**
-     * @var \FeedIo\Rule\DateTimeBuilder
-     */
-    protected $dateTimeBuilder;
-
-    /**
-     * @param \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
-     */
-    public function __construct(DateTimeBuilder $dateTimeBuilder)
-    {
-        $this->dateTimeBuilder = $dateTimeBuilder;
+    public function __construct(
+        protected DateTimeBuilderInterface $dateTimeBuilder
+    ) {
     }
 
     /**

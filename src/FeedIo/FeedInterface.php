@@ -1,15 +1,8 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo;
 
+use ArrayIterator;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\StyleSheet;
@@ -24,54 +17,89 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
 
     /**
      * This method MUST return the feed's full URL
-     * @return string
+     *
+     * @return string|null
      */
     public function getUrl() : ? string;
 
     /**
-     * @param string $url
+     * Sets the feed's URL. Precisely the URL to hit to get the stream
+     *
+     * @param string|null $url
      * @return FeedInterface
      */
     public function setUrl(string $url = null) : FeedInterface;
 
     /**
-     * @return string $language
+     * Returns feed's description
+     *
+     * @return string|null
+     */
+    public function getDescription() : ? string;
+
+    /**
+     * Sets feed's description
+     *
+     * @param string|null $description
+     * @return FeedInterface
+     */
+    public function setDescription(string $description = null) : FeedInterface;
+
+    /**
+     * @return string|null
      */
     public function getLanguage(): ? string ;
 
     /**
-     * @param string $language
+     * @param string|null $language
      * @return FeedInterface
      */
     public function setLanguage(string $language = null): FeedInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLogo() : ? string ;
 
     /**
-     * @param  string $logo
-     * @return NodeInterface
+     * @param string|null $logo
+     * @return FeedInterface
      */
     public function setLogo(string $logo = null) : FeedInterface;
 
     /**
-     * Atom : feed.entry <feed><entry>
-     * Rss  : rss.channel.item <rss><channel><item>
-     * @param  ItemInterface $item
+     * @param ItemInterface $item
      * @return FeedInterface
      */
     public function add(ItemInterface $item) : FeedInterface;
 
     /**
+     * Returns a fresh item compatible with the feed
+     *
      * @return ItemInterface
      */
     public function newItem() : ItemInterface;
 
+    /**
+     * @return ArrayIterator|null
+     */
+    public function getNS(): ?ArrayIterator;
+
+    /**
+     * @param string $ns
+     * @param string $dtd
+     * @return FeedInterface
+     */
     public function addNS(string $ns, string $dtd) : FeedInterface;
 
+    /**
+     * @param StyleSheet $styleSheet
+     * @return FeedInterface
+     */
     public function setStyleSheet(StyleSheet $styleSheet): FeedInterface;
 
+    /**
+     * @return StyleSheet|null
+     */
     public function getStyleSheet(): ? StyleSheet;
 }

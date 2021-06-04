@@ -1,44 +1,23 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo;
 
-use FeedIo\Rule\DateTimeBuilder;
+use FeedIo\Rule\DateTimeBuilderInterface;
 
 abstract class DateRuleAbstract extends RuleAbstract
 {
-    /**
-     * @var \FeedIo\Rule\DateTimeBuilder
-     */
-    protected $dateTimeBuilder = null;
+    protected ?DateTimeBuilderInterface $dateTimeBuilder = null;
 
-    /**
-     * @var string
-     */
-    protected $defaultFormat = \DateTime::RSS;
+    protected string $defaultFormat = \DateTime::RSS;
 
-    /**
-     * @param  \FeedIo\Rule\DateTimeBuilder $dateTimeBuilder
-     * @return DateRuleAbstract
-     */
-    public function setDateTimeBuilder(DateTimeBuilder $dateTimeBuilder) : DateRuleAbstract
+    public function setDateTimeBuilder(DateTimeBuilderInterface $dateTimeBuilder) : DateRuleAbstract
     {
         $this->dateTimeBuilder = $dateTimeBuilder;
 
         return $this;
     }
 
-    /**
-     * @return DateTimeBuilder
-     */
-    public function getDateTimeBuilder() : DateTimeBuilder
+    public function getDateTimeBuilder() : DateTimeBuilderInterface
     {
         if (is_null($this->dateTimeBuilder)) {
             throw new \UnexpectedValueException('date time builder should not be null');

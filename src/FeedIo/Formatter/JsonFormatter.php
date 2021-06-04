@@ -1,35 +1,19 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Formatter;
 
+use Traversable;
 use FeedIo\Feed;
 use FeedIo\FeedInterface;
 use FeedIo\FormatterInterface;
 
 class JsonFormatter implements FormatterInterface
 {
-
-    /**
-     * @param FeedInterface $feed
-     * @return string
-     */
     public function toString(FeedInterface $feed) : string
     {
         return json_encode($this->toArray($feed));
     }
 
-    /**
-     * @param FeedInterface $feed
-     * @return array
-     */
     public function toArray(FeedInterface $feed) : array
     {
         $out =  array_filter([
@@ -47,21 +31,13 @@ class JsonFormatter implements FormatterInterface
         return $out;
     }
 
-    /**
-     * @param FeedInterface $feed
-     * @return iterable
-     */
-    public function itemsToArray(FeedInterface $feed) : iterable
+    public function itemsToArray(FeedInterface $feed) : Traversable
     {
         foreach ($feed as $item) {
             yield $this->itemToArray($item);
         }
     }
 
-    /**
-     * @param Feed\ItemInterface $item
-     * @return array
-     */
     public function itemToArray(Feed\ItemInterface $item) : array
     {
         $array = $this->itemToBaseArray($item);
@@ -72,25 +48,18 @@ class JsonFormatter implements FormatterInterface
         return array_filter($array);
     }
 
-    /**
-     * @param Feed\ItemInterface $item
-     * @return array
-     */
     public function itemToBaseArray(Feed\ItemInterface $item) : array
     {
-        $offset = $this->isHtml($item->getDescription()) ? 'content_html':'content_text';
+        $offset = $this->isHtml($item->getContent()) ? 'content_html':'content_text';
         return [
             'id' => $item->getPublicId(),
             'title' => $item->getTitle(),
-            $offset => $item->getDescription(),
+            'summary'=> $item->getSummary(),
+            $offset => $item->getContent(),
             'url' => $item->getLink(),
         ];
     }
 
-    /**
-     * @param $string
-     * @return bool
-     */
     public function isHtml(?string $string) : bool
     {
         return !! $string && $string !== strip_tags($string);
@@ -99,20 +68,15 @@ class JsonFormatter implements FormatterInterface
     public function handleAuthor(Feed\NodeInterface $node, array &$array) : array
     {
         if (! is_null($node->getAuthor())) {
-            $array['author'] = array_filter([
+            $array['authors'] = [array_filter([
                 'name' => $node->getAuthor()->getName(),
                 'url' => $node->getAuthor()->getUri(),
-            ]);
+            ])];
         }
 
         return $array;
     }
 
-    /**
-     * @param Feed\ItemInterface $item
-     * @param array $array
-     * @return array
-     */
     public function handleMedia(Feed\ItemInterface $item, array &$array) : array
     {
         if ($item->hasMedia()) {
@@ -131,11 +95,6 @@ class JsonFormatter implements FormatterInterface
         return $array;
     }
 
-    /**
-     * @param Feed\ItemInterface $item
-     * @param array $array
-     * @return array
-     */
     public function handleDate(Feed\ItemInterface $item, array &$array) : array
     {
         if (! is_null($item->getLastModified())) {

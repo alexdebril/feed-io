@@ -1,30 +1,25 @@
 # feed-io
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88/mini.png)](https://insight.sensiolabs.com/projects/9cabcb4b-695e-43fa-8b83-a1f9ecefea88)
 [![Latest Stable Version](https://poser.pugx.org/debril/feed-io/v/stable.png)](https://packagist.org/packages/debril/feed-io)
-[![Build Status](https://secure.travis-ci.org/alexdebril/feed-io.png?branch=master)](http://travis-ci.org/alexdebril/feed-io)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexdebril/feed-io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/feed-io/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/alexdebril/feed-io/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alexdebril/feed-io/?branch=master)
+[![Build Status](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/badge.svg)](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/)
+
 
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
 - Feeds auto-discovery through HTML headers
 - a Command line interface to discover and read feeds
-- Multiple feeds reading at once through asynchronous requests
 - PSR-7 Response generation with accurate cache headers
 - HTTP Headers support when reading feeds in order to save network traffic
 - Detection of the format (RSS / Atom) when reading feeds
 - Enclosure support to handle external medias like audio content
 - Feed logo support (RSS + Atom)
 - PSR compliant logging
-- Content filtering to fetch only the newest items
-- Malformed feeds auto correction
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
 - Guzzle Client integration
 
-Keep informed about new releases and incoming features : https://debril.org/categories/feed-io
+This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/alexdebril/feed-io/discussions).
 
 # Installation
 
@@ -36,45 +31,14 @@ Use Composer to add feed-io into your project's requirements :
 
 # Requirements
 
-feed-io requires :
+| feed-io | PHP  |
+| --------| ---- |
+|   4.x   | 7.1+ |
+|   5.0   | 8.0+ |
 
-- php 7.1+
-- psr/log 1.0
-- guzzlehttp/guzzle 6.2+
+feed-io 4 requires PHP 7.1+, feed-io 5 requires PHP 8.0+. All versions relies on `psr/log` and `guzzle`. it suggests `monolog` for logging. Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
 
-it suggests :
-- monolog/monolog 1.10+
-
-Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
-
-## Why skipping PHP 7.0 ?
-
-feed-io 4 requires PHP 7.1+ because return types cannot be nullable in PHP 7.0.
-
-# Fetching the repository
-
-Do this if you want to contribute (and you're welcome to do so):
-
-```sh
-    git clone https://github.com/alexdebril/feed-io.git
-
-    cd feed-io/
-
-    composer install
-```
-
-# Unit Testing
-
-You can run the unit test suites using the following command in the library's source directory:
-
-```sh
-
-    ./vendor/bin/phpunit
-
-```
-
-Usage
-=====
+# Usage
 
 ## CLI
 
@@ -102,9 +66,6 @@ $feedIo = \FeedIo\Factory::create()->getFeedIo();
 // read a feed
 $result = $feedIo->read($url);
 
-// or read a feed since a certain date
-$result = $feedIo->readSince($url, new \DateTime('-7 days'));
-
 // get title
 $feedTitle = $result->getFeed()->getTitle();
 
@@ -128,34 +89,6 @@ echo "average interval in seconds: {$updateStats->getAverageInterval()}";
 feed-io calculates the next update time by first detecting if the feed was active in the last 7 days and if not we consider it as sleepy. The next update date for a sleepy feed is set to the next day at the same time. If the feed isn't sleepy we use the average interval and the median interval by adding those intervals to the feed's last modified date and compare the result to the current time. If the result is in the future, then it's returned as the next update time. If none of them are in the future, we considered the feed will be updated quite soon, so the next update time is one hour later from the moment of the calculation.
 
 Please note: the fixed delays for sleepy and closed to be updated feeds can be set through `Result::getNextUpdate()` arguments, see [Result](src/FeedIo/Reader/Result.php) for more details.
-
-
-### Asynchronous reading of several feeds at once
-
-Thanks to Guzzle, feed-io is able to fetch several feeds at once through asynchronous requests. If you're willing to get more information about the way it works, you can read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/quickstart.html#async-requests).
-
-To read feeds using asynchronous requests with feed-io, you need to send a pool of `\FeedIo\Async\Request` objects to `\FeedIo\FeedIo::readAsync` and handle the result with a `\FeedIo\Async\CallbackInterface` of your own. You can also use `\FeedIo\Async\DefaultCallback` in order to test the feature.
-
-Each `\FeedIo\Async\Request` is a request you want to perform, it embeds the feed's URL and optionnally a `\DateTime` to define the `modified-since` attribute of the request.
-
-The `CallbackInterface` instance needs two methods :
-
-```php
-
-  /**
-   * @param Result $result
-   */
-  public function process(Result $result) : void;
-
-  /**
-   * @param Request $request
-   * @param \Exception $exception
-   */
-  public function handleError(Request $request, \Exception $exception) : void;
-
-```
-
-`process()` is called on successful reading and parsing to let you process the result. Otherwise `handleError()` will be triggered on faulty calls. Here is an example : [PDOCallback](examples/PDOCallback.php)
 
 ## Feeds discovery
 
@@ -427,6 +360,6 @@ $feedIo->getDateTimeBuilder()->resetFeedTimezone();
 
 Don't forget to reset `feedTimezone` after fetching the result, or you'll end up with all feeds located in the same timezone.
 
-## Online documentation
+## Built with PHP Storm
 
-The whole documentation is available at https://feed-io.net
+Most of feed-io's code was written using [PHP Storm](https://www.jetbrains.com/phpstorm/) courtesy of Jetbrains.

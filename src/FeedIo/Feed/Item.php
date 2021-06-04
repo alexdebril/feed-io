@@ -1,39 +1,22 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Feed;
 
+use ArrayIterator;
 use FeedIo\Feed\Item\Media;
 use FeedIo\Feed\Item\MediaInterface;
 
 class Item extends Node implements ItemInterface
 {
+    protected ArrayIterator $medias;
 
-    /**
-     * @var \ArrayIterator
-     */
-    protected $medias;
+    protected ?string $summary = null;
 
-    /**
-     * @var string
-     */
-    protected $summary;
-
-    /**
-     * @var string
-     */
-    protected $content;
+    protected ?string $content = null;
 
     public function __construct()
     {
-        $this->medias = new \ArrayIterator();
+        $this->medias = new ArrayIterator();
 
         parent::__construct();
     }
@@ -98,7 +81,7 @@ class Item extends Node implements ItemInterface
      */
     public function getContent(): ?string
     {
-        return $this->content ?? $this->getDescription();
+        return $this->content;
     }
 
     /**
@@ -108,8 +91,6 @@ class Item extends Node implements ItemInterface
     public function setContent(string $content = null): ItemInterface
     {
         $this->content = $content;
-        // Will be removed in 5.0
-        $this->setDescription($content);
 
         return $this;
     }

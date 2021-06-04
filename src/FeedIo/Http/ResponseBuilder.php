@@ -1,12 +1,4 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Http;
 
@@ -19,23 +11,13 @@ class ResponseBuilder
 {
 
     /**
-     * @var int $maxAge max-age in seconds
+     * @param int $maxAge max-age in seconds
+     * @param bool $public is the response public
      */
-    protected $maxAge;
-
-    /**
-     * @var bool $public is the response public
-     */
-    protected $public;
-
-    /**
-     * @param int $maxAge
-     * @param bool $public
-     */
-    public function __construct(int $maxAge = 600, bool $public = true)
-    {
-        $this->maxAge = $maxAge;
-        $this->public = $public;
+    public function __construct(
+        protected int $maxAge = 600,
+        protected bool $public = true
+    ) {
     }
 
     /**

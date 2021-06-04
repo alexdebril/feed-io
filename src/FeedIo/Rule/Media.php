@@ -1,16 +1,9 @@
 <?php declare(strict_types=1);
-/*
- * This file is part of the feed-io package.
- *
- * (c) Alexandre Debril <alex.debril@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FeedIo\Rule;
 
-use FeedIo\Feed\Item;
+use DomDocument;
+use DOMElement;
 use FeedIo\Feed\Item\MediaInterface;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
@@ -23,12 +16,9 @@ class Media extends RuleAbstract
 
     const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
 
-    protected $urlAttributeName = 'url';
+    protected string $urlAttributeName = 'url';
 
-    /**
-     * @var UrlGenerator
-     */
-    protected $urlGenerator;
+    protected UrlGenerator $urlGenerator;
 
     public function __construct(string $nodeName = null)
     {
@@ -36,27 +26,17 @@ class Media extends RuleAbstract
         parent::__construct($nodeName);
     }
 
-    /**
-     * @return string
-     */
     public function getUrlAttributeName() : string
     {
         return $this->urlAttributeName;
     }
 
-    /**
-     * @param  string $name
-     */
     public function setUrlAttributeName(string $name) : void
     {
         $this->urlAttributeName = $name;
     }
 
-    /**
-     * @param  NodeInterface $node
-     * @param  \DOMElement   $element
-     */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element) : void
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
@@ -82,11 +62,6 @@ class Media extends RuleAbstract
         }
     }
 
-    /**
-     * @param MediaInterface $media
-     * @param NodeInterface $node
-     * @param string|null $url
-     */
     protected function setUrl(MediaInterface $media, NodeInterface $node, string $url = null): void
     {
         if (! is_null($url)) {
@@ -96,12 +71,7 @@ class Media extends RuleAbstract
         }
     }
 
-    /**
-     * @param  \DomDocument   $document
-     * @param  MediaInterface $media
-     * @return \DomElement
-     */
-    public function createMediaElement(\DomDocument $document, MediaInterface $media) : \DOMElement
+    public function createMediaElement(DomDocument $document, MediaInterface $media) : DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
@@ -111,32 +81,24 @@ class Media extends RuleAbstract
         return $element;
     }
 
-    /**
-     * @param MediaInterface $media
-     * @param \DomElement $element
-     */
-    protected function initMedia(MediaInterface $media, \DOMElement $element): void
+    protected function initMedia(MediaInterface $media, DOMElement $element): void
     {
         $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
         $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
         $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function hasValue(NodeInterface $node) : bool
     {
         return $node instanceof ItemInterface && !! $node->getMedias();
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
     {
-        foreach ($node->getMedias() as $media) {
-            $rootElement->appendChild($this->createMediaElement($document, $media));
+        if ($node instanceof ItemInterface) {
+            foreach ($node->getMedias() as $media) {
+                $rootElement->appendChild($this->createMediaElement($document, $media));
+            }
         }
     }
 }
