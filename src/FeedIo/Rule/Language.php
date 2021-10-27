@@ -25,7 +25,7 @@ class Language extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         if ($node instanceof FeedInterface) {
-            $node->set(static::NODE_NAME, $element->nodeValue);
+            $node->setLanguage($element->nodeValue);
         }
     }
 
