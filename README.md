@@ -310,7 +310,7 @@ As feeds' content may vary often, caching may result in unwanted behaviors.
 
 ### Inject a custom Logger
 
-You can inject any Logger you want as long as it implements `Psr\Log\LoggerInterface`. Monolog does, but it's the only library : https://packagist.org/providers/psr/log-implementation
+You can inject any Logger you want as long as it implements `Psr\Log\LoggerInterface`. Monolog does, but it's not the only library : https://packagist.org/providers/psr/log-implementation
 
 ```php
 use FeedIo\FeedIo;
