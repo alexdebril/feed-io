@@ -2,7 +2,8 @@
 
 [![Latest Stable Version](https://poser.pugx.org/debril/feed-io/v/stable.png)](https://packagist.org/packages/debril/feed-io)
 [![Build Status](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/badge.svg)](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/maintainability)](https://codeclimate.com/github/alexdebril/feed-io/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/test_coverage)](https://codeclimate.com/github/alexdebril/feed-io/test_coverage)
 
 [feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
