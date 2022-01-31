@@ -37,6 +37,7 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           debug: true
+          prefix: feed_io
           coverageCommand: ./vendor/bin/phpunit --coverage-clover coverage.xml
           coverageLocations: coverage.xml
 
