@@ -38,5 +38,5 @@ jobs:
         with:
           debug: true
           prefix: /app
-          coverageLocations: coverage.xml
+          coverageLocations: coverage.xml:phpcov
 
