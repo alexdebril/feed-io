@@ -8,6 +8,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+
       - uses: php-actions/composer@v5
       - name: Coding Style
         uses: php-actions/composer@v5
@@ -20,6 +26,7 @@ jobs:
           bootstrap: tests/bootstrap.php
           configuration: phpunit.xml.dist
           args: --coverage-text
+
       - name: PHP Stan
         uses: php-actions/phpstan@v2
         with:
