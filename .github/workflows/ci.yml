@@ -14,11 +14,15 @@ jobs:
         with:
           php-version: 8.1
 
-      - uses: php-actions/composer@v5
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
       - name: Coding Style
-        uses: php-actions/composer@v5
-        with:
-          command: "src:lint"
+        run: PHP_CS_FIXER_IGNORE_ENV=true composer src:lint
+
+      - name: PHP Stan
+        run: composer src:php-stan
+
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:
@@ -27,8 +31,3 @@ jobs:
           configuration: phpunit.xml.dist
           args: --coverage-text
 
-      - name: PHP Stan
-        uses: php-actions/phpstan@v2
-        with:
-          path: src
-          level: 5
