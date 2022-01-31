@@ -32,12 +32,11 @@ jobs:
           args: --coverage-text
       
       - name: Code climate Coverage
-        uses: paambaati/codeclimate-action@v2.7.5
+        uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           debug: true
-          prefix: feed_io
           coverageCommand: ./vendor/bin/phpunit --coverage-clover coverage.xml
           coverageLocations: coverage.xml
 
