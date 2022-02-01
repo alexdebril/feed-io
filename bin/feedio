@@ -2,6 +2,7 @@
 <?php
 
 use FeedIo\FeedIo;
+use FeedIo\Factory;
 
 $file = __DIR__.'/../vendor/autoload.php';
 if ( file_exists($file) ) {
@@ -19,7 +20,7 @@ function main($argc, $argv)
         exit;
     }
 
-    $feedIo = \FeedIo\Factory::create()->getFeedIo();
+    $feedIo = Factory::create()->getFeedIo();
     switch($argv[1]) {
         case 'discover':
             discover($feedIo, $argv[2]);
