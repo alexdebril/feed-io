@@ -1,5 +1,6 @@
-<?php declare(strict_types=1);
+<?php
 
+declare(strict_types=1);
 
 namespace FeedIo\Check;
 
@@ -11,9 +12,9 @@ use DateTime;
  */
 class Result
 {
-    const TEST_UNIQUE_IDS = 'unique_ids';
+    public const TEST_UNIQUE_IDS = 'unique_ids';
 
-    const TEST_NORMAL_DATE_FLOW = 'normal_date_flow';
+    public const TEST_NORMAL_DATE_FLOW = 'normal_date_flow';
 
     private $url;
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Item;
 
@@ -15,7 +17,7 @@ class Author implements AuthorInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getName() : ? string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -24,7 +26,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $name
      * @return AuthorInterface
      */
-    public function setName(string $name = null) : AuthorInterface
+    public function setName(string $name = null): AuthorInterface
     {
         $this->name = $name;
 
@@ -34,7 +36,7 @@ class Author implements AuthorInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getUri() : ? string
+    public function getUri(): ?string
     {
         return $this->uri;
     }
@@ -43,7 +45,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $uri
      * @return AuthorInterface
      */
-    public function setUri(string $uri = null) : AuthorInterface
+    public function setUri(string $uri = null): AuthorInterface
     {
         $this->uri = $uri;
 
@@ -53,7 +55,7 @@ class Author implements AuthorInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getEmail() : ? string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -62,7 +64,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $email
      * @return AuthorInterface
      */
-    public function setEmail(string $email = null) : AuthorInterface
+    public function setEmail(string $email = null): AuthorInterface
     {
         $this->email = $email;
 
@@ -72,7 +74,7 @@ class Author implements AuthorInterface, ArrayableInterface
     /**
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return get_object_vars($this);
     }

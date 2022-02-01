@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Standard;
 
@@ -18,13 +20,13 @@ use FeedIo\RuleSet;
 
 class Atom extends XmlAbstract
 {
-    const ROOT_NODE_TAGNAME = 'feed';
+    public const ROOT_NODE_TAGNAME = 'feed';
 
-    const ITEM_NODE = 'entry';
+    public const ITEM_NODE = 'entry';
 
-    const DATETIME_FORMAT = \DateTime::ATOM;
+    public const DATETIME_FORMAT = \DateTime::ATOM;
 
-    public function format(DOMDocument $document) : DOMDocument
+    public function format(DOMDocument $document): DOMDocument
     {
         $element = $document->createElement('feed');
         $element->setAttribute('xmlns', 'http://www.w3.org/2005/Atom');
@@ -33,7 +35,7 @@ class Atom extends XmlAbstract
         return $document;
     }
 
-    public function canHandle(Document $document) : bool
+    public function canHandle(Document $document): bool
     {
         if (!isset($document->getDOMDocument()->documentElement->tagName)) {
             return false;
@@ -41,12 +43,12 @@ class Atom extends XmlAbstract
         return self::ROOT_NODE_TAGNAME === $document->getDOMDocument()->documentElement->tagName;
     }
 
-    public function getMainElement(\DOMDocument $document) : \DOMElement
+    public function getMainElement(\DOMDocument $document): \DOMElement
     {
         return $document->documentElement;
     }
 
-    public function buildFeedRuleSet() : RuleSet
+    public function buildFeedRuleSet(): RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -57,7 +59,7 @@ class Atom extends XmlAbstract
         return $ruleSet;
     }
 
-    public function buildItemRuleSet() : RuleSet
+    public function buildItemRuleSet(): RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -69,7 +71,7 @@ class Atom extends XmlAbstract
         return $ruleSet;
     }
 
-    protected function buildBaseRuleSet() : RuleSet
+    protected function buildBaseRuleSet(): RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -98,7 +100,7 @@ class FeedIo
      * @param  string $url
      * @return array
      */
-    public function discover(string $url) : array
+    public function discover(string $url): array
     {
         $explorer = new Explorer($this->client, $this->logger);
 
@@ -114,7 +116,7 @@ class FeedIo
      * @param DateTime|null $modifiedSince
      * @return Result
      */
-    public function read(string $url, FeedInterface $feed = null, DateTime $modifiedSince = null) : Result
+    public function read(string $url, FeedInterface $feed = null, DateTime $modifiedSince = null): Result
     {
         if (is_null($feed)) {
             $feed = new Feed();
@@ -137,7 +139,7 @@ class FeedIo
      * @param bool $public
      * @return ResponseInterface
      */
-    public function getPsrResponse(FeedInterface $feed, string $standard, int $maxAge = 600, bool $public = true) : ResponseInterface
+    public function getPsrResponse(FeedInterface $feed, string $standard, int $maxAge = 600, bool $public = true): ResponseInterface
     {
         $this->logAction($feed, "creating a PSR 7 Response in $standard format");
 
@@ -154,7 +156,7 @@ class FeedIo
      * @param  string        $standard Standard's name
      * @return string
      */
-    public function format(FeedInterface $feed, string $standard) : string
+    public function format(FeedInterface $feed, string $standard): string
     {
         $this->logAction($feed, "formatting a feed in $standard format");
 
@@ -169,7 +171,7 @@ class FeedIo
      * @param FeedInterface $feed
      * @return string
      */
-    public function toRss(FeedInterface $feed) : string
+    public function toRss(FeedInterface $feed): string
     {
         return $this->format($feed, 'rss');
     }
@@ -180,7 +182,7 @@ class FeedIo
      * @param FeedInterface $feed
      * @return string
      */
-    public function toAtom(FeedInterface $feed) : string
+    public function toAtom(FeedInterface $feed): string
     {
         return $this->format($feed, 'atom');
     }
@@ -191,7 +193,7 @@ class FeedIo
      * @param FeedInterface $feed
      * @return string
      */
-    public function toJson(FeedInterface $feed) : string
+    public function toJson(FeedInterface $feed): string
     {
         return $this->format($feed, 'json');
     }
@@ -202,7 +204,7 @@ class FeedIo
      * @param array $formats
      * @return $this
      */
-    public function addDateFormats(array $formats) : FeedIo
+    public function addDateFormats(array $formats): FeedIo
     {
         foreach ($formats as $format) {
             $this->getDateTimeBuilder()->addDateFormat($format);
@@ -216,7 +218,7 @@ class FeedIo
      *
      * @return DateTimeBuilderInterface
      */
-    public function getDateTimeBuilder() : DateTimeBuilderInterface
+    public function getDateTimeBuilder(): DateTimeBuilderInterface
     {
         return $this->specification->getDateTimeBuilder();
     }
@@ -226,7 +228,7 @@ class FeedIo
      *
      * @return Reader
      */
-    public function getReader() : Reader
+    public function getReader(): Reader
     {
         return $this->reader;
     }
@@ -238,7 +240,7 @@ class FeedIo
      * @param string $message
      * @return $this
      */
-    protected function logAction(FeedInterface $feed, string $message) : FeedIo
+    protected function logAction(FeedInterface $feed, string $message): FeedIo
     {
         $class = get_class($feed);
         $this->logger->debug("$message (feed class : $class)");

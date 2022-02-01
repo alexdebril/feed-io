@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -7,12 +9,12 @@ use FeedIo\Rule\Media as BaseMedia;
 
 class Media extends BaseMedia
 {
-    const NODE_NAME = 'link';
+    public const NODE_NAME = 'link';
 
     /**
      * @inheritDoc
      */
-    public function createMediaElement(\DomDocument $document, MediaInterface $media) : \DOMElement
+    public function createMediaElement(\DomDocument $document, MediaInterface $media): \DOMElement
     {
         $element = parent::createMediaElement($document, $media);
         $element->setAttribute('rel', 'enclosure');

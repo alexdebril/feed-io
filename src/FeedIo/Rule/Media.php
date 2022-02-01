@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -12,9 +14,9 @@ use FeedIo\RuleAbstract;
 
 class Media extends RuleAbstract
 {
-    const NODE_NAME = 'enclosure';
+    public const NODE_NAME = 'enclosure';
 
-    const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
+    public const MRSS_NAMESPACE = "http://search.yahoo.com/mrss/";
 
     protected string $urlAttributeName = 'url';
 
@@ -26,17 +28,17 @@ class Media extends RuleAbstract
         parent::__construct($nodeName);
     }
 
-    public function getUrlAttributeName() : string
+    public function getUrlAttributeName(): string
     {
         return $this->urlAttributeName;
     }
 
-    public function setUrlAttributeName(string $name) : void
+    public function setUrlAttributeName(string $name): void
     {
         $this->urlAttributeName = $name;
     }
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($node instanceof ItemInterface) {
             $media = $node->newMedia();
@@ -71,7 +73,7 @@ class Media extends RuleAbstract
         }
     }
 
-    public function createMediaElement(DomDocument $document, MediaInterface $media) : DOMElement
+    public function createMediaElement(DomDocument $document, MediaInterface $media): DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $element->setAttribute($this->getUrlAttributeName(), $media->getUrl());
@@ -88,12 +90,12 @@ class Media extends RuleAbstract
         $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
     }
 
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return $node instanceof ItemInterface && !! $node->getMedias();
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         if ($node instanceof ItemInterface) {
             foreach ($node->getMedias() as $media) {

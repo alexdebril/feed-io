@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter;
 
@@ -23,7 +25,7 @@ class NullResponse implements ResponseInterface
     /**
      * @return string
      */
-    public function getBody() : ? string
+    public function getBody(): ?string
     {
         return null;
     }
@@ -31,7 +33,7 @@ class NullResponse implements ResponseInterface
     /**
     * @return boolean
     */
-    public function isModified() : bool
+    public function isModified(): bool
     {
         return true;
     }
@@ -39,7 +41,7 @@ class NullResponse implements ResponseInterface
     /**
      * @return \DateTime
      */
-    public function getLastModified() : ?\DateTime
+    public function getLastModified(): ?\DateTime
     {
         return new \DateTime('@0');
     }
@@ -47,7 +49,7 @@ class NullResponse implements ResponseInterface
     /**
      * @return iterable
      */
-    public function getHeaders() : iterable
+    public function getHeaders(): iterable
     {
         return [];
     }
@@ -56,7 +58,7 @@ class NullResponse implements ResponseInterface
      * @param  string       $name
      * @return iterable
      */
-    public function getHeader(string $name) : iterable
+    public function getHeader(string $name): iterable
     {
         return [];
     }

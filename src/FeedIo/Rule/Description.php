@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -9,13 +11,13 @@ use FeedIo\FeedInterface;
 
 class Description extends TextAbstract
 {
-    const NODE_NAME = 'description';
+    public const NODE_NAME = 'description';
 
     /**
      * @param  NodeInterface $node
      * @param  DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($node instanceof FeedInterface) {
             $node->setDescription($this->getProcessedContent($element, $node));
@@ -25,7 +27,7 @@ class Description extends TextAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         if ($node instanceof FeedInterface) {
             return !! $node->getDescription();
@@ -33,7 +35,7 @@ class Description extends TextAbstract
         return false;
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         if ($node instanceof FeedInterface) {
             $element = $this->generateElement($document, $node->getDescription());

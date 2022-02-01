@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -10,7 +12,7 @@ use FeedIo\Rule\TextAbstract;
 
 class Content extends TextAbstract
 {
-    const NODE_NAME = 'content';
+    public const NODE_NAME = 'content';
 
     public function setProperty(NodeInterface $node, DOMElement $element): void
     {
@@ -21,7 +23,7 @@ class Content extends TextAbstract
         }
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         if ($node instanceof ItemInterface) {
             $rootElement->appendChild(

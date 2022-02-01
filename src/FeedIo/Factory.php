@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -36,7 +38,7 @@ class Factory
             'builder' => 'GuzzleClient',
             'config' => [],
         ]
-    ) : Factory {
+    ): Factory {
         $factory = new self();
 
         $clientBuilder = new GuzzleClientBuilder($factory->extractConfig($clientConfig));
@@ -58,19 +60,19 @@ class Factory
         return new NullLoggerBuilder();
     }
 
-    public function setClientBuilder(ClientBuilderInterface $clientBuilder) : Factory
+    public function setClientBuilder(ClientBuilderInterface $clientBuilder): Factory
     {
         $this->clientBuilder = $clientBuilder;
 
         return $this;
     }
 
-    public function extractConfig(array $builderConfig) : array
+    public function extractConfig(array $builderConfig): array
     {
         return isset($builderConfig['config']) ? $builderConfig['config'] : [];
     }
 
-    public function getFeedIo() : FeedIo
+    public function getFeedIo(): FeedIo
     {
         return new FeedIo(
             $this->clientBuilder->getClient(),
@@ -78,14 +80,14 @@ class Factory
         );
     }
 
-    public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder) : Factory
+    public function setLoggerBuilder(LoggerBuilderInterface $loggerBuilder): Factory
     {
         $this->loggerBuilder = $loggerBuilder;
 
         return $this;
     }
 
-    public function checkDependency(BuilderInterface $builder) : bool
+    public function checkDependency(BuilderInterface $builder): bool
     {
         if (!class_exists($builder->getMainClassName())) {
             $message = "missing {$builder->getPackageName()}, please install it using composer : composer require {$builder->getPackageName()}";

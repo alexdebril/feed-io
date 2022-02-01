@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -10,7 +12,7 @@ use FeedIo\RuleSet;
 
 class Structure extends RuleAbstract
 {
-    const NODE_NAME = 'structure';
+    public const NODE_NAME = 'structure';
 
     protected RuleSet $ruleSet;
 
@@ -21,7 +23,7 @@ class Structure extends RuleAbstract
         $this->ruleSet = $ruleSet ?? new RuleSet();
     }
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         foreach ($element->childNodes as $domNode) {
             if ($domNode instanceof DomElement) {
@@ -31,12 +33,12 @@ class Structure extends RuleAbstract
         }
     }
 
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return true;
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         $element = $document->createElement($this->getNodeName());
 

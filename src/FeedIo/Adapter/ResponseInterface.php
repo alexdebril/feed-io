@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter;
 
@@ -8,11 +10,10 @@ namespace FeedIo\Adapter;
  */
 interface ResponseInterface
 {
-
     /**
      * @return string
      */
-    public function getBody() : ? string;
+    public function getBody(): ?string;
 
     /**
      * request's duration in seconds
@@ -29,12 +30,12 @@ interface ResponseInterface
     /**
      * @return \DateTime
      */
-    public function getLastModified() : ?\DateTime;
+    public function getLastModified(): ?\DateTime;
 
     /**
      * @return iterable
      */
-    public function getHeaders() : iterable;
+    public function getHeaders(): iterable;
 
     /**
      * @param  string $name
@@ -45,5 +46,5 @@ interface ResponseInterface
     /**
      * @return boolean
      */
-    public function isModified() : bool;
+    public function isModified(): bool;
 }
