@@ -118,7 +118,7 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @return string
+     * @return integer
      */
     public function getLength() : ? string
     {
@@ -126,12 +126,12 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param  string $length
+     * @param  mixed $length
      * @return MediaInterface
      */
-    public function setLength(?string $length) : MediaInterface
+    public function setLength($length) : MediaInterface
     {
-        $this->length = $length;
+        $this->length = (string) intval($length);
 
         return $this;
     }

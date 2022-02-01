@@ -72,10 +72,10 @@ interface MediaInterface
     public function getLength() : ? string;
 
     /**
-     * @param  string $length
+     * @param  mixed $length
      * @return MediaInterface
      */
-    public function setLength(?string $length) : MediaInterface;
+    public function setLength($length) : MediaInterface;
 
     /**
      * @return string
