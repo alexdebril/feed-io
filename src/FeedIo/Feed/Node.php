@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed;
 
@@ -34,7 +36,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         $this->categories = new ArrayIterator();
     }
 
-    public function set(string $name, string $value = null) : NodeInterface
+    public function set(string $name, string $value = null): NodeInterface
     {
         $element = $this->newElement();
 
@@ -46,94 +48,94 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this;
     }
 
-    public function getAuthor() : ? AuthorInterface
+    public function getAuthor(): ?AuthorInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(AuthorInterface $author = null) : NodeInterface
+    public function setAuthor(AuthorInterface $author = null): NodeInterface
     {
         $this->author = $author;
 
         return $this;
     }
 
-    public function newAuthor() : AuthorInterface
+    public function newAuthor(): AuthorInterface
     {
         return new Author();
     }
 
-    public function getCategories() : iterable
+    public function getCategories(): iterable
     {
         return $this->categories;
     }
 
-    public function getCategoriesGenerator() : Generator
+    public function getCategoriesGenerator(): Generator
     {
         foreach ($this->categories as $category) {
             yield $category->getlabel();
         }
     }
 
-    public function addCategory(CategoryInterface $category) : NodeInterface
+    public function addCategory(CategoryInterface $category): NodeInterface
     {
         $this->categories->append($category);
 
         return $this;
     }
 
-    public function newCategory() : CategoryInterface
+    public function newCategory(): CategoryInterface
     {
         return new Category();
     }
 
-    public function getTitle() : ? string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title = null) : NodeInterface
+    public function setTitle(string $title = null): NodeInterface
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getPublicId() : ? string
+    public function getPublicId(): ?string
     {
         return $this->publicId;
     }
 
-    public function setPublicId(string $publicId = null) : NodeInterface
+    public function setPublicId(string $publicId = null): NodeInterface
     {
         $this->publicId = $publicId;
 
         return $this;
     }
 
-    public function getLastModified() : ? DateTime
+    public function getLastModified(): ?DateTime
     {
         return $this->lastModified;
     }
 
-    public function setLastModified(DateTime $lastModified = null) : NodeInterface
+    public function setLastModified(DateTime $lastModified = null): NodeInterface
     {
         $this->lastModified = $lastModified;
 
         return $this;
     }
 
-    public function getHost(): ? string
+    public function getHost(): ?string
     {
         return $this->host;
     }
 
-    public function getLink() : ? string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    public function setLink(string $link = null) : NodeInterface
+    public function setLink(string $link = null): NodeInterface
     {
         $this->link = $link;
         $this->setHost($link);
@@ -148,7 +150,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         }
     }
 
-    public function getValue(string $name) : ? string
+    public function getValue(string $name): ?string
     {
         foreach ($this->getElementIterator($name) as $element) {
             return $element->getValue();
@@ -157,7 +159,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return null;
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         $properties = get_object_vars($this);
         $properties['elements'] = iterator_to_array($this->getElementsGenerator());

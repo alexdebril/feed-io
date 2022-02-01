@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader;
 
@@ -10,12 +12,12 @@ abstract class FixerAbstract
 {
     protected LoggerInterface $logger;
 
-    public function setLogger(LoggerInterface $logger) : FixerAbstract
+    public function setLogger(LoggerInterface $logger): FixerAbstract
     {
         $this->logger = $logger;
 
         return $this;
     }
 
-    abstract public function correct(Result $result) : FixerAbstract;
+    abstract public function correct(Result $result): FixerAbstract;
 }

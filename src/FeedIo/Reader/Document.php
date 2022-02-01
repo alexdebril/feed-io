@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader;
 
@@ -19,22 +21,22 @@ class Document
         $this->content = trim(str_replace("\xEF\xBB\xBF", '', $content));
     }
 
-    public function startWith(string $character) : bool
+    public function startWith(string $character): bool
     {
         return mb_substr($this->content, 0, 1) === $character;
     }
 
-    public function isJson() : bool
+    public function isJson(): bool
     {
         return $this->startWith('{');
     }
 
-    public function isXml() : bool
+    public function isXml(): bool
     {
         return $this->startWith('<');
     }
 
-    public function getDOMDocument() : DOMDocument
+    public function getDOMDocument(): DOMDocument
     {
         if (is_null($this->domDocument)) {
             $this->domDocument = $this->loadDomDocument();
@@ -43,7 +45,7 @@ class Document
         return $this->domDocument;
     }
 
-    public function getJsonAsArray() : array
+    public function getJsonAsArray(): array
     {
         if (is_null($this->jsonArray)) {
             $this->jsonArray = $this->loadJsonAsArray();
@@ -52,7 +54,7 @@ class Document
         return $this->jsonArray;
     }
 
-    protected function loadDomDocument() : DOMDocument
+    protected function loadDomDocument(): DOMDocument
     {
         if (! $this->isXml()) {
             throw new \LogicException('this document is not a XML stream');
@@ -78,7 +80,7 @@ class Document
         return $domDocument;
     }
 
-    protected function loadJsonAsArray() : array
+    protected function loadJsonAsArray(): array
     {
         if (! $this->isJson()) {
             throw new \LogicException('this document is not a JSON stream');

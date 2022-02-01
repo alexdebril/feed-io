@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter;
 
@@ -12,7 +14,6 @@ use DateTime;
  */
 interface ClientInterface
 {
-
     /**
      * @param  string                               $url
      * @param  DateTime|null                        $modifiedSince
@@ -20,5 +21,5 @@ interface ClientInterface
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $url, DateTime $modifiedSince = null) : ResponseInterface;
+    public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface;
 }

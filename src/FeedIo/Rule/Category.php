@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -10,9 +12,9 @@ use FeedIo\RuleAbstract;
 
 class Category extends RuleAbstract
 {
-    const NODE_NAME = 'category';
+    public const NODE_NAME = 'category';
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         $category = $node->newCategory();
         $category->setScheme($this->getAttributeValue($element, 'domain'))
@@ -21,23 +23,23 @@ class Category extends RuleAbstract
         $node->addCategory($category);
     }
 
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return !! $node->getCategories();
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         foreach ($node->getCategories() as $category) {
             $rootElement->appendChild($this->createCategoryElement($document, $category));
         }
     }
 
-    public function createCategoryElement(DomDocument $document, CategoryInterface $category) : DOMElement
+    public function createCategoryElement(DomDocument $document, CategoryInterface $category): DOMElement
     {
         $element = $document->createElement(
             $this->getNodeName(),
-            is_null($category->getTerm()) ? $category->getLabel():$category->getTerm()
+            is_null($category->getTerm()) ? $category->getLabel() : $category->getTerm()
         );
         if (!! $category->getScheme()) {
             $element->setAttribute('domain', $category->getScheme());

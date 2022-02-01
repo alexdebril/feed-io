@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader\Fixer;
 
@@ -9,12 +11,11 @@ use FeedIo\Reader\Result;
 
 class PublicId extends FixerAbstract
 {
-
     /**
      * @param  Result $result
      * @return $this
      */
-    public function correct(Result $result) : FixerAbstract
+    public function correct(Result $result): FixerAbstract
     {
         $feed = $result->getFeed();
 
@@ -27,7 +28,7 @@ class PublicId extends FixerAbstract
     /**
      * @param  NodeInterface $node
      */
-    protected function fixNode(NodeInterface $node) : void
+    protected function fixNode(NodeInterface $node): void
     {
         if (is_null($node->getPublicId())) {
             $this->logger->notice("correct public id for node {$node->getTitle()}");
@@ -38,7 +39,7 @@ class PublicId extends FixerAbstract
     /**
      * @param  FeedInterface $feed
      */
-    protected function fixItems(FeedInterface $feed) : void
+    protected function fixItems(FeedInterface $feed): void
     {
         foreach ($feed as $item) {
             $this->fixNode($item);

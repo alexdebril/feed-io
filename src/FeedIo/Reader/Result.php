@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader;
 
@@ -35,32 +37,32 @@ class Result
         $this->date = new DateTime();
     }
 
-    public function getDate() : DateTime
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    public function getDocument() : Document
+    public function getDocument(): Document
     {
         return $this->document;
     }
 
-    public function getFeed() : FeedInterface
+    public function getFeed(): FeedInterface
     {
         return $this->feed;
     }
 
-    public function getModifiedSince() : ?DateTime
+    public function getModifiedSince(): ?DateTime
     {
         return $this->modifiedSince;
     }
 
-    public function getResponse() : ResponseInterface
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
 
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }

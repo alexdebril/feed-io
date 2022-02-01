@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Node;
 
@@ -27,44 +29,43 @@ use PharIo\Manifest\ElementCollection;
  */
 interface ElementInterface
 {
-
     /**
      * @return string
      */
-    public function getName() : string;
+    public function getName(): string;
 
     /**
      * @param  string $name
      * @return ElementInterface
      */
-    public function setName(string $name) : ElementInterface;
+    public function setName(string $name): ElementInterface;
 
     /**
      * @return string
      */
-    public function getValue() : ? string;
+    public function getValue(): ?string;
 
     /**
      * @param  string $value
      * @return ElementInterface
      */
-    public function setValue(string $value = null) : ElementInterface;
+    public function setValue(string $value = null): ElementInterface;
 
     /**
      * @param  string $name
      * @return string
      */
-    public function getAttribute(string $name) : ? string;
+    public function getAttribute(string $name): ?string;
 
     /**
      * @return iterable
      */
-    public function getAttributes() : iterable;
+    public function getAttributes(): iterable;
 
     /**
      * @param  string $name
      * @param  string $value
      * @return ElementInterface
      */
-    public function setAttribute(string $name, string $value = null) : ElementInterface;
+    public function setAttribute(string $name, string $value = null): ElementInterface;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -8,13 +10,13 @@ use FeedIo\DateRuleAbstract;
 
 class ModifiedSince extends DateRuleAbstract
 {
-    const NODE_NAME = 'pubDate';
+    public const NODE_NAME = 'pubDate';
 
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         $node->setLastModified($this->getDateTimeBuilder()->convertToDateTime($element->nodeValue));
     }
@@ -22,7 +24,7 @@ class ModifiedSince extends DateRuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return true;
     }
@@ -30,9 +32,9 @@ class ModifiedSince extends DateRuleAbstract
     /**
      * @inheritDoc
      */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node): void
     {
-        $date = is_null($node->getLastModified()) ? new \DateTime():$node->getLastModified();
+        $date = is_null($node->getLastModified()) ? new \DateTime() : $node->getLastModified();
 
         $rootElement->appendChild($document->createElement(
             $this->getNodeName(),

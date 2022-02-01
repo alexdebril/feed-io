@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -19,17 +21,17 @@ class RuleSet
         $this->default = is_null($default) ? new OptionalField() : $default;
     }
 
-    public function getDefault() : RuleAbstract
+    public function getDefault(): RuleAbstract
     {
         return $this->default;
     }
 
-    public function getRules() : array
+    public function getRules(): array
     {
         return $this->rules->getArrayCopy();
     }
 
-    public function add(RuleAbstract $rule, array $aliases = array()) : RuleSet
+    public function add(RuleAbstract $rule, array $aliases = array()): RuleSet
     {
         $this->rules->offsetSet(strtolower($rule->getNodeName()), $rule);
         $this->addAliases($rule->getNodeName(), $aliases);
@@ -37,7 +39,7 @@ class RuleSet
         return $this;
     }
 
-    public function addAliases(string $name, array $aliases) : RuleSet
+    public function addAliases(string $name, array $aliases): RuleSet
     {
         foreach ($aliases as $alias) {
             $this->aliases[strtolower($alias)] = strtolower($name);
@@ -46,7 +48,7 @@ class RuleSet
         return $this;
     }
 
-    public function get(string $name) : RuleAbstract
+    public function get(string $name): RuleAbstract
     {
         $name = $this->getNameForAlias(strtolower($name));
         if ($this->rules->offsetExists($name)) {
@@ -56,7 +58,7 @@ class RuleSet
         return $this->default;
     }
 
-    public function getNameForAlias(string $alias) : string
+    public function getNameForAlias(string $alias): string
     {
         if (array_key_exists($alias, $this->aliases)) {
             return $this->aliases[$alias];

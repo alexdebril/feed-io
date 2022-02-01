@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader\Fixer;
 
@@ -8,7 +10,6 @@ use FeedIo\Reader\Result;
 
 class HttpLastModified extends FixerAbstract
 {
-
     /**
      * @param Result $result
      * @return FixerAbstract

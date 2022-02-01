@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Http;
 
@@ -9,7 +11,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class ResponseBuilder
 {
-
     /**
      * @param int $maxAge max-age in seconds
      * @param bool $public is the response public
@@ -26,7 +27,7 @@ class ResponseBuilder
      * @param  FeedInterface $feed
      * @return ResponseInterface
      */
-    public function createResponse(string $format, FormatterInterface $formatter, FeedInterface $feed) : ResponseInterface
+    public function createResponse(string $format, FormatterInterface $formatter, FeedInterface $feed): ResponseInterface
     {
         $headers = [
             'Content-Type'  => ($format === 'json') ? 'application/json' : 'application/xhtml+xml',

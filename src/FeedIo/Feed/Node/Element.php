@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Node;
 
@@ -23,7 +25,7 @@ class Element implements ElementInterface, ElementsAwareInterface
     /**
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -32,7 +34,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param  string $name
      * @return ElementInterface
      */
-    public function setName(string $name) : ElementInterface
+    public function setName(string $name): ElementInterface
     {
         $this->name = $name;
 
@@ -42,7 +44,7 @@ class Element implements ElementInterface, ElementsAwareInterface
     /**
      * @return string|null
      */
-    public function getValue() : ? string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -51,7 +53,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param string|null $value
      * @return ElementInterface
      */
-    public function setValue(string $value = null) : ElementInterface
+    public function setValue(string $value = null): ElementInterface
     {
         $this->value = $value;
 
@@ -62,7 +64,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param string $name
      * @return null|string
      */
-    public function getAttribute(string $name) : ? string
+    public function getAttribute(string $name): ?string
     {
         if (array_key_exists($name, $this->attributes)) {
             return $this->attributes[$name];
@@ -74,7 +76,7 @@ class Element implements ElementInterface, ElementsAwareInterface
     /**
      * @return iterable
      */
-    public function getAttributes() : iterable
+    public function getAttributes(): iterable
     {
         return $this->attributes;
     }
@@ -84,7 +86,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param string|null $value
      * @return ElementInterface
      */
-    public function setAttribute(string $name, string $value = null) : ElementInterface
+    public function setAttribute(string $name, string $value = null): ElementInterface
     {
         $this->attributes[$name] = $value;
 

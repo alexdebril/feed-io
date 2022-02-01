@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -9,9 +11,9 @@ use FeedIo\RuleAbstract;
 
 class Author extends RuleAbstract
 {
-    const NODE_NAME = 'author';
+    public const NODE_NAME = 'author';
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         $author = $node->newAuthor();
         $author->setName($this->getChildValue($element, 'name'));
@@ -20,12 +22,12 @@ class Author extends RuleAbstract
         $node->setAuthor($author);
     }
 
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return !! $node->getAuthor();
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         $element = $document->createElement(static::NODE_NAME);
         $this->appendNonEmptyChild($document, $element, 'name', $node->getAuthor()->getName());

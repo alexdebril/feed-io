@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -14,13 +16,12 @@ use FeedIo\Feed\StyleSheet;
  */
 interface FeedInterface extends \Iterator, \Countable, NodeInterface
 {
-
     /**
      * This method MUST return the feed's full URL
      *
      * @return string|null
      */
-    public function getUrl() : ? string;
+    public function getUrl(): ?string;
 
     /**
      * Sets the feed's URL. Precisely the URL to hit to get the stream
@@ -28,14 +29,14 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $url
      * @return FeedInterface
      */
-    public function setUrl(string $url = null) : FeedInterface;
+    public function setUrl(string $url = null): FeedInterface;
 
     /**
      * Returns feed's description
      *
      * @return string|null
      */
-    public function getDescription() : ? string;
+    public function getDescription(): ?string;
 
     /**
      * Sets feed's description
@@ -43,12 +44,12 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $description
      * @return FeedInterface
      */
-    public function setDescription(string $description = null) : FeedInterface;
+    public function setDescription(string $description = null): FeedInterface;
 
     /**
      * @return string|null
      */
-    public function getLanguage(): ? string ;
+    public function getLanguage(): ?string ;
 
     /**
      * @param string|null $language
@@ -59,26 +60,26 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
     /**
      * @return string|null
      */
-    public function getLogo() : ? string ;
+    public function getLogo(): ?string ;
 
     /**
      * @param string|null $logo
      * @return FeedInterface
      */
-    public function setLogo(string $logo = null) : FeedInterface;
+    public function setLogo(string $logo = null): FeedInterface;
 
     /**
      * @param ItemInterface $item
      * @return FeedInterface
      */
-    public function add(ItemInterface $item) : FeedInterface;
+    public function add(ItemInterface $item): FeedInterface;
 
     /**
      * Returns a fresh item compatible with the feed
      *
      * @return ItemInterface
      */
-    public function newItem() : ItemInterface;
+    public function newItem(): ItemInterface;
 
     /**
      * @return ArrayIterator|null
@@ -90,7 +91,7 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string $dtd
      * @return FeedInterface
      */
-    public function addNS(string $ns, string $dtd) : FeedInterface;
+    public function addNS(string $ns, string $dtd): FeedInterface;
 
     /**
      * @param StyleSheet $styleSheet
@@ -101,5 +102,5 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
     /**
      * @return StyleSheet|null
      */
-    public function getStyleSheet(): ? StyleSheet;
+    public function getStyleSheet(): ?StyleSheet;
 }

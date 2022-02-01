@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Node;
 
@@ -13,7 +15,7 @@ class Category implements CategoryInterface
     /**
      * @return null|string
      */
-    public function getTerm() : ? string
+    public function getTerm(): ?string
     {
         return $this->term;
     }
@@ -22,7 +24,7 @@ class Category implements CategoryInterface
      * @param string|null $term
      * @return CategoryInterface
      */
-    public function setTerm(string $term = null) : CategoryInterface
+    public function setTerm(string $term = null): CategoryInterface
     {
         $this->term = $term;
 
@@ -32,7 +34,7 @@ class Category implements CategoryInterface
     /**
      * @return null|string
      */
-    public function getScheme() : ? string
+    public function getScheme(): ?string
     {
         return $this->scheme;
     }
@@ -41,7 +43,7 @@ class Category implements CategoryInterface
      * @param string|null $scheme
      * @return CategoryInterface
      */
-    public function setScheme(string $scheme = null) : CategoryInterface
+    public function setScheme(string $scheme = null): CategoryInterface
     {
         $this->scheme = $scheme;
 
@@ -51,7 +53,7 @@ class Category implements CategoryInterface
     /**
      * @return null|string
      */
-    public function getLabel() : ? string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -60,7 +62,7 @@ class Category implements CategoryInterface
      * @param string|null $label
      * @return CategoryInterface
      */
-    public function setLabel(string $label = null) : CategoryInterface
+    public function setLabel(string $label = null): CategoryInterface
     {
         $this->label = $label;
 

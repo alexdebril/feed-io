@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Standard;
 
@@ -13,40 +15,39 @@ use FeedIo\Rule\Title;
 
 abstract class XmlAbstract extends StandardAbstract
 {
-
     /**
      * Name of the node containing all the feed's items
      */
-    const ITEM_NODE = 'item';
+    public const ITEM_NODE = 'item';
 
     /**
      * This is for XML Standards
      */
-    const SYNTAX_FORMAT = 'Xml';
+    public const SYNTAX_FORMAT = 'Xml';
 
     protected ?RuleSet $feedRuleSet = null;
 
     protected ?RuleSet $itemRuleSet = null;
 
-    abstract public function format(DOMDocument $document) : DOMDocument;
+    abstract public function format(DOMDocument $document): DOMDocument;
 
-    abstract public function getMainElement(DOMDocument $document) : DOMElement;
+    abstract public function getMainElement(DOMDocument $document): DOMElement;
 
-    abstract public function buildFeedRuleSet() : RuleSet;
+    abstract public function buildFeedRuleSet(): RuleSet;
 
-    abstract public function buildItemRuleSet() : RuleSet;
+    abstract public function buildItemRuleSet(): RuleSet;
 
-    public function getItemNodeName() : string
+    public function getItemNodeName(): string
     {
         return static::ITEM_NODE;
     }
 
-    public function getFormatter() : FormatterInterface
+    public function getFormatter(): FormatterInterface
     {
         return new XmlFormatter($this);
     }
 
-    public function getFeedRuleSet() : RuleSet
+    public function getFeedRuleSet(): RuleSet
     {
         if (is_null($this->feedRuleSet)) {
             $this->feedRuleSet = $this->buildFeedRuleSet();
@@ -55,7 +56,7 @@ abstract class XmlAbstract extends StandardAbstract
         return $this->feedRuleSet;
     }
 
-    public function getItemRuleSet() : RuleSet
+    public function getItemRuleSet(): RuleSet
     {
         if (is_null($this->itemRuleSet)) {
             $this->itemRuleSet = $this->buildItemRuleSet();
@@ -64,7 +65,7 @@ abstract class XmlAbstract extends StandardAbstract
         return $this->itemRuleSet;
     }
 
-    public function getModifiedSinceRule(string $tagName) : ModifiedSince
+    public function getModifiedSinceRule(string $tagName): ModifiedSince
     {
         $rule = new ModifiedSince($tagName);
         $rule->setDefaultFormat($this->getDefaultDateFormat());
@@ -73,7 +74,7 @@ abstract class XmlAbstract extends StandardAbstract
         return $rule;
     }
 
-    protected function buildBaseRuleSet() : RuleSet
+    protected function buildBaseRuleSet(): RuleSet
     {
         $ruleSet = $ruleSet = new RuleSet();
         $ruleSet->add(new Title());

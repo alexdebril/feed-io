@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Item;
 
@@ -23,40 +25,40 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getNodeName() : ? string;
+    public function getNodeName(): ?string;
 
     /**
      * @param  string $nodeName
      * @return MediaInterface
      */
-    public function setNodeName(string $nodeName) : MediaInterface;
+    public function setNodeName(string $nodeName): MediaInterface;
 
     /**
      * @return string
      */
-    public function getType() : ? string;
+    public function getType(): ?string;
 
     /**
      * @param  string $type
      * @return MediaInterface
      */
-    public function setType(?string $type) : MediaInterface;
+    public function setType(?string $type): MediaInterface;
 
     /**
      * @return string
      */
-    public function getUrl() : ? string;
+    public function getUrl(): ?string;
 
     /**
      * @param  string $url
      * @return MediaInterface
      */
-    public function setUrl(?string $url) : MediaInterface;
+    public function setUrl(?string $url): MediaInterface;
 
     /**
      * @return string
      */
-    public function getLength() : ? string;
+    public function getLength(): ?string;
 
     /**
      * @param  mixed $length
@@ -67,33 +69,33 @@ interface MediaInterface
     /**
      * @return string
      */
-    public function getTitle() : ? string;
+    public function getTitle(): ?string;
 
     /**
      * @param  string $title
      * @return MediaInterface
      */
-    public function setTitle(?string $title) : MediaInterface;
+    public function setTitle(?string $title): MediaInterface;
 
     /**
      * @return string
      */
-    public function getDescription() : ? string;
+    public function getDescription(): ?string;
 
     /**
      * @param  string $description
      * @return MediaInterface
      */
-    public function setDescription(?string $description) : MediaInterface;
+    public function setDescription(?string $description): MediaInterface;
 
     /**
      * @return string
      */
-    public function getThumbnail() : ? string;
+    public function getThumbnail(): ?string;
 
     /**
      * @param  string $thumbnail
      * @return MediaInterface
      */
-    public function setThumbnail(?string $thumbnail) : MediaInterface;
+    public function setThumbnail(?string $thumbnail): MediaInterface;
 }

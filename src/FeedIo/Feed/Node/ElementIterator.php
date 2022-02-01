@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Node;
 
@@ -10,7 +12,6 @@ use Iterator;
  */
 class ElementIterator extends \FilterIterator
 {
-
     /**
      * @param \Iterator $iterator Set of elements to filter
      * @param string    $name     Element name to accept
@@ -24,7 +25,7 @@ class ElementIterator extends \FilterIterator
      * override PHP's count implementation.
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         $count = 0;
         foreach ($this as $node) {
@@ -37,7 +38,7 @@ class ElementIterator extends \FilterIterator
     /**
      * @return boolean True if the current element's name matches the expected one
      */
-    public function accept() : bool
+    public function accept(): bool
     {
         $element = $this->getInnerIterator()->current();
 

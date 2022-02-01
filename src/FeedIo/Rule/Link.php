@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -7,13 +9,13 @@ use FeedIo\RuleAbstract;
 
 class Link extends RuleAbstract
 {
-    const NODE_NAME = 'link';
+    public const NODE_NAME = 'link';
 
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         $node->setLink($element->nodeValue);
     }
@@ -21,7 +23,7 @@ class Link extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return !! $node->getLink();
     }
@@ -29,7 +31,7 @@ class Link extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node): void
     {
         $rootElement->appendChild($document->createElement($this->getNodeName(), $node->getLink()));
     }

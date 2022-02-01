@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Item;
 
@@ -23,7 +25,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getNodeName() : ? string
+    public function getNodeName(): ?string
     {
         return $this->nodeName;
     }
@@ -32,7 +34,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param string $nodeName
      * @return MediaInterface
      */
-    public function setNodeName(string $nodeName) : MediaInterface
+    public function setNodeName(string $nodeName): MediaInterface
     {
         $this->nodeName = $nodeName;
 
@@ -42,7 +44,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getType() : ? string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -51,7 +53,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param string|null $type
      * @return MediaInterface
      */
-    public function setType(?string $type) : MediaInterface
+    public function setType(?string $type): MediaInterface
     {
         $this->type = $type;
 
@@ -61,7 +63,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getUrl() : ? string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -70,7 +72,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param string|null $url
      * @return MediaInterface
      */
-    public function setUrl(?string $url) : MediaInterface
+    public function setUrl(?string $url): MediaInterface
     {
         $this->url = $url;
 
@@ -80,7 +82,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getLength() : ? string
+    public function getLength(): ?string
     {
         return $this->length;
     }
@@ -99,7 +101,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string|null
      */
-    public function getTitle() : ? string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -108,7 +110,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param string|null $title
      * @return MediaInterface
      */
-    public function setTitle(?string $title) : MediaInterface
+    public function setTitle(?string $title): MediaInterface
     {
         $this->title = $title;
 
@@ -118,7 +120,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string
      */
-    public function getDescription() : ? string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -127,7 +129,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param  string $description
      * @return MediaInterface
      */
-    public function setDescription(?string $description) : MediaInterface
+    public function setDescription(?string $description): MediaInterface
     {
         $this->description = $description;
 
@@ -137,7 +139,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return string
      */
-    public function getThumbnail() : ? string
+    public function getThumbnail(): ?string
     {
         return $this->thumbnail;
     }
@@ -146,7 +148,7 @@ class Media implements MediaInterface, ArrayableInterface
      * @param  string $thumbnail
      * @return MediaInterface
      */
-    public function setThumbnail(?string $thumbnail) : MediaInterface
+    public function setThumbnail(?string $thumbnail): MediaInterface
     {
         $this->thumbnail = $thumbnail;
 
@@ -156,7 +158,7 @@ class Media implements MediaInterface, ArrayableInterface
     /**
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return get_object_vars($this);
     }

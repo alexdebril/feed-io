@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -39,7 +41,7 @@ abstract class TextAbstract extends RuleAbstract
         );
     }
 
-    protected function generateElement(DOMDocument $document, string $content) : DOMElement
+    protected function generateElement(DOMDocument $document, string $content): DOMElement
     {
         $processedContent = htmlspecialchars($content);
         return $document->createElement($this->getNodeName(), $processedContent);
