@@ -64,7 +64,7 @@ interface MediaInterface
      * @param  mixed $length
      * @return MediaInterface
      */
-    public function setLength($length) : MediaInterface;
+    public function setLength($length): MediaInterface;
 
     /**
      * @return string
