@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -9,14 +11,14 @@ use FeedIo\RuleAbstract;
 
 class Logo extends RuleAbstract
 {
-    const NODE_NAME = 'image';
+    public const NODE_NAME = 'image';
 
     protected $urlAttributeName = 'url';
 
     /**
      * @return string
      */
-    public function getUrlAttributeName() : string
+    public function getUrlAttributeName(): string
     {
         return $this->urlAttributeName;
     }
@@ -24,7 +26,7 @@ class Logo extends RuleAbstract
     /**
      * @param  string $name
      */
-    public function setUrlAttributeName(string $name) : void
+    public function setUrlAttributeName(string $name): void
     {
         $this->urlAttributeName = $name;
     }
@@ -33,7 +35,7 @@ class Logo extends RuleAbstract
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         if ($node instanceof FeedInterface) {
             for ($i = $element->childNodes->length; --$i >= 0;) {
@@ -48,7 +50,7 @@ class Logo extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return $node instanceof FeedInterface && !! $node->getLogo();
     }
@@ -56,7 +58,7 @@ class Logo extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node): void
     {
         if ($node instanceof FeedInterface) {
             $element = $document->createElement(static::NODE_NAME);

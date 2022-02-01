@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed;
 
@@ -25,7 +27,7 @@ class Item extends Node implements ItemInterface
      * @param  MediaInterface $media
      * @return ItemInterface
      */
-    public function addMedia(MediaInterface $media) : ItemInterface
+    public function addMedia(MediaInterface $media): ItemInterface
     {
         $this->medias->append($media);
 
@@ -35,7 +37,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return iterable
      */
-    public function getMedias() : iterable
+    public function getMedias(): iterable
     {
         return $this->medias;
     }
@@ -43,7 +45,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return boolean
      */
-    public function hasMedia() : bool
+    public function hasMedia(): bool
     {
         return $this->medias->count() > 0;
     }
@@ -51,7 +53,7 @@ class Item extends Node implements ItemInterface
     /**
      * @return MediaInterface
      */
-    public function newMedia() : MediaInterface
+    public function newMedia(): MediaInterface
     {
         return new Media();
     }

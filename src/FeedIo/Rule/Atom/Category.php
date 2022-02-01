@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -7,12 +9,11 @@ use FeedIo\Feed\NodeInterface;
 
 class Category extends \FeedIo\Rule\Category
 {
-
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         $category = $node->newCategory();
         $category->setScheme($this->getAttributeValue($element, 'scheme'))
@@ -27,7 +28,7 @@ class Category extends \FeedIo\Rule\Category
      * @param  CategoryInterface $category
      * @return \DomElement
      */
-    public function createCategoryElement(\DomDocument $document, CategoryInterface $category) : \DOMElement
+    public function createCategoryElement(\DomDocument $document, CategoryInterface $category): \DOMElement
     {
         $element = $document->createElement($this->getNodeName());
         $this->setNonEmptyAttribute($element, 'scheme', $category->getScheme());

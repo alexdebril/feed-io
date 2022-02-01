@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -44,26 +46,26 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         $this->setTimezone(new DateTimeZone(date_default_timezone_get()));
     }
 
-    public function addDateFormat(string $dateFormat) : DateTimeBuilderInterface
+    public function addDateFormat(string $dateFormat): DateTimeBuilderInterface
     {
         $this->dateFormats[] = $dateFormat;
 
         return $this;
     }
 
-    public function setDateFormats(array $dateFormats) : DateTimeBuilderInterface
+    public function setDateFormats(array $dateFormats): DateTimeBuilderInterface
     {
         $this->dateFormats = $dateFormats;
 
         return $this;
     }
 
-    public function getLastGuessedFormat() : string
+    public function getLastGuessedFormat(): string
     {
         return $this->lastGuessedFormat;
     }
 
-    public function guessDateFormat(string $date) : ? string
+    public function guessDateFormat(string $date): ?string
     {
         foreach ($this->dateFormats as $format) {
             $test = DateTime::createFromFormat($format, $date);
@@ -77,7 +79,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         return null;
     }
 
-    public function convertToDateTime(string $string) : DateTime
+    public function convertToDateTime(string $string): DateTime
     {
         $string = trim($string);
         foreach ([$this->getLastGuessedFormat(), $this->guessDateFormat($string) ] as $format) {
@@ -99,37 +101,37 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         return $date;
     }
 
-    public function getFeedTimezone() : ?DateTimeZone
+    public function getFeedTimezone(): ?DateTimeZone
     {
         return $this->feedTimezone;
     }
 
-    public function setFeedTimezone(DateTimeZone $timezone) : void
+    public function setFeedTimezone(DateTimeZone $timezone): void
     {
         $this->feedTimezone = $timezone;
     }
 
-    public function resetFeedTimezone() : void
+    public function resetFeedTimezone(): void
     {
         $this->feedTimezone = null;
     }
 
-    public function getServerTimezone() : ?DateTimeZone
+    public function getServerTimezone(): ?DateTimeZone
     {
         return $this->serverTimezone;
     }
 
-    public function setServerTimezone(DateTimeZone $timezone) : void
+    public function setServerTimezone(DateTimeZone $timezone): void
     {
         $this->serverTimezone = $timezone;
     }
 
-    public function getTimezone() : ?DateTimeZone
+    public function getTimezone(): ?DateTimeZone
     {
         return $this->getServerTimezone();
     }
 
-    public function setTimezone(DateTimeZone $timezone) : void
+    public function setTimezone(DateTimeZone $timezone): void
     {
         $this->setServerTimezone($timezone);
     }

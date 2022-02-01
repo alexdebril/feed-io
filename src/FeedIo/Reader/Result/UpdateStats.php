@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Reader\Result;
 
@@ -10,22 +12,22 @@ class UpdateStats
     /**
      * default update delay applied when average or median intervals are outdated
      */
-    const DEFAULT_MIN_DELAY = 3600;
+    public const DEFAULT_MIN_DELAY = 3600;
 
     /**
      * default update delay applied when the feed is considered sleepy
      */
-    const DEFAULT_SLEEPY_DELAY = 86400;
+    public const DEFAULT_SLEEPY_DELAY = 86400;
 
     /**
      * default duration after which the feed is considered sleepy
      */
-    const DEFAULT_DURATION_BEFORE_BEING_SLEEPY = 7 * 86400;
+    public const DEFAULT_DURATION_BEFORE_BEING_SLEEPY = 7 * 86400;
 
     /**
      * default margin ratio applied to update time calculation
      */
-    const DEFAULT_MARGIN_RATIO = 0.1;
+    public const DEFAULT_MARGIN_RATIO = 0.1;
 
     protected array $intervals = [];
 
@@ -107,7 +109,7 @@ class UpdateStats
      */
     public function getMinInterval(): int
     {
-        return count($this->intervals) ? min($this->intervals):0;
+        return count($this->intervals) ? min($this->intervals) : 0;
     }
 
     /**
@@ -115,7 +117,7 @@ class UpdateStats
      */
     public function getMaxInterval(): int
     {
-        return count($this->intervals) ? max($this->intervals):0;
+        return count($this->intervals) ? max($this->intervals) : 0;
     }
 
     /**
@@ -125,7 +127,7 @@ class UpdateStats
     {
         $total = array_sum($this->intervals);
 
-        return count($this->intervals) ? intval(floor($total / count($this->intervals))):0;
+        return count($this->intervals) ? intval(floor($total / count($this->intervals))) : 0;
     }
 
     /**
@@ -136,7 +138,7 @@ class UpdateStats
         sort($this->intervals);
         $num = floor(count($this->intervals) / 2);
 
-        return isset($this->intervals[$num]) ? $this->intervals[$num]:0;
+        return isset($this->intervals[$num]) ? $this->intervals[$num] : 0;
     }
 
     private function computeIntervals(array $dates): array
@@ -162,7 +164,7 @@ class UpdateStats
         return $dates;
     }
 
-    private function getTimestamp(ItemInterface $item): ? int
+    private function getTimestamp(ItemInterface $item): ?int
     {
         if (! is_null($item->getLastModified())) {
             return $item->getLastModified()->getTimestamp();
@@ -172,6 +174,6 @@ class UpdateStats
 
     private function getFeedTimestamp(): int
     {
-        return !! $this->feed->getLastModified() ? $this->feed->getLastModified()->getTimestamp():time();
+        return !! $this->feed->getLastModified() ? $this->feed->getLastModified()->getTimestamp() : time();
     }
 }

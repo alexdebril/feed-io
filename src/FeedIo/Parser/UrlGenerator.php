@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Parser;
 
 class UrlGenerator
 {
-
     /**
      * @param string $host
      * @param string $path
@@ -25,7 +26,7 @@ class UrlGenerator
      */
     public function generateAbsolutePath(string $host, string $path): string
     {
-        $path = substr($path, 0, 1) == '/' ? $path:"/{$path}";
+        $path = substr($path, 0, 1) == '/' ? $path : "/{$path}";
         return $host . $path;
     }
 }

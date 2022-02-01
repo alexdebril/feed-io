@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Standard;
 
@@ -18,26 +20,25 @@ use FeedIo\RuleSet;
 
 class Rss extends XmlAbstract
 {
-
     /**
      * Format version
      */
-    const VERSION = '2.0';
+    public const VERSION = '2.0';
 
     /**
      * RSS document must have a <rss> root node
      */
-    const ROOT_NODE_TAGNAME = 'rss';
+    public const ROOT_NODE_TAGNAME = 'rss';
 
     /**
      * <channel> node contains feed's metadata
      */
-    const CHANNEL_NODE_TAGNAME = 'channel';
+    public const CHANNEL_NODE_TAGNAME = 'channel';
 
     /**
      * publication date
      */
-    const DATE_NODE_TAGNAME = 'pubDate';
+    public const DATE_NODE_TAGNAME = 'pubDate';
 
     protected array $mandatoryFields = ['channel'];
 
@@ -46,7 +47,7 @@ class Rss extends XmlAbstract
      * @param  \DOMDocument $document
      * @return \DOMDocument
      */
-    public function format(\DOMDocument $document) : \DOMDocument
+    public function format(\DOMDocument $document): \DOMDocument
     {
         $rss = $document->createElement(static::ROOT_NODE_TAGNAME);
         $rss->setAttribute('version', static::VERSION);
@@ -63,7 +64,7 @@ class Rss extends XmlAbstract
      * @param  Document $document
      * @return boolean
      */
-    public function canHandle(Document $document) : bool
+    public function canHandle(Document $document): bool
     {
         if (!isset($document->getDOMDocument()->documentElement->tagName)) {
             return false;
@@ -75,7 +76,7 @@ class Rss extends XmlAbstract
      * @param  DOMDocument $document
      * @return \DomElement
      */
-    public function getMainElement(\DOMDocument $document) : \DOMElement
+    public function getMainElement(\DOMDocument $document): \DOMElement
     {
         return $document->documentElement->getElementsByTagName(static::CHANNEL_NODE_TAGNAME)->item(0);
     }
@@ -83,7 +84,7 @@ class Rss extends XmlAbstract
     /**
      * @return \FeedIo\RuleSet
      */
-    public function buildFeedRuleSet() : RuleSet
+    public function buildFeedRuleSet(): RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -96,7 +97,7 @@ class Rss extends XmlAbstract
     /**
      * @return \FeedIo\RuleSet
      */
-    public function buildItemRuleSet() : RuleSet
+    public function buildItemRuleSet(): RuleSet
     {
         $ruleSet = $this->buildBaseRuleSet();
         $ruleSet
@@ -113,7 +114,7 @@ class Rss extends XmlAbstract
     /**
      * @return \FeedIo\RuleSet
      */
-    protected function buildBaseRuleSet() : RuleSet
+    protected function buildBaseRuleSet(): RuleSet
     {
         $ruleSet = parent::buildBaseRuleSet();
         $ruleSet

@@ -8,7 +8,7 @@ use FeedIo\RuleAbstract;
 
 class Language extends RuleAbstract
 {
-    const NODE_NAME = 'language';
+    public const NODE_NAME = 'language';
 
     /**
      * @param  NodeInterface $node
@@ -24,7 +24,7 @@ class Language extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return $node instanceof FeedInterface && !! $node->getLanguage();
     }

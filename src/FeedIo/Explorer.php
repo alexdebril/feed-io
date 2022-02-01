@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -10,7 +12,7 @@ use Psr\Log\LoggerInterface;
 
 class Explorer
 {
-    const VALID_TYPES = [
+    public const VALID_TYPES = [
         'application/atom+xml',
         'application/rss+xml'
     ];
@@ -21,7 +23,7 @@ class Explorer
     ) {
     }
 
-    public function discover(string $url) : array
+    public function discover(string $url): array
     {
         $this->logger->info("discover feeds from {$url}");
         $stream = $this->client->getResponse($url, new DateTime('@0'));
@@ -34,7 +36,7 @@ class Explorer
         return $feeds;
     }
 
-    protected function extractFeeds(string $html) : array
+    protected function extractFeeds(string $html): array
     {
         $dom = new DOMDocument();
         $dom->loadHTML($html);
@@ -50,7 +52,7 @@ class Explorer
         return $feeds;
     }
 
-    protected function isFeedLink(DomElement $element) : bool
+    protected function isFeedLink(DomElement $element): bool
     {
         return $element->hasAttribute('type')
                 && in_array($element->getAttribute('type'), self::VALID_TYPES);

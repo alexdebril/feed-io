@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -47,7 +49,7 @@ class Reader
      * @param  ParserAbstract $parser
      * @return Reader
      */
-    public function addParser(ParserAbstract $parser) : Reader
+    public function addParser(ParserAbstract $parser): Reader
     {
         $this->logger->debug("new parser added : ".get_class($parser->getStandard()));
         $this->parsers[] = $parser;
@@ -61,7 +63,7 @@ class Reader
      * @param DateTime|null $modifiedSince
      * @return Result
      */
-    public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null) : Result
+    public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null): Result
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {
@@ -85,7 +87,7 @@ class Reader
      * @param  FeedInterface         $feed
      * @return Document
      */
-    public function handleResponse(ResponseInterface $response, FeedInterface $feed) : Document
+    public function handleResponse(ResponseInterface $response, FeedInterface $feed): Document
     {
         $this->logger->debug("response ok, now turning it into a document");
         $document = new Document($response->getBody());
@@ -105,7 +107,7 @@ class Reader
      * @throws Parser\UnsupportedFormatException
      * @throws Reader\NoAccurateParserException
      */
-    public function parseDocument(Document $document, FeedInterface $feed) : FeedInterface
+    public function parseDocument(Document $document, FeedInterface $feed): FeedInterface
     {
         $parser = $this->getAccurateParser($document);
         $this->logger->debug("accurate parser : ".get_class($parser));
@@ -118,7 +120,7 @@ class Reader
      * @return ParserAbstract
      * @throws Reader\NoAccurateParserException
      */
-    public function getAccurateParser(Document $document) : ParserAbstract
+    public function getAccurateParser(Document $document): ParserAbstract
     {
         foreach ($this->parsers as $parser) {
             if ($parser->getStandard()->canHandle($document)) {

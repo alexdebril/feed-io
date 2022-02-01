@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -8,7 +10,7 @@ use FeedIo\RuleAbstract;
 
 class Image extends RuleAbstract
 {
-    const NODE_NAME = 'image';
+    public const NODE_NAME = 'image';
 
     public function setProperty(NodeInterface $node, \DOMElement $element): void
     {

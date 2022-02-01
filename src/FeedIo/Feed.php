@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -38,7 +40,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
      *
      * @return string|null
      */
-    public function getUrl() : ? string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -47,7 +49,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
      * @param string|null $url
      * @return FeedInterface
      */
-    public function setUrl(string $url = null) : FeedInterface
+    public function setUrl(string $url = null): FeedInterface
     {
         $this->url = $url;
 
@@ -57,19 +59,19 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
     /**
      * @return string|null
      */
-    public function getDescription() : ? string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description = null) : FeedInterface
+    public function setDescription(string $description = null): FeedInterface
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getLanguage(): ? string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -81,12 +83,12 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this;
     }
 
-    public function getLogo() : ? string
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
 
-    public function setLogo(string $logo = null) : FeedInterface
+    public function setLogo(string $logo = null): FeedInterface
     {
         $this->logo = $logo;
 
@@ -130,7 +132,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         $this->items->rewind();
     }
 
-    public function add(ItemInterface $item) : FeedInterface
+    public function add(ItemInterface $item): FeedInterface
     {
         if ($item->getLastModified() > $this->getLastModified()) {
             $this->setLastModified($item->getLastModified());
@@ -141,29 +143,29 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this;
     }
 
-    public function addNS(string $ns, string $dtd) : FeedInterface
+    public function addNS(string $ns, string $dtd): FeedInterface
     {
         $this->ns->offsetSet($ns, $dtd);
 
         return $this;
     }
 
-    public function getNS() : \ArrayIterator
+    public function getNS(): \ArrayIterator
     {
         return $this->ns;
     }
 
-    public function newItem() : ItemInterface
+    public function newItem(): ItemInterface
     {
         return new Item();
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         $items = [];
 
@@ -177,7 +179,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $properties;
     }
 
-    public function count() : int
+    public function count(): int
     {
         return count($this->items);
     }

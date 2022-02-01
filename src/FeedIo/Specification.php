@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -95,7 +97,7 @@ class Specification implements SpecificationInterface
         return $this->dateTimeBuilder;
     }
 
-    public function newParser(string $format, StandardAbstract $standard) : ParserAbstract
+    public function newParser(string $format, StandardAbstract $standard): ParserAbstract
     {
         if (strtolower($format) === 'json') {
             return new JsonParser($standard, $this->logger);

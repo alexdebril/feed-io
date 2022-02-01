@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter\FileSystem;
 
@@ -12,14 +14,13 @@ use FeedIo\Adapter\ResponseInterface;
  */
 class Client implements ClientInterface
 {
-
     /**
      * @param  string                            $path
      * @param  \DateTime                         $modifiedSince
      * @throws \FeedIo\Adapter\NotFoundException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $path, DateTime $modifiedSince = null) : ResponseInterface
+    public function getResponse(string $path, DateTime $modifiedSince = null): ResponseInterface
     {
         if (file_exists($path)) {
             return new Response(

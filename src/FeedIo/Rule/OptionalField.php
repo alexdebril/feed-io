@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule;
 
@@ -14,9 +16,9 @@ use FeedIo\RuleAbstract;
 
 class OptionalField extends RuleAbstract
 {
-    const NODE_NAME = 'default';
+    public const NODE_NAME = 'default';
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($node instanceof ElementsAwareInterface) {
             $newElement = $this->createElementFromDomNode($node, $element);
@@ -24,7 +26,7 @@ class OptionalField extends RuleAbstract
         }
     }
 
-    private function addSubElements(ElementsAwareInterface $node, ElementInterface $element, DOMNode $domNode) : void
+    private function addSubElements(ElementsAwareInterface $node, ElementInterface $element, DOMNode $domNode): void
     {
         if (!$domNode->hasChildNodes() || !$this->hasSubElements($domNode)) {
             return;
@@ -33,7 +35,7 @@ class OptionalField extends RuleAbstract
         $this->addElementsFromNodeList($node, $element, $domNode->childNodes);
     }
 
-    private function addElementsFromNodeList(ElementsAwareInterface $node, ElementInterface $element, DOMNodeList $childNodeList) : void
+    private function addElementsFromNodeList(ElementsAwareInterface $node, ElementInterface $element, DOMNodeList $childNodeList): void
     {
         foreach ($childNodeList as $childNode) {
             if ($childNode instanceof DOMText) {
@@ -46,7 +48,7 @@ class OptionalField extends RuleAbstract
         }
     }
 
-    private function hasSubElements(DOMNode $domNode) : bool
+    private function hasSubElements(DOMNode $domNode): bool
     {
         foreach ($domNode->childNodes as $childDomNode) {
             if (!$childDomNode instanceof \DOMText) {
@@ -57,7 +59,7 @@ class OptionalField extends RuleAbstract
         return false;
     }
 
-    private function createElementFromDomNode(ElementsAwareInterface $node, DOMNode $domNode) : ElementInterface
+    private function createElementFromDomNode(ElementsAwareInterface $node, DOMNode $domNode): ElementInterface
     {
         $element = $node->newElement();
         $element->setName($domNode->nodeName);
@@ -71,7 +73,7 @@ class OptionalField extends RuleAbstract
         return $element;
     }
 
-    public function buildDomElement(DomElement $domElement, ElementInterface $element) : DOMElement
+    public function buildDomElement(DomElement $domElement, ElementInterface $element): DOMElement
     {
         $domElement->nodeValue = $element->getValue();
 
@@ -94,7 +96,7 @@ class OptionalField extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return $node instanceof ElementsAwareInterface;
     }
@@ -102,7 +104,7 @@ class OptionalField extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         $addedElementsCount = 0;
 

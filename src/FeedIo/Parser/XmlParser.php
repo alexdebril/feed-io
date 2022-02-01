@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Parser;
 
@@ -21,7 +23,7 @@ use FeedIo\Standard\XmlAbstract;
  */
 class XmlParser extends ParserAbstract
 {
-    public function isItem(string $tagName) : bool
+    public function isItem(string $tagName): bool
     {
         if ($this->standard instanceof XmlAbstract) {
             return (strtolower($this->standard->getItemNodeName()) === strtolower($tagName));
@@ -30,7 +32,7 @@ class XmlParser extends ParserAbstract
         return false;
     }
 
-    public function parseContent(Document $document, FeedInterface $feed) : FeedInterface
+    public function parseContent(Document $document, FeedInterface $feed): FeedInterface
     {
         if ($this->standard instanceof XmlAbstract) {
             $element = $this->standard->getMainElement($document->getDOMDocument());
@@ -39,7 +41,7 @@ class XmlParser extends ParserAbstract
         return $feed;
     }
 
-    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool
+    public function checkBodyStructure(Document $document, iterable $mandatoryFields): bool
     {
         $errors = array();
 
@@ -60,7 +62,7 @@ class XmlParser extends ParserAbstract
         return true;
     }
 
-    public function parseNode(NodeInterface $item, DOMElement $element, RuleSet $ruleSet) : NodeInterface
+    public function parseNode(NodeInterface $item, DOMElement $element, RuleSet $ruleSet): NodeInterface
     {
         foreach ($element->childNodes as $node) {
             if ($node instanceof DOMElement) {
@@ -71,7 +73,7 @@ class XmlParser extends ParserAbstract
         return $item;
     }
 
-    protected function handleNode(NodeInterface $item, DOMElement $node, RuleSet $ruleSet) : void
+    protected function handleNode(NodeInterface $item, DOMElement $node, RuleSet $ruleSet): void
     {
         if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
             $newItem = $this->parseNode($item->newItem(), $node, $this->getItemRuleSet());
