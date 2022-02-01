@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Formatter;
 
@@ -27,7 +29,7 @@ class XmlFormatter implements FormatterInterface
     ) {
     }
 
-    public function setHeaders(DOMDocument $document, FeedInterface $feed) : XmlFormatter
+    public function setHeaders(DOMDocument $document, FeedInterface $feed): XmlFormatter
     {
         $rules = $this->standard->getFeedRuleSet();
         $mainElement = $this->standard->getMainElement($document);
@@ -36,7 +38,7 @@ class XmlFormatter implements FormatterInterface
         return $this;
     }
 
-    public function addItem(DOMDocument $document, NodeInterface $node) : XmlFormatter
+    public function addItem(DOMDocument $document, NodeInterface $node): XmlFormatter
     {
         $domItem = $document->createElement($this->standard->getItemNodeName());
         $rules = $this->standard->getItemRuleSet();
@@ -47,7 +49,7 @@ class XmlFormatter implements FormatterInterface
         return $this;
     }
 
-    public function buildElements(RuleSet $ruleSet, DOMDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    public function buildElements(RuleSet $ruleSet, DOMDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         $rules = $this->getAllRules($ruleSet, $node);
 
@@ -56,7 +58,7 @@ class XmlFormatter implements FormatterInterface
         }
     }
 
-    public function getAllRules(RuleSet $ruleSet, NodeInterface $node) : iterable
+    public function getAllRules(RuleSet $ruleSet, NodeInterface $node): iterable
     {
         $rules = $ruleSet->getRules();
         if ($node instanceof ElementsAwareInterface) {
@@ -69,12 +71,12 @@ class XmlFormatter implements FormatterInterface
         return $rules;
     }
 
-    public function getEmptyDocument() : DOMDocument
+    public function getEmptyDocument(): DOMDocument
     {
         return new DOMDocument('1.0', 'utf-8');
     }
 
-    public function getDocument() : DOMDocument
+    public function getDocument(): DOMDocument
     {
         $document = $this->getEmptyDocument();
 
@@ -85,14 +87,14 @@ class XmlFormatter implements FormatterInterface
      * @param  FeedInterface $feed
      * @return string
      */
-    public function toString(FeedInterface $feed) : string
+    public function toString(FeedInterface $feed): string
     {
         $document = $this->toDom($feed);
 
         return $document->saveXML();
     }
 
-    public function toDom(FeedInterface $feed) : DOMDocument
+    public function toDom(FeedInterface $feed): DOMDocument
     {
         $document = $this->getDocument();
 
@@ -118,7 +120,7 @@ class XmlFormatter implements FormatterInterface
         }
     }
 
-    public function setItems(DOMDocument $document, FeedInterface $feed) : XmlFormatter
+    public function setItems(DOMDocument $document, FeedInterface $feed): XmlFormatter
     {
         foreach ($feed as $item) {
             $this->addItem($document, $item);

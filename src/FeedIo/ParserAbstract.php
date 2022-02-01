@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -24,7 +26,7 @@ abstract class ParserAbstract
     ) {
     }
 
-    public function parse(Document $document, FeedInterface $feed) : FeedInterface
+    public function parse(Document $document, FeedInterface $feed): FeedInterface
     {
         if (!$this->standard->canHandle($document)) {
             throw new UnsupportedFormatException('this is not a supported format');
@@ -36,12 +38,12 @@ abstract class ParserAbstract
         return $feed;
     }
 
-    public function getStandard() : StandardAbstract
+    public function getStandard(): StandardAbstract
     {
         return $this->standard;
     }
 
-    public function addValidItem(FeedInterface $feed, NodeInterface $item) : ParserAbstract
+    public function addValidItem(FeedInterface $feed, NodeInterface $item): ParserAbstract
     {
         if ($item instanceof ItemInterface) {
             $feed->add($item);
@@ -50,7 +52,7 @@ abstract class ParserAbstract
         return $this;
     }
 
-    abstract public function parseContent(Document $document, FeedInterface $feed) : FeedInterface;
+    abstract public function parseContent(Document $document, FeedInterface $feed): FeedInterface;
 
-    abstract public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool;
+    abstract public function checkBodyStructure(Document $document, iterable $mandatoryFields): bool;
 }

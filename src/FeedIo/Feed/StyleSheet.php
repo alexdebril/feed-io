@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed;
 
 class StyleSheet
 {
-    const DEFAULT_TYPE = 'text/xsl';
+    public const DEFAULT_TYPE = 'text/xsl';
 
     public function __construct(
         protected string $href,

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Parser;
 
@@ -12,13 +14,12 @@ use FeedIo\Reader\Document;
 
 class JsonParser extends ParserAbstract
 {
-
     /**
      * @param Document $document
      * @param FeedInterface $feed
      * @return FeedInterface
      */
-    public function parseContent(Document $document, FeedInterface $feed) : FeedInterface
+    public function parseContent(Document $document, FeedInterface $feed): FeedInterface
     {
         $data = $document->getJsonAsArray();
         $feed->setTitle($this->readOffset($data, 'title'));
@@ -41,7 +42,7 @@ class JsonParser extends ParserAbstract
      * @throws MissingFieldsException
      * @return bool
      */
-    public function checkBodyStructure(Document $document, iterable $mandatoryFields) : bool
+    public function checkBodyStructure(Document $document, iterable $mandatoryFields): bool
     {
         $data = $document->getJsonAsArray();
 
@@ -59,7 +60,7 @@ class JsonParser extends ParserAbstract
      * @param FeedInterface $feed
      * @return JsonParser
      */
-    public function parseItems(iterable $items, FeedInterface $feed) : JsonParser
+    public function parseItems(iterable $items, FeedInterface $feed): JsonParser
     {
         foreach ($items as $dataItem) {
             $item = new Item();
@@ -84,7 +85,7 @@ class JsonParser extends ParserAbstract
      * @param string|null $default
      * @return null|string
      */
-    public function readOffset(array $data, string $offsetName, string $default = null) : ? string
+    public function readOffset(array $data, string $offsetName, string $default = null): ?string
     {
         if (array_key_exists($offsetName, $data)) {
             return $data[$offsetName];

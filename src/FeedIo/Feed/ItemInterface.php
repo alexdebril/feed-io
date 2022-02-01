@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed;
 
@@ -20,35 +22,34 @@ use FeedIo\Feed\Item\MediaInterface;
  */
 interface ItemInterface extends NodeInterface
 {
-
     /**
      * adds $media to the object's attributes
      *
      * @param  MediaInterface $media
      * @return ItemInterface
      */
-    public function addMedia(MediaInterface $media) : ItemInterface;
+    public function addMedia(MediaInterface $media): ItemInterface;
 
     /**
      * returns the current object's medias
      *
      * @return iterable
      */
-    public function getMedias() : iterable;
+    public function getMedias(): iterable;
 
     /**
      * returns true if at least one MediaInterface exists in the object's attributes
      *
      * @return boolean
      */
-    public function hasMedia() : bool;
+    public function hasMedia(): bool;
 
     /**
      * returns a new MediaInterface
      *
      * @return MediaInterface
      */
-    public function newMedia() : MediaInterface;
+    public function newMedia(): MediaInterface;
 
     /**
      * Returns the item's summary. Valid for JSONFeed and Atom formats only

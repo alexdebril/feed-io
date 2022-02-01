@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Feed\Item;
 
@@ -8,37 +10,36 @@ namespace FeedIo\Feed\Item;
  */
 interface AuthorInterface
 {
-
     /**
      * @return string
      */
-    public function getName() : ? string;
+    public function getName(): ?string;
 
     /**
      * @param  string $name
      * @return AuthorInterface
      */
-    public function setName(string $name = null) : AuthorInterface;
+    public function setName(string $name = null): AuthorInterface;
 
     /**
      * @return string
      */
-    public function getUri() : ? string;
+    public function getUri(): ?string;
 
     /**
      * @param  string $uri
      * @return AuthorInterface
      */
-    public function setUri(string $uri = null) : AuthorInterface;
+    public function setUri(string $uri = null): AuthorInterface;
 
     /**
      * @return string
      */
-    public function getEmail() : ? string;
+    public function getEmail(): ?string;
 
     /**
      * @param  string $email
      * @return AuthorInterface
      */
-    public function setEmail(string $email = null) : AuthorInterface;
+    public function setEmail(string $email = null): AuthorInterface;
 }

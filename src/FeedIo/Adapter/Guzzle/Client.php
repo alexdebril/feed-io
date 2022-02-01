@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter\Guzzle;
 
@@ -15,11 +17,10 @@ use GuzzleHttp\TransferStats;
  */
 class Client implements ClientInterface
 {
-
     /**
      * Default user agent provided with the package
      */
-    const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
+    public const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
 
     public function __construct(
         protected GuzzleClientInterface $guzzleClient,
@@ -31,7 +32,7 @@ class Client implements ClientInterface
      * @param  string $userAgent The new user-agent
      * @return Client
      */
-    public function setUserAgent(string $userAgent) : Client
+    public function setUserAgent(string $userAgent): Client
     {
         $this->userAgent = $userAgent;
 
@@ -44,7 +45,7 @@ class Client implements ClientInterface
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getResponse(string $url, DateTime $modifiedSince = null) : ResponseInterface
+    public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface
     {
         if ($modifiedSince) {
             $headResponse = $this->request('head', $url, $modifiedSince);
@@ -86,7 +87,7 @@ class Client implements ClientInterface
      * @param DateTime|null $modifiedSince
      * @return array
      */
-    protected function getOptions(DateTime $modifiedSince = null) : array
+    protected function getOptions(DateTime $modifiedSince = null): array
     {
         $headers = [
             'Accept-Encoding' => 'gzip, deflate',

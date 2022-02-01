@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -11,7 +13,7 @@ use FeedIo\RuleSet;
 
 class LinkNode extends RuleAbstract
 {
-    const NODE_NAME = 'link';
+    public const NODE_NAME = 'link';
 
     protected RuleSet $ruleSet;
 
@@ -24,7 +26,7 @@ class LinkNode extends RuleAbstract
         $this->ruleSet->add($mediaRule, ['media', 'enclosure']);
     }
 
-    public function setProperty(NodeInterface $node, DOMElement $element) : void
+    public function setProperty(NodeInterface $node, DOMElement $element): void
     {
         if ($element->hasAttribute('rel')) {
             $this->ruleSet->get($element->getAttribute('rel'))->setProperty($node, $element);
@@ -33,12 +35,12 @@ class LinkNode extends RuleAbstract
         }
     }
 
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return true;
     }
 
-    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         if ($node instanceof ItemInterface && $node->hasMedia()) {
             $this->ruleSet->get('media')->apply($document, $rootElement, $node);

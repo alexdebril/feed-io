@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Adapter\FileSystem;
 
@@ -32,7 +34,7 @@ class Response implements ResponseInterface
     /**
     * @return boolean
     */
-    public function isModified() : bool
+    public function isModified(): bool
     {
         return true;
     }
@@ -40,7 +42,7 @@ class Response implements ResponseInterface
     /**
      * @return string|null
      */
-    public function getBody() : ? string
+    public function getBody(): ?string
     {
         return $this->fileContent;
     }
@@ -48,7 +50,7 @@ class Response implements ResponseInterface
     /**
      * @return iterable
      */
-    public function getHeaders() : iterable
+    public function getHeaders(): iterable
     {
         return [];
     }
@@ -57,7 +59,7 @@ class Response implements ResponseInterface
      * @param  string $name
      * @return iterable
      */
-    public function getHeader(string $name) : iterable
+    public function getHeader(string $name): iterable
     {
         return [];
     }
@@ -65,7 +67,7 @@ class Response implements ResponseInterface
     /**
      * @return DateTime|null
      */
-    public function getLastModified() : ?DateTime
+    public function getLastModified(): ?DateTime
     {
         return $this->lastModified;
     }

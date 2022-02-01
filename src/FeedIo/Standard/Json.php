@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Standard;
 
@@ -9,7 +11,7 @@ use FeedIo\StandardAbstract;
 
 class Json extends StandardAbstract
 {
-    const SYNTAX_FORMAT = 'Json';
+    public const SYNTAX_FORMAT = 'Json';
 
     protected array $mandatoryFields = ['version', 'title', 'items'];
 
@@ -17,7 +19,7 @@ class Json extends StandardAbstract
      * @param Document $document
      * @return bool
      */
-    public function canHandle(Document $document) : bool
+    public function canHandle(Document $document): bool
     {
         return $document->isJson();
     }
@@ -25,7 +27,7 @@ class Json extends StandardAbstract
     /**
      * @return FormatterInterface
      */
-    public function getFormatter() : FormatterInterface
+    public function getFormatter(): FormatterInterface
     {
         return new JsonFormatter();
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Formatter;
 
@@ -9,12 +11,12 @@ use FeedIo\FormatterInterface;
 
 class JsonFormatter implements FormatterInterface
 {
-    public function toString(FeedInterface $feed) : string
+    public function toString(FeedInterface $feed): string
     {
         return json_encode($this->toArray($feed));
     }
 
-    public function toArray(FeedInterface $feed) : array
+    public function toArray(FeedInterface $feed): array
     {
         $out =  array_filter([
             'version' => 'https://jsonfeed.org/version/1',
@@ -31,14 +33,14 @@ class JsonFormatter implements FormatterInterface
         return $out;
     }
 
-    public function itemsToArray(FeedInterface $feed) : Traversable
+    public function itemsToArray(FeedInterface $feed): Traversable
     {
         foreach ($feed as $item) {
             yield $this->itemToArray($item);
         }
     }
 
-    public function itemToArray(Feed\ItemInterface $item) : array
+    public function itemToArray(Feed\ItemInterface $item): array
     {
         $array = $this->itemToBaseArray($item);
         $this->handleAuthor($item, $array);
@@ -48,9 +50,9 @@ class JsonFormatter implements FormatterInterface
         return array_filter($array);
     }
 
-    public function itemToBaseArray(Feed\ItemInterface $item) : array
+    public function itemToBaseArray(Feed\ItemInterface $item): array
     {
-        $offset = $this->isHtml($item->getContent()) ? 'content_html':'content_text';
+        $offset = $this->isHtml($item->getContent()) ? 'content_html' : 'content_text';
         return [
             'id' => $item->getPublicId(),
             'title' => $item->getTitle(),
@@ -60,12 +62,12 @@ class JsonFormatter implements FormatterInterface
         ];
     }
 
-    public function isHtml(?string $string) : bool
+    public function isHtml(?string $string): bool
     {
         return !! $string && $string !== strip_tags($string);
     }
 
-    public function handleAuthor(Feed\NodeInterface $node, array &$array) : array
+    public function handleAuthor(Feed\NodeInterface $node, array &$array): array
     {
         if (! is_null($node->getAuthor())) {
             $array['authors'] = [array_filter([
@@ -77,7 +79,7 @@ class JsonFormatter implements FormatterInterface
         return $array;
     }
 
-    public function handleMedia(Feed\ItemInterface $item, array &$array) : array
+    public function handleMedia(Feed\ItemInterface $item, array &$array): array
     {
         if ($item->hasMedia()) {
             $attachments = [];
@@ -95,7 +97,7 @@ class JsonFormatter implements FormatterInterface
         return $array;
     }
 
-    public function handleDate(Feed\ItemInterface $item, array &$array) : array
+    public function handleDate(Feed\ItemInterface $item, array &$array): array
     {
         if (! is_null($item->getLastModified())) {
             $array['date_published'] = $item->getLastModified()->format(\DateTime::RFC3339);

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo\Rule\Atom;
 
@@ -12,13 +14,13 @@ use FeedIo\FeedInterface;
 class Logo extends RuleAbstract
 {
     // https://tools.ietf.org/html/rfc4287#section-4.2.8
-    const NODE_NAME = 'logo';
+    public const NODE_NAME = 'logo';
 
     /**
      * @param  NodeInterface $node
      * @param  \DOMElement   $element
      */
-    public function setProperty(NodeInterface $node, \DOMElement $element) : void
+    public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         if ($node instanceof FeedInterface) {
             $node->setLogo($element->nodeValue);
@@ -28,7 +30,7 @@ class Logo extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function hasValue(NodeInterface $node) : bool
+    protected function hasValue(NodeInterface $node): bool
     {
         return $node instanceof FeedInterface && !! $node->getLogo();
     }
@@ -36,7 +38,7 @@ class Logo extends RuleAbstract
     /**
      * @inheritDoc
      */
-    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node) : void
+    protected function addElement(\DomDocument $document, \DOMElement $rootElement, NodeInterface $node): void
     {
         if (!($node instanceof FeedInterface) || is_null($node->getLogo())) {
             return;

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace FeedIo;
 
@@ -8,7 +10,7 @@ use FeedIo\Feed\NodeInterface;
 
 abstract class RuleAbstract
 {
-    const NODE_NAME = 'node';
+    public const NODE_NAME = 'node';
 
     protected string $nodeName;
 
@@ -17,12 +19,12 @@ abstract class RuleAbstract
         $this->nodeName = $nodeName ?? static::NODE_NAME;
     }
 
-    public function getNodeName() : string
+    public function getNodeName(): string
     {
         return $this->nodeName;
     }
 
-    public function getAttributeValue(DOMElement $element, string $name) : ? string
+    public function getAttributeValue(DOMElement $element, string $name): ?string
     {
         if ($element->hasAttribute($name)) {
             return $element->getAttribute($name);
@@ -31,7 +33,7 @@ abstract class RuleAbstract
         return null;
     }
 
-    public function getChildValue(DOMElement $element, string $name, ?string $ns = null) : ? string
+    public function getChildValue(DOMElement $element, string $name, ?string $ns = null): ?string
     {
         if ($ns === null) {
             $list = $element->getElementsByTagName($name);
@@ -45,7 +47,7 @@ abstract class RuleAbstract
         return null;
     }
 
-    public function getChildAttributeValue(DOMElement $element, string $child_name, string $attribute_name, ?string $ns = null) : ? string
+    public function getChildAttributeValue(DOMElement $element, string $child_name, string $attribute_name, ?string $ns = null): ?string
     {
         if ($ns === null) {
             $list = $element->getElementsByTagName($child_name);
@@ -59,30 +61,30 @@ abstract class RuleAbstract
         return null;
     }
 
-    public function apply(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
+    public function apply(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void
     {
         if ($this->hasValue($node)) {
             $this->addElement($document, $rootElement, $node);
         }
     }
 
-    protected function setNonEmptyAttribute(DomElement $element, string $name, string $value = null) : void
+    protected function setNonEmptyAttribute(DomElement $element, string $name, string $value = null): void
     {
         if (! is_null($value)) {
             $element->setAttribute($name, $value);
         }
     }
 
-    protected function appendNonEmptyChild(DomDocument $document, DOMElement $element, string $name, string $value = null) : void
+    protected function appendNonEmptyChild(DomDocument $document, DOMElement $element, string $name, string $value = null): void
     {
         if (! is_null($value)) {
             $element->appendChild($document->createElement($name, $value));
         }
     }
 
-    abstract public function setProperty(NodeInterface $node, DOMElement $element) : void;
+    abstract public function setProperty(NodeInterface $node, DOMElement $element): void;
 
-    abstract protected function hasValue(NodeInterface $node) : bool;
+    abstract protected function hasValue(NodeInterface $node): bool;
 
-    abstract protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void;
+    abstract protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node): void;
 }
