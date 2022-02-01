@@ -86,12 +86,12 @@ class Media implements MediaInterface, ArrayableInterface
     }
 
     /**
-     * @param string|null $length
+     * @param mixed $length
      * @return MediaInterface
      */
-    public function setLength(?string $length) : MediaInterface
+    public function setLength($length) : MediaInterface
     {
-        $this->length = $length;
+        $this->length = (string) intval($length);
 
         return $this;
     }
