@@ -12,17 +12,16 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LinkTest extends TestCase
 {
-
     /**
      * @var Link
      */
     protected $object;
 
-    const LINK = 'http://localhost';
+    public const LINK = 'http://localhost';
 
     protected function setUp(): void
     {

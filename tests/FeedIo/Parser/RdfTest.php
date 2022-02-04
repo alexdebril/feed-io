@@ -14,11 +14,11 @@ use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rdf;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RdfTest extends ParserTestAbstract
 {
-    const SAMPLE_FILE = 'sample-rdf.xml';
+    public const SAMPLE_FILE = 'sample-rdf.xml';
 
     /**
      * @return \FeedIo\StandardAbstract

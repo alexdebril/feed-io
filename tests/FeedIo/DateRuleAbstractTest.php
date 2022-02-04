@@ -5,15 +5,15 @@
  * Date: 22/11/14
  * Time: 11:04
  */
+
 namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DateRuleAbstractTest extends TestCase
 {
-
     /**
      * @var \FeedIo\DateRuleAbstract
      */

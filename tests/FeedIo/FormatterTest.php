@@ -5,6 +5,7 @@
  * Date: 23/11/14
  * Time: 17:44
  */
+
 namespace FeedIo\Formatter;
 
 use FeedIo\Feed;
@@ -14,11 +15,10 @@ use FeedIo\Rule\Title;
 use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FormatterTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Formatter
      */

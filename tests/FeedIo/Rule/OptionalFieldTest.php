@@ -5,17 +5,17 @@
  * Date: 11/12/14
  * Time: 22:54
  */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class OptionalFieldTest extends TestCase
 {
-
     /**
      * @var OptionalField
      */

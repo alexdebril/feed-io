@@ -5,6 +5,7 @@
  * Date: 25/01/15
  * Time: 14:47
  */
+
 namespace FeedIo\Adapter\Guzzle;
 
 use GuzzleHttp\Exception\BadResponseException;
@@ -13,7 +14,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {

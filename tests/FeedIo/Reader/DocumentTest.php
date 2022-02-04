@@ -12,7 +12,7 @@ namespace FeedIo\Reader;
 
 use FeedIo\Feed;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
 {

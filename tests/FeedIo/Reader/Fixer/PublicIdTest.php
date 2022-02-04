@@ -15,11 +15,10 @@ use FeedIo\Feed\Item;
 use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class PublicIdTest extends TestCase
 {
-
     /**
      * @var PublicId
      */

@@ -17,11 +17,11 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class MediaRssTest extends TestCase
 {
-    const SAMPLE_FILE = 'rss/sample-youtube.xml';
+    public const SAMPLE_FILE = 'rss/sample-youtube.xml';
 
     /**
      * @return \FeedIo\StandardAbstract

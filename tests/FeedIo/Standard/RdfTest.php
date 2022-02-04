@@ -12,11 +12,11 @@ namespace FeedIo\Standard;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RdfTest extends TestCase
 {
-    const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rdf version="1.0"><channel/></rdf>';
+    public const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rdf version="1.0"><channel/></rdf>';
 
     /**
      * @var Rdf

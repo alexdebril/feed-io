@@ -1,10 +1,11 @@
 <?php
+
 namespace FeedIo\Factory\Builder;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class MonologBuilderTest extends TestCase
 {

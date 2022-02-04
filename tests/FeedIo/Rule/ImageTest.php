@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;

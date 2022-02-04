@@ -10,7 +10,7 @@
 
 namespace FeedIo\Rule;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase
 {
@@ -19,7 +19,7 @@ class DateTest extends TestCase
      * Longyearbyen is the only place in the world where the testSetTimezone() test will fail,
      * I hope it won't bother anyone
      */
-    const ALTERNATE_TIMEZONE = 'Arctic/Longyearbyen';
+    public const ALTERNATE_TIMEZONE = 'Arctic/Longyearbyen';
 
     /**
      * @var \FeedIo\Parser\DateTimeBuilder

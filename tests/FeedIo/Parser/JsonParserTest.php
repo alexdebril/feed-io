@@ -14,7 +14,7 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Json;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class JsonParserTest extends TestCase
 {

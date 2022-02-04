@@ -14,15 +14,15 @@ use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RssTest extends ParserTestAbstract
 {
-    const SAMPLE_FILE = 'rss/sample-rss.xml';
+    public const SAMPLE_FILE = 'rss/sample-rss.xml';
 
-    const ENCLOSURE_FILE = 'rss/rss-enclosure.xml';
+    public const ENCLOSURE_FILE = 'rss/rss-enclosure.xml';
 
-    const DC_CREATOR_FILE = 'rss/rss-with-dc-creator.xml';
+    public const DC_CREATOR_FILE = 'rss/rss-with-dc-creator.xml';
 
     /**
      * @return \FeedIo\StandardAbstract

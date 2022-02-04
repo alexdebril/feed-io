@@ -10,7 +10,7 @@
 
 namespace FeedIo\Feed;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ElementsAwareTraitTest extends TestCase
 {

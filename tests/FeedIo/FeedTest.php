@@ -10,11 +10,10 @@
 
 namespace FeedIo;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FeedTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Feed
      */
@@ -82,7 +81,7 @@ class FeedTest extends TestCase
     {
         $url = 'http://localhost';
 
-        $feed = new Feed;
+        $feed = new Feed();
         $feed->setUrl($url);
 
         $this->assertEquals($url, $feed->getUrl());

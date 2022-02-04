@@ -14,11 +14,11 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\JsonFormatter;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class JsonFormatterTest extends TestCase
 {
-    const LOGO = 'http://localhost/logo.jpeg';
+    public const LOGO = 'http://localhost/logo.jpeg';
 
     public function testToString()
     {

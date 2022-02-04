@@ -5,6 +5,7 @@
  * Date: 13/12/14
  * Time: 18:21
  */
+
 namespace FeedIo\StandardFormatter;
 
 use FeedIo\Feed;
@@ -12,17 +13,16 @@ use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\XmlFormatter;
 use Psr\Log\NullLogger;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 abstract class FormatterTestAbstract extends TestCase
 {
-
     /**
      * @var \FeedIo\StandardAbstract
      */
     protected $standard;
 
-    const SAMPLE_FILE = '';
+    public const SAMPLE_FILE = '';
 
     /**
      * @return StandardAbstract

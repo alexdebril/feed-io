@@ -13,11 +13,10 @@ namespace FeedIo\Reader\Fixer;
 use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class HttpLastModifiedTest extends TestCase
 {
-
     /**
      * @var HttpLastModified
      */

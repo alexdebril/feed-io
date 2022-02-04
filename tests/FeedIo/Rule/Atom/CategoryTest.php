@@ -12,7 +12,7 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase
 {
@@ -64,7 +64,7 @@ class CategoryTest extends TestCase
 
     public function testCreateElement()
     {
-        $item = new Item;
+        $item = new Item();
         $category = new \FeedIo\Feed\Node\Category();
         $category->setLabel('foo');
         $item->addCategory($category);

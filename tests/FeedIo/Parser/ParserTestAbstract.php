@@ -5,13 +5,14 @@
  * Date: 22/11/14
  * Time: 11:57
  */
+
 namespace FeedIo\Parser;
 
 use FeedIo\Feed;
 use FeedIo\Parser\XmlParser as Parser;
 use FeedIo\Reader\Document;
 use Psr\Log\NullLogger;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 abstract class ParserTestAbstract extends TestCase
 {
@@ -20,7 +21,7 @@ abstract class ParserTestAbstract extends TestCase
      */
     protected $object;
 
-    const SAMPLE_FILE = '';
+    public const SAMPLE_FILE = '';
 
     /**
      * @return \FeedIo\StandardAbstract

@@ -16,11 +16,10 @@ use Psr\Log\NullLogger;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Reader\Document;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ExplorerTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Explorer
      */

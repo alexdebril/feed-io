@@ -12,7 +12,7 @@ namespace FeedIo;
 
 use FeedIo\Rule\OptionalField;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RuleSetTest extends TestCase
 {

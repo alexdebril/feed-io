@@ -5,15 +5,16 @@
  * Date: 11/12/14
  * Time: 23:34
  */
+
 namespace FeedIo\Standard;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AtomTest extends TestCase
 {
-    const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?>
+    public const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"/>';
 
     /**

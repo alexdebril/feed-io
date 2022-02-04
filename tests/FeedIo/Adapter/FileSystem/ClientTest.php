@@ -10,11 +10,10 @@
 
 namespace FeedIo\Adapter\FileSystem;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Adapter\FileSystem\Client
      */

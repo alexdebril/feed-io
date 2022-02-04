@@ -3,21 +3,21 @@
  * Created by PhpStorm.
  * User: alex
  */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AuthorTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Rule\Author
      */
     protected $object;
 
-    const AUTHOR = 'John Doe';
+    public const AUTHOR = 'John Doe';
 
     protected function setUp(): void
     {
@@ -40,7 +40,7 @@ class AuthorTest extends TestCase
     public function testCreateElement()
     {
         $item = new Item();
-        $author = new \FeedIo\Feed\Item\Author;
+        $author = new \FeedIo\Feed\Item\Author();
         $author->setName(self::AUTHOR);
         $item->setAuthor($author);
 

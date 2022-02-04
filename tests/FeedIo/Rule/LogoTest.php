@@ -12,24 +12,23 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LogoTest extends TestCase
 {
-
     /**
      * @var Logo
      */
     protected $object;
 
-    const LOGO = 'http://localhost/logo.jpeg';
+    public const LOGO = 'http://localhost/logo.jpeg';
 
     protected function setUp(): void
     {
         $this->object = new Logo();
     }
 
-    protected function appendNonEmptyChild(\DomDocument $document, \DOMElement $element, string $name, string $value = null) : void
+    protected function appendNonEmptyChild(\DomDocument $document, \DOMElement $element, string $name, string $value = null): void
     {
         if (! is_null($value)) {
             $element->appendChild($document->createElement($name, $value));

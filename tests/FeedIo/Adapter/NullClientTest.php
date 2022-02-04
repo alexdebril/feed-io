@@ -10,7 +10,7 @@
 
 namespace FeedIo\Adapter;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class NullClientTest extends TestCase
 {

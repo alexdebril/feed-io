@@ -12,11 +12,10 @@ namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class StandardAbstractTest extends TestCase
 {
-
     /**
      * @var \FeedIo\StandardAbstract
      */

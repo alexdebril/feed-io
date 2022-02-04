@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: alex
  */
+
 namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AuthorTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Rule\Author
      */
@@ -78,7 +78,7 @@ class AuthorTest extends TestCase
     public function testCreateElement()
     {
         $item = new Item();
-        $author = new \FeedIo\Feed\Item\Author;
+        $author = new \FeedIo\Feed\Item\Author();
         $author->setName('John Doe');
         $author->setUri('http://localhost');
         $author->setEmail('john@localhost');

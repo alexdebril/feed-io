@@ -5,21 +5,21 @@
  * Date: 22/11/14
  * Time: 11:28
  */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class PublicIdTest extends TestCase
 {
-
     /**
      * @var PublicId
      */
     protected $object;
 
-    const PUBLIC_ID = 'a12';
+    public const PUBLIC_ID = 'a12';
 
     protected function setUp(): void
     {

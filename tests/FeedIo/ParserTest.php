@@ -17,11 +17,10 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
 use Psr\Log\NullLogger;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Parser
      */

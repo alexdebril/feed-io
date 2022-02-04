@@ -12,7 +12,7 @@ namespace FeedIo\Feed;
 
 use FeedIo\Feed\Node\Category;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class NodeTest extends TestCase
 {
@@ -90,7 +90,7 @@ class NodeTest extends TestCase
 
     public function testAddCategory()
     {
-        $category = new \FeedIo\Feed\Node\Category;
+        $category = new \FeedIo\Feed\Node\Category();
         $category->setTerm('term');
 
         $this->object->addCategory($category);

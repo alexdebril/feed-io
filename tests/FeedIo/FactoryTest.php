@@ -1,8 +1,9 @@
 <?php
+
 namespace FeedIo;
 
 use FeedIo\Factory\BuilderInterface;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
 {
@@ -92,7 +93,7 @@ class FactoryTest extends TestCase
         $loggerBuilder
             ->expects($this->once())
             ->method('getLogger')
-            ->will($this->returnValue(new \Psr\Log\NullLogger));
+            ->will($this->returnValue(new \Psr\Log\NullLogger()));
 
         $factory->setLoggerBuilder($loggerBuilder);
 
@@ -119,7 +120,7 @@ class ExternalBuilder implements BuilderInterface
     /**
      * @inheritDoc
      */
-    public function getMainClassName() : string
+    public function getMainClassName(): string
     {
         return 'main';
     }
@@ -127,7 +128,7 @@ class ExternalBuilder implements BuilderInterface
     /**
      * @inheritDoc
      */
-    public function getPackageName() : string
+    public function getPackageName(): string
     {
         return 'package';
     }

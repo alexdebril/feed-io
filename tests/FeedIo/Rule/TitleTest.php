@@ -12,7 +12,7 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class TitleTest extends TestCase
 {
@@ -21,7 +21,7 @@ class TitleTest extends TestCase
      */
     protected $object;
 
-    const TITLE = 'my great article';
+    public const TITLE = 'my great article';
 
     protected function setUp(): void
     {

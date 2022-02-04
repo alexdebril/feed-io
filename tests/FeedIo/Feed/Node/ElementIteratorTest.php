@@ -10,7 +10,7 @@
 
 namespace FeedIo\Feed\Node;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ElementIteratorTest extends TestCase
 {

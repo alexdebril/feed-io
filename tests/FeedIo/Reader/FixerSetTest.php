@@ -10,7 +10,7 @@
 
 namespace FeedIo\Reader;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FixerSetTest extends TestCase
 {

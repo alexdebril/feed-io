@@ -12,17 +12,16 @@ namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LogoTest extends TestCase
 {
-
     /**
      * @var Logo
      */
     protected $object;
 
-    const LOGO = 'http://localhost/logo.jpeg';
+    public const LOGO = 'http://localhost/logo.jpeg';
 
     protected function setUp(): void
     {

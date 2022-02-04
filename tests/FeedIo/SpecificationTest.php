@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;

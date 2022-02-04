@@ -1,4 +1,5 @@
 <?php
+
 namespace FeedIo\Http;
 
 use FeedIo\Feed;
@@ -77,11 +78,11 @@ class ResponseBuilderTest extends TestCase
         $this->assertSame(0, $document->getElementsByTagName('entry')->length);
     }
 
-    protected function getFeed() : Feed
+    protected function getFeed(): Feed
     {
         $feed = new Feed();
         $feed->setUrl('http://localhost');
-        $feed->setLastModified(new \DateTime);
+        $feed->setLastModified(new \DateTime());
         $feed->setTitle('test feed');
 
         $item = new Item();

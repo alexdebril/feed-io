@@ -10,7 +10,7 @@
 
 namespace FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class MediaTest extends TestCase
 {

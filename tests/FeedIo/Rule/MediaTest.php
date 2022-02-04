@@ -13,11 +13,10 @@ namespace FeedIo\Rule;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class MediaTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Rule\Media
      */

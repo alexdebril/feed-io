@@ -14,13 +14,13 @@ use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AtomTest extends ParserTestAbstract
 {
-    const SAMPLE_FILE = 'sample-atom.xml';
+    public const SAMPLE_FILE = 'sample-atom.xml';
 
-    const ENCLOSURE_FILE = 'enclosure-atom.xml';
+    public const ENCLOSURE_FILE = 'enclosure-atom.xml';
     /**
      * @var \FeedIo\Parser\Atom
      */

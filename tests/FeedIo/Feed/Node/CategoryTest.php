@@ -10,7 +10,7 @@
 
 namespace FeedIo\Feed\Node;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase
 {
@@ -21,7 +21,7 @@ class CategoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = new Category;
+        $this->object = new Category();
     }
 
     public function testScheme()

@@ -5,15 +5,16 @@
  * Date: 12/12/14
  * Time: 00:38
  */
+
 namespace FeedIo\Standard;
 
 use FeedIo\Rule\DateTimeBuilder;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RssTest extends TestCase
 {
-    const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel/></rss>';
+    public const FORMATTED_DOCUMENT = '<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel/></rss>';
 
     /**
      * @var Atom

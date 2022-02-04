@@ -5,11 +5,12 @@
  * Date: 26/10/14
  * Time: 00:29
  */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ContentTest extends TestCase
 {
@@ -18,11 +19,11 @@ class ContentTest extends TestCase
      */
     protected $object;
 
-    const DESCRIPTION = 'lorem ipsum';
+    public const DESCRIPTION = 'lorem ipsum';
 
-    const HTML_DESCRIPTION = '<h1>a title</h1><div><p>A paragraph<a href="/link.html">a link</a></p><p>second paragraph</p></div>';
+    public const HTML_DESCRIPTION = '<h1>a title</h1><div><p>A paragraph<a href="/link.html">a link</a></p><p>second paragraph</p></div>';
 
-    const HTML_DESCRIPTION_WITH_ABSOLUTE_URL = '<h1>a title</h1><div><p>A paragraph<a href="//localhost/link.html">a link</a></p><p>second paragraph</p></div>';
+    public const HTML_DESCRIPTION_WITH_ABSOLUTE_URL = '<h1>a title</h1><div><p>A paragraph<a href="//localhost/link.html">a link</a></p><p>second paragraph</p></div>';
 
     protected function setUp(): void
     {

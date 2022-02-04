@@ -5,21 +5,21 @@
  * Date: 31/10/14
  * Time: 12:14
  */
+
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class LinkTest extends TestCase
 {
-
     /**
      * @var \FeedIo\Rule\Link
      */
     protected $object;
 
-    const LINK = 'http://localhost';
+    public const LINK = 'http://localhost';
 
     protected function setUp(): void
     {
