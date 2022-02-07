@@ -117,6 +117,7 @@ class Media extends RuleAbstract
      */
     protected function initMedia(MediaInterface $media, \DOMElement $element): void
     {
+        $media->setType($element->getAttribute('type'));
         $media->setTitle($this->getChildValue($element, 'title', static::MRSS_NAMESPACE));
         $media->setDescription($this->getChildValue($element, 'description', static::MRSS_NAMESPACE));
         $media->setThumbnail($this->getChildAttributeValue($element, 'thumbnail', 'url', static::MRSS_NAMESPACE));
