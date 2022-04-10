@@ -42,7 +42,7 @@ use Psr\Http\Message\ResponseInterface;
  *   // and its items
  *   foreach ( $feed as $item ) {
  *       echo $item->getTitle();
- *       echo $item->getDescription();
+ *       echo $item->getContent();
  *   }
  *
  * </code>
