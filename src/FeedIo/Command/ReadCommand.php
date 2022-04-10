@@ -52,7 +52,7 @@ class ReadCommand extends Command
         foreach ($feed as $i => $item) {
             $lastModified = $item->getLastModified() ?: new \DateTime();
             $output->writeln("<info>{$lastModified->format(\DateTime::ATOM)} : {$item->getTitle()}</info>");
-            $output->writeln("{$item->getDescription()}");
+            $output->writeln("{$item->getContent()}");
 
             $this->handleMedias($item, $output);
             if (! is_null($limit) && $limit === $i+1) {

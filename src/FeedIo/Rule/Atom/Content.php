@@ -33,6 +33,9 @@ class Content extends TextAbstract
 
     protected function hasValue(NodeInterface $node): bool
     {
+        if ($node instanceof ItemInterface) {
+            return !! $node->getContent();
+        }
         return !! $node->getDescription();
     }
 }

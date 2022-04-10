@@ -42,7 +42,7 @@ class DescriptionTest extends TestCase
         $document->appendChild($element);
 
         $this->object->setProperty($item, $element);
-        $this->assertEquals(self::DESCRIPTION, $item->getDescription());
+        $this->assertEquals(self::DESCRIPTION, $item->getContent());
     }
 
     public function testSetWithAbsoluteUrlConversion()
@@ -54,7 +54,7 @@ class DescriptionTest extends TestCase
         $document->appendChild($element);
 
         $this->object->setProperty($item, $element);
-        $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getDescription());
+        $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getContent());
     }
 
     public function testSetWithoutConversion()
@@ -66,7 +66,7 @@ class DescriptionTest extends TestCase
         $document->appendChild($element);
 
         $this->object->setProperty($item, $element);
-        $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getDescription());
+        $this->assertEquals(self::HTML_DESCRIPTION_WITH_ABSOLUTE_URL, $item->getContent());
     }
 
 
@@ -79,7 +79,7 @@ class DescriptionTest extends TestCase
         $document->appendChild($element);
 
         $this->object->setProperty($item, $element);
-        $this->assertEquals(self::HTML_DESCRIPTION, $item->getDescription());
+        $this->assertEquals(self::HTML_DESCRIPTION, $item->getContent());
     }
 
     public function testCreateElement()

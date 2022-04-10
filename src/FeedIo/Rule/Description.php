@@ -4,6 +4,7 @@ namespace FeedIo\Rule;
 
 use DomDocument;
 use DOMElement;
+use FeedIo\Feed\ItemInterface;
 use FeedIo\Feed\NodeInterface;
 
 class Description extends TextAbstract
@@ -24,12 +25,21 @@ class Description extends TextAbstract
      */
     protected function hasValue(NodeInterface $node) : bool
     {
+        if ($node instanceof ItemInterface) {
+            return !! $node->getContent();
+        }
         return !! $node->getDescription();
     }
 
     protected function addElement(DomDocument $document, DOMElement $rootElement, NodeInterface $node) : void
     {
-        $element = $this->generateElement($document, $node->getDescription());
+        $description = '';
+        if ($node instanceof ItemInterface) {
+            $description = $node->getContent();
+        } else {
+            $description = $node->getDescription();
+        }
+        $element = $this->generateElement($document, $description);
 
         $rootElement->appendChild($element);
     }
