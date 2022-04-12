@@ -13,6 +13,8 @@ class Json extends StandardAbstract
 {
     public const SYNTAX_FORMAT = 'Json';
 
+    public const MIME_TYPE = 'application/feed+json';
+
     protected array $mandatoryFields = ['version', 'title', 'items'];
 
     /**

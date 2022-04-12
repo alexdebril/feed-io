@@ -143,10 +143,10 @@ class FeedIo
     {
         $this->logAction($feed, "creating a PSR 7 Response in $standard format");
 
-        $formatter = $this->specification->getStandard($standard)->getFormatter();
+        $feedStandard = $this->specification->getStandard($standard);
         $responseBuilder = new ResponseBuilder($maxAge, $public);
 
-        return $responseBuilder->createResponse($standard, $formatter, $feed);
+        return $responseBuilder->createResponse($feedStandard->getMimeType(), $feedStandard->getFormatter(), $feed);
     }
 
     /**

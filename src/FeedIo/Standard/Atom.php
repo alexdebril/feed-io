@@ -26,6 +26,8 @@ class Atom extends XmlAbstract
 
     public const DATETIME_FORMAT = \DateTime::ATOM;
 
+    public const MIME_TYPE = 'application/atom+xml';
+
     public function format(DOMDocument $document): DOMDocument
     {
         $element = $document->createElement('feed');

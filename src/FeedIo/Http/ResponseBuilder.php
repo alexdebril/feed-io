@@ -22,15 +22,15 @@ class ResponseBuilder
     }
 
     /**
-     * @param  string $format
+     * @param  string $mimeType
      * @param  FormatterInterface $formatter
      * @param  FeedInterface $feed
      * @return ResponseInterface
      */
-    public function createResponse(string $format, FormatterInterface $formatter, FeedInterface $feed): ResponseInterface
+    public function createResponse(string $mimeType, FormatterInterface $formatter, FeedInterface $feed): ResponseInterface
     {
         $headers = [
-            'Content-Type'  => ($format === 'json') ? 'application/json' : 'application/xhtml+xml',
+            'Content-Type'  => $mimeType,
             'Cache-Control' => ($this->public ? 'public' : 'private') . ", max-age={$this->maxAge}",
         ];
 
