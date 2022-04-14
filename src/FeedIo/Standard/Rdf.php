@@ -27,6 +27,8 @@ class Rdf extends Rss
      */
     public const DATE_NODE_TAGNAME = 'dc:date';
 
+    public const MIME_TYPE = 'application/rdf+xml';
+
     /**
      * Tells if the parser can handle the feed or not
      * @param  Document $document

@@ -40,6 +40,8 @@ class Rss extends XmlAbstract
      */
     public const DATE_NODE_TAGNAME = 'pubDate';
 
+    public const MIME_TYPE = 'application/rss+xml';
+
     protected array $mandatoryFields = ['channel'];
 
     /**

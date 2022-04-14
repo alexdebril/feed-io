@@ -16,6 +16,11 @@ abstract class StandardAbstract
     public const DATETIME_FORMAT = \DateTime::RFC2822;
 
     /**
+     * Standard mime type
+     */
+    public const MIME_TYPE = '';
+
+    /**
      * Supported format
      */
     public const SYNTAX_FORMAT = '';
@@ -62,5 +67,14 @@ abstract class StandardAbstract
     public function getSyntaxFormat(): string
     {
         return static::SYNTAX_FORMAT;
+    }
+
+    /**
+     * Returns the mime type for the standard
+     * @return string
+     */
+    public function getMimeType(): string
+    {
+        return static::MIME_TYPE;
     }
 }

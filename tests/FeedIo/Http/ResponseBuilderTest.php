@@ -19,11 +19,11 @@ class ResponseBuilderTest extends TestCase
         $formatter = new JsonFormatter();
         $feed = $this->getFeed();
 
-        $response = $responseBuilder->createResponse('json', $formatter, $feed);
+        $response = $responseBuilder->createResponse('application/feed+json', $formatter, $feed);
 
         $headers = $response->getHeaders();
         $this->assertEquals(['Content-Type', 'Cache-Control', 'Last-Modified'], array_keys($headers));
-        $this->assertEquals('application/json', $headers['Content-Type'][0]);
+        $this->assertEquals('application/feed+json', $headers['Content-Type'][0]);
 
         $body = $response->getBody()->getContents();
         $this->assertJson($body);
@@ -37,11 +37,11 @@ class ResponseBuilderTest extends TestCase
         $formatter = new XmlFormatter(new Atom($dateTimeBuilder));
         $feed = $this->getFeed();
 
-        $response = $responseBuilder->createResponse('atom', $formatter, $feed);
+        $response = $responseBuilder->createResponse('application/atom+xml', $formatter, $feed);
 
         $headers = $response->getHeaders();
         $this->assertEquals(['Content-Type', 'Cache-Control', 'Last-Modified'], array_keys($headers));
-        $this->assertEquals('application/xhtml+xml', $headers['Content-Type'][0]);
+        $this->assertEquals('application/atom+xml', $headers['Content-Type'][0]);
 
         $body = $response->getBody()->getContents();
         $document = new \DOMDocument();
@@ -62,13 +62,13 @@ class ResponseBuilderTest extends TestCase
         $feed->setUrl('http://localhost');
         $feed->setTitle('test feed');
 
-        $response = $responseBuilder->createResponse('atom', $formatter, $feed);
+        $response = $responseBuilder->createResponse('application/atom+xml', $formatter, $feed);
 
         $headers = $response->getHeaders();
         $headerNames = array_keys($headers);
         $this->assertEquals(['Content-Type', 'Cache-Control'], $headerNames);
         $this->assertArrayNotHasKey('Last-Modified', $headerNames);
-        $this->assertEquals('application/xhtml+xml', $headers['Content-Type'][0]);
+        $this->assertEquals('application/atom+xml', $headers['Content-Type'][0]);
 
         $body = $response->getBody()->getContents();
         $document = new \DOMDocument();
