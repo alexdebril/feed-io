@@ -7,6 +7,8 @@ namespace FeedIo\Reader;
 use DateTime;
 use FeedIo\Adapter\ResponseInterface;
 use FeedIo\FeedInterface;
+use FeedIo\Filter\Chain;
+use FeedIo\Filter\Since;
 use FeedIo\Reader\Result\UpdateStats;
 
 /**
@@ -50,6 +52,19 @@ class Result
     public function getFeed(): FeedInterface
     {
         return $this->feed;
+    }
+
+    public function getItemsSince(DateTime $since = null): iterable
+    {
+        $filter = new Chain();
+        $filter->add(new Since($since ?? $this->modifiedSince));
+
+        return $filter->filter($this->getFeed());
+    }
+
+    public function getFilteredItems(Chain $filterChain): iterable
+    {
+        return $filterChain->filter($this->feed);
     }
 
     public function getModifiedSince(): ?DateTime

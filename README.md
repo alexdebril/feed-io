@@ -76,6 +76,44 @@ foreach( $result->getFeed() as $item ) {
 }
 
 ```
+
+If you need to get only the new items since the last time you've consumed the feed, use the result's `getItemsSince()` method:
+
+```php
+// read a feed and specify the `$modifiedSince` limit to fetch only items newer than this date
+$result = $feedIo->read($url, $feed, $modifiedSince);
+
+// iterate through new items
+foreach( $result->getItemsSince() as $item ) {
+    echo $item->getTitle();
+}
+
+```
+
+You can also mix several filters to exclude items according to your needs:
+
+```php
+// read a feed
+$result = $feedIo->read($url, $feed, $modifiedSince);
+
+// remove items older than `$modifiedSince`
+$since = new FeedIo\Filter\Since($result->getModifiedSince());
+
+// Your own filter
+$database = new Acme\Filter\Database();
+
+$chain = new Chain();
+$chain
+    ->add($since)
+    ->add($database);
+
+// iterate through new items
+foreach( $result->getFilteredItems($chain) as $item ) {
+    echo $item->getTitle();
+}
+
+```
+
 In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
 
 ```php
