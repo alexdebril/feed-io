@@ -13,6 +13,5 @@ class FilterTest extends TestCase
         $this->assertTrue($filter->filter((new Item())->setLastModified(new \DateTime('-1 hour'))));
         $this->assertTrue($filter->filter((new Item())->setLastModified(new \DateTime('-1 day'))));
         $this->assertFalse($filter->filter((new Item())->setLastModified(new \DateTime('-2 day'))));
-    
     }
 }

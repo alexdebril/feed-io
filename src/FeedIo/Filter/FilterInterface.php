@@ -10,7 +10,7 @@ interface FilterInterface
 {
     /**
      * Returns `true` if the item is to be returned.
-     * 
+     *
      * @param ItemInterface $item
      * @return bool
      */

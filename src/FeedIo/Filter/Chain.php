@@ -17,8 +17,8 @@ class Chain
 
     public function filter(FeedInterface $feed): iterable
     {
-        foreach($feed as $item) {
-            foreach($this->filters as $filter) {
+        foreach ($feed as $item) {
+            foreach ($this->filters as $filter) {
                 if (!$filter->filter($item)) {
                     continue 2;
                 }

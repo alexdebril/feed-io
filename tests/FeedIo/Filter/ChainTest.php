@@ -40,7 +40,7 @@ class ChainTest extends TestCase
 
         $filtered = $chain->filter($feed);
         $count = 0;
-        foreach($filtered as $item) {
+        foreach ($filtered as $item) {
             $count++;
         }
         $this->assertEquals(1, $count);
