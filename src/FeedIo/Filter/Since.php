@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeedIo\Filter;
 
-use \DateTime;
+use DateTime;
 use FeedIo\Feed\ItemInterface;
 
 class Since implements FilterInterface
