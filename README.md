@@ -16,6 +16,7 @@
 - Enclosure support to handle external medias like audio content
 - Feed logo support (RSS + Atom)
 - PSR compliant logging
+- Content filtering to fetch only the newest items
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
 - Guzzle Client integration
@@ -49,12 +50,6 @@ Let's suppose you installed feed-io using Composer, you can use its command line
 ./vendor/bin/feedio read http://php.net/feed.atom
 ```
 
-You can specify the number of items you want to read using the --count option. The instruction below will display the latest item :
-
-```shell
-./vendor/bin/feedio read -c 1 http://php.net/feed.atom
-```
-
 ## reading
 
 feed-io is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php) :
@@ -76,6 +71,44 @@ foreach( $result->getFeed() as $item ) {
 }
 
 ```
+
+If you need to get only the new items since the last time you've consumed the feed, use the result's `getItemsSince()` method:
+
+```php
+// read a feed and specify the `$modifiedSince` limit to fetch only items newer than this date
+$result = $feedIo->read($url, $feed, $modifiedSince);
+
+// iterate through new items
+foreach( $result->getItemsSince() as $item ) {
+    echo $item->getTitle();
+}
+
+```
+
+You can also mix several filters to exclude items according to your needs:
+
+```php
+// read a feed
+$result = $feedIo->read($url, $feed, $modifiedSince);
+
+// remove items older than `$modifiedSince`
+$since = new FeedIo\Filter\Since($result->getModifiedSince());
+
+// Your own filter
+$database = new Acme\Filter\Database();
+
+$chain = new Chain();
+$chain
+    ->add($since)
+    ->add($database);
+
+// iterate through new items
+foreach( $result->getFilteredItems($chain) as $item ) {
+    echo $item->getTitle();
+}
+
+```
+
 In order to save bandwidth, feed-io estimates the next time it will be relevant to read the feed and get new items from it.
 
 ```php
