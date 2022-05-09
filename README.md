@@ -16,6 +16,7 @@
 - Enclosure support to handle external medias like audio content
 - Feed logo support (RSS + Atom)
 - PSR compliant logging
+- Content filtering to fetch only the newest items
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
 - Guzzle Client integration
@@ -47,12 +48,6 @@ Let's suppose you installed feed-io using Composer, you can use its command line
 
 ```shell
 ./vendor/bin/feedio read http://php.net/feed.atom
-```
-
-You can specify the number of items you want to read using the --count option. The instruction below will display the latest item :
-
-```shell
-./vendor/bin/feedio read -c 1 http://php.net/feed.atom
 ```
 
 ## reading
