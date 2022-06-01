@@ -37,13 +37,13 @@ class Client implements ClientInterface
     public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface
     {
         if ($modifiedSince) {
-            $headResponse = $this->request('head', $url, $modifiedSince);
+            $headResponse = $this->request('HEAD', $url, $modifiedSince);
             if (304 === $headResponse->getStatusCode()) {
                 return $headResponse;
             }
         }
 
-        return $this->request('get', $url, $modifiedSince);
+        return $this->request('GET', $url, $modifiedSince);
     }
 
     /**
