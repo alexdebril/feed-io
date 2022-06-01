@@ -19,8 +19,9 @@
         "ext-dom": "*",
         "ext-json": "*",
         "ext-libxml": "*",
-        "guzzlehttp/guzzle": "~6.2|~7.0",
-        "psr/log": "~1.0|~2.0|~3.0"
+        "psr/log": "~1.0|~2.0|~3.0",
+        "php-http/httplug": "^2.3",
+        "nyholm/psr7": "^1.5"
     },
     "require-dev": {
         "phpunit/phpunit": "~9.3.0",
@@ -29,7 +30,8 @@
         "friendsofphp/php-cs-fixer": "^3.5"
     },
     "suggest": {
-        "monolog/monolog": "Allows to handle logs"
+        "monolog/monolog": "Allows to handle logs",
+        "php-http/guzzle7-adapter": "Handles HTTP requests and responses"
     },
     "autoload": {
         "psr-4": {"FeedIo\\": "src/FeedIo"}

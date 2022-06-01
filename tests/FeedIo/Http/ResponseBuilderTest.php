@@ -25,7 +25,7 @@ class ResponseBuilderTest extends TestCase
         $this->assertEquals(['Content-Type', 'Cache-Control', 'Last-Modified'], array_keys($headers));
         $this->assertEquals('application/feed+json', $headers['Content-Type'][0]);
 
-        $body = $response->getBody()->getContents();
+        $body = $response->getBody();
         $this->assertJson($body);
     }
 
@@ -43,7 +43,7 @@ class ResponseBuilderTest extends TestCase
         $this->assertEquals(['Content-Type', 'Cache-Control', 'Last-Modified'], array_keys($headers));
         $this->assertEquals('application/atom+xml', $headers['Content-Type'][0]);
 
-        $body = $response->getBody()->getContents();
+        $body = $response->getBody();
         $document = new \DOMDocument();
         $document->loadXML($body);
 
@@ -70,7 +70,7 @@ class ResponseBuilderTest extends TestCase
         $this->assertArrayNotHasKey('Last-Modified', $headerNames);
         $this->assertEquals('application/atom+xml', $headers['Content-Type'][0]);
 
-        $body = $response->getBody()->getContents();
+        $body = $response->getBody();
         $document = new \DOMDocument();
         $document->loadXML($body);
 
