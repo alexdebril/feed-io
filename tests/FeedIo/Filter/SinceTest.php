@@ -5,7 +5,7 @@ namespace FeedIo\Filter;
 use FeedIo\Feed\Item;
 use PHPUnit\Framework\TestCase;
 
-class FilterTest extends TestCase
+class SinceTest extends TestCase
 {
     public function testFilter()
     {
