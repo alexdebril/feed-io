@@ -11,21 +11,8 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 
 class Client implements ClientInterface
 {
-    public const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
-
-    public function __construct(private PsrClientInterface $client, private string $userAgent = self::DEFAULT_USER_AGENT)
+    public function __construct(private PsrClientInterface $client)
     {
-    }
-
-    /**
-     * @param string $userAgent The new user-agent
-     * @return self
-     */
-    public function setUserAgent(string $userAgent): Client
-    {
-        $this->userAgent = $userAgent;
-
-        return $this;
     }
 
     /**
@@ -81,7 +68,6 @@ class Client implements ClientInterface
     {
         $headers = [
             'Accept-Encoding' => 'gzip, deflate',
-            'User-Agent' => $this->userAgent,
         ];
 
         if ($modifiedSince) {
