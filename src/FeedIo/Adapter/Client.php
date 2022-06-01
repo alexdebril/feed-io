@@ -12,13 +12,9 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 class Client implements ClientInterface
 {
     public const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
-    private PsrClientInterface $client;
-    private string $userAgent;
 
-    public function __construct(PsrClientInterface $client, string $userAgent)
+    public function __construct(private PsrClientInterface $client, private string $userAgent = self::DEFAULT_USER_AGENT)
     {
-        $this->client = $client;
-        $this->userAgent = $userAgent;
     }
 
     /**
