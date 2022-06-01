@@ -42,7 +42,12 @@ class Client implements ClientInterface
      */
     protected function request(string $method, string $url, DateTime $modifiedSince = null): ResponseInterface
     {
-        $headers = $this->getHeaders($modifiedSince);
+        $headers = [];
+
+        if ($modifiedSince) {
+            $headers['If-Modified-Since'] = $modifiedSince->format(DateTime::RFC2822);
+        }
+
         $request = new Request($method, $url, $headers);
 
         $timeStart = microtime(true);
@@ -60,20 +65,4 @@ class Client implements ClientInterface
         }
     }
 
-    /**
-     * @param DateTime|null $modifiedSince
-     * @return array
-     */
-    protected function getHeaders(DateTime $modifiedSince = null): array
-    {
-        $headers = [
-            'Accept-Encoding' => 'gzip, deflate',
-        ];
-
-        if ($modifiedSince) {
-            $headers['If-Modified-Since'] = $modifiedSince->format(\DateTime::RFC2822);
-        }
-
-        return $headers;
-    }
 }
