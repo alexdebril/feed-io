@@ -17,7 +17,7 @@ use Psr\Log\NullLogger;
  * This class acts as a facade. It provides methods to access feed-io main features
  *
  * <code>
- *   // $client is a \Psr\Http\Client\ClientInterface, $logger a \Psr\Log\LoggerInterface
+ *   // $client is a \FeedIo\Adapter\ClientInterface, $logger a \Psr\Log\LoggerInterface
  *   $feedIo = new FeedIo($client, $logger);
  *
  *   // read a feed. Output is a Result instance
