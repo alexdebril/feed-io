@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-namespace FeedIo\Adapter;
+namespace FeedIo\Adapter\Http;
 
 use DateTime;
+use FeedIo\Adapter\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
+/**
+ * HTTP Response
+ */
 class Response implements ResponseInterface
 {
     public const HTTP_LAST_MODIFIED = 'Last-Modified';
@@ -37,7 +41,7 @@ class Response implements ResponseInterface
     public function getBody(): ?string
     {
         if (is_null($this->body)) {
-            $this->body = (string)$this->psrResponse->getBody();
+            $this->body = $this->psrResponse->getBody()->getContents();
         }
 
         return $this->body;

@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
-namespace FeedIo\Adapter;
+namespace FeedIo\Adapter\Http;
 
 use DateTime;
+use FeedIo\Adapter\ClientInterface;
+use FeedIo\Adapter\NotFoundException;
+use FeedIo\Adapter\ResponseInterface;
+use FeedIo\Adapter\ServerErrorException;
 use Nyholm\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as PsrClientInterface;
 
 class Client implements ClientInterface
 {
-    public function __construct(private PsrClientInterface $client)
+    public function __construct(private readonly PsrClientInterface $client)
     {
     }
 

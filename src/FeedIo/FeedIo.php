@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace FeedIo;
 
 use DateTime;
-use FeedIo\Adapter\ClientInterface as AdapterClientInterface;
-use FeedIo\Adapter\ClientFactory;
+use FeedIo\Adapter\ClientInterface;
 use FeedIo\Http\ResponseBuilder;
 use FeedIo\Reader\Result;
 use FeedIo\Rule\DateTimeBuilderInterface;
-use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -65,19 +63,16 @@ use Psr\Log\NullLogger;
  */
 class FeedIo
 {
-    protected AdapterClientInterface $client;
     protected Reader $reader;
 
     public function __construct(
-        ?ClientInterface $client = null,
-        protected LoggerInterface $logger = new NullLogger(),
+        protected ?ClientInterface        $client = null,
+        protected LoggerInterface         $logger = new NullLogger(),
         protected ?SpecificationInterface $specification = null,
-        ClientFactory $factory = new ClientFactory(),
     ) {
         if (is_null($client)) {
-            throw new \Exception('You must provide a PSR18-compliant HTTP client');
+            throw new \Exception('You must provide an instance of FeedIo\Adapter\ClientInterface');
         }
-        $this->client = $factory->create($client);
         if (is_null($this->specification)) {
             $this->specification = new Specification($this->logger);
         }
