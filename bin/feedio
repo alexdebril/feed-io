@@ -20,7 +20,8 @@ function main($argc, $argv)
         exit;
     }
 
-    $feedIo = new FeedIo;
+    $client = \Http\Discovery\HttpClientDiscovery::find();
+    $feedIo = new FeedIo($client);
     switch($argv[1]) {
         case 'discover':
             discover($feedIo, $argv[2]);
