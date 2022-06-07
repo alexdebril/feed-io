@@ -6,6 +6,7 @@ namespace FeedIo;
 
 use DateTime;
 use FeedIo\Adapter\ClientInterface;
+use FeedIo\Adapter\NullClient;
 use FeedIo\Http\ResponseBuilder;
 use FeedIo\Reader\Result;
 use FeedIo\Rule\DateTimeBuilderInterface;
@@ -66,13 +67,10 @@ class FeedIo
     protected Reader $reader;
 
     public function __construct(
-        protected ?ClientInterface        $client = null,
+        protected ClientInterface         $client = new NullClient(),
         protected LoggerInterface         $logger = new NullLogger(),
         protected ?SpecificationInterface $specification = null,
     ) {
-        if (is_null($client)) {
-            throw new \Exception('You must provide an instance of FeedIo\Adapter\ClientInterface');
-        }
         if (is_null($this->specification)) {
             $this->specification = new Specification($this->logger);
         }
