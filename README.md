@@ -19,7 +19,7 @@
 - Content filtering to fetch only the newest items
 - DateTime detection and conversion
 - A generic HTTP ClientInterface
-- Guzzle Client integration
+- Integrates with every [PSR-18 compatible HTTP client](https://www.php-fig.org/psr/psr-18/).
 
 This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/alexdebril/feed-io/discussions).
 
@@ -34,11 +34,12 @@ Use Composer to add feed-io into your project's requirements :
 # Requirements
 
 | feed-io | PHP  |
-| --------| ---- |
-|   4.x   | 7.1+ |
-|   5.0   | 8.0+ |
+|---------|------|
+| 4.x     | 7.1+ |
+| 5.0     | 8.0+ |
+| 6.0     | 8.1+ |
 
-feed-io 4 requires PHP 7.1+, feed-io 5 requires PHP 8.0+. All versions relies on `psr/log` and `guzzle`. it suggests `monolog` for logging. Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
+feed-io 4 requires PHP 7.1+, feed-io 5 requires PHP 8.0+. All versions relies on `psr/log` and any PSR-18 compliant HTTP client. To continue using you may require `php-http/guzzle7-adapter`. it suggests `monolog` for logging. Monolog is not the only library suitable to handle feed-io's logs, you can use any PSR/Log compliant library instead.
 
 # Usage
 
@@ -56,8 +57,9 @@ feed-io is designed to read feeds across the internet and to publish your own. I
 
 ```php
 
-// create a simple FeedIo instance
-$feedIo = \FeedIo\Factory::create()->getFeedIo();
+// create a simple FeedIo instance, e.g. with the Symfony HTTP Client
+$client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
+$feedIo = \FeedIo\FeedIo($client);
 
 // read a feed
 $result = $feedIo->read($url);
@@ -130,7 +132,9 @@ A web page can refer to one or more feeds in its headers, feed-io provides a way
 
 ```php
 
-$feedIo = \FeedIo\Factory::create()->getFeedIo();
+// create a simple FeedIo instance, e.g. with the Symfony HTTP Client
+$client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
+$feedIo = \FeedIo\FeedIo($client);
 
 $feeds = $feedIo->discover($url);
 
@@ -222,38 +226,7 @@ $jsonResponse = $feedIo->getPsrResponse($feed, 'json');
 
 ```
 
-## Configure feed-io using the Factory
-
-We saw in the [reading section](#reading) that to get a simple `FeedIo` instance we can simply call the `Factory` statically and let it return a fresh `FeedIo` composed of the main dependencies it needs to work. The problem is that we may want to inject configuration to its underlying components, such as configuring Guzzle to ignore SSL errors.
-
-For that, we will inject the configuration through `Factory::create()` parameters, first one being for the logging system, and the second one for the HTTP Client (well, Guzzle).
-
-### Configure Guzzle through the Factory
-
-A few lines above, we talked about ignoring ssl errors, let's see how to configure Guzzle to do this:
-
-```php
-$feedIo = \FeedIo\Factory::create(
-        ['builder' => 'NullLogger'], // assuming you want feed-io to keep quiet
-        ['builder' => 'GuzzleClient', 'config' => ['verify' => false]]
-    )->getFeedIo();
-```
-
-It's important to specify the "builder", as it's the class that will be in charge of actually building the instance.
-
-### activate logging
-
-feed-io natively supports PSR-3 logging, you can activate it by choosing a 'builder' in the factory :
-
-```php
-
-$feedIo = \FeedIo\Factory::create(['builder' => 'monolog'])->getFeedIo();
-
-```
-
-feed-io only provides a builder to create Monolog\Logger instances. You can write your own, as long as the Builder implements BuilderInterface.
-
-## Building a FeedIo instance without the factory
+## Building a FeedIo instance
 
 To create a new FeedIo instance you only need to inject two dependencies :
 
@@ -279,68 +252,12 @@ $feedIo = new FeedIo\FeedIo($client, $logger);
 Another example with Monolog configured to write on the standard output :
 
 ```php
-use FeedIo\FeedIo;
-use FeedIo\Adapter\Guzzle\Client;
-use GuzzleHttp\Client as GuzzleClient;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-$client = new Client(new GuzzleClient());
-$logger = new Logger('default', [new StreamHandler('php://stdout')]);
-
-$feedIo = new FeedIo($client, $logger);
+// create a simple FeedIo instance, e.g. with the Symfony HTTP Client
+$client = new \FeedIo\Adapter\Http\Client(new Symfony\Component\HttpClient\HttplugClient());
+$logger = new Monolog\Logger('default', [new Monolog\Handler\StreamHandler('php://stdout')]);
+$feedIo = \FeedIo\FeedIo($client, $logger);
 
 ```
-
-### Guzzle Configuration
-
-You can configure Guzzle before injecting it to `FeedIo` :
-
-```php
-use FeedIo\FeedIo;
-use FeedIo\Adapter\Guzzle\Client;
-use GuzzleHttp\Client as GuzzleClient;
-use \Psr\Log\NullLogger;
-
-// We want to timeout after 3 seconds
-$guzzle = new GuzzleClient(['timeout' => 3]);
-$client = new Client($guzzle);
-
-$logger = new NullLogger();
-
-$feedIo = new \FeedIo\FeedIo($client, $logger);
-
-```
-Please read [Guzzle's documentation](http://docs.guzzlephp.org/en/stable/index.html) to get more information about its configuration.
-
-#### Caching Middleware usage
-
-To prevent your application from hitting the same feeds multiple times, you can inject [Kevin Rob's cache middleware](https://github.com/Kevinrob/guzzle-cache-middleware) into Guzzle's instance :
-
-```php
-use FeedIo\FeedIo;
-use FeedIo\Adapter\Guzzle\Client;
-use GuzzleHttp\Client As GuzzleClient;
-use GuzzleHttp\HandlerStack;
-use Kevinrob\GuzzleCache\CacheMiddleware;
-use Psr\Log\NullLogger;
-
-// Create default HandlerStack
-$stack = HandlerStack::create();
-
-// Add this middleware to the top with `push`
-$stack->push(new CacheMiddleware(), 'cache');
-
-// Initialize the client with the handler option
-$guzzle = new GuzzleClient(['handler' => $stack]);
-$client = new Client($guzzle);
-$logger = new NullLogger();
-
-$feedIo = new \FeedIo\FeedIo($client, $logger);
-
-```
-
-As feeds' content may vary often, caching may result in unwanted behaviors.
 
 ### Inject a custom Logger
 
@@ -361,26 +278,21 @@ $feedIo = new FeedIo($client, $logger);
 
 ### Inject a custom HTTP Client
 
-Warning : it is highly recommended to use the default Guzzle Client integration.
-
-If you really want to use another library to read feeds, you need to create your own `FeedIo\Adapter\ClientInterface` class to embed interactions with the library :
+Since 6.0 there is a generic HTTP adapter that wraps any PST-18 compliant HTTP client. 
 
 ```php
-use FeedIo\FeedIo;
-use Custom\Adapter\Client;
-use Library\Client as LibraryClient;
-use Psr\Log\NullLogger;
+use CustomPsr18\Client as CustomClient;
 
-$client = new Client(new LibraryClient());
-$logger = new NullLogger();
+$client = new Custom\Adapter\Http\Client(new CustomClient())
+$logger = new Psr\Log\NullLogger();
 
-$feedIo = new FeedIo($client, $logger);
+$feedIo = new FeedIo\FeedIo($client, $logger);
 
 ```
 
-### Factory or Dependency Injection ?
+## Configure feed-io using the Factory
 
-Choosing between using the Factory or build `FeedIo` without it is a question you must ask yourself at some point of your project. The Factory is mainly designed to let you use feed-io with the lesser efforts and get your first results in a small amount of time. However, it doesn't let you benefit of all Monolog's and Guzzle's features, which could be annoying. Dependency injection will also let you choose another library to handle logs if you need to.
+The factory has been deprecated in feed-io 5.2 and was removed in 6.0. Instantiate the facade directly and pass in the desired HTTP client and logger interface.
 
 ## Dealing with missing timezones
 
