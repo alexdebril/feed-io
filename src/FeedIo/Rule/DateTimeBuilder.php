@@ -15,6 +15,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
      */
     protected array $dateFormats = [
         \DateTime::RFC2822,
+        \DateTime::RFC822,
         \DateTime::ATOM,
         \DateTime::RFC3339,
         \DateTime::RFC3339_EXTENDED,
