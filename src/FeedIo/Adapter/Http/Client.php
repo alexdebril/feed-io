@@ -68,5 +68,4 @@ class Client implements ClientInterface
                 throw new ServerErrorException($psrResponse, $duration);
         }
     }
-
 }
