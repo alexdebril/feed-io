@@ -17,8 +17,8 @@ class Client implements ClientInterface
     /**
      * @param  string                            $path
      * @param  \DateTime                         $modifiedSince
-     * @throws \FeedIo\Adapter\NotFoundException
      * @return \FeedIo\Adapter\ResponseInterface
+     *@throws \FeedIo\Adapter\NotFoundException
      */
     public function getResponse(string $path, DateTime $modifiedSince = null): ResponseInterface
     {

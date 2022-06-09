@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace FeedIo;
 
 use DateTime;
+use FeedIo\Adapter\ClientInterface;
+use FeedIo\Adapter\NullClient;
+use FeedIo\Http\ResponseBuilder;
 use FeedIo\Reader\Result;
 use FeedIo\Rule\DateTimeBuilderInterface;
-use FeedIo\Adapter\ClientInterface;
-use FeedIo\Http\ResponseBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * This class acts as a facade. It provides methods to access feed-io main features
  *
  * <code>
- *   // $client is a \FeedIo\Adapter\ClientInterface instance, $logger a \Psr\Log\LoggerInterface
+ *   // $client is a \FeedIo\Adapter\ClientInterface, $logger a \Psr\Log\LoggerInterface
  *   $feedIo = new FeedIo($client, $logger);
  *
  *   // read a feed. Output is a Result instance
@@ -65,9 +67,9 @@ class FeedIo
     protected Reader $reader;
 
     public function __construct(
-        protected ClientInterface $client,
-        protected LoggerInterface $logger,
-        protected ?SpecificationInterface $specification = null
+        protected ClientInterface         $client = new NullClient(),
+        protected LoggerInterface         $logger = new NullLogger(),
+        protected ?SpecificationInterface $specification = null,
     ) {
         if (is_null($this->specification)) {
             $this->specification = new Specification($this->logger);

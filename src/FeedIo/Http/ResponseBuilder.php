@@ -6,7 +6,7 @@ namespace FeedIo\Http;
 
 use FeedIo\FeedInterface;
 use FeedIo\FormatterInterface;
-use GuzzleHttp\Psr7\Response;
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 class ResponseBuilder
