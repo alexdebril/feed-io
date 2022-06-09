@@ -39,6 +39,7 @@ class Factory
             'config' => [],
         ]
     ): Factory {
+        @trigger_error('Using the factory is deprecated since 5.2 and will be removed in 6.0', \E_USER_DEPRECATED);
         $factory = new self();
 
         $clientBuilder = new GuzzleClientBuilder($factory->extractConfig($clientConfig));
