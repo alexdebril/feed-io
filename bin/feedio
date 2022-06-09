@@ -2,7 +2,7 @@
 <?php
 
 use FeedIo\FeedIo;
-use FeedIo\Factory;
+use Http\Discovery\HttpClientDiscovery;
 
 foreach( [__DIR__.'/../vendor/autoload.php',  __DIR__.'/../../../autoload.php'] as $file ) {
     if ( file_exists($file) ) {
@@ -21,7 +21,8 @@ function main($argc, $argv)
         exit;
     }
 
-    $feedIo = Factory::create()->getFeedIo();
+    $psrClient = HttpClientDiscovery::find();
+    $feedIo = new FeedIo(new \FeedIo\Adapter\Http\Client($psrClient));
     switch($argv[1]) {
         case 'discover':
             discover($feedIo, $argv[2]);

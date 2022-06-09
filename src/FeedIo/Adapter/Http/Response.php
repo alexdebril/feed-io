@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace FeedIo\Adapter\Guzzle;
+namespace FeedIo\Adapter\Http;
 
 use DateTime;
 use FeedIo\Adapter\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 /**
- * Guzzle dependent HTTP Response
+ * HTTP Response
  */
 class Response implements ResponseInterface
 {
