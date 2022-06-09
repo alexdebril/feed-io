@@ -14,6 +14,9 @@ use FeedIo\Factory\ClientBuilderInterface;
 use FeedIo\Factory\BuilderInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @deprecated 5.3.0 The Factory will be removed in version 6.0 
+ */
 class Factory
 {
     protected LoggerInterface $logger;
@@ -39,7 +42,7 @@ class Factory
             'config' => [],
         ]
     ): Factory {
-        @trigger_error('Using the factory is deprecated since 5.2 and will be removed in 6.0', \E_USER_DEPRECATED);
+        @trigger_error('Using the factory is deprecated since 5.3 and will be removed in 6.0', \E_USER_DEPRECATED);
         $factory = new self();
 
         $clientBuilder = new GuzzleClientBuilder($factory->extractConfig($clientConfig));
