@@ -45,7 +45,15 @@ class Explorer
         $feeds = [];
         foreach ($links as $link) {
             if ($this->isFeedLink($link)) {
-                $feeds[] = $link->getAttribute('href');
+                $href = $link->getAttribute('href');
+                if (strpos($href, '//') === 0) {
+                    // Link href is protocol-less, Implies feed supports http
+                    // and https. Consumers will often assume that feed url
+                    // includes protocol, so we will assign a protocol before
+                    // returning
+                    $href = 'https:' . $href;
+                }
+                $feeds[] = $href;
             }
         }
 
