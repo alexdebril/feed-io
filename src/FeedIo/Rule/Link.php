@@ -23,7 +23,13 @@ class Link extends RuleAbstract
      */
     public function setProperty(NodeInterface $node, \DOMElement $element) : void
     {
-        $node->setLink($element->nodeValue);
+        if (is_null($element->nodeValue) || $element->nodeValue == '') {
+            if ($element->hasAttribute('rel') && $element->getAttribute('rel') == 'alternate') {
+                $node->setLink($element->getAttribute('href'));
+            }
+        } else {
+            $node->setLink($element->nodeValue);
+        }
     }
 
     /**
