@@ -79,7 +79,7 @@ class ExplorerTest extends TestCase
      */
     public function testDiscoverProtocolless()
     {
-        $this->createTestObject("/../samples/discovery-mixed.html");
+        $this->createTestObject("/../samples/discovery-dualprotocol.html");
         $feeds = $this->object->discover('https://exmple.org/feed.atom');
 
         $this->assertEquals(['https://example.org/feed.xml', 'https://example.org/comments.xml'], $feeds);
