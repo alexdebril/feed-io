@@ -15,7 +15,7 @@ use FeedIo\Factory\BuilderInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @deprecated 5.3.0 The Factory will be removed in version 6.0 
+ * @deprecated 5.3.0 The Factory will be removed in version 6.0
  */
 class Factory
 {
