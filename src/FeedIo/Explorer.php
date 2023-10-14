@@ -29,7 +29,7 @@ class Explorer
         $stream = $this->client->getResponse($url, new DateTime('@0'));
 
         $internalErrors = libxml_use_internal_errors(true);
-        $feeds = $this->extractFeeds($stream->getBody());
+        $feeds = $this->extractFeeds($stream->getBody(), $url);
 
         libxml_use_internal_errors($internalErrors);
 
@@ -52,6 +52,9 @@ class Explorer
                     // includes protocol, so we will assign a protocol before
                     // returning
                     $href = 'https:' . $href;
+                }
+                if (!parse_url($href, PHP_URL_HOST) && $url){
+                    $href = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . '/' . ltrim($href,'/');
                 }
                 $feeds[] = $href;
             }
