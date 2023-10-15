@@ -36,7 +36,7 @@ class Explorer
         return $feeds;
     }
 
-    protected function extractFeeds(string $html): array
+    protected function extractFeeds(string $html, string $url = null): array    
     {
         $dom = new DOMDocument();
         $dom->loadHTML($html);
