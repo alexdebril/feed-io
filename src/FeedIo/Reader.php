@@ -73,6 +73,7 @@ class Reader
         try {
             $this->logger->info("hitting {$url}");
             $response = $this->client->getResponse($url, $modifiedSince);
+            $feed->setLink($url);
             $document = $this->handleResponse($response, $feed);
 
             return new Result($document, $feed, $modifiedSince, $response, $url);
