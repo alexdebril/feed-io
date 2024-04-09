@@ -152,29 +152,25 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 
     protected function setHostInContent(string $host = null): void
     {
-        if (property_exists($this, 'content')){
-            if (!is_null($host) && !is_null($this->content)) {
-                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->content );
-                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->content );
-            }
+        if (is_null($host)) {
+            return;
         }
-        if (property_exists($this, 'description')){
-            if (!is_null($host) && !is_null($this->description)) {
-                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->description );
-                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->description );
-            }
+        if (property_exists($this, 'content') && !is_null($this->content)){
+            $this->content = preg_replace('!(<\s*[^>]*)(href=|src=)(.?)(\/[^\/])!','\1\2\3'.$host.'\4', $this->content) ?? $this->content;
+        }
+        if (property_exists($this, 'description') && !is_null($this->description)) {
+            $this->description = preg_replace('!(<\s*[^>]*)(href=|src=)(.?)(\/[^\/])!','\1\2\3'.$host.'\4', $this->description) ?? $this->description;
         }
     }
 
     public function getHostFromLink(): ?string
     {
-        if (!is_null($this->getLink())) {
-            $partsUrl  = parse_url($this->getLink());
-            $result = $partsUrl['scheme']."://".$partsUrl['host'];
-        } else
-            $result = null;
+        if (is_null($this->getLink())) {
+            return null;
+        }
+        $partsUrl = parse_url($this->getLink());
 
-        return $result;
+        return $partsUrl['scheme']."://".$partsUrl['host'];
     }
 
     public function getValue(string $name): ?string
