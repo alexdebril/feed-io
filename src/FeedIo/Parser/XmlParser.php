@@ -77,7 +77,8 @@ class XmlParser extends ParserAbstract
     {
         if ($this->isItem($node->tagName) && $item instanceof FeedInterface) {
             $linkItem = $item->getLink();
-            $newItem = $this->parseNode($item->newItem()->setLink($linkItem), $node, $this->getItemRuleSet());
+            $newItem = $this->parseNode($item->newItem()->setLinkForAnalysis($linkItem), $node, $this->getItemRuleSet());
+
             $this->addValidItem($item, $newItem);
         } else {
             $rule = $ruleSet->get($node->tagName);

@@ -30,6 +30,8 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 
     protected ?string $host = null;
 
+    protected ?string $linkLinkForAnalysis = null;
+
     public function __construct()
     {
         $this->initElements();
@@ -135,10 +137,23 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->link;
     }
 
+    public function getLinkForAnalysis(): ?string
+    {
+        return $this->linkForAnalysis;
+    }
+
     public function setLink(string $link = null): NodeInterface
     {
         $this->link = $link;
         $this->setHost($link);
+        $this->setLinkForAnalysis($link);
+
+        return $this;
+    }
+
+    public function setLinkForAnalysis(string $link = null): NodeInterface
+    {
+        $this->linkForAnalysis = $link;
 
         return $this;
     }
@@ -152,29 +167,43 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
 
     protected function setHostInContent(string $host = null): void
     {
-        if (property_exists($this, 'content')){
-            if (!is_null($host) && !is_null($this->content)) {
-                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->content );
-                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->content );
-            }
+        if (is_null($host)) {
+            return;
         }
-        if (property_exists($this, 'description')){
-            if (!is_null($host) && !is_null($this->description)) {
-                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->description );
-                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->description );
-            }
+        // Replaced links like href="/aaa/bbb.xxx"
+        $pattern = '(<\s*[^>]*)(href=|src=)(.?)(\/[^\/])(?!(.(?!<code))*<\/code>)';
+        $this->pregReplaceInProperty('content', $pattern, '\1\2\3'.$host.'\4');
+        $this->pregReplaceInProperty('description', $pattern, '\1\2\3'.$host.'\4');
+
+        $itemFullLink = $this->getLinkForAnalysis();
+        $itemLink = implode("/", array_slice(explode("/", $itemFullLink), 0, -1))."/";
+
+        // Replaced links like href="#aaa/bbb.xxx"
+        $pattern = '(<\s*[^>]*)(href=|src=)(.?)(#)(?!(.(?!<code))*<\/code>)';
+        $this->pregReplaceInProperty('content', $pattern, '\1\2\3'.$itemFullLink.'\4');
+        $this->pregReplaceInProperty('description', $pattern, '\1\2\3'.$itemFullLink.'\4');
+
+        // Replaced links like href="aaa/bbb.xxx"
+        $pattern = '(<\s*[^>]*)(href=|src=)(.?)(\w+\b)(?![:])(?!(.(?!<code))*<\/code>)';
+        $this->pregReplaceInProperty('content', $pattern, '\1\2\3'.$itemLink.'\4');
+        $this->pregReplaceInProperty('description', $pattern, '\1\2\3'.$itemLink.'\4');
+    }
+
+    public function pregReplaceInProperty(string $property, string $pattern, string $replacement): void
+    {
+        if (property_exists($this, $property) && !is_null($this->{$property})) {
+            $this->{$property} = preg_replace('~'.$pattern.'~', $replacement, $this->{$property}) ?? $this->{$property};
         }
     }
 
     public function getHostFromLink(): ?string
     {
-        if (!is_null($this->getLink())) {
-            $partsUrl  = parse_url($this->getLink());
-            $result = $partsUrl['scheme']."://".$partsUrl['host'];
-        } else
-            $result = null;
+        if (is_null($this->getLinkForAnalysis())) {
+            return null;
+        }
+        $partsUrl = parse_url($this->getLinkForAnalysis());
 
-        return $result;
+        return $partsUrl['scheme']."://".$partsUrl['host'];
     }
 
     public function getValue(string $name): ?string
