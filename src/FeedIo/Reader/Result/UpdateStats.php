@@ -125,7 +125,27 @@ class UpdateStats
      */
     public function getAverageInterval(): int
     {
-        $total = array_sum($this->intervals);
+        sort($this->intervals);
+
+        $count = count($this->intervals);
+        if ($count === 0) {
+            return 0;
+        }
+
+        // some feeds could have very old historic
+        // articles so eliminate them with statistic
+        $q1 = $this->intervals[floor($count * 0.25)];
+        $q3 = $this->intervals[floor($count * 0.75)];
+        $iqr = $q3 - $q1;
+
+        $lower_bound = $q1 - 1.5 * $iqr;
+        $upper_bound = $q3 + 1.5 * $iqr;
+
+        $result = array_filter($this->intervals, function($value) use ($lower_bound, $upper_bound) {
+            return $value >= $lower_bound && $value <= $upper_bound;
+        });
+
+        $total = array_sum($result);
 
         return count($this->intervals) ? intval(floor($total / count($this->intervals))) : 0;
     }
