@@ -156,9 +156,19 @@ class UpdateStats
     public function getMedianInterval(): int
     {
         sort($this->intervals);
-        $num = floor(count($this->intervals) / 2);
 
-        return isset($this->intervals[$num]) ? $this->intervals[$num] : 0;
+        $count = count($this->intervals);
+        if ($count === 0) {
+            return 0;
+        }
+
+        $num = floor($count / 2);
+
+        if ($count % 2 === 0) {
+            return intval(floor(($this->intervals[$num - 1] + $this->intervals[$num]) / 2));
+        } else {
+            return $this->intervals[$num];
+        }
     }
 
     private function computeIntervals(array $dates): array
