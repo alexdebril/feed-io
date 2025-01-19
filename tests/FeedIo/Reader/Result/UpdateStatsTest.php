@@ -35,7 +35,9 @@ class UpdateStatsTest extends TestCase
         $this->assertEquals(86400, $stats->getMinInterval());
         $nextUpdate = $stats->computeNextUpdate();
         $averageInterval = $stats->getAverageInterval();
-        $this->assertEquals($feed->getLastModified()->getTimestamp() + intval($averageInterval + 0.1 * $averageInterval), $nextUpdate->getTimestamp());
+        $medianInterval = $stats->getMedianInterval();
+        $computedInterval = ($medianInterval < $averageInterval ? $medianInterval : $averageInterval);
+        $this->assertEquals($stats->getNewestItemDate() + intval($computedInterval + 0.1 * $computedInterval), $nextUpdate->getTimestamp());
     }
 
     public function testSleepyFeed()
