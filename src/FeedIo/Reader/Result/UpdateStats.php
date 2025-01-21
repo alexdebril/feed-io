@@ -42,7 +42,7 @@ class UpdateStats
     ) {
         $dates = $this->extractDates($feed);
         if (count($dates) > 0) {
-            $this->newestItemDate = max($dates);
+            $this->newestItemDate = min(max($dates), time());
         } else {
             $this->newestItemDate = $this->getFeedTimestamp();
         }
