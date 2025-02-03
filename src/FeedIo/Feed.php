@@ -49,7 +49,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
      * @param string|null $url
      * @return FeedInterface
      */
-    public function setUrl(string $url = null): FeedInterface
+    public function setUrl(?string $url = null): FeedInterface
     {
         $this->url = $url;
 
@@ -64,7 +64,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this->description;
     }
 
-    public function setDescription(string $description = null): FeedInterface
+    public function setDescription(?string $description = null): FeedInterface
     {
         $this->description = $description;
 
@@ -76,7 +76,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this->language;
     }
 
-    public function setLanguage(string $language = null): FeedInterface
+    public function setLanguage(?string $language = null): FeedInterface
     {
         $this->language = $language;
 
@@ -88,7 +88,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         return $this->logo;
     }
 
-    public function setLogo(string $logo = null): FeedInterface
+    public function setLogo(?string $logo = null): FeedInterface
     {
         $this->logo = $logo;
 
@@ -135,7 +135,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
     public function add(ItemInterface $item): FeedInterface
     {
         $item->setHostInContent($this->getHostFromLink());
-        
+
         if ($item->getLastModified() > $this->getLastModified()) {
             $this->setLastModified($item->getLastModified());
         }

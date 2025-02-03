@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -9,7 +10,6 @@
 namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
-
 use PHPUnit\Framework\TestCase;
 
 class DateRuleAbstractTest extends TestCase

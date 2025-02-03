@@ -29,7 +29,7 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $url
      * @return FeedInterface
      */
-    public function setUrl(string $url = null): FeedInterface;
+    public function setUrl(?string $url = null): FeedInterface;
 
     /**
      * Returns feed's description
@@ -44,7 +44,7 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $description
      * @return FeedInterface
      */
-    public function setDescription(string $description = null): FeedInterface;
+    public function setDescription(?string $description = null): FeedInterface;
 
     /**
      * @return string|null
@@ -55,7 +55,7 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $language
      * @return FeedInterface
      */
-    public function setLanguage(string $language = null): FeedInterface;
+    public function setLanguage(?string $language = null): FeedInterface;
 
     /**
      * @return string|null
@@ -66,7 +66,7 @@ interface FeedInterface extends \Iterator, \Countable, NodeInterface
      * @param string|null $logo
      * @return FeedInterface
      */
-    public function setLogo(string $logo = null): FeedInterface;
+    public function setLogo(?string $logo = null): FeedInterface;
 
     /**
      * @param ItemInterface $item

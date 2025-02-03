@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -12,7 +13,6 @@ namespace FeedIo\Reader;
 
 use FeedIo\Feed;
 use FeedIo\Reader\Document;
-
 use PHPUnit\Framework\TestCase;
 
 class ResultTest extends TestCase

@@ -25,7 +25,7 @@ class Client implements ClientInterface
      * @return ResponseInterface
      * @throws ClientExceptionInterface
      */
-    public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface
+    public function getResponse(string $url, ?DateTime $modifiedSince = null): ResponseInterface
     {
         if ($modifiedSince) {
             $headResponse = $this->request('HEAD', $url, $modifiedSince);
@@ -44,7 +44,7 @@ class Client implements ClientInterface
      * @return ResponseInterface
      * @throws ClientExceptionInterface
      */
-    protected function request(string $method, string $url, DateTime $modifiedSince = null): ResponseInterface
+    protected function request(string $method, string $url, ?DateTime $modifiedSince = null): ResponseInterface
     {
         $headers = [];
 

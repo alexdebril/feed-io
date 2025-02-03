@@ -16,7 +16,7 @@ class Structure extends RuleAbstract
 
     protected RuleSet $ruleSet;
 
-    public function __construct(string $nodeName = null, RuleSet $ruleSet = null)
+    public function __construct(?string $nodeName = null, ?RuleSet $ruleSet = null)
     {
         parent::__construct($nodeName);
 

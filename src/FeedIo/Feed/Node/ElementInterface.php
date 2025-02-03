@@ -49,7 +49,7 @@ interface ElementInterface
      * @param  string $value
      * @return ElementInterface
      */
-    public function setValue(string $value = null): ElementInterface;
+    public function setValue(?string $value = null): ElementInterface;
 
     /**
      * @param  string $name
@@ -67,5 +67,5 @@ interface ElementInterface
      * @param  string $value
      * @return ElementInterface
      */
-    public function setAttribute(string $name, string $value = null): ElementInterface;
+    public function setAttribute(string $name, ?string $value = null): ElementInterface;
 }

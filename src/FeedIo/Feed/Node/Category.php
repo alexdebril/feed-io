@@ -24,7 +24,7 @@ class Category implements CategoryInterface
      * @param string|null $term
      * @return CategoryInterface
      */
-    public function setTerm(string $term = null): CategoryInterface
+    public function setTerm(?string $term = null): CategoryInterface
     {
         $this->term = $term;
 
@@ -43,7 +43,7 @@ class Category implements CategoryInterface
      * @param string|null $scheme
      * @return CategoryInterface
      */
-    public function setScheme(string $scheme = null): CategoryInterface
+    public function setScheme(?string $scheme = null): CategoryInterface
     {
         $this->scheme = $scheme;
 
@@ -62,7 +62,7 @@ class Category implements CategoryInterface
      * @param string|null $label
      * @return CategoryInterface
      */
-    public function setLabel(string $label = null): CategoryInterface
+    public function setLabel(?string $label = null): CategoryInterface
     {
         $this->label = $label;
 

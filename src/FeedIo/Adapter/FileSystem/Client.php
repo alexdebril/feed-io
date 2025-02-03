@@ -18,9 +18,9 @@ class Client implements ClientInterface
      * @param  string                            $path
      * @param  \DateTime                         $modifiedSince
      * @return \FeedIo\Adapter\ResponseInterface
-     *@throws \FeedIo\Adapter\NotFoundException
+     * @throws \FeedIo\Adapter\NotFoundException
      */
-    public function getResponse(string $path, DateTime $modifiedSince = null): ResponseInterface
+    public function getResponse(string $path, ?DateTime $modifiedSince = null): ResponseInterface
     {
         if (file_exists($path)) {
             return new Response(

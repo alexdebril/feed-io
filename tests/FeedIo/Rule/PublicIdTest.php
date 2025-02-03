@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -9,7 +10,6 @@
 namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
-
 use PHPUnit\Framework\TestCase;
 
 class PublicIdTest extends TestCase

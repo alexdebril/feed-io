@@ -26,7 +26,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $name
      * @return AuthorInterface
      */
-    public function setName(string $name = null): AuthorInterface
+    public function setName(?string $name = null): AuthorInterface
     {
         $this->name = $name;
 
@@ -45,7 +45,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $uri
      * @return AuthorInterface
      */
-    public function setUri(string $uri = null): AuthorInterface
+    public function setUri(?string $uri = null): AuthorInterface
     {
         $this->uri = $uri;
 
@@ -64,7 +64,7 @@ class Author implements AuthorInterface, ArrayableInterface
      * @param string|null $email
      * @return AuthorInterface
      */
-    public function setEmail(string $email = null): AuthorInterface
+    public function setEmail(?string $email = null): AuthorInterface
     {
         $this->email = $email;
 

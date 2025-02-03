@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -7,7 +8,6 @@
 namespace FeedIo\Rule\Atom;
 
 use FeedIo\Feed\Item;
-
 use PHPUnit\Framework\TestCase;
 
 class AuthorTest extends TestCase

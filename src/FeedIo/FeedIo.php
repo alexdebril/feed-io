@@ -118,7 +118,7 @@ class FeedIo
      * @param DateTime|null $modifiedSince
      * @return Result
      */
-    public function read(string $url, FeedInterface $feed = null, DateTime $modifiedSince = null): Result
+    public function read(string $url, ?FeedInterface $feed = null, ?DateTime $modifiedSince = null): Result
     {
         if (is_null($feed)) {
             $feed = new Feed();

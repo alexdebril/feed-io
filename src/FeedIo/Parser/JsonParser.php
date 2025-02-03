@@ -85,7 +85,7 @@ class JsonParser extends ParserAbstract
      * @param string|null $default
      * @return null|string
      */
-    public function readOffset(array $data, string $offsetName, string $default = null): ?string
+    public function readOffset(array $data, string $offsetName, ?string $default = null): ?string
     {
         if (array_key_exists($offsetName, $data)) {
             return $data[$offsetName];

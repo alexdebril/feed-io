@@ -19,7 +19,7 @@ interface AuthorInterface
      * @param  string $name
      * @return AuthorInterface
      */
-    public function setName(string $name = null): AuthorInterface;
+    public function setName(?string $name = null): AuthorInterface;
 
     /**
      * @return string
@@ -30,7 +30,7 @@ interface AuthorInterface
      * @param  string $uri
      * @return AuthorInterface
      */
-    public function setUri(string $uri = null): AuthorInterface;
+    public function setUri(?string $uri = null): AuthorInterface;
 
     /**
      * @return string
@@ -41,5 +41,5 @@ interface AuthorInterface
      * @param  string $email
      * @return AuthorInterface
      */
-    public function setEmail(string $email = null): AuthorInterface;
+    public function setEmail(?string $email = null): AuthorInterface;
 }

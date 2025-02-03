@@ -53,7 +53,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param string|null $value
      * @return ElementInterface
      */
-    public function setValue(string $value = null): ElementInterface
+    public function setValue(?string $value = null): ElementInterface
     {
         $this->value = $value;
 
@@ -86,7 +86,7 @@ class Element implements ElementInterface, ElementsAwareInterface
      * @param string|null $value
      * @return ElementInterface
      */
-    public function setAttribute(string $name, string $value = null): ElementInterface
+    public function setAttribute(string $name, ?string $value = null): ElementInterface
     {
         $this->attributes[$name] = $value;
 

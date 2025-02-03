@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -13,7 +14,6 @@ namespace FeedIo\Parser;
 use FeedIo\Feed;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
-
 use PHPUnit\Framework\TestCase;
 
 class RssTest extends ParserTestAbstract

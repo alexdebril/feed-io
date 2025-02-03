@@ -62,7 +62,7 @@ interface ItemInterface extends NodeInterface
      * @param string|null $summary
      * @return ItemInterface
      */
-    public function setSummary(string $summary = null): ItemInterface;
+    public function setSummary(?string $summary = null): ItemInterface;
 
     /**
      * Returns the item's content. Valid for JSONFeed and Atom formats only
@@ -75,5 +75,5 @@ interface ItemInterface extends NodeInterface
      * @param string|null $content
      * @return ItemInterface
      */
-    public function setContent(string $content = null): ItemInterface;
+    public function setContent(?string $content = null): ItemInterface;
 }

@@ -15,7 +15,7 @@ class RuleSet
 
     protected RuleAbstract $default;
 
-    public function __construct(RuleAbstract $default = null)
+    public function __construct(?RuleAbstract $default = null)
     {
         $this->rules = new \ArrayIterator(array());
         $this->default = is_null($default) ? new OptionalField() : $default;

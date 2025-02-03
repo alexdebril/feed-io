@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -14,7 +15,6 @@ use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Rule\Title;
 use FeedIo\RuleSet;
 use Psr\Log\NullLogger;
-
 use PHPUnit\Framework\TestCase;
 
 class FormatterTest extends TestCase

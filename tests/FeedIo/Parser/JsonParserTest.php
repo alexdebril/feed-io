@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: adebril
@@ -13,7 +14,6 @@ use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Json;
 use Psr\Log\NullLogger;
-
 use PHPUnit\Framework\TestCase;
 
 class JsonParserTest extends TestCase

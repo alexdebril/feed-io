@@ -70,7 +70,7 @@ class Item extends Node implements ItemInterface
      * @param string|null $summary
      * @return ItemInterface
      */
-    public function setSummary(string $summary = null): ItemInterface
+    public function setSummary(?string $summary = null): ItemInterface
     {
         $this->summary = $summary;
 
@@ -90,7 +90,7 @@ class Item extends Node implements ItemInterface
      * @param string|null $content
      * @return ItemInterface
      */
-    public function setContent(string $content = null): ItemInterface
+    public function setContent(?string $content = null): ItemInterface
     {
         $this->content = $content;
 

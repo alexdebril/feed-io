@@ -26,10 +26,10 @@
         "psr/http-client-implementation": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~9.3.0",
+        "phpunit/phpunit": "^9.6.22",
         "monolog/monolog": "1.*|2.*",
         "phpstan/phpstan": "^0.12.81",
-        "friendsofphp/php-cs-fixer": "^3.5",
+        "friendsofphp/php-cs-fixer": "^3.68",
         "php-http/mock-client": "^1.5"
     },
     "suggest": {
@@ -48,6 +48,9 @@
     "config": {
         "preferred-install": {
             "*": "dist"
+        },
+        "allow-plugins": {
+            "php-http/discovery": false
         }
     }
 }

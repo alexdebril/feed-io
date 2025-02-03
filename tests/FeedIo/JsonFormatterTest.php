@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -13,7 +14,6 @@ namespace FeedIo;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Category;
 use FeedIo\Formatter\JsonFormatter;
-
 use PHPUnit\Framework\TestCase;
 
 class JsonFormatterTest extends TestCase

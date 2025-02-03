@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -11,7 +12,6 @@
 namespace FeedIo;
 
 use FeedIo\Rule\OptionalField;
-
 use PHPUnit\Framework\TestCase;
 
 class RuleSetTest extends TestCase

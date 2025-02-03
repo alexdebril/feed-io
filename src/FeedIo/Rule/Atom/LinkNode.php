@@ -17,7 +17,7 @@ class LinkNode extends RuleAbstract
 
     protected RuleSet $ruleSet;
 
-    public function __construct(string $nodeName = null)
+    public function __construct(?string $nodeName = null)
     {
         parent::__construct($nodeName);
         $mediaRule = new Media();

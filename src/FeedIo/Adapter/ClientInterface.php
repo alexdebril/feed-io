@@ -21,5 +21,5 @@ interface ClientInterface
      * @throws \FeedIo\Adapter\ServerErrorException
      * @return \FeedIo\Adapter\ResponseInterface
      */
-    public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface;
+    public function getResponse(string $url, ?DateTime $modifiedSince = null): ResponseInterface;
 }
