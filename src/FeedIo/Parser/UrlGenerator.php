@@ -11,7 +11,7 @@ class UrlGenerator
      * @param string $path
      * @return string
      */
-    public function getAbsolutePath(string $path, string $host = null): string
+    public function getAbsolutePath(string $path, ?string $host = null): string
     {
         if (! parse_url($path, PHP_URL_HOST) && $host) {
             return $this->generateAbsolutePath($host, $path);

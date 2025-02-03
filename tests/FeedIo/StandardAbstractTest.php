@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -11,7 +12,6 @@
 namespace FeedIo;
 
 use FeedIo\Rule\DateTimeBuilder;
-
 use PHPUnit\Framework\TestCase;
 
 class StandardAbstractTest extends TestCase

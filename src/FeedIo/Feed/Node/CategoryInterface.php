@@ -19,7 +19,7 @@ interface CategoryInterface
      * @param string|null $term
      * @return CategoryInterface
      */
-    public function setTerm(string $term = null): CategoryInterface;
+    public function setTerm(?string $term = null): CategoryInterface;
 
     /**
      * @return null|string
@@ -30,7 +30,7 @@ interface CategoryInterface
      * @param string|null $scheme
      * @return CategoryInterface
      */
-    public function setScheme(string $scheme = null): CategoryInterface;
+    public function setScheme(?string $scheme = null): CategoryInterface;
 
     /**
      * @return null|string
@@ -41,5 +41,5 @@ interface CategoryInterface
      * @param string|null $label
      * @return CategoryInterface
      */
-    public function setLabel(string $label = null): CategoryInterface;
+    public function setLabel(?string $label = null): CategoryInterface;
 }

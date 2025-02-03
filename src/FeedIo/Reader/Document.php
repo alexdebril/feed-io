@@ -62,9 +62,9 @@ class Document
 
         set_error_handler(
 
-        /**
-         * @param string $errno
-         */
+            /**
+             * @param string $errno
+             */
             function ($errno, $errstr) {
                 throw new \InvalidArgumentException("malformed xml string. parsing error : $errstr ($errno)");
             }

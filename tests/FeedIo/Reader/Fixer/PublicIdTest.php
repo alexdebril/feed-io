@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -14,7 +15,6 @@ use FeedIo\Feed;
 use FeedIo\Feed\Item;
 use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
-
 use PHPUnit\Framework\TestCase;
 
 class PublicIdTest extends TestCase

@@ -56,7 +56,7 @@ class JsonFormatter implements FormatterInterface
         return [
             'id' => $item->getPublicId(),
             'title' => $item->getTitle(),
-            'summary'=> $item->getSummary(),
+            'summary' => $item->getSummary(),
             $offset => $item->getContent(),
             'url' => $item->getLink(),
         ];

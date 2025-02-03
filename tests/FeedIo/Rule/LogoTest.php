@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -11,7 +12,6 @@
 namespace FeedIo\Rule;
 
 use FeedIo\Feed;
-
 use PHPUnit\Framework\TestCase;
 
 class LogoTest extends TestCase
@@ -28,7 +28,7 @@ class LogoTest extends TestCase
         $this->object = new Logo();
     }
 
-    protected function appendNonEmptyChild(\DomDocument $document, \DOMElement $element, string $name, string $value = null): void
+    protected function appendNonEmptyChild(\DomDocument $document, \DOMElement $element, string $name, ?string $value = null): void
     {
         if (! is_null($value)) {
             $element->appendChild($document->createElement($name, $value));

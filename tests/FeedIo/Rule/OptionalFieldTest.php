@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -11,7 +12,6 @@ namespace FeedIo\Rule;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Node\ElementInterface;
-
 use PHPUnit\Framework\TestCase;
 
 class OptionalFieldTest extends TestCase

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -15,7 +16,6 @@ use FeedIo\Parser\XmlParser;
 use Psr\Log\NullLogger;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Reader\Document;
-
 use PHPUnit\Framework\TestCase;
 
 class ReaderTest extends TestCase

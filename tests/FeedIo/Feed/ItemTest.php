@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -13,7 +14,6 @@ namespace FeedIo\Feed;
 use FeedIo\Feed\Node\Element;
 use FeedIo\Feed\Item\Media;
 use FeedIo\Feed\Item\Author;
-
 use PHPUnit\Framework\TestCase;
 
 class ItemTest extends TestCase

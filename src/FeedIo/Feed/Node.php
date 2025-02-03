@@ -36,7 +36,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         $this->categories = new ArrayIterator();
     }
 
-    public function set(string $name, string $value = null): NodeInterface
+    public function set(string $name, ?string $value = null): NodeInterface
     {
         $element = $this->newElement();
 
@@ -53,7 +53,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->author;
     }
 
-    public function setAuthor(AuthorInterface $author = null): NodeInterface
+    public function setAuthor(?AuthorInterface $author = null): NodeInterface
     {
         $this->author = $author;
 
@@ -94,7 +94,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->title;
     }
 
-    public function setTitle(string $title = null): NodeInterface
+    public function setTitle(?string $title = null): NodeInterface
     {
         $this->title = $title;
 
@@ -106,7 +106,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->publicId;
     }
 
-    public function setPublicId(string $publicId = null): NodeInterface
+    public function setPublicId(?string $publicId = null): NodeInterface
     {
         $this->publicId = $publicId;
 
@@ -118,7 +118,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->lastModified;
     }
 
-    public function setLastModified(DateTime $lastModified = null): NodeInterface
+    public function setLastModified(?DateTime $lastModified = null): NodeInterface
     {
         $this->lastModified = $lastModified;
 
@@ -135,7 +135,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this->link;
     }
 
-    public function setLink(string $link = null): NodeInterface
+    public function setLink(?string $link = null): NodeInterface
     {
         $this->link = $link;
         $this->setHost($link);
@@ -143,25 +143,25 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         return $this;
     }
 
-    protected function setHost(string $link = null): void
+    protected function setHost(?string $link = null): void
     {
         if (!is_null($link)) {
             $this->host = '//' . parse_url($link, PHP_URL_HOST);
         }
     }
 
-    protected function setHostInContent(string $host = null): void
+    protected function setHostInContent(?string $host = null): void
     {
-        if (property_exists($this, 'content')){
+        if (property_exists($this, 'content')) {
             if (!is_null($host) && !is_null($this->content)) {
-                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->content );
-                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->content );
+                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->content);
+                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->content);
             }
         }
-        if (property_exists($this, 'description')){
+        if (property_exists($this, 'description')) {
             if (!is_null($host) && !is_null($this->description)) {
-                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!','\1 href=\3'.$host.'\4', $this->description );
-                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!','\1 src=\3'.$host.'\4', $this->description );
+                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->description);
+                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->description);
             }
         }
     }
@@ -171,8 +171,9 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
         if (!is_null($this->getLink())) {
             $partsUrl  = parse_url($this->getLink());
             $result = $partsUrl['scheme']."://".$partsUrl['host'];
-        } else
+        } else {
             $result = null;
+        }
 
         return $result;
     }
@@ -201,7 +202,7 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
                     if ($entry instanceof ArrayableInterface) {
                         $entry = $entry->toArray();
                     }
-                    $properties[$name] []= $entry;
+                    $properties[$name] [] = $entry;
                 }
             } elseif ($property instanceof ArrayableInterface) {
                 $properties[$name] = $property->toArray();

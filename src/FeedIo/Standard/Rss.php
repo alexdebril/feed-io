@@ -108,7 +108,7 @@ class Rss extends XmlAbstract
             ->add(new Image())
             ->add(new Content())
             ->add(new Media(), ['media:thumbnail', 'media:group', 'media:content'])
-            ;
+        ;
 
         return $ruleSet;
     }

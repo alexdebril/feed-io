@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -16,12 +17,16 @@ use FeedIo\Reader\Document;
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Atom;
 use Psr\Log\NullLogger;
-
 use PHPUnit\Framework\TestCase;
 
 class MediaRssTest extends TestCase
 {
     public const SAMPLE_FILE = 'rss/sample-youtube.xml';
+
+    /**
+     * @var \FeedIo\Parser\XmlParser
+     */
+    protected $object;
 
     /**
      * @return \FeedIo\StandardAbstract

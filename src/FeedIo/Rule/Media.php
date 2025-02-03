@@ -22,7 +22,7 @@ class Media extends RuleAbstract
 
     protected UrlGenerator $urlGenerator;
 
-    public function __construct(string $nodeName = null)
+    public function __construct(?string $nodeName = null)
     {
         $this->urlGenerator = new UrlGenerator();
         parent::__construct($nodeName);
@@ -64,7 +64,7 @@ class Media extends RuleAbstract
         }
     }
 
-    protected function setUrl(MediaInterface $media, NodeInterface $node, string $url = null): void
+    protected function setUrl(MediaInterface $media, NodeInterface $node, ?string $url = null): void
     {
         if (! is_null($url)) {
             $media->setUrl(

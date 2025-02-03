@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -12,7 +13,6 @@ namespace FeedIo\Rule;
 
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\MediaInterface;
-
 use PHPUnit\Framework\TestCase;
 
 class MediaTest extends TestCase

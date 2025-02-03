@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -10,7 +11,6 @@ namespace FeedIo\StandardFormatter;
 
 use FeedIo\Rule\DateTimeBuilder;
 use FeedIo\Standard\Rss;
-
 use PHPUnit\Framework\TestCase;
 
 class RssTest extends FormatterTestAbstract

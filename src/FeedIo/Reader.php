@@ -63,7 +63,7 @@ class Reader
      * @param DateTime|null $modifiedSince
      * @return Result
      */
-    public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null): Result
+    public function read(string $url, FeedInterface $feed, ?DateTime $modifiedSince = null): Result
     {
         $this->logger->debug("start reading {$url}");
         if (is_null($modifiedSince)) {

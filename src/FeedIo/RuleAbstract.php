@@ -14,7 +14,7 @@ abstract class RuleAbstract
 
     protected string $nodeName;
 
-    public function __construct(string $nodeName = null)
+    public function __construct(?string $nodeName = null)
     {
         $this->nodeName = $nodeName ?? static::NODE_NAME;
     }
@@ -68,14 +68,14 @@ abstract class RuleAbstract
         }
     }
 
-    protected function setNonEmptyAttribute(DomElement $element, string $name, string $value = null): void
+    protected function setNonEmptyAttribute(DomElement $element, string $name, ?string $value = null): void
     {
         if (! is_null($value)) {
             $element->setAttribute($name, $value);
         }
     }
 
-    protected function appendNonEmptyChild(DomDocument $document, DOMElement $element, string $name, string $value = null): void
+    protected function appendNonEmptyChild(DomDocument $document, DOMElement $element, string $name, ?string $value = null): void
     {
         if (! is_null($value)) {
             $element->appendChild($document->createElement($name, $value));

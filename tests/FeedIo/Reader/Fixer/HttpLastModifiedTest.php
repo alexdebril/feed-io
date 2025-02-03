@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the feed-io package.
  *
@@ -12,7 +13,6 @@ namespace FeedIo\Reader\Fixer;
 
 use FeedIo\Reader\ResultMockFactory;
 use Psr\Log\NullLogger;
-
 use PHPUnit\Framework\TestCase;
 
 class HttpLastModifiedTest extends TestCase
