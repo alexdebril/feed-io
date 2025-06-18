@@ -1,11 +1,15 @@
 {
-    "name": "debril/feed-io",
+    "name": "php-feed-io/feed-io",
     "description": "PHP library built to consume and serve JSONFeed / RSS / Atom feeds",
     "keywords": ["rss", "atom","jsonfeed", "feed", "news", "CLI", "client"],
-    "homepage": "https://alexdebril.github.io/feed-io/",
+    "homepage": "https://php-feed-io.github.io/feed-io/",
     "type": "library",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Benjamin Brahmer",
+            "email": "info@b-brahmer.de"
+        },
         {
             "name": "Alexandre Debril",
             "email": "alex.debril@gmail.com"

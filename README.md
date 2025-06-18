@@ -1,11 +1,7 @@
 # feed-io
 
-[![Latest Stable Version](https://poser.pugx.org/debril/feed-io/v/stable.png)](https://packagist.org/packages/debril/feed-io)
-[![Build Status](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/badge.svg)](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/maintainability)](https://codeclimate.com/github/alexdebril/feed-io/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/test_coverage)](https://codeclimate.com/github/alexdebril/feed-io/test_coverage)
 
-[feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
+[feed-io](https://github.com/php-feed-io/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
 - Feeds auto-discovery through HTML headers
@@ -21,7 +17,7 @@
 - A generic HTTP ClientInterface
 - Integrates with every [PSR-18 compatible HTTP client](https://www.php-fig.org/psr/psr-18/).
 
-This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/alexdebril/feed-io/discussions).
+This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/php-feed-io/feed-io/discussions).
 
 # Installation
 
@@ -53,7 +49,7 @@ Let's suppose you installed feed-io using Composer, you can use its command line
 
 ## reading
 
-feed-io is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/alexdebril/feed-io/blob/master/src/FeedIo/FeedIo.php) :
+feed-io is designed to read feeds across the internet and to publish your own. Its main class is [FeedIo](https://github.com/php-feed-io/feed-io/blob/master/src/FeedIo/FeedIo.php) :
 
 ```php
 
