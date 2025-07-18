@@ -154,14 +154,14 @@ class Node implements NodeInterface, ElementsAwareInterface, ArrayableInterface
     {
         if (property_exists($this, 'content')) {
             if (!is_null($host) && !is_null($this->content)) {
-                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->content );
-                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->content );
+                $this->content = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->content);
+                $this->content = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->content);
             }
         }
         if (property_exists($this, 'description')) {
             if (!is_null($host) && !is_null($this->description)) {
-                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->description );
-                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->description );
+                $this->description = preg_replace('!(<*\s*[^>]*)(href=)(.?)(\/[^\/])!', '\1 href=\3'.$host.'\4', $this->description);
+                $this->description = preg_replace('!(<*\s*[^>]*)(src=)(.?)(\/[^\/])!', '\1 src=\3'.$host.'\4', $this->description);
             }
         }
     }
