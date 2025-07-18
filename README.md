@@ -1,11 +1,13 @@
 # feed-io
 
-[![Latest Stable Version](https://poser.pugx.org/debril/feed-io/v/stable.png)](https://packagist.org/packages/debril/feed-io)
-[![Build Status](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/badge.svg)](https://github.com/alexdebril/feed-io/actions/workflows/ci.yml/)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/maintainability)](https://codeclimate.com/github/alexdebril/feed-io/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/c418d2c84346aa398d19/test_coverage)](https://codeclimate.com/github/alexdebril/feed-io/test_coverage)
+## Please use `php-feed-io/feed-io`
 
-[feed-io](https://github.com/alexdebril/feed-io) is a PHP library built to consume and serve news feeds. It features:
+> [!IMPORTANT]
+> `feed-io` has now a dedicated organization to take care of its maintenance. Please head to https://github.com/php-feed-io/feed-io for documentation, questions, feature requests and bug reports.
+> Huge thanks to everyone who contributed so far to make `feed-io` this tiny library I'm so proud of. Especially to [@Grotax](https://github.com/Grotax) and [@SMillerDev](https://github.com/SMillerDev), without whom this journey couldn't continue. Big ups to you guys ! 🍻
+
+
+[feed-io](https://github.com/php-feed-io/feed-io) is a PHP library built to consume and serve news feeds. It features:
 
 - JSONFeed / Atom / RSS read and write support
 - Feeds auto-discovery through HTML headers
@@ -21,14 +23,17 @@
 - A generic HTTP ClientInterface
 - Integrates with every [PSR-18 compatible HTTP client](https://www.php-fig.org/psr/psr-18/).
 
-This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/alexdebril/feed-io/discussions).
+> [!NOTE]
+> This feature list may become outdated with new versions of `php-feed-io/feed-io`.
+
+This library is highly extensible and is designed to adapt to many situations, so if you don't find a solution through the documentation feel free to ask in the [discussions](https://github.com/php-feed-io/feed-io/discussions).
 
 # Installation
 
 Use Composer to add feed-io into your project's requirements :
 
 ```sh
-    composer require debril/feed-io
+    composer require php-feed-io/feed-io
  ```
 
 # Requirements
