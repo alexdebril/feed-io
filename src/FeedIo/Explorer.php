@@ -36,7 +36,7 @@ class Explorer
         return $feeds;
     }
 
-    protected function extractFeeds(string $html, string $url = null): array    
+    protected function extractFeeds(string $html, string $url = null): array
     {
         $dom = new DOMDocument();
         $dom->loadHTML($html);
@@ -53,8 +53,8 @@ class Explorer
                     // returning
                     $href = 'https:' . $href;
                 }
-                if (!parse_url($href, PHP_URL_HOST) && $url){
-                    $href = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . '/' . ltrim($href,'/');
+                if (!parse_url($href, PHP_URL_HOST) && $url) {
+                    $href = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . '/' . ltrim($href, '/');
                 }
                 $feeds[] = $href;
             }
