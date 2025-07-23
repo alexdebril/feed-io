@@ -18,6 +18,11 @@ class PublicId extends RuleAbstract
     public function setProperty(NodeInterface $node, \DOMElement $element): void
     {
         $node->setPublicId($element->nodeValue);
+        if ($element->nodeName == 'guid'
+        && $element->getAttribute('isPermaLink') === 'true'
+        && is_null($node->getLink())) {
+            $node->setLink($element->nodeValue);
+        }
     }
 
     /**
