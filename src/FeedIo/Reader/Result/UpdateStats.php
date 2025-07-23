@@ -31,6 +31,8 @@ class UpdateStats
 
     protected array $intervals = [];
 
+    protected int $newestItemDate = 0;
+
     /**
      * UpdateStats constructor.
      * @param FeedInterface $feed
@@ -38,7 +40,13 @@ class UpdateStats
     public function __construct(
         protected FeedInterface $feed
     ) {
-        $this->intervals = $this->computeIntervals($this->extractDates($feed));
+        $dates = $this->extractDates($feed);
+        if (count($dates) > 0) {
+            $this->newestItemDate = min(max($dates), time());
+        } else {
+            $this->newestItemDate = $this->getFeedTimestamp();
+        }
+        $this->intervals = $this->computeIntervals($dates);
     }
 
     /**
@@ -57,7 +65,6 @@ class UpdateStats
         if ($this->isSleepy($sleepyDuration, $marginRatio)) {
             return (new \DateTime())->setTimestamp(time() + $sleepyDelay);
         }
-        $feedTimeStamp = $this->getFeedTimestamp();
         $now = time();
         $intervals = [
             $this->getAverageInterval(),
@@ -66,7 +73,7 @@ class UpdateStats
         sort($intervals);
         $newTimestamp = $now + $minDelay;
         foreach ($intervals as $interval) {
-            $computedTimestamp = $this->addInterval($feedTimeStamp, $interval, $marginRatio);
+            $computedTimestamp = $this->addInterval($this->newestItemDate, $interval, $marginRatio);
             if ($computedTimestamp > $now) {
                 $newTimestamp = $computedTimestamp;
                 break;
@@ -82,7 +89,7 @@ class UpdateStats
      */
     public function isSleepy(int $sleepyDuration, float $marginRatio): bool
     {
-        return time() > $this->addInterval($this->getFeedTimestamp(), $sleepyDuration, $marginRatio);
+        return time() > $this->addInterval($this->newestItemDate, $sleepyDuration, $marginRatio);
     }
 
     /**
@@ -125,7 +132,27 @@ class UpdateStats
      */
     public function getAverageInterval(): int
     {
-        $total = array_sum($this->intervals);
+        sort($this->intervals);
+
+        $count = count($this->intervals);
+        if ($count === 0) {
+            return 0;
+        }
+
+        // some feeds could have very old historic
+        // articles so eliminate them with statistic
+        $q1 = $this->intervals[floor($count * 0.25)];
+        $q3 = $this->intervals[floor($count * 0.75)];
+        $iqr = $q3 - $q1;
+
+        $lower_bound = $q1 - 1.5 * $iqr;
+        $upper_bound = $q3 + 1.5 * $iqr;
+
+        $result = array_filter($this->intervals, function($value) use ($lower_bound, $upper_bound) {
+            return $value >= $lower_bound && $value <= $upper_bound;
+        });
+
+        $total = array_sum($result);
 
         return count($this->intervals) ? intval(floor($total / count($this->intervals))) : 0;
     }
@@ -136,9 +163,27 @@ class UpdateStats
     public function getMedianInterval(): int
     {
         sort($this->intervals);
-        $num = floor(count($this->intervals) / 2);
 
-        return isset($this->intervals[$num]) ? $this->intervals[$num] : 0;
+        $count = count($this->intervals);
+        if ($count === 0) {
+            return 0;
+        }
+
+        $num = floor($count / 2);
+
+        if ($count % 2 === 0) {
+            return intval(floor(($this->intervals[$num - 1] + $this->intervals[$num]) / 2));
+        } else {
+            return $this->intervals[$num];
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getNewestItemDate(): int
+    {
+        return $this->newestItemDate;
     }
 
     private function computeIntervals(array $dates): array
